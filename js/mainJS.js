@@ -30,8 +30,23 @@ function main() {
 	camera.position.z = 30;
 	camera.lookAt(scene.position);
 	//INSERT YOUR CODE HERE 
+	//	AMBIENT LIGHT
+	ambientLight = new THREE.AmbientLight(0x0c0c0c);
+	scene.add(ambientLight);
+	//	SPOT LIGHT
 
+	spotLight = new THREE.SpotLight(0xeeaabb);
+	spotLight.position.set(-5, 30, 20);
+	spotLight.castShadow = true;
+	scene.add(spotLight);
 
+	var shipGeometry = new THREE.SphereGeometry(7,10,10);
+	shipMaterial = new THREE.MeshLambertMaterial({color:0x0088ee});
+	shipMesh = new THREE.Mesh(shipMaterial , shipGeometry );
+	shipMesh.castShadow;
+	scene.add(shipMesh);
+	
+	var enemy = new THREE.Sphere(1,new THREE.Vector3(10, 10, 0));
 
 
 
