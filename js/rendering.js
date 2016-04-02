@@ -1,8 +1,7 @@
 function render() {
 	spawnTick = (spawnTick + 1) % spawnFrequency;
 	if(spawnTick === (spawnFrequency-1)) {
-		var newAsteroid = generateAsteroid();
-		asteroidArray.push(newAsteroid);
+		generateAsteroid();
 	}
 	moveAsteroids();
 	cleanAsteroids();
