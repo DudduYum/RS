@@ -1,23 +1,7 @@
-//playable zone
-var areaWidth = 16;
-var areaHeight = 9;
-var areaDepth = 30;
-var gameArea_geometry = new THREE.BoxGeometry(areaWidth, areaHeight, areaDepth);
-var gameArea_material = new THREE.MeshBasicMaterial({wireframe:true});
-var gameArea = new THREE.Mesh(gameArea_geometry, gameArea_material);
-
-//basic spaceship
-var spaceshipRadius = 1;
-var spaceshipLength = 3;
-var spaceship_geometry = new THREE.CylinderGeometry(spaceshipRadius/2, spaceshipRadius, spaceshipLength);
-var spaceship_material = new THREE.MeshBasicMaterial({color:0x303060});
-var spaceship = new THREE.Mesh(spaceship_geometry, spaceship_material);
-spaceship.rotation.x = degInRad(-90);
-spaceship.position.set(0,0,-spaceshipLength/2);
-
-//basic asteroid
-var asteroid_material = new THREE.MeshBasicMaterial({color:0x5f3f00, wireframe:true});
-			
+//GAME SCENE
+var game = new THREE.Object3D();
+game.position.set(0,0,-25);
+game.rotation.y = degInRad(90);
 
 //ASTEROID SPAWN SETTINGS
 var spawnFrequency = 30;
@@ -25,13 +9,30 @@ var asteroidSpeed = 0.1;
 var spawnTick = 0;
 var asteroidArray = [];
 
-//GAME SCENE
-var game = new THREE.Object3D();
-game.add(gameArea);
-game.add(spaceship);
-game.position.set(0,0,-20);
-game.rotation.y = degInRad(45);
 
+//playable zone
+var areaWidth = 16;
+var areaHeight = 9;
+var areaDepth = 30;
+var gameArea_geometry = new THREE.BoxGeometry(areaWidth, areaHeight, areaDepth);
+var gameArea_material = new THREE.MeshBasicMaterial({wireframe:true});
+var gameArea = new THREE.Mesh(gameArea_geometry, gameArea_material);
+game.add(gameArea);
+
+
+//basic spaceship
+var spaceshipRadius = 1;
+var spaceshipLength = 3;
+var spaceship_geometry = new THREE.CylinderGeometry(spaceshipRadius/2, spaceshipRadius, spaceshipLength);
+var spaceship_material = new THREE.MeshBasicMaterial({color:0x303060});
+var spaceship = new THREE.Mesh(spaceship_geometry, spaceship_material);
+game.add(spaceship);
+spaceship.rotation.x = degInRad(-90);
+spaceship.position.set(0,0,areaDepth/2-spaceshipLength/2);
+
+
+//basic asteroid
+var asteroid_material = new THREE.MeshBasicMaterial({color:0x5f3f00, wireframe:true});
 
 //generate asteroids
 function generateAsteroid() {		
@@ -41,41 +42,28 @@ function generateAsteroid() {
 
 	var asteroid_geometry = new THREE.SphereGeometry(size);
 	var asteroid = new THREE.Mesh(asteroid_geometry, asteroid_material);
-	asteroid.position.set(posX, posY, game.position.z - areaDepth/2);
+	asteroid.position.set(posX, posY, - areaDepth/2);
 	game.add(asteroid);
 	return asteroid;
 }
+
 //move asteroids towards spaceship
 function moveAsteroids() {
 	for(var i=0;i<asteroidArray.length;i++) {
 		asteroidArray[i].translateZ(asteroidSpeed);
 	}
 }
+
 //remove asteroids out of game
 function cleanAsteroids() {
 	for(var i=0;i<asteroidArray.length;i++) {
-		if(asteroidArray[i].positionZ === 1) {
+		//if(asteroidArray[i].position.z === 0) {
 			scene.remove(asteroidArray[i]);
-		}
+		//}
 	}
 }
 
-//keyboard controls
-window.addEventListener('keydown', handleKeyDown, false);
-function handleKeyDown(event) {
-	if (event.keyCode === 39) {
-		spaceship.translateX(0.5);
-	}
-	if (event.keyCode === 37) {
-		spaceship.translateX(-0.5);
-	}
-	if (event.keyCode === 38) {
-		spaceship.translateZ(0.1);
-	}
-	if (event.keyCode === 40) {
-		spaceship.translateZ(-0.1);
-	}
-}
+
 
 //radius to degree functions
 function degInRad(deg) {

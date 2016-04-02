@@ -10,9 +10,15 @@
 	</head>
 	<script src="lib/three.min.js"></script>
 	<script src="lib/stats.min.js"></script>
+	<script src="js/main.js"></script>
 	<script src="js/environment.js"></script>
 	<script src="js/controls.js"></script>
+	<script src="js/rendering.js"></script>
+	
 	<body>
-		<script src="js/main.js"></script>
+		<script>
+			document.body.appendChild(renderer.domElement);
+			document.body.appendChild(stats.domElement);
+		</script>
 	</body>
 </html>

@@ -14,3 +14,5 @@ function handleKeyDown(event) {
 		spaceship.translateZ(-0.1);
 	}
 }
+
+scene.add(game);
