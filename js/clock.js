@@ -1,3 +1,4 @@
+//clock to animate the game regardless of framerate
 var clock = 0;
 var prevTime = new Date();
 var currTime;

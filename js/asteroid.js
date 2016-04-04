@@ -1,8 +1,10 @@
 //ASTEROID SPAWN SETTINGS
 //miliseconds between asteroid spawn
-var spawnDelay = 1500;
+var spawnDelay = 800;
 //asteroid speed in units per second
-var asteroidSpeed = 3;
+var asteroidSpeed = 12;
+
+
 var asteroidArray = [];
 
 
@@ -11,7 +13,7 @@ var asteroid_material = new THREE.MeshBasicMaterial({color:0x5f3f00, wireframe:t
 
 //generate asteroids
 function generateAsteroid() {		
-	var size = 1 + 2 * Math.random();
+	var size = 0.5 + 2 * Math.random();
 	var posX = -(areaWidth/2) + areaWidth * Math.random();
 	var posY = -(areaHeight/2) + areaHeight * Math.random();
 

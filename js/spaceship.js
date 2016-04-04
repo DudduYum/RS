@@ -7,7 +7,7 @@ var moveSpeed = 3;
 var spaceshipRadius = 0.5;
 var spaceshipLength = 2;
 var spaceship_geometry = new THREE.CylinderGeometry(spaceshipRadius/3, spaceshipRadius, spaceshipLength);
-var spaceship_material = new THREE.MeshBasicMaterial({color:0x303060});
+var spaceship_material = new THREE.MeshBasicMaterial({color:0xA03030});
 var spaceship = new THREE.Mesh(spaceship_geometry, spaceship_material);
 game.add(spaceship);
 spaceship.position.set(0,0,areaDepth/2-spaceshipLength/2);
