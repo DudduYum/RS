@@ -1,9 +1,11 @@
 function render() {
-	spawnTick = (spawnTick + 1) % spawnFrequency;
-	if(spawnTick === (spawnFrequency-1)) {
+	flowTime();
+	moveSpaceship(timePassed);
+	moveAsteroids(timePassed);
+	if(clock > spawnDelay) {
+		clock = clock % spawnDelay;
 		generateAsteroid();
 	}
-	moveAsteroids();
 	cleanAsteroids();
 	requestAnimationFrame(render);
 	stats.update();

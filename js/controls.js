@@ -1,18 +1,12 @@
 //keyboard controls
-window.addEventListener('keydown', handleKeyDown, false);
-function handleKeyDown(event) {
-	if (event.keyCode === 39) {
-		spaceship.translateX(0.5);
-	}
-	if (event.keyCode === 37) {
-		spaceship.translateX(-0.5);
-	}
-	if (event.keyCode === 38) {
-		spaceship.translateZ(0.1);
-	}
-	if (event.keyCode === 40) {
-		spaceship.translateZ(-0.1);
-	}
+var keyPressed = [];
+window.addEventListener("keydown", registerKeydown);
+window.addEventListener("keyup", registerKeyup);
+
+function registerKeydown(event) {
+	keyPressed[event.keyCode] = true;
 }
 
-scene.add(game);
+function registerKeyup(event) {
+	keyPressed[event.keyCode] = false;	
+}
