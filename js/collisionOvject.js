@@ -1,5 +1,35 @@
-//      COLLIDERS
+/*
 
+interface
+
+The first thing to do when you create a game is to initialize a CollisionManager. You may add CollisionManager
+to your game object, just to make sure you don't destroy it by accident.
+
+
+to add an asteroid to the scene just use makeGameTargetObject function, it returns to you an "extended" 
+three.Mesh objecct. To move the returned object you must use moveGameObj(obj,x,y,z) function, it's important 'couse if 
+you don't use it you may separete the objcet from his collider. 
+When you use makeGameTargetObject you must pass default CollisionManager object as an argument, this is importante 'couse,
+if not do this the objcet will be lost in scene.
+
+
+
+
+
+
+
+
+
+
+
+*/
+
+
+
+
+
+
+//      COLLIDERS
 
 //THREE.Mesh {quello che c'era prima }  ---->   THREE.Mesh{quello che c'era prima,  collider:..., rays:..., rayCaster:...}
 function preperPlayerObject(obj,rays){
@@ -74,6 +104,8 @@ function createCollisionManager(){
 	obj = {};
 	obj.Targets = new Array();
 	obj.Players = new Array();
+
+	return obj;
 }
 //Throws 1 if a player collides with something
 function checkCollision(obj){
