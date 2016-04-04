@@ -12,7 +12,7 @@ var gameArea_geometry = new THREE.BoxGeometry(areaWidth, areaHeight, areaDepth);
 var gameArea_material = new THREE.MeshBasicMaterial({wireframe:true});
 var gameArea = new THREE.Mesh(gameArea_geometry, gameArea_material);
 //game.add(gameArea);
-game.position.set(0,0,-((areaDepth/2)+8));
+game.position.set(0,0,-((areaDepth/2)+6.7));
 
 
 
