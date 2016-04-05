@@ -1,6 +1,7 @@
 //GAME SCENE
 var game = new THREE.Object3D();
-game.rotation.y = degInRad(0);
+//whole game rotation for testing purposes
+//game.rotation.y = degInRad(90);
 scene.add(game);
 
 
@@ -8,9 +9,10 @@ scene.add(game);
 var areaWidth = 16;
 var areaHeight = 9;
 var areaDepth = 100;
-var gameArea_geometry = new THREE.BoxGeometry(areaWidth, areaHeight, areaDepth);
-var gameArea_material = new THREE.MeshBasicMaterial({wireframe:true});
-var gameArea = new THREE.Mesh(gameArea_geometry, gameArea_material);
+//creating a box corresponding to the game area for testing purposes
+//var gameArea_geometry = new THREE.BoxGeometry(areaWidth, areaHeight, areaDepth);
+//var gameArea_material = new THREE.MeshBasicMaterial({wireframe:true});
+//var gameArea = new THREE.Mesh(gameArea_geometry, gameArea_material);
 //game.add(gameArea);
 game.position.set(0,0,-((areaDepth/2)+6.7));
 

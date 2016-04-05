@@ -3,22 +3,40 @@
 var moveSpeed = 3;
 
 
-//basic spaceship
+//spaceship parameters
 var spaceshipRadius = 0.5;
-var spaceshipLength = 2;
-var spaceship_front_geometry = new THREE.CylinderGeometry(0, spaceshipRadius, spaceshipLength*1/4);
-var spaceship_body_geometry = new THREE.CylinderGeometry(spaceshipRadius, spaceshipRadius, spaceshipLength*3/4);
+var spaceshipLength = 5;
+var spaceshipFrontSize = 0.4;
+var spaceshipBodySize = 0.4;
+var spaceshipBackSize = 0.2;
+
+//spaceship front
+var spaceship_front_geometry = new THREE.CylinderGeometry(0, spaceshipRadius, spaceshipLength*spaceshipFrontSize);
 var spaceship_front_material = new THREE.MeshBasicMaterial({color:0xA03030});
+var spaceship_front = new THREE.Mesh(spaceship_front_geometry, spaceship_front_material);
+
+//spaceship body
+var spaceship_body_geometry = new THREE.CylinderGeometry(spaceshipRadius, spaceshipRadius, spaceshipLength*spaceshipBodySize);
 var spaceship_body_material = new THREE.MeshBasicMaterial({color:0xa0a0a0});
-var spaceship_front = new THREE.Mesh(spaceship_geometry, spaceship_material);
 var spaceship_body = new THREE.Mesh(spaceship_body_geometry, spaceship_body_material);
+
+//spaceship tail
+var spaceship_back_geometry =  new THREE.CylinderGeometry(spaceshipRadius/2, spaceshipRadius*4/5, spaceshipLength*spaceshipBackSize);
+var spaceship_back_material = new THREE.MeshBasicMaterial({color:0xa0a0ff});
+var spaceship_back = new THREE.Mesh(spaceship_back_geometry, spaceship_back_material);
+
+//spaceship assembly
 var spaceship = new THREE.Object3D();
 spaceship.add(spaceship_front);
-spaceship_front.translateY(spaceshipLength*3/8);
-spaceshi.add(spaceship_body);
-game.add(spaceship);
+spaceship_front.translateY((spaceshipFrontSize/2 + spaceshipBodySize + spaceshipBackSize) * spaceshipLength);
+spaceship.add(spaceship_body);
+spaceship_body.translateY((spaceshipBodySize/2 + spaceshipBackSize) * spaceshipLength);
+spaceship.add(spaceship_back);
+spaceship_back.translateY((spaceshipBackSize/2 * spaceshipLength));
 spaceship.position.set(0,0,areaDepth/2-spaceshipLength/2);
 spaceship.rotation.x = degInRad(-90);
+game.add(spaceship);
+
 
 
 //spaceship movement
