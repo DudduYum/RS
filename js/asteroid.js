@@ -38,6 +38,10 @@ function cleanAsteroids() {
 		var asteroidPosition = new THREE.Vector3().setFromMatrixPosition(asteroidArray[i].matrix);
 		if(asteroidPosition.z >= areaDepth/2 + 5) {
 			scene.remove(new THREE.Object3D().add(asteroidArray[i]));
+			//remove asteroid from asteroidArray
+			asteroidArray.splice(i,1);
+			//remove collider
+			asteroidColliderArray.splice(i,1);
 		}
 	}
 }
