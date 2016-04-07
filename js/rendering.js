@@ -1,12 +1,14 @@
 function render() {
-	flowTime();
-	moveSpaceship(timePassed);
-	moveAsteroids(timePassed);
-	if(clock > spawnDelay) {
-		clock = clock % spawnDelay;
-		generateAsteroid();
+	if (gameRunning) {
+		flowTime();
+		moveSpaceship(timePassed);
+		moveAsteroids(timePassed);
+		if(clock > spawnDelay) {
+			clock = clock % spawnDelay;
+			generateAsteroid();
+		}
+		cleanAsteroids();
 	}
-	cleanAsteroids();
 	requestAnimationFrame(render);
 	stats.update();
 	renderer.render(scene, camera);
