@@ -157,4 +157,9 @@ function checkCollisionWithoutRays(obj){
 			}
 		}
 	}
+}
+
+
+function checkCollision(){
+	
 }	

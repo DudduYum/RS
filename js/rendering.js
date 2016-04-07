@@ -6,7 +6,9 @@ function render() {
 		if(clock > spawnDelay) {
 			clock = clock % spawnDelay;
 			generateAsteroid();
+			generateAsteroidCollider();
 		}
+		checkCollision();
 		cleanAsteroids();
 	}
 	requestAnimationFrame(render);

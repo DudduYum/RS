@@ -40,6 +40,7 @@ function cleanAsteroids() {
 			scene.remove(new THREE.Object3D().add(asteroidArray[i]));
 			asteroidArray.splice(i,1);
 			gameScore++;
+			asteroidColliderArray.splice(i,1);
 		}
 	}
 }
