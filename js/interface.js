@@ -16,4 +16,3 @@ function displayGameOver() {
 function removeScreen() {
 	//rimozione delle scritte a schermo
 }
-
