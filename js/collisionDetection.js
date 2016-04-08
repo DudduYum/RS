@@ -161,5 +161,12 @@ function checkCollisionWithoutRays(obj){
 
 
 function checkCollision(){
+	for(i = 0 ; i < spaceshipColliders.length ; i++){
+		for(j = 0 ; j < asteroidColliderArray.length ; j++){
+			if(spaceshipColliders[i].intersectsSphere(asteroidColliderArray[j])){
+				throw {index:i , asteroid:asteroidColliderArray[i]};
+			}
+		}
+	}
 	
 }	
