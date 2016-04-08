@@ -30,6 +30,7 @@ function moveAsteroids(time) {
 	for(var i=0;i<asteroidArray.length;i++) {
 		asteroidArray[i].translateZ(time/1000 * asteroidSpeed);
 	}
+	moveAsteroidColliders(time);
 }
 
 //remove asteroids out of game

@@ -14,7 +14,7 @@ var areaDepth = 100;
 //var gameArea_material = new THREE.MeshBasicMaterial({wireframe:true});
 //var gameArea = new THREE.Mesh(gameArea_geometry, gameArea_material);
 //game.add(gameArea);
-game.position.set(0,0,-((areaDepth/2)+6.7));
+game.position.set(0,0,-((areaDepth/2)+4));
 
 
 

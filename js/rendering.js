@@ -1,4 +1,4 @@
-generateSpaceShipColliders();
+generateSpaceshipColliders();
 
 // var geo = new THREE.SphereGeometry(spaceshipFrontSize,8,8);
 // var mat = new THREE.MeshBasicMaterial({color:0xff0000});
@@ -30,8 +30,6 @@ function render() {
 		flowTime();
 		moveSpaceship(timePassed);
 		moveAsteroids(timePassed);
-		moveAsteroidColliders(timePassed);
-		clock = clock % spawnDelay;
 		if(clock > spawnDelay) {
  			clock = clock % spawnDelay;
  			generateAsteroid();

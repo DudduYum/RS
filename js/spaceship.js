@@ -6,6 +6,7 @@ var moveSpeed = 3;
 //spaceship parameters
 var spaceshipRadius = 0.5;
 var spaceshipLength = 5;
+//ratios compared to spaceship length (eg 0.4 is 40% of length)
 var spaceshipFrontSize = 0.4;
 var spaceshipBodySize = 0.4;
 var spaceshipBackSize = 0.2;
@@ -45,19 +46,19 @@ function moveSpaceship(time) {
 	var spaceshipPosition = new THREE.Vector3().setFromMatrixPosition(spaceship.matrix);
 	if(keyPressed[37] && spaceshipPosition.x > -areaWidth/2) {
 		spaceship.translateX(-distance);
-		translateShipColliderX(-distance);
+		translateSpaceshipColliderX(-distance);
 	}
 	if(keyPressed[39] && spaceshipPosition.x < areaWidth/2) {
 		spaceship.translateX(distance);
-		translateShipColliderX(distance);
+		translateSpaceshipColliderX(distance);
 	}
 	if(keyPressed[38] && spaceshipPosition.y < areaHeight/2) {
 		spaceship.translateZ(distance);
-		translateShipColliderY(distance);
+		translateSpaceshipColliderY(distance);
 	}
 	if(keyPressed[40] && spaceshipPosition.y > -areaHeight/2) {
 		spaceship.translateZ(-distance);
-		translateShipColliderY(-distance);
+		translateSpaceshipColliderY(-distance);
 	}
 	
 }

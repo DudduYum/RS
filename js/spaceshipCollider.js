@@ -1,15 +1,15 @@
 
 
-function generateSpaceShipColliders(){
+function generateSpaceshipColliders(){
 
 
 	spaceshipColliders.push(new THREE.Sphere());
 	spaceshipColliders.push(new THREE.Sphere());
 	spaceshipColliders.push(new THREE.Sphere());
 
-	spaceshipColliders[0].radius = spaceshipFrontSize;
-	spaceshipColliders[1].radius = spaceshipBodySize;
-	spaceshipColliders[2].radius = spaceshipBackSize;
+	spaceshipColliders[0].radius = spaceshipRadius;
+	spaceshipColliders[1].radius = spaceshipRadius;
+	spaceshipColliders[2].radius = spaceshipRadius;
 
 	spaceshipColliders[0].center.set(0,0, spaceship.position.z + game.position.z - ( (spaceshipFrontSize/2+spaceshipBodySize+spaceshipBackSize)* spaceshipLength)) ;
 	spaceshipColliders[1].center.set(0,0, spaceship.position.z + game.position.z - ( (spaceshipBodySize/2+spaceshipBackSize)* spaceshipLength)) ;
@@ -17,17 +17,18 @@ function generateSpaceShipColliders(){
 
 }
 
-function translateShipColliderX(X){
-	translateShipCollider(X,0);
+function translateSpaceshipColliderX(x){
+	translateSpaceshipCollider(x,0);
 }
 
-function translateShipColliderY(Y){
-	translateShipCollider(0,Y);
+function translateSpaceshipColliderY(y){
+	translateSpaceshipCollider(0,y);
 }
 
-function translateShipCollider(X,Y){
+function translateSpaceshipCollider(x, y){
 	for (var i = 0 ; i < spaceshipColliders.length ; i++) {
-		spaceshipColliders[i].center.set(spaceshipColliders[i].center.x + X, spaceshipColliders[i].center.y + Y, spaceshipColliders[i].center.z);
+		spaceshipColliders[i].translate(new THREE.Vector3(x,y,0));
+		//spaceshipColliders[i].center.set(spaceshipColliders[i].center.x + X, spaceshipColliders[i].center.y + Y, spaceshipColliders[i].center.z);
 	}
 	// mesh.position.set(mesh.position.x + X, mesh.position.y + Y, mesh.position.z);
 	// mesh1.position.set(mesh1.position.x + X, mesh1.position.y + Y, mesh1.position.z);

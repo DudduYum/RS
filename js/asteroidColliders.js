@@ -20,6 +20,7 @@ function genereteAsteroidCollider(){
 
 function moveAsteroidColliders(time) {
 	for(var i=0;i<asteroidColliderArray.length;i++) {
+		//asteroidColliderArray[i].translate(0,0,time/1000 * asteroidSpeed);
 		asteroidColliderArray[i].center.z +=time/1000 * asteroidSpeed;
 		// console.log("funziona1");
 	}
