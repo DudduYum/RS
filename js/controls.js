@@ -7,6 +7,8 @@ function registerKeydown(event) {
 	if(event.keyCode != 32) {
 		keyPressed[event.keyCode] = true;
 	} else {
+
+		preperForTheGame();
 		gameStart();
 	}
 }

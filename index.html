@@ -1,38 +1,92 @@
 <html>
 	<head>
-		<title>Project: unknown RS</title>
-		<style>
-			canvas {
-				width:100%;
-				height:100%;
-			}
-		</style>
+		<title>Project: Reach the Sun</title>
+		<link rel="stylesheet" type="text/css" href="style/startMenu.css">
+		<link rel="stylesheet" type="text/css" href="style/endMenu.css">
+		<link rel="stylesheet" type="text/css" href="style/scoreTab.css">
 	</head>
 
   	<body>
+	  	<div id="backColor">
+		  	<!-- <div id="output">
+
+			</div> -->
+		</div>
+		<div id="ScoreTable">
+			
+		</div>
+		<h1 id="CurrentScore"> 0</h1>
+		<div id="startMenu">
+			<div id="GameTitle">
+				<div id="TitleContainer">
+				<!-- game title and others game info -->
+					<h1>Dark's Souls</h1><br/>
+					<h3>There is Arthorias on the ship!</h3>
+
+				</div>
+			</div>
+
+			<div id="comands">
+				<div>
+					<p> * Press space to start the game </p><br/>
+					<p> * Use arrows to move the spaceship </p><br/>
+					<p> * Good luck! </p>
+				</div>
+			</div>
+			
+			<div id="authors">
+				<p >Made by: Riccardo Lulli, Rostyslav Kostyuk © XD </p>
+
+			</div>
+		</div>
+		
+
+		<div id="endMenu">
+			<div id="Score">
+				<div id="ScoreContainer">
+				<!-- game title and others game info -->
+
+					<h1 id="YourScore"></h1><br/>
+					<h3>Not bad!</h3>
+
+				</div>
+			</div>
+
+			<div id="comandsE">
+				<div>
+					<p> * Press space to restart the game </p><br/>
+					<p> * Use arrows to move the spaceship </p>
+				</div>
+			</div>
+			<div id="authors">
+				<p >Made by: Riccardo Lulli, Rostyslav Kostyuk © XD </p>
+
+			</div>
+		</div>
 
 
-	<script src="lib/three.min.js"></script>
-  	<script src="lib/stats.min.js"></script>
- 	<script src="js/controls.js"></script>
-	<script src="js/clock.js"></script>
-	<script src="js/interface.js"></script>
-	<script src="js/game_loop.js"></script> 
-	<script src="js/main.js"></script>
-	<script src="js/colliderConstants.js"></script>
-	<script src="js/environment.js"></script>
-	<script src="js/asteroid.js"></script>
-	<script src="js/asteroidColliders.js"></script>
-	<script src="js/spaceship.js"></script>
-	<script src="js/spaceshipCollider.js"></script>
-	<script src="js/collisionDetection.js"></script>
+		<script src="lib/three.min.js"></script>
+	  	<script src="lib/stats.min.js"></script>
+	 	<script src="js/controls.js"></script>
+		<script src="js/clock.js"></script>
+		<script src="js/gameConstants.js"></script> 
+		<script src="js/main.js"></script>
+		<script src="js/interface.js"></script>
+		<script src="js/game_loop.js"></script> 
+		<script src="js/colliderConstants.js"></script>
+		<script src="js/environment.js"></script>
+		<script src="js/asteroid.js"></script>
+		<script src="js/asteroidColliders.js"></script>
+		<script src="js/spaceship.js"></script>
+		<script src="js/spaceshipCollider.js"></script>
+		<script src="js/collisionDetection.js"></script>
+		
+		
+		<script src="js/rendering.js"></script>
 	
 	
-	<script src="js/rendering.js"></script>
-	
-	<body>
 		<script>
-			document.body.appendChild(renderer.domElement);
+			// document.body.appendChild(renderer.domElement);
 			document.body.appendChild(stats.domElement);
 		</script>
 	</body>

@@ -33,8 +33,10 @@ function render() {
  			generateAsteroid();
  			genereteAsteroidCollider();
  		}
+ 		scoreNumTab.innerHTML =  gameScore;
 		cleanAsteroids();
 		checkCollision();
+
 	}
 	
 	requestAnimationFrame(render);

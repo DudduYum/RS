@@ -1,0 +1,2 @@
+var gameScore;
+var gameRunning;
