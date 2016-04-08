@@ -7,14 +7,16 @@ function generateSpaceshipColliders(){
 	spaceshipColliders.push(new THREE.Sphere());
 	spaceshipColliders.push(new THREE.Sphere());
 
-	spaceshipColliders[0].radius = spaceshipRadius;
+	spaceshipColliders[0].radius = spaceshipRadius+ 0.1;
 	spaceshipColliders[1].radius = spaceshipRadius;
-	spaceshipColliders[2].radius = spaceshipRadius;
+	spaceshipColliders[2].radius = spaceshipRadius+ 0.1;
 
-	spaceshipColliders[0].center.set(0,0, spaceship.position.z + game.position.z - ( (spaceshipFrontSize/2+spaceshipBodySize+spaceshipBackSize)* spaceshipLength)) ;
-	spaceshipColliders[1].center.set(0,0, spaceship.position.z + game.position.z - ( (spaceshipBodySize/2+spaceshipBackSize)* spaceshipLength)) ;
-	spaceshipColliders[2].center.set(0,0, spaceship.position.z + game.position.z - ( (+spaceshipBackSize/2)* spaceshipLength)) ;
-
+	// spaceshipColliders[0].center.set(0,0, spaceship.position.z + game.position.z + ( (spaceshipFrontSize/2)* spaceshipLength) -4) ;
+	// spaceshipColliders[1].center.set(0,0, spaceship.position.z + game.position.z + ( (spaceshipFrontSize + spaceshipBodySize/2)* spaceshipLength) -4) ;
+	// spaceshipColliders[2].center.set(0,0, spaceship.position.z + game.position.z + ( (spaceshipFrontSize + spaceshipFrontSize + spaceshipBackSize/2)* spaceshipLength) -4) ;
+	spaceshipColliders[0].center.set(0,0,spaceship.position.z - ((spaceshipFrontSize/2 + spaceshipBodySize  + spaceshipBackSize)* spaceshipLength));
+ 	spaceshipColliders[1].center.set(0,0,spaceship.position.z - ((spaceshipBodySize/2 + spaceshipBackSize)* spaceshipLength));
+	spaceshipColliders[2].center.set(0,0,spaceship.position.z - ((spaceshipBackSize/2)* spaceshipLength));
 }
 
 function translateSpaceshipColliderX(x){

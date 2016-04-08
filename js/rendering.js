@@ -32,6 +32,13 @@ function render() {
  			clock = clock % spawnDelay;
  			generateAsteroid();
  			genereteAsteroidCollider();
+ 			console.log("-------");
+ 			console.log("asteroid");
+ 			console.log(asteroidColliderArray[0].center);
+ 			console.log(asteroidArray[0].position);
+ 			console.log("ship");
+ 			console.log(spaceship.position);
+ 			console.log(spaceshipColliders[0].center);
  		}
  		scoreNumTab.innerHTML =  gameScore;
 		cleanAsteroids();

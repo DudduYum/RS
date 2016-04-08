@@ -2,19 +2,21 @@
 
 function genereteAsteroidCollider(){
 	index = asteroidArray.length-1;
-	// console.log(asteroidArray[index]);
-	var asteroid = asteroidArray[index];
-	// console.log("generete collider "+ index);
-	// var collider = new THREE.Sphere();
-	asteroidColliderArray.push(asteroid.geometry.boundingSphere.clone());
-	// asteroidColliderArray.push(new THREE.Sphere(asteroid.geometry.position,4));
-	// asteroidColliderArray.push(collider);
-//  	
 	
+	var asteroid = asteroidArray[index];
+ 
+	asteroidColliderArray.push(asteroid.geometry.boundingSphere.clone());
+
+	
+	// asteroidColliderArray[index].center.set(
+	// 	asteroidArray[index].position.x + game.position.x,
+	// 	asteroidArray[index].position.y + game.position.y,
+	// 	asteroidArray[index].position.z + game.position.z
+	// );
 	asteroidColliderArray[index].center.set(
-		asteroidArray[index].position.x + game.position.x,
-		asteroidArray[index].position.y + game.position.y,
-		asteroidArray[index].position.z + game.position.z
+		asteroidArray[index].position.x ,
+		asteroidArray[index].position.y ,
+		asteroidArray[index].position.z 
 	);
 }
 
