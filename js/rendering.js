@@ -24,8 +24,6 @@ generateSpaceshipColliders();
 
 
 function render() {
-	
-	
 	if(gameRunning){
 		flowTime();
 		moveSpaceship(timePassed);
@@ -36,8 +34,9 @@ function render() {
  			genereteAsteroidCollider();
  		}
 		cleanAsteroids();
+		checkCollision();
 	}
-	checkCollision();
+	
 	requestAnimationFrame(render);
 	stats.update();
 	renderer.render(scene, camera);

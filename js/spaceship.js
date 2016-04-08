@@ -34,10 +34,15 @@ spaceship.add(spaceship_body);
 spaceship_body.translateY((spaceshipBodySize/2 + spaceshipBackSize) * spaceshipLength);
 spaceship.add(spaceship_back);
 spaceship_back.translateY((spaceshipBackSize/2 * spaceshipLength));
-spaceship.position.set(0,0,areaDepth/2-spaceshipLength/2);
+initializeSpaceshipPosition();
 spaceship.rotation.x = degInRad(-90);
 game.add(spaceship);
 
+
+//initialize spaceship position
+function initializeSpaceshipPosition() {
+	spaceship.position.set(0,0,areaDepth/2-spaceshipLength/2);
+}
 
 
 //spaceship movement

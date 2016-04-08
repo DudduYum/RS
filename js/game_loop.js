@@ -1,13 +1,17 @@
 var gameScore;
-var gameRunning;
+var gameRunning = false;
 
-gameStart();
+//gameStart();
 
 function gameStart() {
-	score = 0;
-	removeScreen();
-	initializeClock();
-	gameRunning = true;
+	if(!gameRunning) {
+		gameScore = 0;
+		removeScreen();
+		resetAsteroids();
+		initializeSpaceshipPosition();
+		initializeClock();
+		gameRunning = true;
+	}
 }
 
 

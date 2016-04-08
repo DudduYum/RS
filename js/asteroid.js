@@ -48,6 +48,14 @@ function cleanAsteroids() {
 	}
 }
 
+function resetAsteroids() {
+	for(var i=0;i<asteroidArray.length;i++) {
+		var asteroidPosition = new THREE.Vector3().setFromMatrixPosition(asteroidArray[i].matrix);
+		scene.remove(new THREE.Object3D().add(asteroidArray[i]));
+	}
+	asteroidArray = [];
+	asteroidColliderArray = [];
+}
 
 
 //radius to degree functions

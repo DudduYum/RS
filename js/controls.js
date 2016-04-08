@@ -4,9 +4,13 @@ window.addEventListener("keydown", registerKeydown);
 window.addEventListener("keyup", registerKeyup);
 
 function registerKeydown(event) {
-	keyPressed[event.keyCode] = true;
+	if(event.keyCode != 32) {
+		keyPressed[event.keyCode] = true;
+	} else {
+		gameStart();
+	}
 }
 
 function registerKeyup(event) {
-	keyPressed[event.keyCode] = false;	
+	keyPressed[event.keyCode] = false;
 }
