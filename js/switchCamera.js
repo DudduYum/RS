@@ -1,15 +1,20 @@
+var freeSwitch = document.getElementById("freeCameraButton");
+var gameSwitch = document.getElementById("gameCameraButton");
+
+//enables mouse controls over the free camera and changes the variable
+//that determine which camera is used to render
 function switchToFreeCamera(){
-	var sw1 = document.getElementById("freeCamera");
-	var sw2 = document.getElementById("gameCamera");
-	sw1.style.display = "none";
-	sw2.style.display = "block";
+	freeSwitch.style.display = "none";
+	gameSwitch.style.display = "block";
 	useGameCamera = false;
+	orbitControls.enabled = true;
 }
 
+//disables mouse controls over the free camera and changes the variable
+//that determine which camera is used to render
 function switchToGameCamera(){
-	var sw2 = document.getElementById("gameCamera");
-	var sw1 = document.getElementById("freeCamera");
-	sw2.style.display = "none";
-	sw1.style.display = "block";
+	gameSwitch.style.display = "none";
+	freeSwitch.style.display = "block";
+	orbitControls.enabled = false;
 	useGameCamera = true;
 }

@@ -1,5 +1,5 @@
 var asteroidArray = [];
-
+var asteroidColliderArray = [];
 
 //asteroid apperance
 //var textureL = new THREE.TextureLoader(THREE.DefaultLoadingManager);
@@ -21,6 +21,9 @@ function generateAsteroid() {
 	var asteroid = new THREE.Mesh(asteroid_geometry, asteroid_material);
 	asteroid.position.set(posX, posY, -areaDepth/2);
 	asteroidArray.push(asteroid);
+	var asteroidCollider = asteroid.geometry.boundingSphere.clone();
+	asteroidCollider.center.set(asteroid.position.x, asteroid.position.y, asteroid.position.z);
+	asteroidColliderArray.push(asteroidCollider);
 	game.add(asteroid);
 }
 
@@ -29,8 +32,9 @@ function generateAsteroid() {
 function moveAsteroids(time) {
 	for(var i=0;i<asteroidArray.length;i++) {
 		asteroidArray[i].translateZ(time/1000 * asteroidSpeed);
+		asteroidColliderArray[i].translate(new THREE.Vector3(0,0,time/1000 * asteroidSpeed));
 	}
-	moveAsteroidColliders(time);
+	//moveAsteroidColliders(time);
 }
 
 //remove asteroids out of game

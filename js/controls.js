@@ -7,7 +7,11 @@ function registerKeydown(event) {
 	if(event.keyCode == 32) {
 		gameStart();
 	} else if(event.keyCode == 67) {
-		useGameCamera = !useGameCamera;
+		if(useGameCamera) {
+			switchToFreeCamera();
+		} else {
+			switchToGameCamera();
+		}
 	} else {
 		keyPressed[event.keyCode] = true;
 	}

@@ -1,5 +1,6 @@
 displayInitalScreen();
 
+//starts the game by calling all initializing functions
 function gameStart() {	
 	if(!gameRunning) {
 		gameScore = 0;
@@ -11,7 +12,7 @@ function gameStart() {
 	}
 }
 
-
+//stops game execution
 function gameOver() {
 	gameRunning = false;
 	displayGameOver();

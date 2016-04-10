@@ -3,52 +3,38 @@
 	display: none;
 	border-radius: 10px;
 	color:white;
-	background-color:rgba(50,0,0,0.5);
-	z-index: -6;
+	background-color:rgba(100,0,0,0.5);
+	width: 40vw;
+	height: 40vh;
+	top: 30vh;
+	left: 30vw;
+	border-radius: 100px 100px 100px 100px;
+	z-index: -1;
 }
 
-
-
 #score{
+	text-align: center;
 	position: absolute;
 	color: #FFFFFF;
 	top: 0px;
-	width: 50%;
+	width: 70%;
 	height: 35%;
-	left:25%;
+	left:15%;
 	z-index: inherit;
 }
 
-#score>div{
-	width: 100%;
-	height: 100%;
-	left:0px;
-	right: 0px;
-	top:0px;
-	bottom:0px;
-	position: relative;
-	padding-top: 10%;
-	z-index: inherit;
-}
-
-#score>div>h1{
-	text-align: center;
+#score>h1{
 	position:absolute;
 	width:100%;
 	font-size: 300%;
-	margin: auto;
-	color:white;
 	z-index: inherit;
 }
 
-#score>div>h3{
+#score>h3{
 	position:absolute;
-	width:80%;
-	left:10%;
-	right: 10%;
-	padding-top: 20%;
-	font-size: 130%;
-	margin: auto;
+	width:100%;
+	top: 60%;
+	font-size: 200%;
 	z-index: inherit;
 }
 
@@ -57,20 +43,8 @@
 	text-align: center;
 	position: absolute;
 	top: 55%;
-	width: 50%;
-	height: 20%;
-	left:25%;
-	z-index: inherit;
-}
-
-#authors{
-	color: #FFFFFF;
-	position: absolute;
-	right: 0px;
-	bottom: 0px;
-	padding-top: 3%;
-	padding-bottom: 1%;
-	padding-right: 2%;
-	padding-left: 2%;
+	width: 70%;
+	left:15%;
+	font-size: 100%;
 	z-index: inherit;
 }

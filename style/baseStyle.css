@@ -1,39 +1,33 @@
+body{
+	background: black;
+}
+
 #canvas{
 	position: fixed;
 	top: 0px;
 	left: 0px;
 	margin: auto;
-  	z-index: -1;
-	background: black;
 	display: block;
-}
-
-#backColor{
-	position: absolute;
-	z-index: -5;
-	width:100%;
-	height:100%;
-	top:0px;
-	left:0px;
-	background: black;
-	display: block;
+	z-index: -1;
 }
 
 #scoreTable{
-	display:block;
 	position: absolute;
+	text-align: center;
+	vertical-align: middle;
 	right: 0px;
 	top: 0px;
-	width: 20%;
+	width: 10%;
 	height: 10%;
-	background: #388E8E;
-	border-radius: 0px 0px 0px 50px;
-	opacity: 0.5;
+	color: #FFFFFF;
+	background-color:rgba(80,150,150,0.4);
+	border-radius: 0px 0px 0px 70px;
 }
 
-h1{
-	color: #7CFC00;
-	position: absolute;
-	top: 0%;
-	right: 2%;
+#authors{
+	color: #FFFFFF;
+	position: fixed;
+	left: 0px;
+	bottom: 0px;
+	z-index: inherit;
 }

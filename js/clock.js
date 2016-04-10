@@ -1,5 +1,5 @@
 //clock to animate the game regardless of framerate
-//clock to animate the game regardless of framerate
+//this allows the game to run at the same "effective speed" at any framerate
 var clock;
 var prevTime;
 var currTime;

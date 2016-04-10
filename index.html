@@ -10,25 +10,20 @@
   	<body>
 		<div id="canvas"></div>
 		
-	  	<div id="backColor"></div>
-		
-		<div id="scoreTable"></div>
-		
-		<h1 id="currentScore"> 0</h1>
+		<div id="scoreTable">
+			<h1 id="currentScore">0</h1>
+		</div>
 		
 		<div id="initialScreen">
 			<div id="gameTitle">
-					<h1>OH LOOK, AN ASTER...</h1><br/>
-					<h3>Asteroid storm incoming!</h3><br/>
+				<h1>OH LOOK, AN ASTER...</h1><br/>
+				<h3>Asteroid storm incoming!</h3><br/>
 			</div>
 			<div id="instructions">
-					<p>- use arrows or W,A,S,D to move your spaceship and avoid asteroids</p><br/>
-					<p>- click the button or press C to switch camera</p><br/>
-					<p>- press [SPACEBAR] to start the game</p><br/>
-					<p>Good luck!</p>
-			</div>
-			<div id="authors">
-				<p >Made by Riccardo Lulli, Rostyslav Kostyuk</p>
+				<p>- use arrows or W,A,S,D to move your spaceship and avoid asteroids</p><br/>
+				<p>- click the button or press C to switch camera</p><br/>
+				<p>- press [SPACEBAR] to start the game</p><br/>
+				<p>Good luck!</p>
 			</div>
 		</div>
 		
@@ -36,41 +31,39 @@
 		<div id="gameoverScreen">
 			<div id="score">
 				<h1 id="yourScore"></h1><br/>
+				<h3>Not bad!</h3><br/>
 			</div>
 			<div id="goInstructions">
-				<div>
-					<p>Press [SPACEBAR] to play again!</p><br/>
-				</div>
+				<p>Press [SPACEBAR] to play again!</p><br/>
 			</div>
-			<div id="authors">
-				<p >Made by Riccardo Lulli, Rostyslav Kostyuk</p>
-			</div>
+			
 		</div>
 
 		<div id="cameraSwitch">
 			<div id="switchContainer">
-				<button id="freeCamera" onclick="switchToFreeCamera()" type="button">Switch to free camera</button>
-				<button id="gameCamera" onclick="switchToGameCamera()" type="button">Switch to game camera</button>
+				<button id="freeCameraButton" onclick="switchToFreeCamera()" type="button">Switch to FREE camera</button>
+				<button id="gameCameraButton" onclick="switchToGameCamera()" type="button">Switch to GAME camera</button>
 			</div>
 		</div>
 		 
-
+		<div id="authors">
+			<p >Developed by Riccardo Lulli, Rostyslav Kostyuk</p>
+		</div>
+		 
+		 
 		<script src="lib/three.min.js"></script>
 	  	<script src="lib/stats.min.js"></script>
 	 	<script src="js/controls.js"></script>
 		<script src="js/OrbitControls.js"></script>
 		<script src="js/switchCamera.js"></script>
 		<script src="js/clock.js"></script>
-		<script src="js/gameConstants.js"></script> 
+		<script src="js/gameSettings.js"></script> 
 		<script src="js/main.js"></script>
 		<script src="js/interface.js"></script>
 		<script src="js/game_loop.js"></script> 
-		<script src="js/colliderConstants.js"></script>
 		<script src="js/environment.js"></script>
 		<script src="js/asteroid.js"></script>
-		<script src="js/asteroidColliders.js"></script>
 		<script src="js/spaceship.js"></script>
-		<script src="js/spaceshipCollider.js"></script>
 		<script src="js/collisionDetection.js"></script>
 		<script src="js/rendering.js"></script>
 		
