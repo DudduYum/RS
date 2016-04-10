@@ -1,4 +1,4 @@
-generateSpaceshipColliders();
+//generateSpaceshipColliders();
 
 function render() {
 	if(gameRunning){
@@ -15,12 +15,11 @@ function render() {
 		checkCollision();
 	}
 	
-	//orbitControls.update();
+	orbitControls.update();
 	requestAnimationFrame(render);
 	stats.update();
 	renderer.render(scene, camera);
 }
-
 
 
 render();
