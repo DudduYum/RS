@@ -16,12 +16,16 @@ function animate() {
 	requestAnimationFrame(animate);
 	orbitControls.update();
 	stats.update();
-	renderer.render(scene, camera);
+	render();
 }
 
+
+function render() {
+	renderer.render(scene, camera);
+}
 
 animate();
 
 
 //mouse controls
-orbitControls.addEventListener('change', animate);
+//orbitControls.addEventListener('change', render);

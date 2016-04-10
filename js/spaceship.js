@@ -8,17 +8,17 @@ var spaceshipBackSize = 0.2;
 
 //spaceship front
 var spaceship_front_geometry = new THREE.CylinderGeometry(0, spaceshipRadius, spaceshipLength*spaceshipFrontSize);
-var spaceship_front_material = new THREE.MeshBasicMaterial({color:0xA03030});
+var spaceship_front_material = new THREE.MeshPhongMaterial({color:0xA03030});
 var spaceship_front = new THREE.Mesh(spaceship_front_geometry, spaceship_front_material);
 
 //spaceship body
 var spaceship_body_geometry = new THREE.CylinderGeometry(spaceshipRadius, spaceshipRadius, spaceshipLength*spaceshipBodySize);
-var spaceship_body_material = new THREE.MeshBasicMaterial({color:0xa0a0a0});
+var spaceship_body_material = new THREE.MeshPhongMaterial({color:0xa0a0a0});
 var spaceship_body = new THREE.Mesh(spaceship_body_geometry, spaceship_body_material);
 
 //spaceship tail
 var spaceship_back_geometry =  new THREE.CylinderGeometry(spaceshipRadius/2, spaceshipRadius*4/5, spaceshipLength*spaceshipBackSize);
-var spaceship_back_material = new THREE.MeshBasicMaterial({color:0xa0a0ff});
+var spaceship_back_material = new THREE.MeshPhongMaterial({color:0xa0a0ff});
 var spaceship_back = new THREE.Mesh(spaceship_back_geometry, spaceship_back_material);
 
 //spaceship assembly
