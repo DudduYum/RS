@@ -53,19 +53,19 @@ function initializeSpaceshipPosition() {
 function moveSpaceship(time) {
 	var distance = time/1000 * moveSpeed;
 	var spaceshipPosition = new THREE.Vector3().setFromMatrixPosition(spaceship.matrix);
-	if(keyPressed[37] && spaceshipPosition.x > -areaWidth/2) {
+	if((keyPressed[37] || keyPressed[65]) && spaceshipPosition.x > -areaWidth/2) {
 		spaceship.translateX(-distance);
 		translateSpaceshipColliderX(-distance);
 	}
-	if(keyPressed[39] && spaceshipPosition.x < areaWidth/2) {
+	if((keyPressed[39] || keyPressed[68]) && spaceshipPosition.x < areaWidth/2) {
 		spaceship.translateX(distance);
 		translateSpaceshipColliderX(distance);
 	}
-	if(keyPressed[38] && spaceshipPosition.y < areaHeight/2) {
+	if((keyPressed[38] || keyPressed[87]) && spaceshipPosition.y < areaHeight/2) {
 		spaceship.translateZ(distance);
 		translateSpaceshipColliderY(distance);
 	}
-	if(keyPressed[40] && spaceshipPosition.y > -areaHeight/2) {
+	if((keyPressed[40] || keyPressed[83]) && spaceshipPosition.y > -areaHeight/2) {
 		spaceship.translateZ(-distance);
 		translateSpaceshipColliderY(-distance);
 	}
