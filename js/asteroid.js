@@ -2,11 +2,6 @@ var asteroidArray = [];
 var asteroidColliderArray = [];
 
 //asteroid apperance
-//var textureL = new THREE.TextureLoader(THREE.DefaultLoadingManager);
-//var asteroid_material = new THREE.MeshBasicMaterial({color:0x604000, wireframe:true});
-
-//textureL.load('textures/asteroid.jpg',function (texture){asteroid_material = new THREE.MeshBasicMaterial({map:texture});});
-
 var asteroid_texture = new THREE.TextureLoader().load('textures/asteroid.jpg');
 var asteroid_material = new THREE.MeshBasicMaterial({map: asteroid_texture});
 
