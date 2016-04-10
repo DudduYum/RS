@@ -100,3 +100,9 @@ function translateSpaceshipColliderX(x){
 function translateSpaceshipColliderY(y){
 	translateSpaceshipCollider(0,y);
 }
+
+
+//converts from radians to degrees
+function degInRad(deg) {
+	return deg * Math.PI / 180;
+}

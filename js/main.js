@@ -1,17 +1,19 @@
 var screenRatio = window.innerWidth/window.innerHeight;
 
-//create scene, add fog
+//creates scene, add fog
 var scene = new THREE.Scene();
 scene.fog = new THREE.FogExp2( 0x000000, 0.01);
 
-//create two camers 
+//creates two camers 
 var gameCamera = new THREE.PerspectiveCamera(75, screenRatio, 0.1, 1000);
 var freeCamera = new THREE.PerspectiveCamera(75, screenRatio, 0.1, 1000);
+//initial free camera position
 freeCamera.position.set(2,2,2);
 var useGameCamera = true;
 
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);window.addEventListener( 'resize', onWindowResize, false );
+//resizes the renderer and the game area if the window resizes
 function onWindowResize(){
 	screenRatio = window.innerWidth/window.innerHeight;
     gameCamera.aspect = screenRatio;
@@ -23,6 +25,7 @@ function onWindowResize(){
 }
 window.addEventListener('resize', onWindowResize, false);
 
+//initializes mouse controls for free camera
 var orbitControls = new THREE.OrbitControls(freeCamera, renderer.domElement);
 orbitControls.enableKeys = false;
 orbitControls.enabled = false;
@@ -40,7 +43,6 @@ scene.add(light);
 stats = new Stats();
 stats.domElement.style.position = 'absolute';
 stats.domElement.style.top = '0px';
-
 
 
 canvas = document.getElementById('canvas');

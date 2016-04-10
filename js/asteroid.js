@@ -3,12 +3,12 @@ var asteroidColliderArray = [];
 
 //asteroid apperance
 //var textureL = new THREE.TextureLoader(THREE.DefaultLoadingManager);
-var asteroid_material = new THREE.MeshBasicMaterial({color:0x604000, wireframe:true});
+//var asteroid_material = new THREE.MeshBasicMaterial({color:0x604000, wireframe:true});
 
-//textureL.load('textures/asteroid.jpg',function (texture){steroid_material = new THREE.MeshBasicMaterial({map:texture});});
+//textureL.load('textures/asteroid.jpg',function (texture){asteroid_material = new THREE.MeshBasicMaterial({map:texture});});
 
-//var asteroid_texture = new THREE.TextureLoader().load('textures/asteroid.jpg');
-//var asteroid_material = new THREE.MeshBasicMaterial({map: asteroid_texture});
+var asteroid_texture = new THREE.TextureLoader().load('textures/asteroid.jpg');
+var asteroid_material = new THREE.MeshBasicMaterial({map: asteroid_texture});
 
 
 //generate asteroids
@@ -34,7 +34,6 @@ function moveAsteroids(time) {
 		asteroidArray[i].translateZ(time/1000 * asteroidSpeed);
 		asteroidColliderArray[i].translate(new THREE.Vector3(0,0,time/1000 * asteroidSpeed));
 	}
-	//moveAsteroidColliders(time);
 }
 
 //remove asteroids out of game
@@ -60,10 +59,4 @@ function resetAsteroids() {
 	}
 	asteroidArray = [];
 	asteroidColliderArray = [];
-}
-
-
-//radius to degree functions
-function degInRad(deg) {
-	return deg * Math.PI / 180;
 }

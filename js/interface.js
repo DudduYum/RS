@@ -5,27 +5,29 @@ var scoreTable = document.getElementById("scoreTable");
 var cameraSwitch = document.getElementById("cameraSwitch");
 
 
+//displays initial screen
 function displayInitalScreen() {
-	//hide game, score and camera switch divs
+	//hides game, score and camera switch divs
 	scoreNumber.style.display = "none";
 	scoreTable.style.display = "none";
 	cameraSwitch.style.display = "none";
-	//display initial screen and spaceship
+	//displays initial screen and spaceship
 	initialScreen.style.display = "block";
 	canvas.style.display = "block";
 }
 
 
+//displays the game
 function displayGame(){
 	//hides initial or gameover divs
 	initialScreen.style.display = "none";
 	gameoverScreen.style.display = "none";
 
 	
-	//reset the score
+	//resets the score
 	scoreNumber.innerHTML =  0;
 	
-	//adjust z-indexes
+	//adjusts z-indexes
 	initialScreen.style.zIndex = "-1";
 	gameoverScreen.style.zIndex = "-1";
 	scoreTable.style.zIndex = "1";
@@ -41,13 +43,12 @@ function displayGame(){
 
 //displays game over screen
 function displayGameOver() {
-	//adjust z-indexes
+	//adjusts z-indexes
 	gameoverScreen.style.zIndex = "0";
 	
-	//hide game, score and camera switch divs
+	//hides game, score and camera switch divs
 	scoreTable.style.display = "none";
 	
 	document.getElementById("yourScore").innerHTML = "Your score is "+ gameScore;
-	
 	gameoverScreen.style.display = "block";
 }
