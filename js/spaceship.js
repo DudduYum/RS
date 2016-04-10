@@ -38,36 +38,14 @@ spaceship.position.set(0,-spaceshipLength/2,areaDepth/2-spaceshipLength/2)
 game.add(spaceship);
 
 
-var meshA;
-var meshB;
-var meshC;
-
-// var geoa = new THREE.SphereGeometry(spaceshipFrontSize+ 0.1,8,8);
-// var mata = new THREE.MeshBasicMaterial({color:0xff0000});
-// var meshA = new THREE.Mesh(geoa,mata);
-
-// var geob = new THREE.SphereGeometry(spaceshipBodySize,8,8);
-// var matb = new THREE.MeshBasicMaterial({color:0x00ff00});
-// var meshB = new THREE.Mesh(geob,matb);
-
-// var geoc = new THREE.SphereGeometry(spaceshipBackSize + 0.1,8,8);
-// var matc = new THREE.MeshBasicMaterial({color:0x0000ff});
-// var meshC = new THREE.Mesh(geoc,matc);
-
-// meshA.position.set(0,0, spaceship.position.z + game.position.z + ( (spaceshipFrontSize/2)* spaceshipLength) -4) ;
-// meshB.position.set(0,0, spaceship.position.z + game.position.z + ( (spaceshipFrontSize + spaceshipBodySize/2)* spaceshipLength) -4) ;
-// meshC.position.set(0,0, spaceship.position.z + game.position.z + ( (spaceshipFrontSize + spaceshipFrontSize + spaceshipBackSize/2)* spaceshipLength) -4) ;
-
-// scene.add(meshA);
-// scene.add(meshB);
-// scene.add(meshC);
-
 
 
 //initialize spaceship position
 function initializeSpaceshipPosition() {
 	spaceship.rotation.x = degInRad(-90);
 	spaceship.position.set(0,0,areaDepth/2-spaceshipLength/2);
+	resetShipCollider();
+	generateSpaceshipColliders();
 }
 
 
