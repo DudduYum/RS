@@ -1,6 +1,6 @@
 //generateSpaceshipColliders();
 
-function render() {
+function animate() {
 	if(gameRunning){
 		flowTime();
 		moveSpaceship(timePassed);
@@ -16,10 +16,10 @@ function render() {
 	}
 	
 	orbitControls.update();
-	requestAnimationFrame(render);
+	requestAnimationFrame(animate);
 	stats.update();
 	renderer.render(scene, camera);
 }
 
 
-render();
+animate();

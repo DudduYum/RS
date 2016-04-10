@@ -22,7 +22,6 @@ renderer.domElement.style.top = leftOffset + "px";
 //mouse controls
 //orbitControls.addEventListener('change', renderer);
 
-document.body.appendChild(renderer.domElement);
 //scene.add(game);
 
 

@@ -48,6 +48,7 @@ function cleanAsteroids() {
 	}
 }
 
+//remove all asteroids
 function resetAsteroids() {
 	for(var i=0;i<asteroidArray.length;i++) {
 		var asteroidPosition = new THREE.Vector3().setFromMatrixPosition(asteroidArray[i].matrix);
