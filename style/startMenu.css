@@ -47,7 +47,6 @@
 	/*color:white;*/
 	position: relative;
 	padding-top: 10%;
-	padding-right: 50%;
 	/*background: blue;*/
 }
 #GameTitle>div>h1{
@@ -64,15 +63,14 @@
 	position:absolute;
 	width:80%;
 	left:10%;
-	text-align: center;
 	right: 10%;
 	padding-top: 20%;
-	font-size: 200%;
+	font-size: 130%;
 	margin: auto;
 	
 }
 #authors{
-	color: #FFFFFF;
+	color: #878785;
 	position: absolute;
 	right: 0px;
 	bottom: 0px;
