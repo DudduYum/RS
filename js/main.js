@@ -6,6 +6,9 @@ scene.fog = new THREE.FogExp2( 0x000000, 0.01);
 var camera = new THREE.PerspectiveCamera(75, 16/9, 0.1, 1000);
 var renderer = new THREE.WebGLRenderer();
 var orbitControls = new THREE.OrbitControls(camera, renderer.domElement);
+orbitControls.enableKeys = false;
+orbitControls.reset();
+orbitControls.target = new THREE.Vector3(0,0,-10);
 
 
 //lights to simulate sunlight from behind on the left

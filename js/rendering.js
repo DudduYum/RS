@@ -12,7 +12,7 @@ function animate() {
  			generateAsteroid();
  			genereteAsteroidCollider();
  		}
- 		scoreNumTab.innerHTML = gameScore;
+ 		//scoreNumTab.innerHTML = gameScore;
 	}
 	
 	requestAnimationFrame(animate);
@@ -25,3 +25,5 @@ function animate() {
 function render() {
 	renderer.render(scene, camera);
 }
+
+orbitControls.addEventListener( 'change', render );
