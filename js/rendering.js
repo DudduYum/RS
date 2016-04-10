@@ -1,3 +1,5 @@
+animate();
+
 function animate() {
 	if(gameRunning){
 		flowTime();
@@ -23,9 +25,3 @@ function animate() {
 function render() {
 	renderer.render(scene, camera);
 }
-
-animate();
-
-
-//mouse controls
-//orbitControls.addEventListener('change', render);

@@ -1,14 +1,12 @@
 //GAME SCENE
 var game = new THREE.Object3D();
-//whole game rotation for testing purposes
-//game.rotation.y = degInRad(90);
 scene.add(game);
 
 
 //playable zone
 var areaWidth = 16;
 var areaHeight = 9;
-var areaDepth = 100;
+var areaDepth = 200;
 //creating a box corresponding to the game area for testing purposes
 //var gameArea_geometry = new THREE.BoxGeometry(areaWidth, areaHeight, areaDepth);
 //var gameArea_material = new THREE.MeshBasicMaterial({wireframe:true});
