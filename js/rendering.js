@@ -1,5 +1,3 @@
-var orbitControls = new THREE.OrbitControls(camera, renderer.domElement);
-
 animate();
 
 function animate() {
