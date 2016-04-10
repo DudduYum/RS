@@ -20,22 +20,21 @@
 			<div id="GameTitle">
 				<div id="TitleContainer">
 				<!-- game title and others game info -->
-					<h1>Dark's Souls</h1><br/>
-					<h3>There is Arthorias on the ship!</h3>
-
+					<h1>OH LOOK, AN ASTER...</h1><br/>
+					<h3>Wireframed-asteroid storm incoming!</h3><br/>
 				</div>
 			</div>
 
 			<div id="comands">
 				<div>
-					<p> * Press space to start the game </p><br/>
-					<p> * Use arrows to move the spaceship </p><br/>
-					<p> * Good luck! </p>
+					<p>- use arrows to move your spaceship and avoid asteroids</p><br/>
+					<p>- press [SPACEBAR] to start the game</p><br/>
+					<p>Good luck! </p>
 				</div>
 			</div>
 			
 			<div id="authors">
-				<p >Made by: Riccardo Lulli, Rostyslav Kostyuk &copy; XD </p>
+				<p >Made by Riccardo Lulli, Rostyslav Kostyuk</p>
 
 			</div>
 		</div>
@@ -47,28 +46,31 @@
 				<!-- game title and others game info -->
 
 					<h1 id="YourScore"></h1><br/>
-					<h3>Not bad!</h3>
+					<!-- <h3>Not bad!</h3> -->
 
 				</div>
 			</div>
 
 			<div id="comandsE">
 				<div>
-					<p> * Press space to restart the game </p><br/>
-					<p> * Use arrows to move the spaceship </p>
+					<p>Press [SPACEBAR] to play again!</p><br/>
 				</div>
 			</div>
 			<div id="authors">
-				<p >Made by: Riccardo Lulli, Rostyslav Kostyuk &copy; XD </p>
+				<p >Made by Riccardo Lulli, Rostyslav Kostyuk</p>
 
 			</div>
 		</div>
+
+		<!-- <div id="cameraSwitch">
+			<button id="gameView" action="" type="button">player view</button>
+			<button id="gameView" action="" type="button">free view</button>
+		</div> -->
 
 
 		<script src="lib/three.min.js"></script>
 	  	<script src="lib/stats.min.js"></script>
 	 	<script src="js/controls.js"></script>
-		<script src="js/OrbitControls.js"></script>
 		<script src="js/clock.js"></script>
 		<script src="js/gameConstants.js"></script> 
 		<script src="js/main.js"></script>
@@ -87,6 +89,7 @@
 	
 	
 		<script>
+			
 			document.body.appendChild(stats.domElement);
 		</script>
 	</body>
