@@ -1,8 +1,8 @@
 //ASTEROID SPAWN SETTINGS
 //miliseconds between asteroid spawn
-var spawnDelay = 800;
+var spawnDelay = 300;
 //asteroid speed in units per second
-var asteroidSpeed = 12;
+var asteroidSpeed = 20;
 
 
 var asteroidArray = [];
