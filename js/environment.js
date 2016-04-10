@@ -6,7 +6,7 @@ scene.add(game);
 //playable zone
 var areaWidth = 16;
 var areaHeight = 9;
-var areaDepth = 200;
+var areaDepth = 150;
 //creating a box corresponding to the game area for testing purposes
 //var gameArea_geometry = new THREE.BoxGeometry(areaWidth, areaHeight, areaDepth);
 //var gameArea_material = new THREE.MeshBasicMaterial({wireframe:true});
