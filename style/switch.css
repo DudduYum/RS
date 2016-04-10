@@ -1,0 +1,35 @@
+#cameraSwitch{
+	position: absolute;
+	width: 10%;
+	height: 5%;
+	bottom: 0px;
+	right: 0px;
+	/*background: red;*/
+}
+#switchConteiner{
+	position: relative;
+	background: red;
+	width: 100%;
+	height: 100%; 
+	left:0px;
+	right:0px;
+	top:0px;
+	bottom:0px;
+}
+
+#gameView{
+	position: absolute;
+	width: 80%;
+	height: 50%;
+	left: 10%;
+	top: 25%;
+	display: none;
+}
+
+#freeView{
+	position: absolute;
+	width: 80%;
+	height: 50%;
+	left: 10%;
+	top: 25%;
+}
