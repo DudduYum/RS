@@ -1,24 +1,25 @@
-/*END MENU*/
-#endMenu{
+#gameoverScreen{
 	position: absolute;
-	z-index: -20;
 	display: none;
 	border-radius: 10px;
 	color:white;
-	background: #550055;
+	background-color:rgba(50,0,0,0.5);
+	z-index: -6;
 }
 
 
-#Score{
 
+#score{
 	position: absolute;
+	color: #FFFFFF;
 	top: 0px;
 	width: 50%;
 	height: 35%;
 	left:25%;
-	/*background: blue;*/
+	z-index: inherit;
 }
-#Score>div{
+
+#score>div{
 	width: 100%;
 	height: 100%;
 	left:0px;
@@ -27,19 +28,20 @@
 	bottom:0px;
 	position: relative;
 	padding-top: 10%;
-	/*background: blue;*/
+	z-index: inherit;
 }
-#Score>div>h1{
+
+#score>div>h1{
 	text-align: center;
 	position:absolute;
 	width:100%;
-
 	font-size: 300%;
 	margin: auto;
 	color:white;
-	
+	z-index: inherit;
 }
-#Score>div>h3{
+
+#score>div>h3{
 	position:absolute;
 	width:80%;
 	left:10%;
@@ -47,34 +49,22 @@
 	padding-top: 20%;
 	font-size: 130%;
 	margin: auto;
-	
+	z-index: inherit;
 }
 
-#comandsE{
+#goInstructions{
+	color: #FFFFFF;
 	text-align: center;
 	position: absolute;
 	top: 55%;
 	width: 50%;
 	height: 20%;
 	left:25%;
+	z-index: inherit;
 }
 
-#comandsE>div{
-	width: 100%;
-	height: 100%;
-	left:0px;
-	right: 0px;
-	top:0px;
-	bottom:0px;
-	position: relative;
-}
-#comandsE>div>p{
-	width:60%;
-	left:20%;
-	right: 20%;
-	position: relative;
-}
 #authors{
+	color: #FFFFFF;
 	position: absolute;
 	right: 0px;
 	bottom: 0px;
@@ -82,10 +72,5 @@
 	padding-bottom: 1%;
 	padding-right: 2%;
 	padding-left: 2%;
-	
-	/*background: red;*/
-	
+	z-index: inherit;
 }
-
-
-

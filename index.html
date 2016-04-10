@@ -1,73 +1,56 @@
 <html>
 	<head>
 		<title>Project: Reach the Sun</title>
-		<!-- <link rel="stylesheet" type="text/css" href="style/startMenu.css">
-		<link rel="stylesheet" type="text/css" href="style/endMenu.css">
-		<link rel="stylesheet" type="text/css" href="style/scoreTab.css">
+		<link rel="stylesheet" type="text/css" href="style/baseStyle.css">
+		<link rel="stylesheet" type="text/css" href="style/initialScreen.css">
+		<link rel="stylesheet" type="text/css" href="style/gameoverScreen.css">
 		<link rel="stylesheet" type="text/css" href="style/switch.css">
-		-->
 	</head>
 
   	<body>
-	  	<div id="backColor">
-		  	<!-- <div id="output">
-
-			</div> -->
-		</div>
-		<div id="ScoreTable">
-			
-		</div>
-		<h1 id="CurrentScore"> 0</h1>
-		<div id="startMenu">
-			<div id="GameTitle">
-				<div id="TitleContainer">
-				<!-- game title and others game info -->
+		<div id="canvas"></div>
+		
+	  	<div id="backColor"></div>
+		
+		<div id="scoreTable"></div>
+		
+		<h1 id="currentScore"> 0</h1>
+		
+		<div id="initialScreen">
+			<div id="gameTitle">
 					<h1>OH LOOK, AN ASTER...</h1><br/>
-					<h3>Wireframed-asteroid storm incoming!</h3><br/>
-				</div>
+					<h3>Asteroid storm incoming!</h3><br/>
 			</div>
-
-			<div id="comands">
-				<div>
+			<div id="instructions">
 					<p>- use arrows or W,A,S,D to move your spaceship and avoid asteroids</p><br/>
+					<p>- click the button or press C to switch camera</p><br/>
 					<p>- press [SPACEBAR] to start the game</p><br/>
-					<p>Good luck! </p>
-				</div>
+					<p>Good luck!</p>
 			</div>
-			
 			<div id="authors">
 				<p >Made by Riccardo Lulli, Rostyslav Kostyuk</p>
-
 			</div>
 		</div>
 		
 
-		<div id="endMenu">
-			<div id="Score">
-				<div id="ScoreContainer">
-				<!-- game title and others game info -->
-
-					<h1 id="YourScore"></h1><br/>
-					<!-- <h3>Not bad!</h3> -->
-
-				</div>
+		<div id="gameoverScreen">
+			<div id="score">
+				<h1 id="yourScore"></h1><br/>
 			</div>
-
-			<div id="comandsE">
+			<div id="goInstructions">
 				<div>
 					<p>Press [SPACEBAR] to play again!</p><br/>
 				</div>
 			</div>
 			<div id="authors">
 				<p >Made by Riccardo Lulli, Rostyslav Kostyuk</p>
-
 			</div>
 		</div>
 
 		<div id="cameraSwitch">
-			<div id="switchConteiner">
-				<button id="gameView" onclick="switchToGameView()" type="button">player view</button>
-				<button id="freeView" onclick="switchToFreeView()" type="button">free view</button>
+			<div id="switchContainer">
+				<button id="freeCamera" onclick="switchToFreeCamera()" type="button">Switch to free camera</button>
+				<button id="gameCamera" onclick="switchToGameCamera()" type="button">Switch to game camera</button>
 			</div>
 		</div>
 		 
@@ -75,12 +58,12 @@
 		<script src="lib/three.min.js"></script>
 	  	<script src="lib/stats.min.js"></script>
 	 	<script src="js/controls.js"></script>
-	 	<script src="js/switchInterface.js"></script>
 		<script src="js/OrbitControls.js"></script>
+		<script src="js/switchCamera.js"></script>
 		<script src="js/clock.js"></script>
 		<script src="js/gameConstants.js"></script> 
 		<script src="js/main.js"></script>
-		<!-- <script src="js/interface.js"></script> -->
+		<script src="js/interface.js"></script>
 		<script src="js/game_loop.js"></script> 
 		<script src="js/colliderConstants.js"></script>
 		<script src="js/environment.js"></script>
@@ -90,12 +73,6 @@
 		<script src="js/spaceshipCollider.js"></script>
 		<script src="js/collisionDetection.js"></script>
 		<script src="js/rendering.js"></script>
-
-		<script>
-			document.body.appendChild(renderer.domElement);
-			document.body.appendChild(stats.domElement);
-		</script>
-	
 		
 		
 	</body>

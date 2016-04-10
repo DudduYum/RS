@@ -1,11 +1,16 @@
 var baseLength = Math.min(window.innerWidth/16, window.innerHeight/9);
 
-
 var scene = new THREE.Scene();
 scene.fog = new THREE.FogExp2( 0x000000, 0.01);
-var camera = new THREE.PerspectiveCamera(75, 16/9, 0.1, 1000);
+
+var gameCamera = new THREE.PerspectiveCamera(75, 16/9, 0.1, 1000);
+var freeCamera = new THREE.PerspectiveCamera(75, 16/9, 0.1, 1000);
+freeCamera.position.set(2,2,2);
+var useGameCamera = true;
+
 var renderer = new THREE.WebGLRenderer();
-var orbitControls = new THREE.OrbitControls(camera, renderer.domElement);
+
+var orbitControls = new THREE.OrbitControls(freeCamera, renderer.domElement);
 orbitControls.enableKeys = false;
 orbitControls.reset();
 orbitControls.target = new THREE.Vector3(0,0,-10);
@@ -37,3 +42,7 @@ renderer.domElement.style.top = leftOffset + "px";
 stats = new Stats();
 stats.domElement.style.position = 'absolute';
 stats.domElement.style.top = '0px';
+
+canvas = document.getElementById('canvas');
+canvas.appendChild(renderer.domElement);
+canvas.appendChild(stats.domElement);
