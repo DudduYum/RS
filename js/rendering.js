@@ -15,8 +15,8 @@ function animate() {
 		checkCollision();
 	}
 	
-	orbitControls.update();
 	requestAnimationFrame(animate);
+	orbitControls.update();
 	stats.update();
 	renderer.render(scene, camera);
 }

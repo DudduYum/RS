@@ -1,8 +1,3 @@
-//SPACESHIP MOVEMENT SETTINGS
-//spaceship movement speed in units per seconds
-var moveSpeed = 3;
-
-
 //spaceship parameters
 var spaceshipRadius = 0.5;
 var spaceshipLength = 5;

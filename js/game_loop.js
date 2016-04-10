@@ -1,11 +1,5 @@
-// var gameScore;
-// var gameRunning = false;
-
 displayInitalScreen();
-// gameStart();
-// gameOver();
 
-//gameStart();
 
 function gameStart() {
 	// startMenu.style.display = "none";

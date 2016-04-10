@@ -4,7 +4,7 @@ var baseLength = Math.min(window.innerWidth/16, window.innerHeight/9);
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, 16/9, 0.1, 1000);
 var renderer = new THREE.WebGLRenderer();
-var orbitControls = new THREE.OrbitControls(camera, renderer.domElement);
+var orbitControls = new THREE.OrbitControls(camera);
 
 //specify the resize factor
 var par = 50;
@@ -20,9 +20,7 @@ renderer.domElement.style.left = topOffset + "px" ;
 renderer.domElement.style.top = leftOffset + "px";
 
 //mouse controls
-//orbitControls.addEventListener('change', renderer);
-
-//scene.add(game);
+orbitControls.addEventListener('change', renderer);
 
 
 
