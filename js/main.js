@@ -6,6 +6,7 @@ var camera = new THREE.PerspectiveCamera(75, 16/9, 0.1, 1000);
 var renderer = new THREE.WebGLRenderer();
 var orbitControls = new THREE.OrbitControls(camera);
 
+
 //specify the resize factor
 var par = 50;
 renderer.setSize(baseLength*16-par, baseLength*9-par);
@@ -20,7 +21,7 @@ renderer.domElement.style.left = topOffset + "px" ;
 renderer.domElement.style.top = leftOffset + "px";
 
 //mouse controls
-orbitControls.addEventListener('change', renderer);
+//orbitControls.addEventListener('change', animate);
 
 
 

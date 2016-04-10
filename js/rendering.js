@@ -1,5 +1,3 @@
-//generateSpaceshipColliders();
-
 function animate() {
 	if(gameRunning){
 		flowTime();
@@ -23,3 +21,7 @@ function animate() {
 
 
 animate();
+
+
+//mouse controls
+orbitControls.addEventListener('change', animate);

@@ -1,8 +1,10 @@
 var asteroidArray = [];
 
 
-//basic asteroid
-var asteroid_material = new THREE.MeshBasicMaterial({color:0x5f3f00, wireframe:true});
+//asteroid apperance
+//var asteroid_texture = new THREE.TextureLoader().load('textures/asteroid.jpg');
+//var asteroid_material = new THREE.MeshBasicMaterial({map: asteroid_texture});
+var asteroid_material = new THREE.MeshBasicMaterial({color:0x604000, wireframe:true});
 
 //generate asteroids
 function generateAsteroid() {		
