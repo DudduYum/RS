@@ -2,9 +2,25 @@ var asteroidArray = [];
 
 
 //asteroid apperance
+var textureL = new THREE.TextureLoader(THREE.DefaultLoadingManager);
+// var asteroid_material = new THREE.MeshBasicMaterial({color:0x604000, wireframe:true});
+var asteroid_material;
+
+textureL.load('textures/asteroid.jpg',
+	function (texture){
+		asteroid_material = new THREE.MeshBasicMaterial({map:texture});
+	},
+	function ( xhr ) {
+		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+	},
+	function ( xhr ) {
+		console.log( 'An error happened while louding textures' );
+	}
+);
+
 //var asteroid_texture = new THREE.TextureLoader().load('textures/asteroid.jpg');
 //var asteroid_material = new THREE.MeshBasicMaterial({map: asteroid_texture});
-var asteroid_material = new THREE.MeshBasicMaterial({color:0x604000, wireframe:true});
+
 
 //generate asteroids
 function generateAsteroid() {		
