@@ -10,6 +10,7 @@
 
 
 #Score{
+
 	position: absolute;
 	top: 0px;
 	width: 50%;
@@ -24,16 +25,15 @@
 	right: 0px;
 	top:0px;
 	bottom:0px;
-	/*color:white;*/
 	position: relative;
 	padding-top: 10%;
 	/*background: blue;*/
 }
 #Score>div>h1{
+	text-align: center;
 	position:absolute;
 	width:100%;
-	/*left:10%;
-	right: 10%;*/
+
 	font-size: 300%;
 	margin: auto;
 	color:white;
@@ -51,6 +51,7 @@
 }
 
 #comandsE{
+	text-align: center;
 	position: absolute;
 	top: 55%;
 	width: 50%;

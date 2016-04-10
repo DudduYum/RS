@@ -38,13 +38,13 @@
 	/*background: blue;*/
 }
 #GameTitle>div{
+	text-align: center;
 	width: 100%;
 	height: 100%;
 	left:0px;
 	right: 0px;
 	top:0px;
 	bottom:0px;
-	/*color:white;*/
 	position: relative;
 	padding-top: 10%;
 	/*background: blue;*/
@@ -84,6 +84,7 @@
 }
 
 #comands{
+	text-align: center;
 	position: absolute;
 	top: 55%;
 	width: 50%;
