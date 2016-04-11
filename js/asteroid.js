@@ -3,7 +3,7 @@ var asteroidColliderArray = [];
 
 //asteroid apperance
 var asteroid_texture = new THREE.TextureLoader().load('textures/asteroid.jpg');
-var asteroid_material = new THREE.MeshBasicMaterial({map: asteroid_texture});
+var asteroid_material = new THREE.MeshPhongMaterial({map: asteroid_texture});
 
 
 //generate asteroids
