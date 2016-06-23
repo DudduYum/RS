@@ -79,7 +79,7 @@ function initializeSpaceshipColliders(){
 	spaceshipColliders[0].radius = spaceshipRadius;
 	spaceshipColliders[1].radius = spaceshipRadius;
 	spaceshipColliders[2].radius = spaceshipRadius;
-	 
+
 	spaceshipColliders[0].center.set(0,0,spaceship.position.z - ((spaceshipFrontSize + spaceshipBodySize/2 )* spaceshipLength));
 	spaceshipColliders[1].center.set(0,0,spaceship.position.z);
 	spaceshipColliders[2].center.set(0,0,spaceship.position.z + ((spaceshipBodySize/2 + spaceshipBackSize)* spaceshipLength));

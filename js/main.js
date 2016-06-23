@@ -4,7 +4,7 @@ var screenRatio = window.innerWidth/window.innerHeight;
 var scene = new THREE.Scene();
 scene.fog = new THREE.FogExp2( 0x000000, 0.01);
 
-//creates two camers 
+//creates two camers
 var gameCamera = new THREE.PerspectiveCamera(75, screenRatio, 0.1, 1000);
 var freeCamera = new THREE.PerspectiveCamera(75, screenRatio, 0.1, 1000);
 //initial free camera position

@@ -16,3 +16,5 @@ function flowTime() {
 	clock = clock + timePassed;
 	prevTime = currTime;
 }
+
+//update of code
