@@ -7,19 +7,28 @@ function createGameSettings(){
 
 
   //SPACESHIP SETTINGS
+  // spce ship forward velocity
+  var forwardVelocity = .5;
   //spaceship movement speed in units per seconds
   var moveSpeed = 3;
 
+  var inertiaValue = .4;
   //ASTEROID SETTINGS
   //miliseconds between asteroid spawn
-  var spawnDelay = .300;
+  // old value = .3
+  var spawnDelay = .3;
   //asteroid speed in units per second
   var asteroidSpeed = 20;
 
   var game_area_H,
   game_area_W,
   game_area_D
+
+
+
   ;
+
+  var ganeTimer;
 
 
 
@@ -31,9 +40,23 @@ function createGameSettings(){
     return 0.5 + 2 * Math.random();
   };
 
-
   //default settings
   var configObj = {};
+
+
+  // set timer
+  configObj.setTimerGameTimer = function( newTimer){
+    ganeTimer = newTimer;
+  }
+
+  // spaceship
+  configObj.getForwardVelocity = function(){
+    return forwardVelocity;
+  };
+
+  configObj.getInertiaValue = function(){
+    return inertiaValue;
+  };
 
 
   configObj.moveSpeed = function(){

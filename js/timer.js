@@ -19,9 +19,13 @@ function createTimer(){
   	clock = clock + timePassed;
   	prevTime = currTime;
   };
-  
+
   Timer.getTime = function(){
     return clock/1000;
+  };
+
+  Timer.passedTime = function(){
+    return timePassed/1000;
   };
 
   Timer.reset = function(){

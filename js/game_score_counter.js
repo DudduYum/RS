@@ -1,20 +1,21 @@
-function createScoreCounter(){
+function createScoreCounter(timer, settings){
 
 
   //private score counter
   var gameScore;
   var sCount = {};
 
-  sCount.updateGame = function(){
-    this.gameScore++;
+  sCount.update = function(){
+    gameScore = Math.round(timer.getTime() * settings.getForwardVelocity());
+    // gameScore++;
   };
 
   sCount.reset = function(){
-    this.gameScore = 0;
+    gameScore = 0;
   };
 
   sCount.getScore = function(){
-    return this.gameScore;
+    return gameScore;
   };
 
   sCount.reset();

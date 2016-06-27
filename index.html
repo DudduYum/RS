@@ -11,6 +11,8 @@
 		<!--  Libraris-->
 		<script type="text/javascript" src="lib/three.min.js"></script>
 		<script type="text/javascript" src="lib/requirejs_2.2.js"></script>
+		<script type="text/javascript" src="lib/OrbitControls.js"></script>
+		<script type="text/javascript" src="lib/stats.min.js"></script>
 
 		<!--  Our scripts and class-->
 		<script type="text/javascript" src="js/IO_Manager.js"></script><!-- X -->
@@ -22,6 +24,10 @@
 		<script type="text/javascript" src="js/space_ship_class.js"></script>
 		<script type="text/javascript" src="js/clock.js"></script>
 		<script type="text/javascript" src="js/timer.js"></script>
+		<script type="text/javascript" src="js/interfaceControl.js"></script>
+		<!-- <script type="text/javascript" src="js/interface.js"></script> -->
+		<script type="text/javascript" src="js/main.js"></script>
+
 		<script type="text/ogsl" id="vertex">
 			varying vec3 tNorm;
 			varying vec2 vUv;
@@ -47,7 +53,25 @@
 
 	</head>
 
-  	<body>
+
+	<body>
+
+
+		<script type="text/javascript" >
+
+			var switchToFreeCamera = function (){
+				// just a global function that will be changed late
+			};
+
+			var switchToGameCamera = function (){
+				// just a global function that will be changed late
+
+			};
+
+		</script>
+
+
+
 		<div id="canvas"></div>
 
 		<div id="scoreTable">
@@ -81,8 +105,8 @@
 
 		<div id="cameraSwitch">
 			<div id="switchContainer">
-				<button id="freeCameraButton" onclick="switchToFreeCamera()" type="button">Switch to FREE camera</button>
-				<button id="gameCameraButton" onclick="switchToGameCamera()" type="button">Switch to GAME camera</button>
+				<button id="freeCameraButton" onclick="switchToFreeCamera()" type="button">FREE camera</button>
+				<button id="gameCameraButton" onclick="switchToGameCamera()" type="button">GAME camera</button>
 			</div>
 		</div>
 
@@ -93,53 +117,52 @@
 		<!--  game evocation -->
 		<script type="text/javascript" >
 
-		var a = 1;
+// 		var a = 1;
+//
+// // global scope
+// function one() {
+//   alert(a);
+// };
+// function two(a) {
+//   alert(a);
+// };
+//
+// // local scope again
+// function three() {
+//   var a = 3;
+//   alert(a);
+// };
+//
+// function four() {
+//   if (false) {
+//     var a = 4;
+//   }
+//
+//   alert(a); // alerts '4', not the global value of '1'
+// };
 
-// global scope
-function one() {
-  alert(a);
-};
-function two(a) {
-  alert(a);
-};
-
-// local scope again
-function three() {
-  var a = 3;
-  alert(a);
-};
-
-function four() {
-  if (false) {
-    var a = 4;
-  }
-
-  alert(a); // alerts '4', not the global value of '1'
-};
-
-function five() {
-  this.a = 5;
-}
+// function five() {
+//   this.a = 5;
+// }
 // five();
 
 
-		var settingsObj = createGameSettings();
-
-		//creates scene, add fog
-		var scene = new THREE.Scene();
-		scene.fog = new THREE.FogExp2( 0x000000, 0.01);
-
-		//creates two camers
-		var gameCamera = new THREE.PerspectiveCamera(75, settingsObj.screenRatio(), 0.1, 1000);
-
-		// freeCamera.position.set(2,2,2);
-
-		var renderer = new THREE.WebGLRenderer();
-		renderer.setSize(window.innerWidth, window.innerHeight);
-
-		canvas = document.getElementById('canvas');
-		canvas.appendChild(renderer.domElement);
-
+		// var settingsObj = createGameSettings();
+		//
+		// //creates scene, add fog
+		// var scene = new THREE.Scene();
+		// scene.fog = new THREE.FogExp2( 0x000000, 0.01);
+		//
+		// //creates two camers
+		// var gameCamera = new THREE.PerspectiveCamera(75, settingsObj.screenRatio(), 0.1, 1000);
+		//
+		// // freeCamera.position.set(2,2,2);
+		//
+		// var renderer = new THREE.WebGLRenderer();
+		// renderer.setSize(window.innerWidth, window.innerHeight);
+		//
+		// canvas = document.getElementById('canvas');
+		// canvas.appendChild(renderer.domElement);
 
 
 
@@ -150,39 +173,40 @@ function five() {
 		// settingsObj.setGameAreaDepth(-180);
 
 
-		var timer = createTimer();
-
-		// timer.initTest();
-		// timer.updateTest();
-
-
-		var stateCTRL = createGameState(
-			function(){
-				console.log("here come dat boi");
-			},
-			function(){
-				console.log("hey waddupp?");
-			}
-		);
-
-		// stateCTRL.testInit();
-
-// for later
-		var gameControl = createGameIOManager( );
-		window.addEventListener("keydown",gameControl.keyDownAction);
-
-		gameControl.addFunction(
-			32 ,
-			stateCTRL.start
-		);
-
-		gameControl.addFunction(
-			67 ,
-			function(){
-
-			}
-		);
-
+// 		var timer = createTimer();
+//
+// 		// timer.initTest();
+// 		// timer.updateTest();
+//
+//
+// 		var stateCTRL = createGameState(
+// 			function(){
+// 				console.log("here come dat boi");
+// 			},
+// 			function(){
+// 				console.log("hey waddupp?");
+// 			}
+// 		);
+//
+// 		// stateCTRL.testInit();
+//
+// // for later
+// 		var gameControl = createGameIOManager( );
+// 		window.addEventListener("keydown",gameControl.keyDownAction);
+// 		window.addEventListener("keyup",gameControl.keyUpAction);
+//
+// 		gameControl.addKeyDownAction(
+// 			32 ,
+// 			stateCTRL.start
+// 		);
+//
+// 		gameControl.addKeyDownAction(
+// 			67 ,
+// 			function(){
+//
+// 			}
+// 		);
+//
 
 
 		// console.log(gameControl.keyDownAction({ keyCode : 32 }));
@@ -194,60 +218,47 @@ function five() {
 
 
 
-		var envi = createEnvironment(settingsObj , 12 , 12 , 150 ,timer, gameControl);
+		// var envi = createEnvironment(settingsObj , 12 , 12 , 150 ,timer, gameControl);
+		//
+		//
+		//
+		// scene.add(envi.gameScene());
+		//
+		// envi.setPosition(
+		// 	0 ,
+    //   0 ,
+    //   -((settingsObj.gameAreaDepth() / 2) + 4)
+		// );
+		//
+		//
+		//
+		// function render() {
+		// 	renderer.render(scene, gameCamera);
+		//
+		// }
+		//
+		//
+		// function animate() {
+		//
+		// 	requestAnimationFrame(animate);
+		//
+		// 	envi.updateEniroment();
+		//
+		// 	timer.update();
+		//
+		// 	render();
+		// }
+		//
+		// animate();
 
-		// console.log(gameControl.keyDownAction({ keyCode : 39 }));
-		// envi.testIO();
-		// gameControl.unitTest();
 
-
-		scene.add(envi.gameScene());
-
-		envi.setPosition(
-			0 ,
-      0 ,
-      -((settingsObj.gameAreaDepth() / 2) + 4)
-		);
-		// envi.initTest();
-
-
-
-		envi.addAsteroids();
-		// envi.spaceShitTest();
-
-
-		function render() {
-			renderer.render(scene, gameCamera);
-
-		}
-
-
-		function animate() {
-
-			requestAnimationFrame(animate);
-			// ast.move(timer.getTime());
-
-
-			// console.log("/////////////////////");
-			envi.moveAsteroids();
-			envi.moveAsteroidTest();
-
-			envi.animateEnvironment();
-
-			timer.update();
-			// console.log(settingsObj.asteroidStartPoint() );
+		// window.addEventListener('onload', main );
 
 
 
+		main();
 
-			render();
-		}
-		// console.log( settingsObj.spawnDelay());
-		animate();
-		// test
-
-
-
+		
 
 
 

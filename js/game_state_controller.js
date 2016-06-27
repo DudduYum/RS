@@ -4,7 +4,7 @@
 
 function createGameState(startFun, stopFun ){
   //true if game is running righ now
-  var gameRunning,
+  var gameRunning = false,
 
   // i blochi che vengono chiamati dalla
   startAction = startFun,
@@ -16,41 +16,48 @@ function createGameState(startFun, stopFun ){
 
   // getter
   gameCntr.isRunning = function(){
-    return this.gameRunning;
+    return gameRunning;
   };
 
   //setters
   //set to start state and
   // execute some call back function
   gameCntr.start = function(){
-    if(this.gameRunning == true)
-      console.log("warring: game is alredy running !");
-    this.gameRunning = true;
+    if( !gameRunning ){
+      gameRunning = true;
 
-    //use callBack function call
-    if(startAction != undefined){
-      startAction();
+      //use callBack function call
+      if(startAction != undefined){
+        startAction();
+      }
     }
+
+    if(gameRunning == true)
+      console.log("warring: game is alredy running !");
 
   }
 
   //set to stop state and
   // execute some call back function
-  gameCntr.stop = function(){
-    if(this.gameRunning == false)
-      console.log("warring: game is alredy stopped !");
-    this.gameRunning = false;
+  gameCntr.end = function(){
+    if( gameRunning ){
+      gameRunning = false;
 
-    //use callBack function call
-    if(stopAction != undefined){
-      stopAction();
+      //use callBack function call
+      if(stopAction != undefined){
+        stopAction();
+      }
     }
+
+    if(gameRunning == false)
+      console.log("warring: game is alredy stopped !");
+
   }
 
 
 
   //init :)
-  gameCntr.stop();
+  // gameCntr.stop();
 
   // unit tests
   gameCntr.testInit = function(){

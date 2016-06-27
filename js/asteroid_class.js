@@ -1,4 +1,4 @@
-function createAsteroid(settingsObject, materialManager){
+function createAsteroid(settingsObject, materialManager, timer){
 
   // var AsteroidMaterial = materialManager.asteroidMaterial();
 
@@ -24,6 +24,8 @@ function createAsteroid(settingsObject, materialManager){
 
 
 
+
+
   // define propertys and behavior
 
   //public methods
@@ -38,7 +40,6 @@ function createAsteroid(settingsObject, materialManager){
 
     // move quantity
     var step = passedTime  * settingsObject.asteroidSpeed() ;
-
 
     // move mesh
     mesh.position.setZ(settingsObject.asteroidStartPoint() + step);
@@ -95,8 +96,8 @@ function createAsteroid(settingsObject, materialManager){
   })();
 
   asteroid.testCreation = function(){
-    console.log(mesh);
-    console.log(collider);
+    console.log(mesh.position);
+    console.log(collider.center);
   };
 
   asteroid.testMove = function(){
@@ -109,6 +110,7 @@ function createAsteroid(settingsObject, materialManager){
   asteroid.testAnomalia = function(){
     console.log(mesh.position.z);
   };
+
 
 
   return asteroid;
