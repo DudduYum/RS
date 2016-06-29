@@ -6,8 +6,23 @@ var asteroid_texture = new THREE.TextureLoader().load('textures/asteroid.jpg');
 var asteroid_material = new THREE.MeshPhongMaterial({map: asteroid_texture});
 
 
+
+function getAsteroidMaterial(){
+	var vs = document.getElementById("vertex").textContent;
+	var fs = document.getElementById("fragment").textContent;
+	var material = THREE.ShaderMaterial( {
+
+		vertexShader: vs,
+		fragmentShader: fs
+	});
+
+	return meterial;
+}
+
+console.log(getAsteroidMaterial());
+
 //generate asteroids
-function generateAsteroid() {		
+function generateAsteroid() {
 	var size = 0.5 + 2 * Math.random();
 	var posX = -(areaWidth/2) + areaWidth * Math.random();
 	var posY = -(areaHeight/2) + areaHeight * Math.random();

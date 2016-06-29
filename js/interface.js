@@ -23,16 +23,16 @@ function displayGame(){
 	initialScreen.style.display = "none";
 	gameoverScreen.style.display = "none";
 
-	
+
 	//resets the score
 	scoreNumber.innerHTML =  0;
-	
+
 	//adjusts z-indexes
 	initialScreen.style.zIndex = "-1";
 	gameoverScreen.style.zIndex = "-1";
 	scoreTable.style.zIndex = "1";
 	canvas.style.zIndex = "0";
-	
+
 	//display game, score and camera switch divs
 	canvas.style.display = "block";
 	scoreNumber.style.display = "block";
@@ -45,10 +45,10 @@ function displayGame(){
 function displayGameOver() {
 	//adjusts z-indexes
 	gameoverScreen.style.zIndex = "0";
-	
+
 	//hides game, score and camera switch divs
 	scoreTable.style.display = "none";
-	
+
 	document.getElementById("yourScore").innerHTML = "Your score is "+ gameScore;
 	gameoverScreen.style.display = "block";
 }

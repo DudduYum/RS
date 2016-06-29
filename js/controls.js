@@ -1,3 +1,4 @@
+
 //keyboard controls
 var keyPressed = [];
 window.addEventListener("keydown", registerKeydown);
@@ -5,12 +6,12 @@ window.addEventListener("keyup", registerKeyup);
 
 function registerKeydown(event) {
 	if(event.keyCode == 32) {
-		gameStart();
+		// gameStart();
 	} else if(event.keyCode == 67) {
 		if(useGameCamera) {
-			switchToFreeCamera();
+			// switchToFreeCamera();
 		} else {
-			switchToGameCamera();
+			// switchToGameCamera();
 		}
 	} else {
 		keyPressed[event.keyCode] = true;
