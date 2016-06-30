@@ -1,100 +1,100 @@
 function createInterfaceManager( ScoreCTRL ){
-  var interfaceManager = {};
+	var interfaceManager = {};
 
-  var initialScreen = document.getElementById("initialScreen");
-  var gameoverScreen = document.getElementById("gameoverScreen");
-  var scoreNumber = document.getElementById("currentScore");
-  var scoreTable = document.getElementById("scoreTable");
-  var cameraSwitch = document.getElementById("cameraSwitch");
-
-
-  var freeSwitch = document.getElementById("freeCameraButton");
-  var gameSwitch = document.getElementById("gameCameraButton");
-
-  var activateGameCamera = undefined;
-  var activateFreeCamera = undefined;
-
-  interfaceManager.displayInitalScreen = function(){
-    {
-    	//hides game, score and camera switch divs
-    	scoreNumber.style.display = "none";
-    	scoreTable.style.display = "none";
-    	cameraSwitch.style.display = "none";
-    	//displays initial screen and spaceship
-    	initialScreen.style.display = "block";
-    	canvas.style.display = "block";
-    }
-  }
-
-  interfaceManager.displayGame = function(){
-    //hides initial or gameover divs
-  	initialScreen.style.display = "none";
-  	gameoverScreen.style.display = "none";
+	var initialScreen = document.getElementById("initialScreen");
+	var gameoverScreen = document.getElementById("gameoverScreen");
+	var scoreNumber = document.getElementById("currentScore");
+	var scoreTable = document.getElementById("scoreTable");
+	var cameraSwitch = document.getElementById("cameraSwitch");
 
 
-  	//resets the score
-  	scoreNumber.innerHTML = ScoreCTRL.getScore();
+	var freeSwitch = document.getElementById("freeCameraButton");
+	var gameSwitch = document.getElementById("gameCameraButton");
 
-  	//adjusts z-indexes
-  	initialScreen.style.zIndex = "-1";
-  	gameoverScreen.style.zIndex = "-1";
-  	scoreTable.style.zIndex = "1";
-  	canvas.style.zIndex = "0";
+	var activateGameCamera = undefined;
+	var activateFreeCamera = undefined;
 
-  	//display game, score and camera switch divs
-  	canvas.style.display = "block";
-  	scoreNumber.style.display = "block";
-  	scoreTable.style.display = "block";
-  	cameraSwitch.style.display = "block";
-  };
+	interfaceManager.displayInitalScreen = function(){
+		{
+			//hides game, score and camera switch divs
+			scoreNumber.style.display = "none";
+			scoreTable.style.display = "none";
+			cameraSwitch.style.display = "none";
+			//displays initial screen and spaceship
+			initialScreen.style.display = "block";
+			canvas.style.display = "block";
+		}
+	}
 
-  interfaceManager.displayGameOver = function(){
-    //adjusts z-indexes
-  	gameoverScreen.style.zIndex = "0";
+	interfaceManager.displayGame = function(){
+		//hides initial or gameover divs
+		initialScreen.style.display = "none";
+		gameoverScreen.style.display = "none";
 
-  	//hides game, score and camera switch divs
-  	scoreTable.style.display = "none";
 
-  	document.getElementById("yourScore").innerHTML = "Your score is "+ ScoreCTRL.getScore();
-  	gameoverScreen.style.display = "block";
-  };
+		//resets the score
+		scoreNumber.innerHTML = ScoreCTRL.getScore();
 
-  // interfaceManager.setScoreCTRL = function( scoreMng ){
-  //   ScoreCTRL = scoreMng;
-  // }
+		//adjusts z-indexes
+		initialScreen.style.zIndex = "-1";
+		gameoverScreen.style.zIndex = "-1";
+		scoreTable.style.zIndex = "1";
+		canvas.style.zIndex = "0";
 
-  interfaceManager.update = function(value){
-    scoreNumber.innerHTML = ScoreCTRL.getScore();
-  };
+		//display game, score and camera switch divs
+		canvas.style.display = "block";
+		scoreNumber.style.display = "block";
+		scoreTable.style.display = "block";
+		cameraSwitch.style.display = "block";
+	};
 
-  interfaceManager.setCameraSwitchs = function( toGame, toFree){
-    activateGameCamera = toGame;
-    activateFreeCamera = toFree;
-  }
+	interfaceManager.displayGameOver = function(){
+		//adjusts z-indexes
+		gameoverScreen.style.zIndex = "0";
 
-  interfaceManager.switchToFreeCamera  = function(){
+		//hides game, score and camera switch divs
+		scoreTable.style.display = "none";
 
-    gameSwitch.style.display = "block";
-    freeSwitch.style.display = "none";
+		document.getElementById("yourScore").innerHTML = "Your score is "+ ScoreCTRL.getScore();
+		gameoverScreen.style.display = "block";
+	};
 
-    if (activateFreeCamera != undefined) {
-      activateFreeCamera();
-    }
-  };
+	// interfaceManager.setScoreCTRL = function( scoreMng ){
+	//   ScoreCTRL = scoreMng;
+	// }
 
-  interfaceManager.switchToGameCamera = function(){
+	interfaceManager.update = function(value){
+		scoreNumber.innerHTML = ScoreCTRL.getScore();
+	};
 
-    gameSwitch.style.display = "none";
-    freeSwitch.style.display = "block";
+	interfaceManager.setCameraSwitchs = function( toGame, toFree){
+		activateGameCamera = toGame;
+		activateFreeCamera = toFree;
+	}
 
-    if (activateGameCamera != undefined) {
-      activateGameCamera();
-    }
-  };
+	interfaceManager.switchToFreeCamera  = function(){
 
-  // interfaceManager. = function(){
-  //
-  // }
+		gameSwitch.style.display = "block";
+		freeSwitch.style.display = "none";
 
-  return interfaceManager;
+		if (activateFreeCamera != undefined) {
+		  activateFreeCamera();
+		}
+	};
+
+	interfaceManager.switchToGameCamera = function(){
+
+		gameSwitch.style.display = "none";
+		freeSwitch.style.display = "block";
+
+		if (activateGameCamera != undefined) {
+		  activateGameCamera();
+		}
+	};
+
+	// interfaceManager. = function(){
+	//
+	// }
+
+	return interfaceManager;
 }
