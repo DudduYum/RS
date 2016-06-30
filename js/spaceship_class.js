@@ -1,4 +1,5 @@
 function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
+
   //spaceship3D size
   var spaceshipRadius = 0.5;
   var spaceshipLength = 5;
@@ -26,11 +27,13 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
   //spaceship3D collider, aproximated with 3 spheres
   var spaceshipColliders = [];
 
+
 	spaceshipColliders.push(new THREE.Sphere());
 	spaceshipColliders.push(new THREE.Sphere());
 	spaceshipColliders.push(new THREE.Sphere());
 
-  var timeStump = timer.getTime();
+
+  // var timeStump = timer.getTime();
 
 
 
@@ -270,10 +273,12 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
       settingsObj.gameAreaDepth()/2-spaceshipLength/2
     );
 
-    // reset colliders
-    spaceshipColliders[0].radius = spaceshipRadius;
-    spaceshipColliders[1].radius = spaceshipRadius;
-    spaceshipColliders[2].radius = spaceshipRadius;
+
+	  // reset colliders
+	  spaceshipColliders[0].radius = spaceshipRadius;
+	  spaceshipColliders[1].radius = spaceshipRadius;
+	  spaceshipColliders[2].radius = spaceshipRadius;
+
 
     spaceshipColliders[0].center.set(0,0,spaceship3D.position.z - ((spaceshipFrontSize + spaceshipBodySize/2 )* spaceshipLength));
     spaceshipColliders[1].center.set(0,0,spaceship3D.position.z);
@@ -288,7 +293,9 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
     // step = (timer.getTime() - timeStump) * settingsObj.moveSpeed();
     step = timer.passedTime() * settingsObj.moveSpeed();
 
-    randomMovement();
+
+	  randomMovement();
+
 
     if (spaceship3D.position.x > settingsObj.gameAreaWidth()/2 && movementTraker.hStep > 0 )
       movementTraker.hStep = 0;
@@ -305,7 +312,9 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
     updateColliders();
 
 
-  }
+
+	}
+
 
   spaceship.spaceShipObject = function(){
     return spaceship3D;
@@ -314,21 +323,23 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
   spaceship.isColliding = function(ast){
     // var res = false;
 
-    for (index in spaceshipColliders){
-      // console.log("in isColliding method strt");
-      // console.log(spaceshipColliders[index].center);
-      // console.log(ast.testCreation() );
-      // console.log("in isColliding method STOP");
-      if(ast.isCollidingWith(spaceshipColliders[index])){
-        return true;
-      }
-    }
-    return false;
-  };
+
+	  for (index in spaceshipColliders){
+	    // console.log("in isColliding method strt");
+	    // console.log(spaceshipColliders[index].center);
+	    // console.log(ast.testCreation() );
+	    // console.log("in isColliding method STOP");
+	    if(ast.isCollidingWith(spaceshipColliders[index])){
+	      return true;
+	    }
+	  }
+	  return false;
+	};
 
 
 
 // unit tests
+
   spaceship.testGenerale = function(){
     console.log(spaceship3D);
     console.log(spaceshipColliders);
@@ -351,4 +362,5 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
   spaceship.update();
 
   return spaceship;
+
 }

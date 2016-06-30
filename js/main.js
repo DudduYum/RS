@@ -3,20 +3,16 @@ function main(){
 	var settingsObj = createGameSettings();
 
 
-
 	// game timer
 	var timer = createTimer();
-
 
 
 	// game state manager
 	var stateCTRL;
 
 
-
 	// score counter
 	var scoreCTRL = createScoreCounter( timer , settingsObj);
-
 
 
 	// keyboard Input managment
@@ -35,7 +31,6 @@ function main(){
 	switchToFreeCamera = interfaceCTRL.switchToFreeCamera;
 
 
-
 	// environment
 	var envi = createEnvironment(settingsObj , 12 , 12 , 150 ,timer , inputCTRL);
 
@@ -48,8 +43,7 @@ function main(){
 
 
 
-
-	// 3D scene initialization //
+	//3D scene initialization
 	var scene = new THREE.Scene();
 	scene.fog = new THREE.FogExp2( 0x000000, 0.01);
 
