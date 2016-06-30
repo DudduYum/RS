@@ -1,29 +1,29 @@
 function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
-  //spaceship size
+  //spaceship3D size
   var spaceshipRadius = 0.5;
   var spaceshipLength = 5;
 
-  //ratios compared to spaceship length (eg 0.4 is 40% of length)
+  //ratios compared to spaceship3D length (eg 0.4 is 40% of length)
   var spaceshipFrontSize = 0.4;
   var spaceshipBodySize = 0.4;
   var spaceshipBackSize = 0.2;
 
-  //spaceship front
+  //spaceship3D front
   var spaceship_front_geometry = new THREE.CylinderGeometry(0, spaceshipRadius, spaceshipLength*spaceshipFrontSize);
   var spaceship_front_material = materialManager.shipMaterila;
   var spaceship_front = new THREE.Mesh(spaceship_front_geometry, spaceship_front_material);
 
-  //spaceship body
+  //spaceship3D body
   var spaceship_body_geometry = new THREE.CylinderGeometry(spaceshipRadius, spaceshipRadius, spaceshipLength*spaceshipBodySize);
   var spaceship_body_material = materialManager.shipMaterila;
   var spaceship_body = new THREE.Mesh(spaceship_body_geometry, spaceship_body_material);
 
-  //spaceship tail
+  //spaceship3D tail
   var spaceship_back_geometry =  new THREE.CylinderGeometry(spaceshipRadius/2, spaceshipRadius*4/5, spaceshipLength*spaceshipBackSize);
   var spaceship_back_material = materialManager.shipMaterila;
   var spaceship_back = new THREE.Mesh(spaceship_back_geometry, spaceship_back_material);
 
-  //spaceship collider, aproximated with 3 spheres
+  //spaceship3D collider, aproximated with 3 spheres
   var spaceshipColliders = [];
 
 	spaceshipColliders.push(new THREE.Sphere());
@@ -59,22 +59,22 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
   }
 
 
-  //spaceship assembly
-  var spaceship = new THREE.Object3D();
-  spaceship.add(spaceship_front);
+  //spaceship3D assembly
+  var spaceship3D = new THREE.Object3D();
+  spaceship3D.add(spaceship_front);
   spaceship_front.translateY((spaceshipFrontSize/2 + spaceshipBodySize + spaceshipBackSize) * spaceshipLength);
-  spaceship.add(spaceship_body);
+  spaceship3D.add(spaceship_body);
   spaceship_body.translateY((spaceshipBodySize/2 + spaceshipBackSize) * spaceshipLength);
-  spaceship.add(spaceship_back);
+  spaceship3D.add(spaceship_back);
   spaceship_back.translateY((spaceshipBackSize/2 * spaceshipLength));
 
-  spaceship.position.set(
+  spaceship3D.position.set(
     0,
     -spaceshipLength/2,
     settingsObj.gameAreaDepth()/2-spaceshipLength/2
   );
 
-  var spaceshipPosition = new THREE.Vector3().setFromMatrixPosition( spaceship.matrix  );
+  var spaceshipPosition = new THREE.Vector3().setFromMatrixPosition( spaceship3D.matrix  );
   var step = 0;
 
   // // collider translation functions
@@ -92,8 +92,8 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
 
   function updateColliders(){
     for (var i = 0 ; i < spaceshipColliders.length ; i++) {
-      spaceshipColliders[i].center.setX(spaceship.position.x);
-      spaceshipColliders[i].center.setY(spaceship.position.y);
+      spaceshipColliders[i].center.setX(spaceship3D.position.x);
+      spaceshipColliders[i].center.setY(spaceship3D.position.y);
     }
   };
 
@@ -148,7 +148,7 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
     // console.log("left");
     if( spaceshipPosition.x > -settingsObj.gameAreaWidth() / 2+1 ){
       movementTraker.hStep = -step;
-      // spaceship.translateX(-step);
+      // spaceship3D.translateX(-step);
       // updateColliders();
     }
   }
@@ -156,7 +156,7 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
     // console.log("right");
     if(spaceshipPosition.x < settingsObj.gameAreaWidth() / 2-1){
       movementTraker.hStep = step;
-      // spaceship.translateX(step);
+      // spaceship3D.translateX(step);
       // updateColliders();
     }
   }
@@ -164,7 +164,7 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
     // console.log("up");
     if(spaceshipPosition.y < settingsObj.gameAreaHeight() / 2-1){
       movementTraker.vStep = step;
-      // spaceship.translateZ(step);
+      // spaceship3D.translateZ(step);
       // updateColliders();
     }
   }
@@ -172,7 +172,7 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
     // console.log("down");
     if(spaceshipPosition.y > -settingsObj.gameAreaHeight() / 2+1) {
       movementTraker.vStep = -step;
-      // spaceship.translateZ(-step);
+      // spaceship3D.translateZ(-step);
       // updateColliders();
     }
   }
@@ -239,13 +239,13 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
 
 
 
-  var space_ship = {};
+  var spaceship = {};
 
-  //initialize spaceship position
+  //initialize spaceship3D position
   // function initializeSpaceshipPosition() {
-  //   // spaceship.rotation.x = degInRad(-90);
-  //   spaceship.rotation.x = -90 * Math.PI/180;
-  //   spaceship.position.set(
+  //   // spaceship3D.rotation.x = degInRad(-90);
+  //   spaceship3D.rotation.x = -90 * Math.PI/180;
+  //   spaceship3D.position.set(
   //     0 ,
   //     0 ,
   //     settingsObj.gameAreaDepth()/2-spaceshipLength/2
@@ -255,16 +255,16 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
   // };
 
   //rotate the ship towards asteroids
-  spaceship.rotation.x = -90 * Math.PI/180;
+  spaceship3D.rotation.x = -90 * Math.PI/180;
 
 
 
-  space_ship.reset = function(){
+  spaceship.reset = function(){
 
 
 
     // reset the ship
-    spaceship.position.set(
+    spaceship3D.position.set(
       0 ,
       0 ,
       settingsObj.gameAreaDepth()/2-spaceshipLength/2
@@ -275,43 +275,43 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
     spaceshipColliders[1].radius = spaceshipRadius;
     spaceshipColliders[2].radius = spaceshipRadius;
 
-    spaceshipColliders[0].center.set(0,0,spaceship.position.z - ((spaceshipFrontSize + spaceshipBodySize/2 )* spaceshipLength));
-    spaceshipColliders[1].center.set(0,0,spaceship.position.z);
-    spaceshipColliders[2].center.set(0,0,spaceship.position.z + ((spaceshipBodySize/2 + spaceshipBackSize)* spaceshipLength));
+    spaceshipColliders[0].center.set(0,0,spaceship3D.position.z - ((spaceshipFrontSize + spaceshipBodySize/2 )* spaceshipLength));
+    spaceshipColliders[1].center.set(0,0,spaceship3D.position.z);
+    spaceshipColliders[2].center.set(0,0,spaceship3D.position.z + ((spaceshipBodySize/2 + spaceshipBackSize)* spaceshipLength));
   };
 
 
 
-  //move the spaceship and keep it inside game borders
-  space_ship.update = function(){
-    var spaceshipPosition = new THREE.Vector3().setFromMatrixPosition( spaceship.matrix );
+  //move the spaceship3D and keep it inside game borders
+  spaceship.update = function(){
+    var spaceshipPosition = new THREE.Vector3().setFromMatrixPosition( spaceship3D.matrix );
     // step = (timer.getTime() - timeStump) * settingsObj.moveSpeed();
     step = timer.passedTime() * settingsObj.moveSpeed();
 
     randomMovement();
 
-    if (spaceship.position.x > settingsObj.gameAreaWidth()/2 && movementTraker.hStep > 0 )
+    if (spaceship3D.position.x > settingsObj.gameAreaWidth()/2 && movementTraker.hStep > 0 )
       movementTraker.hStep = 0;
-    if (spaceship.position.x < - settingsObj.gameAreaWidth()/2 && movementTraker.hStep < 0 )
+    if (spaceship3D.position.x < - settingsObj.gameAreaWidth()/2 && movementTraker.hStep < 0 )
       movementTraker.hStep = 0;
-    if (spaceship.position.y > settingsObj.gameAreaWidth()/2 && movementTraker.vStep > 0 )
+    if (spaceship3D.position.y > settingsObj.gameAreaWidth()/2 && movementTraker.vStep > 0 )
       movementTraker.vStep = 0;
-    if (spaceship.position.y < - settingsObj.gameAreaWidth()/2 && movementTraker.vStep < 0 )
+    if (spaceship3D.position.y < - settingsObj.gameAreaWidth()/2 && movementTraker.vStep < 0 )
       movementTraker.vStep = 0;
 
 
-    spaceship.translateX(movementTraker.hStep);
-    spaceship.translateZ(movementTraker.vStep);
+    spaceship3D.translateX(movementTraker.hStep);
+    spaceship3D.translateZ(movementTraker.vStep);
     updateColliders();
 
 
   }
 
-  space_ship.spaceShipObject = function(){
-    return spaceship;
+  spaceship.spaceShipObject = function(){
+    return spaceship3D;
   };
 
-  space_ship.isColliding = function(ast){
+  spaceship.isColliding = function(ast){
     // var res = false;
 
     for (index in spaceshipColliders){
@@ -329,15 +329,15 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
 
 
 // unit tests
-  space_ship.testGenerale = function(){
-    console.log(spaceship);
+  spaceship.testGenerale = function(){
+    console.log(spaceship3D);
     console.log(spaceshipColliders);
   }
 
-  space_ship.colliderMoveTest = function(){
+  spaceship.colliderMoveTest = function(){
     console.log("--------");
     console.log("--------");
-    console.log(spaceship.position);
+    console.log(spaceship3D.position);
 
     console.log("--------");
     console.log(spaceshipColliders[0].center);
@@ -348,7 +348,7 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
   }
 
   // initialization
-  space_ship.update();
+  spaceship.update();
 
-  return space_ship;
+  return spaceship;
 }
