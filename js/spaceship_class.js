@@ -239,7 +239,7 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
 
 
 
-  var space_ship = {};
+  var spaceship = {};
 
   //initialize spaceship position
   // function initializeSpaceshipPosition() {
@@ -255,11 +255,11 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
   // };
 
   //rotate the ship towards asteroids
-  spaceship.rotation.x = -90 * Math.PI/180;
+  //spaceship.rotation.x = -90 * Math.PI/180;
 
 
 
-  space_ship.reset = function(){
+  spaceship.reset = function(){
 
 
 
@@ -283,7 +283,7 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
 
 
   //move the spaceship and keep it inside game borders
-  space_ship.update = function(){
+  spaceship.update = function(){
     var spaceshipPosition = new THREE.Vector3().setFromMatrixPosition( spaceship.matrix );
     // step = (timer.getTime() - timeStump) * settingsObj.moveSpeed();
     step = timer.passedTime() * settingsObj.moveSpeed();
@@ -307,11 +307,11 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
 
   }
 
-  space_ship.spaceShipObject = function(){
+  spaceship.spaceShipObject = function(){
     return spaceship;
   };
 
-  space_ship.isColliding = function(ast){
+  spaceship.isColliding = function(ast){
     // var res = false;
 
     for (index in spaceshipColliders){
@@ -329,12 +329,12 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
 
 
 // unit tests
-  space_ship.testGenerale = function(){
+  spaceship.testGenerale = function(){
     console.log(spaceship);
     console.log(spaceshipColliders);
   }
 
-  space_ship.colliderMoveTest = function(){
+  spaceship.colliderMoveTest = function(){
     console.log("--------");
     console.log("--------");
     console.log(spaceship.position);
@@ -348,7 +348,7 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
   }
 
   // initialization
-  space_ship.update();
+  spaceship.update();
 
-  return space_ship;
+  return spaceship;
 }
