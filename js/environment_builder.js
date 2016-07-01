@@ -12,7 +12,7 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 
   Settings = settingsObject,
 
-  TextureManager,
+  materialManager,
 
   Envi = {},
 // asteroid param
@@ -22,6 +22,8 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 
   // spaceship
   spaceS ,
+
+  materialManager,
 
 
 
@@ -48,12 +50,11 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 
     // init the texture manager
     // tmp code
-    TextureManager = {
-       asteroidMaterial: new THREE.MeshBasicMaterial({color:0xff0000}),
-       shipMaterila : new THREE.MeshBasicMaterial({color:0x00ff00})
-     };
+    materialManager = creatMaterialManager();
 
-    spaceS = createSpaceShip( Settings, TextureManager , IO_controls , timer);
+    materialManager.shipMaterila = new THREE.MeshBasicMaterial({color:0x00ff00});
+
+    spaceS = createSpaceShip( Settings, materialManager , IO_controls , timer);
 
     // test
     // spaceS.colliderMoveTest();
@@ -141,7 +142,7 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
     while(ActiveAsteroid.length + PassiveAsteroid.length < AsteroidNumMax ) {
       PassiveAsteroid.push( createAsteroid (
           Settings,
-          TextureManager,
+          materialManager,
           timer
         )
       );

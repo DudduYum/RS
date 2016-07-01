@@ -116,7 +116,26 @@ function main(){
 	);
 
 
+	//tmp
+  var MM = creatMaterialManager();
+	MM.getAsteroidMaterial();
+  var material = MM.getAsteroidMaterial();
+	var testmaterial = new THREE.MeshBasicMaterial({color: 0xff0000});
 
+
+	console.log(material);
+  var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+  var cube = new THREE.Mesh( geometry, material );
+
+
+	var light = new THREE.AmbientLight( 0xffffff );
+	// scene.add(light);
+  scene.add( cube );
+
+  cube.position.z = -10;
+	cube.position.x = 1;
+
+	// cube.scale
 
 
 
@@ -149,11 +168,10 @@ function main(){
 
 			// interface
 			interfaceCTRL.displayGame();
-			console.log("here come dat boi");
 		},
 		function(){
 			interfaceCTRL.displayGameOver();
-			console.log("shit waddupp?");
+
 		}
 	);
 
