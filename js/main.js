@@ -35,11 +35,7 @@ function main(){
 	var envi = createEnvironment(settingsObj , 12 , 12 , 150 ,timer , inputCTRL);
 
 	// init of environment
-	envi.setPosition(
-		0 ,
-		0 ,
-		-((settingsObj.gameAreaDepth() / 2) + 4)
-	);
+	envi.setPosition(0,	0, -((settingsObj.gameAreaDepth() / 2) + 4));
 
 
 
@@ -103,13 +99,11 @@ function main(){
 	interfaceCTRL.setCameraSwitchs(
 		function(){
 			// switch to game camera
-
 			orbitControls.enabled = false;
 			useGameCamera = true;
-		} ,
+		},
 		function(){
 			// switch to free camera
-
 			useGameCamera = false;
 			orbitControls.enabled = true;
 		}
@@ -131,8 +125,6 @@ function main(){
 
 			gameCamera.updateProjectionMatrix();
 			freeCamera.updateProjectionMatrix();
-
-
 		},
 		false
 	);
@@ -199,8 +191,6 @@ function main(){
 
 		stats.update();
 		timer.update();
-
-
 		render();
 	};
 

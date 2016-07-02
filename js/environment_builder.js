@@ -8,7 +8,14 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 	// aWidth = width * settingsObject.screenRatio,
 	// aHeight = height,
 	// aDepth = depth,
-
+	
+	var openSpaceGeometry  = new THREE.SphereGeometry(150,32, 32);
+	var openSpaceTexture = new THREE.TextureLoader().load('textures/space.jpg');
+	var openSpaceMaterial  = new THREE.MeshBasicMaterial({map: openSpaceTexture});
+	openSpaceMaterial.side  = THREE.BackSide;
+	var openSpace  = new THREE.Mesh(openSpaceGeometry, openSpaceMaterial);
+	
+	
 	var Settings = settingsObject;
 	var TextureManager;
 	var Envi = {};
@@ -21,7 +28,7 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 	var spaceS;
 	var spamTimeKeeper = timer.getTime();
 	var game3Dscene = new THREE.Object3D();
-
+	game3Dscene.add(openSpace);
 
 
 	(function (){
