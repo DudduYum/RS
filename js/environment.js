@@ -3,11 +3,10 @@ var game = new THREE.Object3D();
 scene.add(game);
 
 //sphere map
-var openSpaceGeometry  = new THREE.SphereGeometry(50,32, 32);
+var openSpaceGeometry  = new THREE.SphereGeometry(150,32, 32);
 var openSpaceMaterial  = new THREE.MeshBasicMaterial();
 openSpaceMaterial.map   = THREE.ImageUtils.loadTexture('textures/space.png');
 openSpaceMaterial.side  = THREE.BackSide;
-// create the mesh based on geometry and material
 var openSpace  = new THREE.Mesh(openSpaceGeometry, openSpaceMaterial);
 
 
