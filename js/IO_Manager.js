@@ -19,20 +19,20 @@ function createGameIOManager( ){
 	// and the function that has bees saved in the structure previosly
 	IO_controller.addKeyDownAlias = function(frsKeyCode, scdKeyCode){
 		if( keyDownMapping[scdKeyCode] != undefined && (typeof( keyDownMapping[ scdKeyCode ]) != "number")  ){
-		  keyDownMapping[frsKeyCode] = scdKeyCode;
+			keyDownMapping[frsKeyCode] = scdKeyCode;
 		}else{
-		  console.log("Can't create alias to another alias or undefined!");
+			console.log("Can't create alias to another alias or undefined!");
 		}
 	};
 
 	// this method execute callback function given the key code
 	IO_controller.keyDownAction = function(event){
 		if( keyDownMapping[ event.keyCode] != undefined ){
-		  if(typeof( keyDownMapping[ event.keyCode]) != "number"){
-		    keyDownMapping[event.keyCode]();
-		  }else{
-		    keyDownMapping[ keyDownMapping[ event.keyCode] ]();
-		  }
+			if(typeof( keyDownMapping[ event.keyCode]) != "number"){
+				keyDownMapping[event.keyCode]();
+			}else{
+				keyDownMapping[ keyDownMapping[ event.keyCode] ]();
+			}
 		}
 	};
 
@@ -46,9 +46,9 @@ function createGameIOManager( ){
 
 	IO_controller.addKeyUpAlias = function(frsKeyCode, scdKeyCode){
 		if( keyUpMapping[scdKeyCode] != undefined && (typeof( keyUpMapping[ scdKeyCode ]) != "number")  ){
-		  keyUpMapping[frsKeyCode] = scdKeyCode;
+			keyUpMapping[frsKeyCode] = scdKeyCode;
 		}else{
-		  console.log("Can't create alias to another alias or undefined!");
+			console.log("Can't create alias to another alias or undefined!");
 		}
 	};
 
@@ -56,11 +56,11 @@ function createGameIOManager( ){
 	// the same as addKeyDownAlias. Read the description abowe
 	IO_controller.keyUpAction = function(event){
 		if( keyUpMapping [ event.keyCode ] != undefined ){
-		  if(typeof( keyUpMapping [ event.keyCode ]) != "number"){
-		    keyUpMapping [event.keyCode]();
-		  }else{
-		    keyUpMapping[ keyUpMapping[ event.keyCode ]]();
-		  }
+			if(typeof( keyUpMapping [ event.keyCode ]) != "number"){
+				keyUpMapping [event.keyCode]();
+			}else{
+				keyUpMapping[ keyUpMapping[ event.keyCode ]]();
+			}
 		}
 	};
 

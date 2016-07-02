@@ -8,6 +8,7 @@ var openSpaceMaterial  = new THREE.MeshBasicMaterial();
 openSpaceMaterial.map   = THREE.ImageUtils.loadTexture('textures/space.png');
 openSpaceMaterial.side  = THREE.BackSide;
 var openSpace  = new THREE.Mesh(openSpaceGeometry, openSpaceMaterial);
+scene.add(openSpace);
 
 
 //playable zone

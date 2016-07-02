@@ -39,7 +39,7 @@ function createTimer(){
 		console.log("update test")
 		console.log(this.getTime());
 		for(var i = 0; i< 10000 ; i++){
-		  this.update();
+			this.update();
 		}
 		console.log(this.getTime());
 

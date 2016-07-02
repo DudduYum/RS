@@ -78,7 +78,7 @@ function createInterfaceManager( ScoreCTRL ){
 		freeSwitch.style.display = "none";
 
 		if (activateFreeCamera != undefined) {
-		  activateFreeCamera();
+			activateFreeCamera();
 		}
 	};
 
@@ -88,7 +88,7 @@ function createInterfaceManager( ScoreCTRL ){
 		freeSwitch.style.display = "block";
 
 		if (activateGameCamera != undefined) {
-		  activateGameCamera();
+			activateGameCamera();
 		}
 	};
 

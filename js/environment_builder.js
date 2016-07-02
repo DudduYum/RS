@@ -49,8 +49,8 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 		// init the texture manager
 		// tmp code
 		TextureManager = {
-		   asteroidMaterial: new THREE.MeshBasicMaterial({color:0xff0000}),
-		   shipMaterila : new THREE.MeshBasicMaterial({color:0x00ff00})
+			 asteroidMaterial: new THREE.MeshBasicMaterial({color:0xff0000}),
+			 shipMaterila : new THREE.MeshBasicMaterial({color:0x00ff00})
 		 };
 
 		spaceS = createSpaceShip( Settings, TextureManager , IO_controls , timer);
@@ -70,11 +70,11 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 	// collision detection
 	function detectCollisions(){
 		for(j=0; j < ActiveAsteroid.length; j++){
-		  if(spaceS.isColliding(ActiveAsteroid[j])){
-		    throw {
-		      asteroid: ActiveAsteroid[j].mesh
-		    };
-		  }
+			if(spaceS.isColliding(ActiveAsteroid[j])){
+				throw {
+					asteroid: ActiveAsteroid[j].mesh
+				};
+			}
 		}
 	};
 
@@ -87,14 +87,14 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 	function activateAsteroids(){
 
 		if(timer.getTime() - spamTimeKeeper > Settings.spawnDelay() ){
-		  var newAsteroid = PassiveAsteroid.pop();
-		  newAsteroid.update();
-		  ActiveAsteroid.push(newAsteroid);
+			var newAsteroid = PassiveAsteroid.pop();
+			newAsteroid.update();
+			ActiveAsteroid.push(newAsteroid);
 
 
-		  game3Dscene.add(newAsteroid.mesh());
+			game3Dscene.add(newAsteroid.mesh());
 
-		  spamTimeKeeper = timer.getTime();
+			spamTimeKeeper = timer.getTime();
 		}
 
 	}
@@ -113,9 +113,9 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 	//game are position
 	Envi.setPosition = function(px, py , pz){
 		game3Dscene.position.set(
-		  px ,
-		  py ,
-		  pz
+			px ,
+			py ,
+			pz
 		);
 	};
 
@@ -139,12 +139,12 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 
 		//if there aren't enough asteroid add some
 		while(ActiveAsteroid.length + PassiveAsteroid.length < AsteroidNumMax ) {
-		  PassiveAsteroid.push( createAsteroid (
-		      Settings,
-		      TextureManager,
-		      timer
-		    )
-		  );
+			PassiveAsteroid.push( createAsteroid (
+					Settings,
+					TextureManager,
+					timer
+				)
+			);
 		}
 
 
@@ -154,7 +154,7 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 	//this method moves asteroids and make them visible
 	Envi.moveAsteroids = function(){
 		if(PassiveAsteroid.length <= 0){
-		  AsteroidNumMax += 5;
+			AsteroidNumMax += 5;
 		}
 
 		// correct the number of asteroid dynimically
@@ -165,17 +165,17 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 		activateAsteroids();
 
 		for (astIndex in ActiveAsteroid ){
-		  var asteroid = ActiveAsteroid[astIndex];
+			var asteroid = ActiveAsteroid[astIndex];
 
-		  asteroid.move( timer.getTime() );
+			asteroid.move( timer.getTime() );
 
-		  if( asteroid.hasCrossLimit()){
+			if( asteroid.hasCrossLimit()){
 
-		    ActiveAsteroid.splice(astIndex,1);
-		    game3Dscene.remove(asteroid.mesh());
+				ActiveAsteroid.splice(astIndex,1);
+				game3Dscene.remove(asteroid.mesh());
 
-		    PassiveAsteroid.push(asteroid);
-		  }
+				PassiveAsteroid.push(asteroid);
+			}
 		}
 	};
 
@@ -201,9 +201,9 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 
 	Envi.reset = function(){
 		while ( ActiveAsteroid.length != 0 ){
-		  var ast = ActiveAsteroid.pop();
-		  game3Dscene.remove(ast.mesh());
-		  PassiveAsteroid.push(ast);
+			var ast = ActiveAsteroid.pop();
+			game3Dscene.remove(ast.mesh());
+			PassiveAsteroid.push(ast);
 		}
 
 		spaceS.reset();
@@ -235,7 +235,6 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 		console.log(ActiveAsteroid.length);
 
 		// console.log(ActiveAsteroid)
-
 		// console.log(ActiveAsteroid);
 		// console.log(game3Dscene.children.length);
 	};
@@ -246,7 +245,7 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 		console.log(game3Dscene.position);
 		console.log("asteroid position");
 		for (astIn in PassiveAsteroid){
-		  console.log(PassiveAsteroid[astIn].mesh().position);
+			console.log(PassiveAsteroid[astIn].mesh().position);
 		}
 
 	};

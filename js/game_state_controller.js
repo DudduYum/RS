@@ -24,16 +24,16 @@ function createGameState(startFun, stopFun ){
 	// execute some call back function
 	gameCntr.start = function(){
 		if( !gameRunning ){
-		  gameRunning = true;
+			gameRunning = true;
 
-		  //use callBack function call
-		  if(startAction != undefined){
-		    startAction();
-		  }
+			//use callBack function call
+			if(startAction != undefined){
+				startAction();
+			}
 		}
 
 		if(gameRunning == true)
-		  console.log("warring: game is alredy running !");
+			console.log("warring: game is alredy running !");
 
 	}
 
@@ -41,16 +41,16 @@ function createGameState(startFun, stopFun ){
 	// execute some call back function
 	gameCntr.end = function(){
 		if( gameRunning ){
-		  gameRunning = false;
+			gameRunning = false;
 
-		  //use callBack function call
-		  if(stopAction != undefined){
-		    stopAction();
-		  }
+			//use callBack function call
+			if(stopAction != undefined){
+				stopAction();
+			}
 		}
 
 		if(gameRunning == false)
-		  console.log("warring: game is alredy stopped !");
+			console.log("warring: game is alredy stopped !");
 
 	}
 

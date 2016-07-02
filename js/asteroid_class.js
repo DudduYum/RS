@@ -58,9 +58,9 @@ function createAsteroid(settingsObject, materialManager, timer){
 
 		//reset position
 		mesh.position.set(
-		  settingsObject.coordinatRandValue( settingsObject.gameAreaWidth() ),  //X
-		  settingsObject.coordinatRandValue( settingsObject.gameAreaHeight() ),  //Y
-		  settingsObject.asteroidStartPoint()
+			settingsObject.coordinatRandValue( settingsObject.gameAreaWidth() ),  //X
+			settingsObject.coordinatRandValue( settingsObject.gameAreaHeight() ),  //Y
+			settingsObject.asteroidStartPoint()
 		);
 
 		// rescale mesh
@@ -71,9 +71,9 @@ function createAsteroid(settingsObject, materialManager, timer){
 
 		//upadate collider
 		collider.center.set(
-		  mesh.position.x,
-		  mesh.position.y,
-		  mesh.position.z
+			mesh.position.x,
+			mesh.position.y,
+			mesh.position.z
 		);
 
 		collider.radius = size;
