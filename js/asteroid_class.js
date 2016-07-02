@@ -12,17 +12,11 @@ function createAsteroid(settingsObject, materialManager, timer){
 		1
 	);
 	var mat = materialManager.asteroidMaterial;
-	var mesh = new THREE.Mesh(geom , mat);
+	var mesh = new THREE.Mesh(geom, mat);
 
 	var activationTime;
 
 	var collider = mesh.geometry.boundingSphere.clone();
-
-
-
-
-
-
 
 
 

@@ -50,14 +50,14 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 		//questo codice era nel mio environment_builder
 		/*TextureManager = {
 			 asteroidMaterial: new THREE.MeshBasicMaterial({color:0xff0000}),
-			 shipMaterila : new THREE.MeshBasicMaterial({color:0x00ff00})
+			 shipMaterial : new THREE.MeshBasicMaterial({color:0x00ff00})
 		 };*/
 		 
-		materialManager = creatMaterialManager();
+		materialManager = createMaterialManager();
 
-		materialManager.shipMaterila = new THREE.MeshBasicMaterial({color:0x00ff00});
+		materialManager.shipMaterial = new THREE.MeshBasicMaterial({color:0x00ff00});
 
-		spaceS = createSpaceShip(Settings, TextureManager, IO_controls, timer);
+		spaceS = createSpaceship(Settings, materialManager, IO_controls, timer);
 
 		// test
 		// spaceS.colliderMoveTest();
@@ -138,18 +138,10 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 
 	//creat asteroid for the future use
 	Envi.addAsteroids = function(){
-
 		//if there aren't enough asteroid add some
 		while(ActiveAsteroid.length + PassiveAsteroid.length < AsteroidNumMax ) {
-			PassiveAsteroid.push( createAsteroid (
-					Settings,
-					TextureManager,
-					timer
-				)
-			);
+			PassiveAsteroid.push(createAsteroid(Settings, materialManager, timer));
 		}
-
-
 	};
 
 	// ASTEROIDS
@@ -160,15 +152,15 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 		}
 
 
-    //if there aren't enough asteroid add some
-    while(ActiveAsteroid.length + PassiveAsteroid.length < AsteroidNumMax ) {
-      PassiveAsteroid.push( createAsteroid (
-          Settings,
-          materialManager,
-          timer
-        )
-      );
-    }
+		//if there aren't enough asteroid add some
+		while(ActiveAsteroid.length + PassiveAsteroid.length < AsteroidNumMax ) {
+			PassiveAsteroid.push( createAsteroid (
+					Settings,
+					materialManager,
+					timer
+				)
+			);
+		}
 
 		this.addAsteroids();
 
