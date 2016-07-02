@@ -3,35 +3,24 @@
 
 function createEnvironment(settingsObject , width, height, depth, timer, IO_controls){
 
-	var
 	// GameTimer = timer,
 	// forse non serve
 	// aWidth = width * settingsObject.screenRatio,
 	// aHeight = height,
 	// aDepth = depth,
 
-	Settings = settingsObject,
-
-	TextureManager,
-
-	Envi = {},
-// asteroid param
-	AsteroidNumMax = 10,
-	ActiveAsteroid = [],
-	PassiveAsteroid = [],
+	var Settings = settingsObject;
+	var TextureManager;
+	var Envi = {};
+	//asteroid param
+	var AsteroidNumMax = 10;
+	var ActiveAsteroid = [];
+	var PassiveAsteroid = [];
 
 	// spaceship
-	spaceS ,
-
-
-
-	spamTimeKeeper = timer.getTime(),
-
-	game3Dscene = new THREE.Object3D()
-
-
-	;
-
+	var spaceS;
+	var spamTimeKeeper = timer.getTime();
+	var game3Dscene = new THREE.Object3D();
 
 
 
@@ -111,12 +100,8 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 	};
 
 	//game are position
-	Envi.setPosition = function(px, py , pz){
-		game3Dscene.position.set(
-			px ,
-			py ,
-			pz
-		);
+	Envi.setPosition = function(px, py, pz){
+		game3Dscene.position.set(px, py, pz);
 	};
 
 	//game area dimensions
