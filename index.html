@@ -13,20 +13,24 @@
 		<script type="text/javascript" src="lib/requirejs_2.2.js"></script>
 		<script type="text/javascript" src="lib/OrbitControls.js"></script>
 		<script type="text/javascript" src="lib/stats.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 		<!--  Our scripts and class-->
-		<script type="text/javascript" src="js/IO_Manager.js"></script><!-- X -->
+		<script type="text/javascript" src="js/IO_Manager.js"></script><!-- V -->
 		<script type="text/javascript" src="js/game_score_counter.js"></script><!-- V -->
 		<script type="text/javascript" src="js/game_state_controller.js"></script><!-- V -->
 		<script type="text/javascript" src="js/game_settings_object.js"></script><!-- V -->
 		<script type="text/javascript" src="js/environment_builder.js"></script><!-- V -->
-		<script type="text/javascript" src="js/asteroid_class.js"></script>
-		<script type="text/javascript" src="js/spaceship_class.js"></script>
-		<script type="text/javascript" src="js/timer.js"></script>
-		<script type="text/javascript" src="js/interfaceControl.js"></script>
-		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" src="js/asteroid_class.js"></script> <!-- V -->
+		<script type="text/javascript" src="js/spaceship_class.js"></script><!-- V -->
+		<script type="text/javascript" src="js/game_Materials.js"></script>
+		<script type="text/javascript" src="js/timer.js"></script><!-- V -->
+		<script type="text/javascript" src="js/interfaceControl.js"></script><!-- V -->
+		<script type="text/javascript" src="js/main.js"></script><!-- V -->
 
-		<script type="text/ogsl" id="vertex">
+
+
+		<script type="text/ogsl" id="asteroidVS">
 			varying vec3 tNorm;
 			varying vec2 vUv;
 
@@ -38,14 +42,14 @@
 			}
 		</script>
 
-		<script type="text/ogsl" id="fragment">
-			vatying vec3 tNorm;
+		<script type="text/ogsl" id="asteroidFS">
+			varying vec3 tNorm;
 			varying vec2 vUv;
-			uniform sampler2D texture;
+			uniform sampler2D tex;
 
 			void main(){
-				vec4 color = texture2D(texture,vUv);
-				gl_FragColor = vec4(color.rgb, 1. );
+				vec4 color = texture2D(tex,vUv);
+				gl_FragColor = color;
 			}
 		</script>
 
@@ -111,9 +115,10 @@
 			<p >Developed by Riccardo Lulli, Rostyslav Kostyuk</p>
 		</div>
 
-		
+
 		<!--  game evocation -->
 		<script type="text/javascript" >
+
 
 
 

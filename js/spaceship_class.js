@@ -263,8 +263,9 @@ function createSpaceShip( settingsObj, materialManager, IO_controls ,timer){
 
 
   spaceship.reset = function(){
-
-
+    // 
+    movementTraker.hStep = 0;
+    movementTraker.vStep = 0;
 
     // reset the ship
     spaceship3D.position.set(

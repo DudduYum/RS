@@ -3,6 +3,7 @@
 
 function createEnvironment(settingsObject , width, height, depth, timer, IO_controls){
 
+
 	// GameTimer = timer,
 	// forse non serve
 	// aWidth = width * settingsObject.screenRatio,
@@ -28,6 +29,7 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 	var spaceS;
 	var spamTimeKeeper = timer.getTime();
 	var game3Dscene = new THREE.Object3D();
+	
 	game3Dscene.add(openSpace);
 
 
@@ -44,12 +46,18 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 
 		// init the texture manager
 		// tmp code
-		TextureManager = {
+		
+		//questo codice era nel mio environment_builder
+		/*TextureManager = {
 			 asteroidMaterial: new THREE.MeshBasicMaterial({color:0xff0000}),
 			 shipMaterila : new THREE.MeshBasicMaterial({color:0x00ff00})
-		 };
+		 };*/
+		 
+		materialManager = creatMaterialManager();
 
-		spaceS = createSpaceShip( Settings, TextureManager , IO_controls , timer);
+		materialManager.shipMaterila = new THREE.MeshBasicMaterial({color:0x00ff00});
+
+		spaceS = createSpaceShip(Settings, TextureManager, IO_controls, timer);
 
 		// test
 		// spaceS.colliderMoveTest();
@@ -78,6 +86,8 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 		Settings.setGameAreaWidth(width * Settings.screenRatio());
 		Settings.setGameAreaHeight(height);
 	};
+
+
 
 
 	function activateAsteroids(){
@@ -149,7 +159,16 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 			AsteroidNumMax += 5;
 		}
 
-		// correct the number of asteroid dynimically
+
+    //if there aren't enough asteroid add some
+    while(ActiveAsteroid.length + PassiveAsteroid.length < AsteroidNumMax ) {
+      PassiveAsteroid.push( createAsteroid (
+          Settings,
+          materialManager,
+          timer
+        )
+      );
+    }
 
 		this.addAsteroids();
 
