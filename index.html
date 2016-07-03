@@ -31,24 +31,44 @@
 
 
 		<script type="text/ogsl" id="asteroidVS">
-			varying vec3 tNorm;
+			// varying vec3 tNorm;
 			varying vec2 vUv;
+			varying float noise;
+			uniform sampler2D displaysmentMap;
 
 
-			void main(){
-				tNorm = normalMatrix * normal;
-				gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.);
-				vUv = uv;
+
+
+			void main() {
+
+			    vUv = uv;
+
+					// tNorm = normalMatrix * normal;
+
+					// get texture coordinates
+					vec4 distortion = texture2D( displaysmentMap , uv);
+
+					//change the normal
+					vec3 newNormal = normal * distortion.x * 0.5;
+
+					// actually make displaysment
+					vec3 nPosition = position + newNormal ;
+
+					// calculate the position
+					gl_Position = projectionMatrix * modelViewMatrix * vec4( nPosition , 1.) ;
+
 			}
 		</script>
 
 		<script type="text/ogsl" id="asteroidFS">
-			varying vec3 tNorm;
+			// varying vec3 tNorm;
+			varying float noise;
 			varying vec2 vUv;
 			uniform sampler2D tex;
 
 			void main(){
-				vec4 color = texture2D(tex,vUv);
+				vec2 noise = vec2( vUv * ( 1. - 2. * noise ) );
+				vec4 color = texture2D(tex,noise);
 				gl_FragColor = color;
 			}
 		</script>
@@ -70,7 +90,7 @@
 			};
 
 		</script>
-
+		
 
 
 		<div id="canvas"></div>

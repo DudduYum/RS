@@ -8,22 +8,30 @@ function creatMaterialManager(){
   spaceshipMaterial,
   sunMaterial,
 
-  textureLoader
+  asteroidNormalMap,
+
+  asteroidDisplaysmentMap,
+
+
+
+
+  // textureLoader manager initialization
+  textureLoader = new THREE.TextureLoader(),
+
+  asteroidMaterial
   ;
 
+  var pointLightPositio,
+  pointLightPower
+  ;
+
+  // private methods
   materialManager.asteroidMaterial;
 
-
-
-  (function (){
-    // textureLoader manager initialization
-    var textureLoader = new THREE.TextureLoader()
-
-
-    // load a resource
-    asteroidTexture = textureLoader.load(
+  function loadImg(imgSrc){
+    img = textureLoader.load(
     	// resource URL
-    	'textures/asteroid.jpg',
+    	imgSrc,
     	// Function when resource is loaded
     	function ( texture ) {
     		// do something with the texture
@@ -41,34 +49,71 @@ function creatMaterialManager(){
     	});
 
 
+      return img;
+  }
 
-  })();
+  // texture initialization
+  // (function (){
+  //
+  //
+  //
+  //   // asteroid texture
+  //   asteroidTexture = loadImg('textures/asteroid.jpg');
+  //
+  //   // normal map that is used for light calculation
+  //   asteroidNormalMap = loadImg('textures/normalAst.png');
+  //
+  //   // displaysmant map used for vertex distortion
+  //   asteroidDisplaysmentMap = loadImg('textures/displaysmentAst.png');
+  //
+  //
+  //
+  //
+  // })();
 
-  materialManager.getAsteroidMaterial = function(){
 
+  function createUniforms(){
+    // asteroid texture
+    asteroidTexture = loadImg('textures/asteroid.jpg');
 
+    // normal map that is used for light calculation
+    asteroidNormalMap = loadImg('textures/normalAst.png');
 
-    var material = this.getMaterialByName("asteroid");
-    console.log(asteroidTexture);
+    // displaysmant map used for vertex distortion
+    asteroidDisplaysmentMap = loadImg('textures/displaysmentAst.png');
 
     var uniforms = {
       tex: {
         type: "t",
         value: asteroidTexture
+      },
+      normalMap: {
+        type:  "t",
+        value: asteroidNormalMap
+      },
+      displaysmentMap: {
+        type:  "t",
+        value: asteroidDisplaysmentMap
+      },
+      pLight: {
+        type: "vec3",
+        value: new THREE.Vector3()
       }
     };
 
-    material.uniforms = uniforms;
-
-
-    return material;
+    return uniforms;
   }
 
-  materialManager.getMaterialByName = function(objectName){
+
+
+
+
+  function getMaterialByName(objectName){
     var vs = document.getElementById(objectName + "VS").textContent;
     var fs = document.getElementById(objectName + "FS").textContent;
 
     var uniforms = {};
+
 
     var material = new THREE.ShaderMaterial({
       uniforms: uniforms,
@@ -80,9 +125,49 @@ function creatMaterialManager(){
     return material;
   }
 
+  function initAstMaterial (){
+
+    asteroidMaterial = getMaterialByName("asteroid");
+
+
+    asteroidMaterial.uniforms = createUniforms();;
+
+  }
+
+  materialManager.getAsteroidMaterial = function(){
+
+    var newMat = asteroidMaterial.clone();
+
+    newMat.uniforms = createUniforms();
+
+    return   newMat;
+  }
+
+
+
+
 
   // crete default materials
-  materialManager.asteroidMaterial = materialManager.getAsteroidMaterial();
+  // materialManager.asteroidMaterial = materialManager.getAsteroidMaterial();
+  initAstMaterial();
 
+  console.log(asteroidMaterial);
+  console.log(asteroidMaterial.clone());
+  var newMat = asteroidMaterial.clone();
+
+  newMat.uniforms = {
+    tex: {
+      type: "t",
+      value: asteroidTexture
+    },
+    normalMap: {
+      type:  "t",
+      value: asteroidNormalMap
+    },
+    displaysmentMap: {
+      type:  "t",
+      value: asteroidDisplaysmentMap
+    }
+  }
   return materialManager;
 }

@@ -9,9 +9,23 @@ function createAsteroid(settingsObject, materialManager, timer){
   // create mesh
   var geom = new THREE.SphereGeometry(
     // settingsObject.sizeRandValue()
-    1
+    1,
+    32,
+    32
   );
-  var mat = materialManager.asteroidMaterial;
+
+
+  var mat = materialManager.getAsteroidMaterial();
+
+  // console.log(mat.map);
+  // mat.needsUpdate = true;
+
+  // console.log(mat);
+
+
+
+
+
   var mesh = new THREE.Mesh(geom , mat);
 
   var activationTime;
