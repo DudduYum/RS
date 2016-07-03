@@ -1,29 +1,35 @@
 //this file saves all sheders
 // asteroid
 
-function creatMaterialManager(){
-  var materialManager = {},
+function createMaterialManager(){
 
-  asteroidTexture ,
-  spaceshipMaterial,
-  sunMaterial,
+	var materialManager = {};
+	var asteroidTexture;
+	var spaceshipMaterial;
+	var sunMaterial;
+	var textureLoader;
 
-  asteroidNormalMap,
 
-  asteroidDisplaysmentMap,
+
+	var asteroidMaterial;
+
+  var asteroidNormalMap;
+
+  var asteroidDisplaysmentMap;
 
 
 
 
   // textureLoader manager initialization
-  textureLoader = new THREE.TextureLoader(),
+  var textureLoader = new THREE.TextureLoader();
 
-  asteroidMaterial
-  ;
 
-  var pointLightPositio,
-  pointLightPower
-  ;
+  var asteroidMaterial;
+
+
+  // var pointLightPositio,
+  // pointLightPower
+  // ;
 
   // private methods
   materialManager.asteroidMaterial;
@@ -94,11 +100,12 @@ function creatMaterialManager(){
       displaysmentMap: {
         type:  "t",
         value: asteroidDisplaysmentMap
-      },
-      pLight: {
-        type: "vec3",
-        value: new THREE.Vector3()
       }
+			// ,
+      // pLight: {
+      //   type: "vec3",
+      //   value: new THREE.Vector3()
+      // }
     };
 
     return uniforms;
@@ -112,11 +119,12 @@ function creatMaterialManager(){
     var vs = document.getElementById(objectName + "VS").textContent;
     var fs = document.getElementById(objectName + "FS").textContent;
 
-    var uniforms = {};
+
+
 
 
     var material = new THREE.ShaderMaterial({
-      uniforms: uniforms,
+      uniforms: createUniforms(),
 
       vertexShader: vs,
       fragmentShader: fs
@@ -170,4 +178,5 @@ function creatMaterialManager(){
     }
   }
   return materialManager;
+
 }
