@@ -2,15 +2,22 @@
 // asteroid
 
 function createMaterialManager(){
-	
+
+
 	var materialManager = {};
 	var asteroidTexture;
 	var spaceshipMaterial;
 	var sunMaterial;
 	var textureLoader;
-	
 
-	materialManager.asteroidMaterial;
+
+
+	var asteroidMaterial;
+
+  var asteroidNormalMap;
+
+  var asteroidDisplaysmentMap;
+
 
 
 
@@ -18,67 +25,168 @@ function createMaterialManager(){
 		// textureLoader manager initialization
 		var textureLoader = new THREE.TextureLoader();
 
+  // textureLoader manager initialization
+  var textureLoader = new THREE.TextureLoader();
 
-		// load a resource
-		asteroidTexture = textureLoader.load(
-			// resource URL
-			'textures/asteroid.jpg',
-			// Function when resource is loaded
-			function ( texture ) {
-				// do something with the texture
-				// var material = new THREE.MeshBasicMaterial( {
-				// 	map: texture
-				//  } );
-			},
-			// Function called when download progresses
-			function ( xhr ) {
-				console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
-			},
-			// Function called when download errors
-			function ( xhr ) {
-				console.log( 'An error happened' );
-			});
-	})();
-
-	materialManager.getAsteroidMaterial = function(){
+  var asteroidMaterial;
 
 
+  // var pointLightPositio,
+  // pointLightPower
+  // ;
 
-		var material = this.getMaterialByName("asteroid");
-		console.log(asteroidTexture);
+  // private methods
+  materialManager.asteroidMaterial;
 
-		var uniforms = {
-			tex: {
-				type: "t",
-				value: asteroidTexture
-			}
-		};
+  function loadImg(imgSrc){
+    img = textureLoader.load(
+    	// resource URL
+    	imgSrc,
+    	// Function when resource is loaded
+    	function ( texture ) {
+    		// do something with the texture
+    		// var material = new THREE.MeshBasicMaterial( {
+    		// 	map: texture
+    		//  } );
+    	},
+    	// Function called when download progresses
+    	function ( xhr ) {
+    		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+    	},
+    	// Function called when download errors
+    	function ( xhr ) {
+    		console.log( 'An error happened' );
+    	});
 
-		material.uniforms = uniforms;
+
+      return img;
+  }
+
+  // texture initialization
+  // (function (){
+  //
+  //
+  //
+  //   // asteroid texture
+  //   asteroidTexture = loadImg('textures/asteroid.jpg');
+  //
+  //   // normal map that is used for light calculation
+  //   asteroidNormalMap = loadImg('textures/normalAst.png');
+  //
+  //   // displaysmant map used for vertex distortion
+  //   asteroidDisplaysmentMap = loadImg('textures/displaysmentAst.png');
+  //
+  //
+  //
+  //
+  // })();
 
 
-		return material;
-	}
+  function createUniforms(){
+    // asteroid texture
+    asteroidTexture = loadImg('textures/asteroid.jpg');
 
-	materialManager.getMaterialByName = function(objectName){
-		var vs = document.getElementById(objectName + "VS").textContent;
-		var fs = document.getElementById(objectName + "FS").textContent;
+    // normal map that is used for light calculation
+    asteroidNormalMap = loadImg('textures/normalAst.png');
 
-		var uniforms = {};
+    // displaysmant map used for vertex distortion
+    asteroidDisplaysmentMap = loadImg('textures/displaysmentAst.png');
 
-		var material = new THREE.ShaderMaterial({
-			uniforms: uniforms,
+    var uniforms = {
+      tex: {
+        type: "t",
+        value: asteroidTexture
+      },
+      normalMap: {
+        type:  "t",
+        value: asteroidNormalMap
+      },
+      displaysmentMap: {
+        type:  "t",
+        value: asteroidDisplaysmentMap
+      }
+			// ,
+      // pLight: {
+      //   type: "vec3",
+      //   value: new THREE.Vector3()
+      // }
+    };
+
+    return uniforms;
+  }
+
+
+
 
 			vertexShader: vs,
 			fragmentShader: fs
 		});
 
-		return material;
-	}
 
 
-	// crete default materials
-	materialManager.asteroidMaterial = materialManager.getAsteroidMaterial();
+  function getMaterialByName(objectName){
+    var vs = document.getElementById(objectName + "VS").textContent;
+    var fs = document.getElementById(objectName + "FS").textContent;
 
-	return materialManager;
+
+
+
+
+    var material = new THREE.ShaderMaterial({
+      uniforms: createUniforms(),
+
+      vertexShader: vs,
+      fragmentShader: fs
+    });
+
+    return material;
+  }
+
+  function initAstMaterial (){
+
+    asteroidMaterial = getMaterialByName("asteroid");
+
+
+    asteroidMaterial.uniforms = createUniforms();;
+
+  }
+
+  materialManager.getAsteroidMaterial = function(){
+
+    var newMat = asteroidMaterial.clone();
+
+    newMat.uniforms = createUniforms();
+
+    return   newMat;
+  }
+
+
+
+
+
+  // crete default materials
+  // materialManager.asteroidMaterial = materialManager.getAsteroidMaterial();
+  initAstMaterial();
+
+  console.log(asteroidMaterial);
+  console.log(asteroidMaterial.clone());
+  var newMat = asteroidMaterial.clone();
+
+  newMat.uniforms = {
+    tex: {
+      type: "t",
+      value: asteroidTexture
+    },
+    normalMap: {
+      type:  "t",
+      value: asteroidNormalMap
+    },
+    displaysmentMap: {
+      type:  "t",
+      value: asteroidDisplaysmentMap
+    }
+  }
+  return materialManager;
+
+
 }

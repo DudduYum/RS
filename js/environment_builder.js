@@ -9,14 +9,21 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 	// aWidth = width * settingsObject.screenRatio,
 	// aHeight = height,
 	// aDepth = depth,
-	
+
+
+>>>>>>> asteroid_material
 	var openSpaceGeometry  = new THREE.SphereGeometry(150,32, 32);
 	var openSpaceTexture = new THREE.TextureLoader().load('textures/space.jpg');
 	var openSpaceMaterial  = new THREE.MeshBasicMaterial({map: openSpaceTexture});
 	openSpaceMaterial.side  = THREE.BackSide;
 	var openSpace  = new THREE.Mesh(openSpaceGeometry, openSpaceMaterial);
-	
-	
+<<<<<<< HEAD
+
+
+=======
+
+
+>>>>>>> asteroid_material
 	var Settings = settingsObject;
 	var TextureManager;
 	var Envi = {};
@@ -29,7 +36,11 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 	var spaceS;
 	var spamTimeKeeper = timer.getTime();
 	var game3Dscene = new THREE.Object3D();
-	
+<<<<<<< HEAD
+
+=======
+
+>>>>>>> asteroid_material
 	game3Dscene.add(openSpace);
 
 
@@ -46,13 +57,21 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 
 		// init the texture manager
 		// tmp code
-		
+<<<<<<< HEAD
+
+=======
+
+>>>>>>> asteroid_material
 		//questo codice era nel mio environment_builder
 		/*TextureManager = {
 			 asteroidMaterial: new THREE.MeshBasicMaterial({color:0xff0000}),
 			 shipMaterial : new THREE.MeshBasicMaterial({color:0x00ff00})
 		 };*/
-		 
+<<<<<<< HEAD
+
+=======
+
+>>>>>>> asteroid_material
 		materialManager = createMaterialManager();
 
 		materialManager.shipMaterial = new THREE.MeshBasicMaterial({color:0x00ff00});
@@ -61,6 +80,7 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 
 		// test
 		// spaceS.colliderMoveTest();
+<<<<<<< HEAD
 
 		game3Dscene.add(spaceS.spaceShipObject());
 		spaceS.reset();
@@ -135,6 +155,82 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 	};
 
 
+=======
+
+		game3Dscene.add(spaceS.spaceShipObject());
+		spaceS.reset();
+
+		// test
+		// spaceS.colliderMoveTest();
+
+	})();
+
+	// thow exeption
+	// collision detection
+	function detectCollisions(){
+		for(j=0; j < ActiveAsteroid.length; j++){
+			if(spaceS.isColliding(ActiveAsteroid[j])){
+				throw {
+					asteroid: ActiveAsteroid[j].mesh
+				};
+			}
+		}
+	};
+
+	function resizeGameArea(){ //ma serve ancora sta roba... si
+		Settings.setGameAreaWidth(width * Settings.screenRatio());
+		Settings.setGameAreaHeight(height);
+	};
+
+
+
+
+	function activateAsteroids(){
+
+		if(timer.getTime() - spamTimeKeeper > Settings.spawnDelay() ){
+			var newAsteroid = PassiveAsteroid.pop();
+			newAsteroid.update();
+			ActiveAsteroid.push(newAsteroid);
+
+
+			game3Dscene.add(newAsteroid.mesh());
+
+			spamTimeKeeper = timer.getTime();
+		}
+
+	}
+
+
+	Envi.gameScene = function(){
+		return game3Dscene;
+	};
+
+	//I don't know why is it stll here
+	Envi.updateRatio = function(){
+		Settings.updateScreenRatio();
+		resizeGameArea();
+	};
+
+	//game are position
+	Envi.setPosition = function(px, py, pz){
+		game3Dscene.position.set(px, py, pz);
+	};
+
+	//game area dimensions
+	Envi.width = function(){
+		return Settings.gameAreaWidth();
+	};
+
+	Envi.height = function(){
+		return Settings.gameAreaHeight();
+	};
+
+	Envi.depth = function(){
+		return Settings.gameAreaDepth();
+	};
+
+
+>>>>>>> asteroid_material
 
 	//creat asteroid for the future use
 	Envi.addAsteroids = function(){

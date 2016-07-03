@@ -6,19 +6,48 @@ function createAsteroid(settingsObject, materialManager, timer){
 	var asteroid = {};
 
 
-	// create mesh
-	var geom = new THREE.SphereGeometry(
-		// settingsObject.sizeRandValue()
-		1
-	);
-	var mat = materialManager.asteroidMaterial;
-	var mesh = new THREE.Mesh(geom, mat);
+
+
+  // create mesh
+  var geom = new THREE.SphereGeometry(
+    // settingsObject.sizeRandValue()
+    1,
+    32,
+    32
+  );
+
+
+  var mat = materialManager.getAsteroidMaterial();
+
+  // console.log(mat.map);
+  // mat.needsUpdate = true;
+
+  // console.log(mat);
+
+
+
+
+	// define propertys and behavior
+
+	//public methods
+
+
+  var mesh = new THREE.Mesh(geom , mat);
+
 
 	var activationTime;
 
 	var collider = mesh.geometry.boundingSphere.clone();
 
 
+		// move quantity
+		var step = passedTime  * settingsObject.asteroidSpeed() ;
+
+		// move mesh
+		mesh.position.setZ(settingsObject.asteroidStartPoint() + step);
+		// move collider
+		collider.center.setZ(settingsObject.asteroidStartPoint() + step);
+	};
 
 	// define propertys and behavior
 
@@ -104,6 +133,7 @@ function createAsteroid(settingsObject, materialManager, timer){
 	asteroid.testAnomalia = function(){
 		console.log(mesh.position.z);
 	};
+
 
 
 
