@@ -8,7 +8,7 @@ function createMaterialManager(){
 	var asteroidTexture;
 	var spaceshipMaterial;
 	var sunMaterial;
-	var textureLoader;
+	var textureLoader = new THREE.TextureLoader();
 
 
 
@@ -21,14 +21,7 @@ function createMaterialManager(){
 
 
 
-	(function (){
-		// textureLoader manager initialization
-		var textureLoader = new THREE.TextureLoader();
 
-  // textureLoader manager initialization
-  var textureLoader = new THREE.TextureLoader();
-
-  var asteroidMaterial;
 
 
   // var pointLightPositio,
@@ -39,6 +32,7 @@ function createMaterialManager(){
   materialManager.asteroidMaterial;
 
   function loadImg(imgSrc){
+
     img = textureLoader.load(
     	// resource URL
     	imgSrc,
@@ -118,9 +112,7 @@ function createMaterialManager(){
 
 
 
-			vertexShader: vs,
-			fragmentShader: fs
-		});
+
 
 
 

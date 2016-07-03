@@ -30,8 +30,6 @@ function createAsteroid(settingsObject, materialManager, timer){
 	// define propertys and behavior
 
 	//public methods
-
-
   var mesh = new THREE.Mesh(geom , mat);
 
 
@@ -40,14 +38,7 @@ function createAsteroid(settingsObject, materialManager, timer){
 	var collider = mesh.geometry.boundingSphere.clone();
 
 
-		// move quantity
-		var step = passedTime  * settingsObject.asteroidSpeed() ;
 
-		// move mesh
-		mesh.position.setZ(settingsObject.asteroidStartPoint() + step);
-		// move collider
-		collider.center.setZ(settingsObject.asteroidStartPoint() + step);
-	};
 
 	// define propertys and behavior
 
@@ -135,10 +126,7 @@ function createAsteroid(settingsObject, materialManager, timer){
 	};
 
 
-
-
 	return asteroid;
-
 
 
 }
