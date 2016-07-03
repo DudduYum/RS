@@ -1,4 +1,4 @@
-function createInterfaceManager( ScoreCTRL ){
+function createInterfaceManager(scoreControl){
 	var interfaceManager = {};
 
 	var initialScreen = document.getElementById("initialScreen");
@@ -33,7 +33,7 @@ function createInterfaceManager( ScoreCTRL ){
 
 
 		//resets the score
-		scoreNumber.innerHTML = ScoreCTRL.getScore();
+		scoreNumber.innerHTML = scoreControl.getScore();
 
 		//adjusts z-indexes
 		initialScreen.style.zIndex = "-1";
@@ -55,19 +55,19 @@ function createInterfaceManager( ScoreCTRL ){
 		//hides game, score and camera switch divs
 		scoreTable.style.display = "none";
 
-		document.getElementById("yourScore").innerHTML = "Your score is "+ ScoreCTRL.getScore();
+		document.getElementById("yourScore").innerHTML = "Your score is "+ scoreControl.getScore();
 		gameoverScreen.style.display = "block";
 	};
 
-	// interfaceManager.setScoreCTRL = function( scoreMng ){
-	//   ScoreCTRL = scoreMng;
+	// interfaceManager.setscoreControl = function( scoreMng ){
+	//   scoreControl = scoreMng;
 	// }
 
 	interfaceManager.update = function(value){
-		scoreNumber.innerHTML = ScoreCTRL.getScore();
+		scoreNumber.innerHTML = scoreControl.getScore();
 	};
 
-	interfaceManager.setCameraSwitchs = function( toGame, toFree){
+	interfaceManager.setCameraSwitch = function(toGame, toFree){
 		activateGameCamera = toGame;
 		activateFreeCamera = toFree;
 	}

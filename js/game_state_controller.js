@@ -2,27 +2,27 @@
 // some function must be passed as arguments, it's the best
 // I can do right now
 
-function createGameState(startFun, stopFun ){
+function createGameState(startFun, stopFun){
 	//true if game is running righ now
-	var gameRunning = false,
+	var gameRunning = false;
 
 	// i blochi che vengono chiamati dalla
-	startAction = startFun,
-	stopAction = stopFun,
-	gameCntr = {};
+	var startAction = startFun;
+	var stopAction = stopFun;
+	var gameControl = {};
 
 	//constructor
 
 
 	// getter
-	gameCntr.isRunning = function(){
+	gameControl.isRunning = function(){
 		return gameRunning;
 	};
 
 	//setters
 	//set to start state and
 	// execute some call back function
-	gameCntr.start = function(){
+	gameControl.start = function(){
 		if( !gameRunning ){
 			gameRunning = true;
 
@@ -39,7 +39,7 @@ function createGameState(startFun, stopFun ){
 
 	//set to stop state and
 	// execute some call back function
-	gameCntr.end = function(){
+	gameControl.end = function(){
 		if( gameRunning ){
 			gameRunning = false;
 
@@ -57,16 +57,16 @@ function createGameState(startFun, stopFun ){
 
 
 	//init :)
-	// gameCntr.stop();
+	// gameControl.stop();
 
 	// unit tests
-	gameCntr.testInit = function(){
+	gameControl.testInit = function(){
 		console.log(startAction);
 		console.log(stopAction);
 	};
 
 
 
-	return gameCntr;
+	return gameControl;
 
 }
