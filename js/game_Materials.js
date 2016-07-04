@@ -169,14 +169,31 @@ function createMaterialManager(){
 			type: "t",
 			value: asteroidTexture
 		},
-		normalMap: {
+		normMap: {
 			type:  "t",
 			value: asteroidNormalMap
 		},
 		displaysmentMap: {
 			type:  "t",
 			value: asteroidDisplaysmentMap
+		},
+		pointLightPosition: {
+			type:  "vec3",
+			value: new THREE.Vector3( 8 , 8 , -8)
+		},
+		lightPower: {
+			type: "f",
+			value: 40.
+		},
+		c_spec: {
+			type: "vec3",
+			value: new THREE.Vector3( .91 , .93 , .92)
+		},
+		alpha: {
+			type: "f",
+			value: .9
 		}
+
 	}
 	return materialManager;
 
