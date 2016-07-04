@@ -34,7 +34,6 @@ function createEnvironment(settingsObject, width, height, depth, timer, IO_contr
 
 	game3Dscene.add(openSpace);
 
-
 	(function (){
 		// set volume size
 		resizeGameArea();
@@ -191,7 +190,7 @@ function createEnvironment(settingsObject, width, height, depth, timer, IO_contr
 
 	envi.updateEnviroment = function(){
 			this.moveAsteroids();
-			spaceship.updateSpaceship(0);
+			spaceship.updateSpaceship();
 			detectCollisions();
 	};
 
@@ -207,6 +206,10 @@ function createEnvironment(settingsObject, width, height, depth, timer, IO_contr
 	
 	envi.rotateSpaceship = function() {
 		spaceship.rotate();
+	}
+	
+	envi.immobilizeSpaceship = function() {
+		spaceship.immobilize();
 	}
 
 // unit tests

@@ -35,12 +35,7 @@ function createGameState(startFun, stopFun){
 			if(startAction != undefined){
 				startAction();
 			}
-		} else {
-			console.log("warring: game is alredy running!");
-		}
-
-		
-
+		}		
 	}
 
 	//set to stop state and

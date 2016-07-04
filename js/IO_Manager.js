@@ -1,9 +1,9 @@
 
 function createGameIOManager(){
 	var IO_controller = {};
-	// keyPressed = [],
 	var keyDownMapping = {};
 	var keyUpMapping = {};
+	var keyPressedStatus = [];
 	
 
 	// KEY DOWN ACTIONS
@@ -11,7 +11,7 @@ function createGameIOManager(){
 	// the first one shuld be a key code
 	// adds ongly key down function
 	IO_controller.addKeyDownAction = function(funKey, funCode){
-		keyDownMapping[funKey] = funCode ;
+		keyDownMapping[funKey] = funCode;
 	};
 
 	// thanks to this method you don't need to add the same "callback"
@@ -29,8 +29,10 @@ function createGameIOManager(){
 	IO_controller.keyDownAction = function(event){
 		if(keyDownMapping[event.keyCode] != undefined ){
 			if(typeof(keyDownMapping[event.keyCode]) != "number"){
+				keyPressedStatus[event.keyCode] = true;
 				keyDownMapping[event.keyCode]();
 			} else {
+				keyPressedStatus[keyUpMapping[event.keyCode]] = true;
 				keyDownMapping[keyDownMapping[event.keyCode] ]();
 			}
 		}
@@ -57,15 +59,25 @@ function createGameIOManager(){
 	IO_controller.keyUpAction = function(event){
 		if(keyUpMapping[event.keyCode] != undefined ){
 			if(typeof( keyUpMapping [event.keyCode]) != "number"){
+				keyPressedStatus[event.keyCode] = false;
 				keyUpMapping [event.keyCode]();
-			}else{
+			} else {
+				keyPressedStatus[keyUpMapping[event.keyCode]] = false;
 				keyUpMapping[ keyUpMapping[event.keyCode]]();
 			}
 		}
 	};
-
+	
+	
+	//get key status
+	IO_controller.isKeyPressed = function(key) {
+		if(!keyPressedStatus[key] || keyPressedStatus[key]==undefined)
+			return false;
+		else
+			return true;
+	}
+	
 	IO_controller.unitTest = function(){
-
 		console.log(keyMapping);
 	};
 

@@ -13,9 +13,9 @@ function createGameSettings(){
 	// spce ship forward velocity
 	var forwardVelocity = 1;
 	//spaceship movement speed in units per seconds
-	var moveSpeed = 3;
-
-	var inertiaValue = 0.4;
+	var normalSpeed = 5;
+	var inertia = 0.4;
+	
 	//ASTEROID SETTINGS
 	//miliseconds between asteroid spawn
 	// old value = .3
@@ -50,14 +50,14 @@ function createGameSettings(){
 	configObject.getForwardVelocity = function(){
 		return forwardVelocity;
 	};
+	
+	configObject.inertia = function() {
+		return inertia;
+	}
 
-	configObject.getInertiaValue = function(){
-		return inertiaValue;
-	};
 
-
-	configObject.moveSpeed = function(){
-		return moveSpeed;
+	configObject.normalSpeed = function(){
+		return normalSpeed;
 	};
 
 	//asteroid propertys

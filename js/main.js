@@ -6,7 +6,7 @@ function main(){
 	var timer = createTimer();
 
 	// game state manager
-	var stateControl;
+	var gameStateControl;
 
 	// score counter
 	var scoreControl = createScoreCounter( timer , settingsObj);
@@ -113,7 +113,7 @@ function main(){
 
 	// GAME LOOP //
 	// game state initializzation (function for game start and end)
-	stateControl = createGameState(
+	gameStateControl = createGameState(
 		function(){
 			timer.reset();
 			envi.reset();
@@ -128,7 +128,15 @@ function main(){
 
 
 	// add some event listener to start the game and switch the camera
-	inputControl.addKeyDownAction(32, stateControl.startGame);
+	inputControl.addKeyDownAction(32, 
+		function(){
+			if(gameStateControl.isRunning()) {
+				envi.immobilizeSpaceship();
+			} else {
+				gameStateControl.startGame();
+			}
+		}
+	);
 
 	inputControl.addKeyDownAction(67,
 		function(){
@@ -172,15 +180,15 @@ function main(){
 	
 	//animation loop
 	function animate() {
-		if(stateControl.isRunning()) {
+		if(gameStateControl.isRunning()) {
 			try{
 				envi.updateEnviroment();
 				interfaceControl.update();
 			}
 			catch(exec) {
-				stateControl.stopGame();
+				gameStateControl.stopGame();
 			}
-		} else if(!stateControl.isOver()){
+		} else if(!gameStateControl.isOver()){
 			envi.rotateSpaceship();
 		}
 		requestAnimationFrame(animate);

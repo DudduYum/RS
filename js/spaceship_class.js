@@ -1,7 +1,8 @@
 function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 	
 	var spaceship = {};
-		
+
+	
 	//spaceship3D size
 	var spaceshipRadius = 0.5;
 	var spaceshipLength = 5;
@@ -42,10 +43,15 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 
 	// struttura dati che serve per fare rimanere l'possibilità aggiungere
 	// keydown eventi in magnera dinamica e muovere la nave in tutte le direzioni
-	movementTraker = {
-		hStep: .0,
-		vStep: .0
+	movementTracker = {
+		hStep: 0.0,
+		vStep: 0.0
 	};
+	
+	spaceshipSpeed = {
+		hSpeed: 0.0,
+		vSpeed: 0.0
+	}
 
 	// function give the ship "random" movement direction on the start
 	/* var randMoveDirection = -1;
@@ -53,12 +59,12 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 	function randomMovement(){
 		randMoveDirection *= -1 ;
 
-		if(movementTraker.vStep == 0){
-			movementTraker.vStep = randMoveSpeed * randMoveDirection;
+		if(movementTracker.vStep == 0){
+			movementTracker.vStep = randMoveSpeed * randMoveDirection;
 		}
 
-		if(movementTraker.hStep == 0){
-			movementTraker.hStep = randMoveSpeed * randMoveDirection * -1;
+		if(movementTracker.hStep == 0){
+			movementTracker.hStep = randMoveSpeed * randMoveDirection * -1;
 		}
 
 	} */
@@ -98,22 +104,18 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 	// space ship movement initialization
 	// left
 	IO_controls.addKeyDownAction(37, moveLeft);
-
 	IO_controls.addKeyDownAlias(65, 37);
 
 	// right
 	IO_controls.addKeyDownAction(39, moveRight);
-
 	IO_controls.addKeyDownAlias(68, 39);
 
 	// Up
 	IO_controls.addKeyDownAction(38, moveUp);
-
 	IO_controls.addKeyDownAlias(87, 38);
 
 	//down
 	IO_controls.addKeyDownAction(40, moveDown);
-
 	IO_controls.addKeyDownAlias(83, 40);
 	
 	
@@ -145,83 +147,118 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 			return false;
 	}
 	
-	function checkAllBorders() {
-		return checkLeftBorder() && checkRightBorder() && checkUpBorder() && checkDownBorder();
-	}
 	
 	//space ship move function definition
+		
+	function moveRight(isInertial){
+		/*if(spaceshipSpeed.hSpeed < 0) {
+			spaceshipSpeed.hSpeed = 0;
+		} else {*/
+			spaceshipSpeed.hSpeed = settingsObj.normalSpeed();
+		//}
+		//console.log(spaceshipSpeed);
+	}
+	
 	function moveLeft(){
-		step = timer.passedTime() * settingsObj.moveSpeed();
-		movementTraker.hStep = -step;
-		spaceship.updateSpaceship(checkLeftBorder());
+		/*if(spaceshipSpeed.hSpeed > 0) {
+			spaceshipSpeed.hSpeed = 0;
+		} else {*/
+			spaceshipSpeed.hSpeed = -settingsObj.normalSpeed();
+		//}
+		//console.log(spaceshipSpeed);
 	}
 	
-	function moveRight(){
-		step = timer.passedTime() * settingsObj.moveSpeed();
-		movementTraker.hStep = step;
-		spaceship.updateSpaceship(checkRightBorder());
+	function moveUp(isInertial){
+		/*if(spaceshipSpeed.vSpeed < 0) {
+			spaceshipSpeed.vSpeed = 0;
+		} else {*/
+			spaceshipSpeed.vSpeed = settingsObj.normalSpeed();
+		//}
+		//console.log(spaceshipSpeed);
 	}
 	
-	function moveUp(){
-		step = timer.passedTime() * settingsObj.moveSpeed();
-		movementTraker.vStep = step;
-		spaceship.updateSpaceship(checkUpBorder());
+	function moveDown(isInertial){
+		/*if(spaceshipSpeed.vSpeed > 0) {
+			spaceshipSpeed.vSpeed = 0;
+		} else {*/
+			spaceshipSpeed.vSpeed = -settingsObj.normalSpeed();
+		//}
+		//console.log(spaceshipSpeed);
 	}
 	
-	function moveDown(){
-		step = timer.passedTime() * settingsObj.moveSpeed();
-		movementTraker.vStep = -step;
-		spaceship.updateSpaceship(checkDownBorder());
+	function horizontalInertia(){
+		if(!IO_controls.isKeyPressed(37) && !IO_controls.isKeyPressed(65) && !IO_controls.isKeyPressed(39) && !IO_controls.isKeyPressed(68)) {
+			spaceshipSpeed.hSpeed = spaceshipSpeed.hSpeed * settingsObj.inertia();
+			//console.log(spaceshipSpeed);
+		}
+	};
+
+	function verticalInertia(){
+		if(!IO_controls.isKeyPressed(38) && !IO_controls.isKeyPressed(87) && !IO_controls.isKeyPressed(40) && !IO_controls.isKeyPressed(83)) {
+			spaceshipSpeed.vSpeed = spaceshipSpeed.vSpeed * settingsObj.inertia();
+			//console.log(spaceshipSpeed);
+		}
+	};
+	
+	spaceship.immobilize = function(){
+		spaceshipSpeed.hSpeed = 0;
+		spaceshipSpeed.vSpeed = 0;
 	}
 	
 	//move the spaceship3D and keep it inside game borders
-	spaceship.updateSpaceship = function(testPassed){
-		if(testPassed || checkAllBorders()) {
-			spaceship3D.translateX(movementTraker.hStep);
-			spaceship3D.translateZ(movementTraker.vStep);
-			for (var i = 0 ; i < spaceshipColliders.length ; i++) {
-				spaceshipColliders[i].center.setX(spaceship3D.position.x);
-				spaceshipColliders[i].center.setY(spaceship3D.position.y);
-			}
+	spaceship.updateSpaceship = function(){
+		movementTracker.hStep = timer.passedTime() * spaceshipSpeed.hSpeed;
+		movementTracker.vStep = timer.passedTime() * spaceshipSpeed.vSpeed;
+		if(Math.sign(movementTracker.hStep) < 0){
+			if(checkLeftBorder())
+				spaceship3D.translateX(movementTracker.hStep);
+		} else {
+			if(checkRightBorder())
+				spaceship3D.translateX(movementTracker.hStep);
 		}
+		if(Math.sign(movementTracker.vStep) < 0){
+			if(checkDownBorder())
+				spaceship3D.translateZ(movementTracker.vStep);
+		} else {
+			if(checkUpBorder())
+				spaceship3D.translateZ(movementTracker.vStep);
+		}
+		updateColliders();
 	}
+
 
 	// ship stops moving
 	// left
-	IO_controls.addKeyUpAction(37, stopMovingHorizontally);
-
+	IO_controls.addKeyUpAction(37, horizontalInertia);
 	IO_controls.addKeyUpAlias(65, 37);
 
 	// right
-	IO_controls.addKeyUpAction(39, stopMovingHorizontally);
-
+	IO_controls.addKeyUpAction(39, horizontalInertia);
 	IO_controls.addKeyUpAlias(68, 39);
 
 	// Up
-	IO_controls.addKeyUpAction(38, stopMovingVertically);
-
+	IO_controls.addKeyUpAction(38, verticalInertia);
 	IO_controls.addKeyUpAlias(87, 38);
 
 	//Up
-	IO_controls.addKeyUpAction(40, stopMovingVertically);
-
+	IO_controls.addKeyUpAction(40, verticalInertia);
 	IO_controls.addKeyUpAlias(83, 40);
-
-
-
-	function stopMovingHorizontally(){
-		movementTraker.hStep *= settingsObj.getInertiaValue();
-	};
-
-	function stopMovingVertically(){
-		movementTraker.vStep *= settingsObj.getInertiaValue();
-	};
+	
+	
+	
+	//updates collider position
+	function updateColliders() {
+		for(var i = 0 ; i < spaceshipColliders.length ; i++) {
+			spaceshipColliders[i].center.setX(spaceship3D.position.x);
+			spaceshipColliders[i].center.setY(spaceship3D.position.y);
+		}
+	}
 
 
 
 	spaceship.initialize = function() {
-		movementTraker.hStep = 0;
-		movementTraker.vStep = 0;
+		movementTracker.hStep = 0;
+		movementTracker.vStep = 0;
 
 		//set the ship
 		spaceship3D.position.set(0, -spaceshipLength/2, -spaceshipLength);
@@ -239,8 +276,8 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 	
 	
 	spaceship.reset = function(){
-		movementTraker.hStep = 0;
-		movementTraker.vStep = 0;
+		movementTracker.hStep = 0;
+		movementTracker.vStep = 0;
 
 		// reset the ship
 		spaceship3D.position.set(0, 0, -spaceshipLength);
