@@ -105,6 +105,7 @@ function main(){
 
 			gameCamera.updateProjectionMatrix();
 			freeCamera.updateProjectionMatrix();
+			renderer.setSize(window.innerWidth, window.innerHeight);
 		},
 		false
 	);
