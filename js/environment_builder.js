@@ -1,7 +1,7 @@
 // todo remember to pass the correct
 // arguments to this function
 
-function createEnvironment(settingsObject , width, height, depth, timer, IO_controls){
+function createEnvironment(settingsObject, width, height, depth, timer, IO_controls, scoreControl){
 
 
 	// GameTimer = timer,
@@ -11,28 +11,26 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 	// aDepth = depth,
 
 
+	var settings = settingsObject;
+	var textureManager;
+	var envi = {};
+	//asteroid param
+	var asteroidNumMax = 10;
+	var activeAsteroids = [];
+	var passiveAsteroids = [];
 
-	var openSpaceGeometry  = new THREE.SphereGeometry(150,32, 32);
+	// spaceship
+	var spaceship;
+	var spamTimeKeeper = timer.getTime();
+	var game3Dscene = new THREE.Object3D();
+	
+	//sphere map
+	var openSpaceGeometry  = new THREE.SphereGeometry(600, 32, 32);
 	var openSpaceTexture = new THREE.TextureLoader().load('textures/space.jpg');
 	var openSpaceMaterial  = new THREE.MeshBasicMaterial({map: openSpaceTexture});
 	openSpaceMaterial.side  = THREE.BackSide;
 	var openSpace  = new THREE.Mesh(openSpaceGeometry, openSpaceMaterial);
-
-
-
-
-	var Settings = settingsObject;
-	var TextureManager;
-	var Envi = {};
-	//asteroid param
-	var AsteroidNumMax = 10;
-	var ActiveAsteroid = [];
-	var PassiveAsteroid = [];
-
-	// spaceship
-	var spaceS;
-	var spamTimeKeeper = timer.getTime();
-	var game3Dscene = new THREE.Object3D();
+	openSpace.position.set(0,0,0);
 
 	game3Dscene.add(openSpace);
 
@@ -40,19 +38,19 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 	(function (){
 		// set volume size
 		resizeGameArea();
-		Settings.setGameAreaDepth(depth);
+		settings.setGameAreaDepth(depth);
 
 		//game position
 		// game3Dscene.position.set(
 		//   0 ,
 		//   0 ,
-		//   -((Settings.gameAreaDepth() / 2) + 4));
+		//   -((settings.gameAreaDepth() / 2) + 4));
 
 		// init the texture manager
 		// tmp code
 
 		//questo codice era nel mio environment_builder
-		/*TextureManager = {
+		/*textureManager = {
 			 asteroidMaterial: new THREE.MeshBasicMaterial({color:0xff0000}),
 			 shipMaterial : new THREE.MeshBasicMaterial({color:0x00ff00})
 		 };*/
@@ -61,34 +59,34 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 
 		materialManager.shipMaterial = new THREE.MeshBasicMaterial({color:0x00ff00});
 
-		spaceS = createSpaceship(Settings, materialManager, IO_controls, timer);
+		spaceship = createSpaceship(settings, materialManager, IO_controls, timer);
 
 		// test
-		// spaceS.colliderMoveTest();
+		// spaceship.colliderMoveTest();
 
-		game3Dscene.add(spaceS.spaceShipObject());
-		spaceS.reset();
+		game3Dscene.add(spaceship.spaceshipObject());
+		spaceship.initialize();
 
 		// test
-		// spaceS.colliderMoveTest();
+		// spaceship.colliderMoveTest();
 
 	})();
 
 	// thow exeption
 	// collision detection
 	function detectCollisions(){
-		for(j=0; j < ActiveAsteroid.length; j++){
-			if(spaceS.isColliding(ActiveAsteroid[j])){
+		for(j=0; j < activeAsteroids.length; j++){
+			if(spaceship.isColliding(activeAsteroids[j])){
 				throw {
-					asteroid: ActiveAsteroid[j].mesh
+					asteroid: activeAsteroids[j].mesh
 				};
 			}
 		}
 	};
 
 	function resizeGameArea(){ //ma serve ancora sta roba... si
-		Settings.setGameAreaWidth(width * Settings.screenRatio());
-		Settings.setGameAreaHeight(height);
+		settings.setGameAreaWidth(width * settings.screenRatio());
+		settings.setGameAreaHeight(height);
 	};
 
 
@@ -96,10 +94,10 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 
 	function activateAsteroids(){
 
-		if(timer.getTime() - spamTimeKeeper > Settings.spawnDelay() ){
-			var newAsteroid = PassiveAsteroid.pop();
-			newAsteroid.update();
-			ActiveAsteroid.push(newAsteroid);
+		if(timer.getTime() - spamTimeKeeper > settings.spawnDelay() ){
+			var newAsteroid = passiveAsteroids.pop();
+			newAsteroid.initialize();
+			activeAsteroids.push(newAsteroid);
 
 
 			game3Dscene.add(newAsteroid.mesh());
@@ -110,61 +108,54 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 	}
 
 
-	Envi.gameScene = function(){
+	envi.gameScene = function(){
 		return game3Dscene;
 	};
 
 	//I don't know why is it stll here
-	Envi.updateRatio = function(){
-		Settings.updateScreenRatio();
+	envi.updateRatio = function(){
+		settings.updateScreenRatio();
 		resizeGameArea();
 	};
 
 	//game are position
-	Envi.setPosition = function(px, py, pz){
+	envi.setPosition = function(px, py, pz){
 		game3Dscene.position.set(px, py, pz);
 	};
 
 	//game area dimensions
-	Envi.width = function(){
-		return Settings.gameAreaWidth();
+	envi.width = function(){
+		return settings.gameAreaWidth();
 	};
 
-	Envi.height = function(){
-		return Settings.gameAreaHeight();
+	envi.height = function(){
+		return settings.gameAreaHeight();
 	};
 
-	Envi.depth = function(){
-		return Settings.gameAreaDepth();
+	envi.depth = function(){
+		return settings.gameAreaDepth();
 	};
-
-
 
 
 	//creat asteroid for the future use
-	Envi.addAsteroids = function(){
+	envi.addAsteroids = function(){
 		//if there aren't enough asteroid add some
-		while(ActiveAsteroid.length + PassiveAsteroid.length < AsteroidNumMax ) {
-			PassiveAsteroid.push(createAsteroid(Settings, materialManager, timer));
+		while(activeAsteroids.length + passiveAsteroids.length < asteroidNumMax ) {
+			passiveAsteroids.push(createAsteroid(settings, materialManager, timer));
 		}
 	};
 
 	// ASTEROIDS
 	//this method moves asteroids and make them visible
-	Envi.moveAsteroids = function(){
-		if(PassiveAsteroid.length <= 0){
-			AsteroidNumMax += 5;
+	envi.moveAsteroids = function(){
+		if(passiveAsteroids.length <= 0){
+			asteroidNumMax += 5;
 		}
 
 
 		//if there aren't enough asteroid add some
-		while(ActiveAsteroid.length + PassiveAsteroid.length < AsteroidNumMax ) {
-			PassiveAsteroid.push( createAsteroid (
-					Settings,
-					materialManager,
-					timer
-				)
-			);
+		while(activeAsteroids.length + passiveAsteroids.length < asteroidNumMax ) {
+			passiveAsteroids.push(createAsteroid(settings, materialManager, timer));
 		}
 
 		this.addAsteroids();
@@ -172,101 +163,102 @@ function createEnvironment(settingsObject , width, height, depth, timer, IO_cont
 		//activate passive asteroid
 		activateAsteroids();
 
-		for (astIndex in ActiveAsteroid ){
-			var asteroid = ActiveAsteroid[astIndex];
+		for (astIndex in activeAsteroids ){
+			var asteroid = activeAsteroids[astIndex];
 
-			asteroid.move( timer.getTime() );
+			asteroid.move(timer.getTime());
 
-			if( asteroid.hasCrossLimit()){
-
-				ActiveAsteroid.splice(astIndex,1);
+			if(asteroid.hasCrossLimit()){
+				activeAsteroids.splice(astIndex,1);
 				game3Dscene.remove(asteroid.mesh());
-
-				PassiveAsteroid.push(asteroid);
+				scoreControl.update();
+				passiveAsteroids.push(asteroid);
 			}
 		}
 	};
 
 
 	//get asteroid of index
-	Envi.getAsteroid = function(index){
+	envi.getAsteroid = function(index){
 		return this.game3Dscene.children[index];
 	};
 
 	//remove all asteroid from the game area
-	Envi.removeAsteroids = function(){
+	envi.removeAsteroids = function(){
 		this.game3Dscene = new THREE.Object3D();
 		// this.asteroidList = [];
 	};
 
-	Envi.updateEnviroment = function(){
-		// here I will put update for asteroids
-		this.moveAsteroids();
-
-		spaceS.update( );
-		detectCollisions();
+	envi.updateEnviroment = function(){
+			this.moveAsteroids();
+			spaceship.updateSpaceship(0);
+			detectCollisions();
 	};
 
-	Envi.reset = function(){
-		while ( ActiveAsteroid.length != 0 ){
-			var ast = ActiveAsteroid.pop();
+	envi.reset = function(){
+		while ( activeAsteroids.length != 0 ){
+			var ast = activeAsteroids.pop();
 			game3Dscene.remove(ast.mesh());
-			PassiveAsteroid.push(ast);
+			passiveAsteroids.push(ast);
 		}
 
-		spaceS.reset();
+		spaceship.reset();
 	};
+	
+	envi.rotateSpaceship = function() {
+		spaceship.rotate();
+	}
 
 // unit tests
 
-	Envi.testIO = function(){
+	envi.testIO = function(){
 		IO_controls.unitTest();
 	};
-	Envi.initTest = function(){
+	envi.initTest = function(){
 		console.log("test init");
-		console.log(Settings.gameAreaWidth());
-		console.log(Settings.gameAreaHeight());
-		console.log(Settings.gameAreaDepth());
+		console.log(settings.gameAreaWidth());
+		console.log(settings.gameAreaHeight());
+		console.log(settings.gameAreaDepth());
 		console.log(game3Dscene);
 	};
 
-	Envi.createAsteroidTest = function(){
+	envi.createAsteroidTest = function(){
 		console.log("test crate ast");
-		console.log(PassiveAsteroid);
+		console.log(passiveAsteroids);
 	};
 
-	Envi.moveAsteroidTest = function(){
+	envi.moveAsteroidTest = function(){
 		// console.log("test move ast");
 
 		// console.log(tmpAsteroid.mesh().position);
-		console.log(PassiveAsteroid.length);
-		console.log(ActiveAsteroid.length);
+		console.log(passiveAsteroids.length);
+		console.log(activeAsteroids.length);
 
-		// console.log(ActiveAsteroid)
-		// console.log(ActiveAsteroid);
+		// console.log(activeAsteroids)
+		// console.log(activeAsteroids);
 		// console.log(game3Dscene.children.length);
 	};
 
-	Envi.positionTest = function(){
+	envi.positionTest = function(){
 		console.log("test position");
 		console.log("game position");
 		console.log(game3Dscene.position);
 		console.log("asteroid position");
-		for (astIn in PassiveAsteroid){
-			console.log(PassiveAsteroid[astIn].mesh().position);
+		for (astIn in passiveAsteroids){
+			console.log(passiveAsteroids[astIn].mesh().position);
 		}
 
 	};
 
-	Envi.spaceShitTest = function(){
+	envi.spaceshiphitTest = function(){
 		console.log(game3Dscene);
 	};
 	// envi.removeAsteroids();
 
 	(function (){
-		Envi.addAsteroids();
+		envi.addAsteroids();
 	})();
 
-	return Envi;
+	return envi;
 
 }

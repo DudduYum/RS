@@ -47,7 +47,7 @@ function initializeSpaceshipPosition() {
 
 
 //move the spaceship and keep it inside game borders
-function moveSpaceship(time) {
+function updateSpaceship(time) {
 	var distance = time/1000 * moveSpeed;
 	var spaceshipPosition = new THREE.Vector3().setFromMatrixPosition(spaceship.matrix);
 	if((keyPressed[37] || keyPressed[65]) && spaceshipPosition.x > -areaWidth/2+1) {

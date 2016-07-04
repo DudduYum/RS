@@ -6,8 +6,8 @@ function createScoreCounter(timer, settings){
 	var sCount = {};
 
 	sCount.update = function(){
-		gameScore = Math.round(timer.getTime() * settings.getForwardVelocity());
-		// gameScore++;
+		//gameScore = Math.round(timer.getTime() * settings.getForwardVelocity());
+		gameScore++;
 	};
 
 	sCount.reset = function(){

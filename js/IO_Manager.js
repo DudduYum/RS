@@ -1,10 +1,10 @@
 
-function createGameIOManager( ){
-	var IO_controller = {},
+function createGameIOManager(){
+	var IO_controller = {};
 	// keyPressed = [],
-	keyDownMapping = {},
-	keyUpMapping = {}
-	;
+	var keyDownMapping = {};
+	var keyUpMapping = {};
+	
 
 	// KEY DOWN ACTIONS
 
@@ -18,7 +18,7 @@ function createGameIOManager( ){
 	// function each time, but insted you can create alias between the new key code
 	// and the function that has bees saved in the structure previosly
 	IO_controller.addKeyDownAlias = function(frsKeyCode, scdKeyCode){
-		if( keyDownMapping[scdKeyCode] != undefined && (typeof( keyDownMapping[ scdKeyCode ]) != "number")  ){
+		if(keyDownMapping[scdKeyCode] != undefined && (typeof(keyDownMapping[scdKeyCode]) != "number")  ){
 			keyDownMapping[frsKeyCode] = scdKeyCode;
 		}else{
 			console.log("Can't create alias to another alias or undefined!");
@@ -27,11 +27,11 @@ function createGameIOManager( ){
 
 	// this method execute callback function given the key code
 	IO_controller.keyDownAction = function(event){
-		if( keyDownMapping[ event.keyCode] != undefined ){
-			if(typeof( keyDownMapping[ event.keyCode]) != "number"){
+		if(keyDownMapping[event.keyCode] != undefined ){
+			if(typeof(keyDownMapping[event.keyCode]) != "number"){
 				keyDownMapping[event.keyCode]();
-			}else{
-				keyDownMapping[ keyDownMapping[ event.keyCode] ]();
+			} else {
+				keyDownMapping[keyDownMapping[event.keyCode] ]();
 			}
 		}
 	};
@@ -45,7 +45,7 @@ function createGameIOManager( ){
 	};
 
 	IO_controller.addKeyUpAlias = function(frsKeyCode, scdKeyCode){
-		if( keyUpMapping[scdKeyCode] != undefined && (typeof( keyUpMapping[ scdKeyCode ]) != "number")  ){
+		if(keyUpMapping[scdKeyCode] != undefined && (typeof(keyUpMapping[scdKeyCode]) != "number")  ){
 			keyUpMapping[frsKeyCode] = scdKeyCode;
 		}else{
 			console.log("Can't create alias to another alias or undefined!");
@@ -55,11 +55,11 @@ function createGameIOManager( ){
 
 	// the same as addKeyDownAlias. Read the description abowe
 	IO_controller.keyUpAction = function(event){
-		if( keyUpMapping [ event.keyCode ] != undefined ){
-			if(typeof( keyUpMapping [ event.keyCode ]) != "number"){
+		if(keyUpMapping[event.keyCode] != undefined ){
+			if(typeof( keyUpMapping [event.keyCode]) != "number"){
 				keyUpMapping [event.keyCode]();
 			}else{
-				keyUpMapping[ keyUpMapping[ event.keyCode ]]();
+				keyUpMapping[ keyUpMapping[event.keyCode]]();
 			}
 		}
 	};

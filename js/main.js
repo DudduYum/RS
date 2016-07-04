@@ -12,7 +12,7 @@ function main(){
 	var scoreControl = createScoreCounter( timer , settingsObj);
 
 	// keyboard Input managment
-	var inputControl = createGameIOManager( );
+	var inputControl = createGameIOManager();
 	window.addEventListener("keydown",inputControl.keyDownAction);
 	window.addEventListener("keyup",inputControl.keyUpAction);
 
@@ -24,14 +24,15 @@ function main(){
 	switchToFreeCamera = interfaceControl.switchToFreeCamera;
 
 	// environment
-	var envi = createEnvironment(settingsObj , 12 , 12 , 150 ,timer , inputControl);
+	var envi = createEnvironment(settingsObj, 12, 12, 300, timer, inputControl, scoreControl);
 
 	// init of environment
-	envi.setPosition(0,	0, -((settingsObj.gameAreaDepth() / 2) + 4));
+	envi.setPosition(0,	0, 0);
+	//-((settingsObj.gameAreaDepth() / 2) + 4));
 
 	//3D scene initialization
 	var scene = new THREE.Scene();
-	//scene.fog = new THREE.FogExp2( 0x000000, 0.01);
+	scene.fog = new THREE.FogExp2(0x000000, 0.002);
 
 	//two cameras
 	var gameCamera = new THREE.PerspectiveCamera(75, settingsObj.screenRatio(), 0.1, 1000);
@@ -46,14 +47,17 @@ function main(){
 	//composer
 	var composer = new THREE.EffectComposer(renderer);
 	var effect = new THREE.ShaderPass(THREE.CopyShader);
+	//effects
+	var dofEffect;
+	//shaders
+	var dofShader;
 
 	//initializes mouse controls for free camera
 	var orbitControls = new THREE.OrbitControls(freeCamera, renderer.domElement);
 	orbitControls.enableKeys = false;
 	orbitControls.enabled = false;
 	orbitControls.target = new THREE.Vector3(0,0,-10);
-
-
+	
 
 	// add ship and asteroid to the scene
 	scene.add(envi.gameScene());
@@ -77,13 +81,13 @@ function main(){
 			// switch to game camera
 			orbitControls.enabled = false;
 			useGameCamera = true;
-			switchComposerCamera(gameCamera)
+			switchComposerCamera(gameCamera);
 		},
 		function(){
 			// switch to free camera
 			useGameCamera = false;
 			orbitControls.enabled = true;
-			switchComposerCamera(freeCamera)
+			switchComposerCamera(freeCamera);
 		}
 	);
 
@@ -124,7 +128,7 @@ function main(){
 
 
 	// add some event listener to start the game and switch the camera
-	inputControl.addKeyDownAction(32, stateControl.start);
+	inputControl.addKeyDownAction(32, stateControl.startGame);
 
 	inputControl.addKeyDownAction(67,
 		function(){
@@ -135,17 +139,21 @@ function main(){
 			}
 		}
 	);
-	interfaceControl.switchToGameCamera();
+	
+	//interfaceControl.switchToGameCamera();
 	
 	
 	//======= RENDERING =======
 	
+	//post-processing effects
+	dofShader = createDofShader();
+	dofEffect = new THREE.ShaderPass(dofShader);
+	dofEffect.uniforms.width.value = window.innerWidth;
+	dofEffect.uniforms.height.value = window.innerHeight;
+	
 	//composing the scene with post-processing effects
 	composer.addPass(new THREE.RenderPass(scene, gameCamera));
-	//blurEffect = new THREE.ShaderPass( blurShader );
-	//blurEffect.uniforms.width.value = window.innerWidth;
-	//blurEffect.uniforms.height.value = window.innerHeight;
-	//composer.addPass( blurEffect );
+	//composer.addPass(dofEffect);
 	effect.renderToScreen = true;
 	composer.addPass(effect);
 	
@@ -153,7 +161,7 @@ function main(){
 		composer.passes = [];
 		composer.reset();
 		composer.addPass(new THREE.RenderPass(scene, activeCamera));
-		//add dof pass
+		//composer.addPass(dofEffect);
 		composer.addPass(effect);
 	}
 	
@@ -162,23 +170,24 @@ function main(){
 		composer.render();
 	};
 	
-	
 	//animation loop
 	function animate() {
-		if(stateControl.isRunning) {
+		if(stateControl.isRunning()) {
 			try{
 				envi.updateEnviroment();
-				scoreControl.update();
 				interfaceControl.update();
 			}
 			catch(exec) {
-				stateControl.end();
+				stateControl.stopGame();
 			}
+		} else if(!stateControl.isOver()){
+			envi.rotateSpaceship();
 		}
 		requestAnimationFrame(animate);
 		stats.update();
 		timer.update();
 		composer.render();
 	};
+	
 	animate();
 }

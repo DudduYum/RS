@@ -5,6 +5,7 @@
 function createGameState(startFun, stopFun){
 	//true if game is running righ now
 	var gameRunning = false;
+	var gameOver = false;
 
 	// i blochi che vengono chiamati dalla
 	var startAction = startFun;
@@ -18,40 +19,43 @@ function createGameState(startFun, stopFun){
 	gameControl.isRunning = function(){
 		return gameRunning;
 	};
+	
+	gameControl.isOver = function() {
+		return gameOver;
+	}
 
 	//setters
 	//set to start state and
-	// execute some call back function
-	gameControl.start = function(){
-		if( !gameRunning ){
+	//execute some call back function
+	gameControl.startGame = function(){
+		if(!gameRunning){
 			gameRunning = true;
-
+			gameOver = false;
 			//use callBack function call
 			if(startAction != undefined){
 				startAction();
 			}
+		} else {
+			console.log("warring: game is alredy running!");
 		}
 
-		if(gameRunning == true)
-			console.log("warring: game is alredy running !");
+		
 
 	}
 
 	//set to stop state and
-	// execute some call back function
-	gameControl.end = function(){
-		if( gameRunning ){
+	//execute some call back function
+	gameControl.stopGame = function(){
+		if(gameRunning){
 			gameRunning = false;
-
+			gameOver = true;
 			//use callBack function call
 			if(stopAction != undefined){
 				stopAction();
 			}
+		} else {
+			console.log("warring: game is alredy stopped!");
 		}
-
-		if(gameRunning == false)
-			console.log("warring: game is alredy stopped !");
-
 	}
 
 

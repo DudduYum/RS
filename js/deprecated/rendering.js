@@ -10,7 +10,7 @@ function createRenderingLoop(renderer, rendererCall) {
 				interfaceControl.update();
 			}
 			catch(exec) {
-				stateControl.end();
+				stateControl.stopGame();
 			}
 		}
 		requestAnimationFrame(this.animate);
