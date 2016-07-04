@@ -96,41 +96,42 @@
 
 			// start ininitializzation
 			#define PI 3.14159265
-			#extension GL_OES_standard_derivatives : enable
-
-			float G(float LdotH) {
-				return 1.0/pow(LdotH,2.0);
-			}
-
-			vec3 F(float LdotH) {
-				return c_spec + (vec3(1.0) - c_spec)*pow(1.0-LdotH, 5.0);
-			}
-
-			float D(float NdotH) {
-				float A = pow(alpha,2.0);
-				float B = PI * pow(pow(NdotH,2.0)*(A-1.0) + 1.0, 2.0);
-
-				return A/B;
-			}
+			// #extension GL_OES_standard_derivatives : enable
+			//
+			// float G(float LdotH) {
+			// 	return 1.0/pow(LdotH,2.0);
+			// }
+			//
+			// vec3 F(float LdotH) {
+			// 	return c_spec + (vec3(1.0) - c_spec)*pow(1.0-LdotH, 5.0);
+			// }
+			//
+			// float D(float NdotH) {
+			// 	float A = pow(alpha,2.0);
+			// 	float B = PI * pow(pow(NdotH,2.0)*(A-1.0) + 1.0, 2.0);
+			//
+			// 	return A/B;
+			// }
 
 			void main(){
 
-				vec3 n = normalize( tNorm );
-				vec3 v = normalize( -pointPosition );
-				vec3 l = normalize( lightVector );
-				vec3 h = normalize( v+l );
-
-				float NdotH = max(0.000001, dot( n, h ));
-				float VdotH = max(0.000001, dot( v, h ));
-				float NdotV = max(0.000001, dot( n, v ));
-				float NdotL = max(0.000001, dot( n, l ));
-
-				vec3 Specular = F(VdotH) * G(VdotH) * D(NdotH) / 4.0;
-				vec3 beta = lightPower / ( 4.0 * PI * pow( length(lightVector),2.0) );
+				// vec3 n = normalize( tNorm );
+				// vec3 v = normalize( -pointPosition );
+				// vec3 l = normalize( lightVector );
+				// vec3 h = normalize( v+l );
+				//
+				// float NdotH = max(0.000001, dot( n, h ));
+				// float VdotH = max(0.000001, dot( v, h ));
+				// float NdotV = max(0.000001, dot( n, v ));
+				// float NdotL = max(0.000001, dot( n, l ));
+				//
+				// vec3 Specular = F(VdotH) * G(VdotH) * D(NdotH) / 4.0;
+				// vec3 beta = lightPower / ( 4.0 * PI * pow( length(lightVector),2.0) );
 
 				vec4 color = texture2D(tex,vUv);
 
-				gl_FragColor = vec4(beta * NdotL * Specular * color, 1.0);
+				// gl_FragColor = vec4(beta * NdotL * Specular * color, 1.0);
+				gl_FragColor = color;
 			}
 		</script>
 
