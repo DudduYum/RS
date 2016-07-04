@@ -29,51 +29,108 @@
 		<script type="text/javascript" src="js/spaceship_class.js"></script><!-- V -->
 		<script type="text/javascript" src="js/game_Materials.js"></script>
 		<script type="text/javascript" src="js/timer.js"></script><!-- V -->
-		<script type="text/javascript" src="js/interfaceControl.js"></script><!-- V -->	
+		<script type="text/javascript" src="js/interfaceControl.js"></script><!-- V -->
 		<script type="text/javascript" src="js/main.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/postprocessing.js"></script><!-- V -->
 
 
 		<script type="text/ogsl" id="asteroidVS">
-			// varying vec3 tNorm;
+			// point propertys
+			varying vec3 tNorm;
 			varying vec2 vUv;
-			varying float noise;
+			varying vec3 pointPosition;
+
+			varying vec3 lightVector;
+
 			uniform sampler2D displaysmentMap;
 
-
-
+			uniform vec3 pointLightPosition;
 
 			void main() {
 
 					vUv = uv;
 
-					// tNorm = normalMatrix * normal;
+					tNorm = normalMatrix * normal;
 
 					// get texture coordinates
 					vec4 distortion = texture2D( displaysmentMap , uv);
 
 					//change the normal
-					vec3 newNormal = normal * distortion.x * 0.5;
+					vec3 newNormal = (tNorm * distortion.x) - 0.5;
 
 					// actually make displaysment
 					vec3 nPosition = position + newNormal ;
 
-					// calculate the position
-					gl_Position = projectionMatrix * modelViewMatrix * vec4( nPosition , 1.) ;
+					pointPosition = (modelViewMatrix * vec4( nPosition, 1.0 )).xyz;
+
+					vec4 lPosition = viewMatrix * vec4( pointLightPosition, 1.0 );
+					lightVector = lPosition.xyz - pointPosition;
+
+					gl_Position = projectionMatrix * vec4( pointPosition , 1.) ;
+
 
 			}
 		</script>
 
 		<script type="text/ogsl" id="asteroidFS">
-			// varying vec3 tNorm;
-			varying float noise;
+			// fragment propertys
+			varying vec3 tNorm;
+			varying vec3 pointPosition;
+
+			//texture coordinates
 			varying vec2 vUv;
+
+
+			varying vec3 lightVector;
+
+			// lights
+			uniform float lightPower;
+			uniform vec3 c_spec;
+			uniform float alpha;
+
+			// maps & texture
 			uniform sampler2D tex;
+			uniform sampler2D normMap;
+
+
+
+			// start ininitializzation
+			#define PI 3.14159265
+			#extension GL_OES_standard_derivatives : enable
+
+			float G(float LdotH) {
+				return 1.0/pow(LdotH,2.0);
+			}
+
+			vec3 F(float LdotH) {
+				return c_spec + (vec3(1.0) - c_spec)*pow(1.0-LdotH, 5.0);
+			}
+
+			float D(float NdotH) {
+				float A = pow(alpha,2.0);
+				float B = PI * pow(pow(NdotH,2.0)*(A-1.0) + 1.0, 2.0);
+
+				return A/B;
+			}
 
 			void main(){
-				vec2 noise = vec2( vUv * ( 1. - 2. * noise ) );
-				vec4 color = texture2D(tex,noise);
-				gl_FragColor = color;
+
+				vec3 n = normalize( tNorm );
+				vec3 v = normalize( -pointPosition );
+				vec3 l = normalize( lightVector );
+				vec3 h = normalize( v+l );
+
+				float NdotH = max(0.000001, dot( n, h ));
+				float VdotH = max(0.000001, dot( v, h ));
+				float NdotV = max(0.000001, dot( n, v ));
+				float NdotL = max(0.000001, dot( n, l ));
+
+				vec3 Specular = F(VdotH) * G(VdotH) * D(NdotH) / 4.0;
+				vec3 beta = lightPower / ( 4.0 * PI * pow( length(lightVector),2.0) );
+
+				vec4 color = texture2D(tex,vUv);
+
+				gl_FragColor = vec4(beta * NdotL * Specular * color, 1.0);
 			}
 		</script>
 
