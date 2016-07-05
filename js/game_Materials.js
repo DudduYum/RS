@@ -17,6 +17,7 @@ function createMaterialManager(){
 	var asteroidNormalMap;
 
 	var asteroidDisplaysmentMap;
+	var asteroiSpecularMap;
 
 
 
@@ -86,6 +87,8 @@ function createMaterialManager(){
 		// displaysmant map used for vertex distortion
 		asteroidDisplaysmentMap = loadImg('textures/displaysmentAst.png');
 
+		asteroiSpecularMap = loadImg('textures/specularAst.png');
+
 		var uniforms = {
 			tex: {
 				type: "t",
@@ -97,31 +100,35 @@ function createMaterialManager(){
 			},
 			displaysmentMap: {
 				type:  "t",
-				value: asteroidDisplaysmentMap
+				value: asteroiSpecularMap
+			},
+			specularMap:{
+				type:	"t",
+				value: new THREE.Vector2(0.2 , 0.2)
 			},
 			normalScale:{
 				type:	"v2",
-				value: new THREE.Vector2(0.4 , 0.4)
+				value: new THREE.Vector2(3.0 , 3.0)
 			},
 			pointLightPos: {
 				type:  "v3",
-				value: new THREE.Vector3( 3.0, 3.0, -10.0)
+				value: new THREE.Vector3( 16.0, 16.0, 10.0)
 			},
 			lightPower: {
 				type: "v3",
-				value: new THREE.Vector3( 30.0, 300.0, 30.0 )
+				value: new THREE.Vector3( 10000.0, 10000.0, 1000 0.0 )
 			},
 			alpha: {
 				type: "f",
-				value: 0.9
+				value: 0.1
 			},
-			c_diff: {
-				type: "v3",
-				value: new THREE.Vector3( 0.5 , 0.5 , 0.5)
-			},
+			// c_diff: {
+			// 	type: "v3",
+			// 	value: new THREE.Vector3( 0.1 , 0.1 , 0.1)
+			// },
 			s :{
 				type: "f",
-				value: 3.0
+				value: 1.0
 			}
 		};
 
