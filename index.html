@@ -37,7 +37,7 @@
 
 		<script type="text/javascript" src="js/tmp_sun.js"></script><!-- V -->
 
-	
+
 
 		<script type="text/ogsl" id="asteroidVS">
 
@@ -171,9 +171,8 @@
 
 				vec3 beta = lightPower / (4.0 * PI * pow( length(lightVector) , 2.0));
 
-				gl_FragColor = vec4(beta * NdotL  * (s * c_diff + (1.0 - s) * Specular)  , 1.0);
+				gl_FragColor = vec4( (beta * NdotL  * (s * c_diff  + (1.0 - s) * Specular ))  , 1.0);
 
-				// gl_FragColor = texture2D(tex,vdUv);
 
 			}
 		</script>

@@ -128,11 +128,11 @@ function createMaterialManager(){
 			},
 			alpha: {
 				type: "f",
-				value: 0.1
+				value: 3.0
 			},
 			s :{
 				type: "f",
-				value: 0.5
+				value: 0.6
 			}
 		};
 
