@@ -78,14 +78,22 @@ function createMaterialManager(){
 
 
 	function createUniforms(){
+
+
 		// asteroid texture
 		asteroidTexture = loadImg('textures/asteroid.jpg');
+		asteroidTexture.minFilter = THREE.LinearMipMapLinearFilter;
+		// asteroidTexture.anisotropy = renderer.getMaxAnisotropy();
 
 		// normal map that is used for light calculation
 		asteroidNormalMap = loadImg('textures/normalAst.png');
+		asteroidNormalMap.minFilter = THREE.LinearMipMapLinearFilter;
+		// asteroidNormalMap.anisotropy = renderer.getMaxAnisotropy
 
 		// displaysmant map used for vertex distortion
 		asteroidDisplaysmentMap = loadImg('textures/displaysmentAst.png');
+		asteroidDisplaysmentMap.minFilter = THREE.LinearMipMapLinearFilter;
+		// asteroidDisplaysmentMap.anisotropy = renderer.getMaxAnisotropy();
 
 		asteroiSpecularMap = loadImg('textures/specularAst.png');
 
@@ -112,23 +120,19 @@ function createMaterialManager(){
 			},
 			pointLightPos: {
 				type:  "v3",
-				value: new THREE.Vector3( 16.0, 16.0, 10.0)
+				value: pointLight.lightPosition
 			},
 			lightPower: {
 				type: "v3",
-				value: new THREE.Vector3( 10000.0, 10000.0, 10000.0 )
+				value: pointLight.lightPower
 			},
 			alpha: {
 				type: "f",
-				value: 0.1
+				value: 3.0
 			},
-			// c_diff: {
-			// 	type: "v3",
-			// 	value: new THREE.Vector3( 0.1 , 0.1 , 0.1)
-			// },
 			s :{
 				type: "f",
-				value: 1.0
+				value: 0.6
 			}
 		};
 
