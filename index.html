@@ -35,6 +35,7 @@
 
 
 		<script type="text/ogsl" id="asteroidVS">
+
 			// point propertys
 			varying vec3 tNorm;
 			varying vec2 vUv;
@@ -59,7 +60,7 @@
 					vec3 newNormal = (tNorm * distortion.x) ;
 
 					// actually make displaysment
-					vec3 nPosition = position + newNormal * 0.9;
+					vec3 nPosition = position + (newNormal * 0.2);
 
 					pointPosition = (modelViewMatrix * vec4( nPosition, 1.0 )).xyz;
 
@@ -73,6 +74,8 @@
 		</script>
 
 		<script type="text/ogsl" id="asteroidFS">
+
+
 			// fragment propertys
 			varying vec3 tNorm;
 			varying vec3 pointPosition;
@@ -85,8 +88,7 @@
 
 			// lights
 			uniform vec3 lightPower;
-			// uniform vec3 c_spec;
-			uniform vec3 c_diff;
+
 			uniform float alpha;
 
 			uniform float s;
@@ -94,12 +96,13 @@
 			// maps & texture
 			uniform sampler2D tex;
 			uniform sampler2D normMap;
+			uniform sampler2D specularMap;
 
 
 
 			// start ininitializzation
 			#define PI 3.14159265
-			// #extension GL_OES_standard_derivatives : enable
+
 
 			// vec3 perturbNormal2Arb( vec3 eye_pos, vec3 surf_norm ) {
 			// 	vec3 q0 = dFdx( eye_pos.xyz );
@@ -119,13 +122,13 @@
 			// 	return normalize( tsn * mapN );
 			// }
 
-
+			//
 			float G(float LdotH) {
 				return 1.0/pow(LdotH,2.0);
 			}
 
 			vec3 F(float LdotH ) {
-				vec3 c_spec = (texture2D(tex,vUv)).rgb;
+				vec3 c_spec = (texture2D(specularMap,vUv)).rgb;
 				return c_spec + (vec3(1.0) - c_spec) * pow( 1.0 - LdotH , 5.0);
 			}
 
@@ -138,8 +141,7 @@
 			}
 
 			void main(){
-
-				// vec3 color = (texture2D(tex,vUv)).xyz;
+				vec3 c_diff = texture2D(tex,vUv).rgb;
 
 				vec3 n = normalize( tNorm );
 				vec3 v = normalize( -pointPosition );
@@ -151,19 +153,13 @@
 				float NdotV = max(0.000001, dot( n, v ));
 				float NdotL = max(0.000001, dot( n, l ));
 
-				// test
-
-
 				vec3 Specular = F(VdotH  ) * G(VdotH) * D(NdotH) / 4.0;
-
 
 				vec3 beta = lightPower / (4.0 * PI * pow( length(lightVector) , 2.0));
 
+				gl_FragColor = vec4(beta * NdotL * (s * c_diff + (1.0 - s) * Specular)  , 1.0);
 
-
-				gl_FragColor = vec4(beta + Specular , 1.0);
-
-				// gl_FragColor = texture2D(tex,vUv);
+				// gl_FragColor = texture2D(tex,vdUv);
 
 			}
 		</script>
