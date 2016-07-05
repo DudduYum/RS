@@ -37,20 +37,44 @@ function main(){
 	//two cameras
 	var gameCamera = new THREE.PerspectiveCamera(75, settingsObj.screenRatio(), 0.1, 1000);
 	var freeCamera = new THREE.PerspectiveCamera(75, settingsObj.screenRatio(), 0.1, 1000);
-	freeCamera.position.set(2,2,2);
+		freeCamera.position.set(2,2,2);
 	var useGameCamera = true
 	
-	//renderer
+	//renderer and render targets
 	var renderer = new THREE.WebGLRenderer();
-	renderer.setSize(window.innerWidth, window.innerHeight);
+		renderer.setSize(window.innerWidth, window.innerHeight);
+	var renderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
+	var depthRenderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
 	
-	//composer
-	var composer = new THREE.EffectComposer(renderer);
-	var effect = new THREE.ShaderPass(THREE.CopyShader);
-	//effects
-	var dofEffect;
+	//composers
+	var mainComposer = new THREE.EffectComposer(renderer, renderTarget);
+	var depthComposer = new THREE.EffectComposer(renderer, depthRenderTarget);
+	
 	//shaders
-	var dofShader;
+	var depthShader = createDepthShader();
+		depthShader.uniforms.farPlane.value = 140;
+	var dofShader = createDofShader();
+		dofShader.uniforms.width.value = window.innerWidth;
+		dofShader.uniforms.height.value = window.innerHeight;
+		dofShader.uniforms.tDepth.value = depthComposer.renderTarget1;
+	
+	
+	//passes
+	var mainRenderPass;
+	var depthRenderPass;
+	var dofPass = new THREE.ShaderPass(dofShader);
+		dofPass.renderToScreen = true;
+	var depthPass = new THREE.ShaderPass(THREE.CopyShader);
+		depthPass.renderToScreen = true;
+
+	
+	//depth material
+	var depthMaterial = new THREE.ShaderMaterial({
+		fragmentShader : depthShader.fragmentShader,
+		vertexShader : depthShader.vertexShader,
+		uniforms : depthShader.uniforms
+	});
+	
 
 	//initializes mouse controls for free camera
 	var orbitControls = new THREE.OrbitControls(freeCamera, renderer.domElement);
@@ -105,7 +129,9 @@ function main(){
 
 			gameCamera.updateProjectionMatrix();
 			freeCamera.updateProjectionMatrix();
+			
 			renderer.setSize(window.innerWidth, window.innerHeight);
+			depthRenderTarget.setSize(window.innerWidth, window.innerHeight);
 		},
 		false
 	);
@@ -153,30 +179,30 @@ function main(){
 	
 	
 	//======= RENDERING =======
+	//set render passes
+	mainRenderPass = new THREE.RenderPass(scene, gameCamera);
+	depthRenderPass = new THREE.RenderPass(scene, gameCamera, depthMaterial);
 	
-	//post-processing effects
-	dofShader = createDofShader();
-	dofEffect = new THREE.ShaderPass(dofShader);
-	dofEffect.uniforms.width.value = window.innerWidth;
-	dofEffect.uniforms.height.value = window.innerHeight;
+	//rendering depth image
+	depthComposer.addPass(depthRenderPass);
+	depthComposer.addPass(depthPass);
 	
-	//composing the scene with post-processing effects
-	composer.addPass(new THREE.RenderPass(scene, gameCamera));
-	//composer.addPass(dofEffect);
-	effect.renderToScreen = true;
-	composer.addPass(effect);
+	//composing final image
+	mainComposer.addPass(mainRenderPass);
+	mainComposer.addPass(dofPass);
 	
 	function switchComposerCamera(activeCamera) {
-		composer.passes = [];
-		composer.reset();
-		composer.addPass(new THREE.RenderPass(scene, activeCamera));
-		//composer.addPass(dofEffect);
-		composer.addPass(effect);
+		mainRenderPass = new THREE.RenderPass(scene, activeCamera);
+		depthRenderPass = new THREE.RenderPass(scene, activeCamera, depthMaterial);
+		depthComposer.addPass(depthRenderPass);
+		depthComposer.addPass(depthPass);
+		mainComposer.addPass(mainRenderPass);
+		mainComposer.addPass(dofPass);
 	}
 	
 	//renders from different cameras
 	function renderingCall() {
-		composer.render();
+		mainComposer.render();
 	};
 	
 	//animation loop
@@ -195,7 +221,8 @@ function main(){
 		requestAnimationFrame(animate);
 		stats.update();
 		timer.update();
-		composer.render();
+		depthComposer.render();
+		mainComposer.render();
 	};
 	
 	animate();
