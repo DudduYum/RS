@@ -15,6 +15,5 @@ function createDirectionalLight(){
 function createAmbientLight(){
 	return {
 		lightPower: new THREE.Vector3(),
-		lightDirection: new THREE.Vector3()
 	};
 };
