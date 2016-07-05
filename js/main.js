@@ -32,7 +32,7 @@ function main(){
 
 	//3D scene initialization
 	var scene = new THREE.Scene();
-	scene.fog = new THREE.FogExp2(0x000000, 0.002);
+	scene.fog = new THREE.FogExp2(0x000000, 0.0015);
 
 	//two cameras
 	var gameCamera = new THREE.PerspectiveCamera(75, settingsObj.screenRatio(), 0.1, 1000);
