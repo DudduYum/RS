@@ -98,12 +98,31 @@ function createMaterialManager(){
 			displaysmentMap: {
 				type:  "t",
 				value: asteroidDisplaysmentMap
+			},
+			normalScale:{
+				type:	"v2",
+				value: new THREE.Vector2(0.4 , 0.4)
+			},
+			pointLightPos: {
+				type:  "v3",
+				value: new THREE.Vector3( 3.0, 3.0, -10.0)
+			},
+			lightPower: {
+				type: "v3",
+				value: new THREE.Vector3( 30.0, 300.0, 30.0 )
+			},
+			alpha: {
+				type: "f",
+				value: 0.9
+			},
+			c_diff: {
+				type: "v3",
+				value: new THREE.Vector3( 0.5 , 0.5 , 0.5)
+			},
+			s :{
+				type: "f",
+				value: 3.0
 			}
-			// ,
-			// pLight: {
-			//   type: "vec3",
-			//   value: new THREE.Vector3()
-			// }
 		};
 
 		return uniforms;
@@ -160,41 +179,57 @@ function createMaterialManager(){
 	// materialManager.asteroidMaterial = materialManager.getAsteroidMaterial();
 	initAstMaterial();
 
-	console.log(asteroidMaterial);
-	console.log(asteroidMaterial.clone());
 	var newMat = asteroidMaterial.clone();
 
-	newMat.uniforms = {
-		tex: {
-			type: "t",
-			value: asteroidTexture
-		},
-		normMap: {
-			type:  "t",
-			value: asteroidNormalMap
-		},
-		displaysmentMap: {
-			type:  "t",
-			value: asteroidDisplaysmentMap
-		},
-		pointLightPosition: {
-			type:  "vec3",
-			value: new THREE.Vector3( 8 , 8 , -8)
-		},
-		lightPower: {
-			type: "f",
-			value: 40.
-		},
-		c_spec: {
-			type: "vec3",
-			value: new THREE.Vector3( .91 , .93 , .92)
-		},
-		alpha: {
-			type: "f",
-			value: .9
-		}
+	// newMat.uniforms = {
+		// tex: {
+		// 	type: "t",
+		// 	value: asteroidTexture
+		// },
+		// normMap: {
+		// 	type:  "t",
+		// 	value: asteroidNormalMap
+		// },
+		// normalScale:{
+		// 	type:	"vec2",
+		// 	value: new THREE.Vector2(0.4 , 0.4)
+		// },
+		// displaysmentMap: {
+		// 	type:  "t",
+		// 	value: asteroidDisplaysmentMap
+		// },
+		// pointLightPosition: {
+		// 	type:  "vec3",
+		// 	value: new THREE.Vector3( .4 , .4 , 0)
+		// },
+		// lightPower: {
+		// 	type: "vec3",
+		// 	value: new THREE.Vector3( 30000.0, 30000.0, 30000.0 )
+		// },
+		// c_spec: {
+		// 	type: "vec3",
+		// 	value: new THREE.Vector3( 1.0 , .71 , .29)
+		// },
+		// alpha: {
+		// 	type: "f",
+		// 	value: 0.9
+		// },
+		// c_diff: {
+		// 	type: "vec3",
+		// 	value: new THREE.Vector3( 0.5 , 0.5 , 0.5)
+		// },
+		// s :{
+		// 	type: "f",
+		// 	value: 3.0
+		// }
 
-	}
+	// }
+
+	// console.log(newMat.uniforms.lightPower);
+	// uniform
+
+	// scene.add(sphere);
+
 	return materialManager;
 
 
