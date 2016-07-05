@@ -11,7 +11,7 @@ function createGameSettings(){
 
 	//SPACESHIP SETTINGS
 	// spce ship forward velocity
-	var forwardVelocity = 1;
+	//var forwardVelocity = 1;
 	//spaceship movement speed in units per seconds
 	var normalSpeed = 5;
 	var inertia = 0.4;
@@ -47,9 +47,9 @@ function createGameSettings(){
 	}
 
 	// spaceship
-	configObject.getForwardVelocity = function(){
+	/*configObject.getForwardVelocity = function(){
 		return forwardVelocity;
-	};
+	};*/
 	
 	configObject.inertia = function() {
 		return inertia;
@@ -62,7 +62,7 @@ function createGameSettings(){
 
 	//asteroid propertys
 	configObject.asteroidStartPoint = function(){
-		return - game_area_D/2;
+		return -game_area_D/2;
 	};
 
 	configObject.screenRatio = function(){

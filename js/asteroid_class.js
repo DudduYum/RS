@@ -2,13 +2,10 @@ function createAsteroid(settingsObject, materialManager, timer){
 
 	// var AsteroidMaterial = materialManager.asteroidMaterial();
 
-
 	var asteroid = {};
 
 
-
-
-	// create mesh
+	// create asteroidMesh
 	var geom = new THREE.SphereGeometry(1, 32, 32);
 
 
@@ -19,66 +16,58 @@ function createAsteroid(settingsObject, materialManager, timer){
 
 	// console.log(mat);
 
+	// define propertys and behavior
+
+	//public methods
+	var asteroidMesh = new THREE.Mesh(geom , mat);
+
+	var previousTime;
+
+	var collider = asteroidMesh.geometry.boundingSphere.clone();
+
 
 
 
 	// define propertys and behavior
 
 	//public methods
-	var mesh = new THREE.Mesh(geom , mat);
 
-	var activationTime;
-
-	var collider = mesh.geometry.boundingSphere.clone();
-
-
-
-
-	// define propertys and behavior
-
-	//public methods
-
-	asteroid.mesh = function(){
-		return mesh;
+	asteroid.asteroidMesh = function(){
+		return asteroidMesh;
 	};
 
 	asteroid.move = function(time){
-		//time passed since the creation
-		passedTime = time - activationTime;
-
 		// move quantity
-		var step = passedTime  * settingsObject.asteroidSpeed() ;
-
-		// move mesh
-		mesh.position.setZ(settingsObject.asteroidStartPoint() + step);
-		// move collider
-		collider.center.setZ(settingsObject.asteroidStartPoint() + step);
+		var step = timer.passedTime()  * settingsObject.asteroidSpeed() ;
+		// move asteroidMesh and collider
+		asteroidMesh.translateZ(step);
+		collider.center.setZ(asteroidMesh.position.z);
 	};
 
-	asteroid.hasCrossLimit = function(){
-		// return mesh.position.z >= - settingsObject.gameAreaDepth() / 2 + 5;
-		return mesh.position.z >= settingsObject.gameAreaDepth() / 2 + 5;
+	asteroid.hasCrossedTheLine = function(){
+		return asteroidMesh.position.z >= 1;
+		//return asteroidMesh.position.z >= settingsObject.gameAreaDepth() / 2;
 	};
 
 	asteroid.initialize = function(){
 		//reset timestamp
-		activationTime = timer.getTime();
+		previousTime = timer.getTime();
 
 		//reset position
-		mesh.position.set(
+		asteroidMesh.position.set(
 			settingsObject.randomCoordinate(settingsObject.gameAreaWidth()*2),  //X
 			settingsObject.randomCoordinate(settingsObject.gameAreaHeight()*2),  //Y
 			settingsObject.asteroidStartPoint()
 		);
 
-		// rescale mesh
+		// rescale asteroidMesh
 		var size = settingsObject.randomSize();
-		mesh.scale.x = size;
-		mesh.scale.y = size;
-		mesh.scale.z = size;
+		asteroidMesh.scale.x = size;
+		asteroidMesh.scale.y = size;
+		asteroidMesh.scale.z = size;
 
 		//initialize collider
-		collider.center.set(mesh.position.x, mesh.position.y, mesh.position.z);
+		collider.center.set(asteroidMesh.position.x, asteroidMesh.position.y, asteroidMesh.position.z);
 		collider.radius = size;
 	};
 
@@ -86,31 +75,22 @@ function createAsteroid(settingsObject, materialManager, timer){
 		return collider.intersectsSphere(sphere);
 	};
 	
-	// change position
-	(function (){
-		// mesh.position.set(
-		//   settingsObject.coordinatRandValue( settingsObject.gameAreaWidth() ),  //X
-		//   settingsObject.coordinatRandValue( settingsObject.gameAreaHeight() ),  //Y
-		//   settingsObject.gameAreaDepth());
 
-		asteroid.initialize();
-	})();
-
-	asteroid.testCreation = function(){
-		console.log(mesh.position);
+	/*asteroid.testCreation = function(){
+		console.log(asteroidMesh.position);
 		console.log(collider.center);
-	};
+	};*/
 
-	asteroid.testMove = function(){
-		console.log(mesh.position);
+	/*asteroid.testMove = function(){
+		console.log(asteroidMesh.position);
 		console.log(- settingsObject.gameAreaDepth() / 2 + 5);
 
-		console.log(asteroid.hasCrossLimit());
-	};
+		console.log(asteroid.hasCrossedTheLine());
+	};*/
 
-	asteroid.testAnomalia = function(){
-		console.log(mesh.position.z);
-	};
+	/*asteroid.testAnomalia = function(){
+		console.log(asteroidMesh.position.z);
+	};*/
 
 
 	return asteroid;

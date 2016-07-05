@@ -1,23 +1,22 @@
-
 function createTimer(){
 	//clock to animate the game regardless of framerate
 	//this allows the game to run at the same "effective speed" at any framerate
 	var Timer = {},
 	clock ,
-	prevTime,
-	currTime,
+	previousTime,
+	currentTimer,
 	timePassed;
 
 	(function(){
 		clock = 0;
-		prevTime = new Date();
+		previousTime = new Date();
 	})();
 
 	Timer.update = function(){
-		currTime =  new Date();
-		timePassed = currTime - prevTime;
+		currentTimer =  new Date();
+		timePassed = currentTimer - previousTime;
 		clock = clock + timePassed;
-		prevTime = currTime;
+		previousTime = currentTimer;
 	};
 
 	Timer.getTime = function(){
@@ -30,7 +29,7 @@ function createTimer(){
 
 	Timer.reset = function(){
 		clock = 0;
-		prevTime = new Date();
+		previousTime = new Date();
 	};
 
 	//unit tests
@@ -52,5 +51,4 @@ function createTimer(){
 
 
 	return Timer;
-
 }

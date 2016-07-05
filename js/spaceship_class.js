@@ -151,52 +151,30 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 	//space ship move function definition
 		
 	function moveRight(isInertial){
-		/*if(spaceshipSpeed.hSpeed < 0) {
-			spaceshipSpeed.hSpeed = 0;
-		} else {*/
-			spaceshipSpeed.hSpeed = settingsObj.normalSpeed();
-		//}
-		//console.log(spaceshipSpeed);
+		spaceshipSpeed.hSpeed = settingsObj.normalSpeed();
 	}
 	
 	function moveLeft(){
-		/*if(spaceshipSpeed.hSpeed > 0) {
-			spaceshipSpeed.hSpeed = 0;
-		} else {*/
-			spaceshipSpeed.hSpeed = -settingsObj.normalSpeed();
-		//}
-		//console.log(spaceshipSpeed);
+		spaceshipSpeed.hSpeed = -settingsObj.normalSpeed();
 	}
 	
 	function moveUp(isInertial){
-		/*if(spaceshipSpeed.vSpeed < 0) {
-			spaceshipSpeed.vSpeed = 0;
-		} else {*/
-			spaceshipSpeed.vSpeed = settingsObj.normalSpeed();
-		//}
-		//console.log(spaceshipSpeed);
+		spaceshipSpeed.vSpeed = settingsObj.normalSpeed();
 	}
 	
 	function moveDown(isInertial){
-		/*if(spaceshipSpeed.vSpeed > 0) {
-			spaceshipSpeed.vSpeed = 0;
-		} else {*/
-			spaceshipSpeed.vSpeed = -settingsObj.normalSpeed();
-		//}
-		//console.log(spaceshipSpeed);
+		spaceshipSpeed.vSpeed = -settingsObj.normalSpeed();
 	}
 	
 	function horizontalInertia(){
 		if(!IO_controls.isKeyPressed(37) && !IO_controls.isKeyPressed(65) && !IO_controls.isKeyPressed(39) && !IO_controls.isKeyPressed(68)) {
 			spaceshipSpeed.hSpeed = spaceshipSpeed.hSpeed * settingsObj.inertia();
-			//console.log(spaceshipSpeed);
 		}
 	};
 
 	function verticalInertia(){
 		if(!IO_controls.isKeyPressed(38) && !IO_controls.isKeyPressed(87) && !IO_controls.isKeyPressed(40) && !IO_controls.isKeyPressed(83)) {
 			spaceshipSpeed.vSpeed = spaceshipSpeed.vSpeed * settingsObj.inertia();
-			//console.log(spaceshipSpeed);
 		}
 	};
 	
@@ -257,9 +235,6 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 
 
 	spaceship.initialize = function() {
-		movementTracker.hStep = 0;
-		movementTracker.vStep = 0;
-
 		//set the ship
 		spaceship3D.position.set(0, -spaceshipLength/2, -spaceshipLength);
 
@@ -276,8 +251,8 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 	
 	
 	spaceship.reset = function(){
-		movementTracker.hStep = 0;
-		movementTracker.vStep = 0;
+		spaceshipSpeed.hSpeed = 0;
+		spaceshipSpeed.vSpeed = 0;
 
 		// reset the ship
 		spaceship3D.position.set(0, 0, -spaceshipLength);
@@ -301,8 +276,6 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 	};
 
 	spaceship.isColliding = function(ast){
-		// var res = false;
-
 
 		for (index in spaceshipColliders){
 			// console.log("in isColliding method strt");
@@ -320,12 +293,12 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 
 // unit tests
 
-	spaceship.testGenerale = function(){
+	/*spaceship.testGenerale = function(){
 		console.log(spaceship3D);
 		console.log(spaceshipColliders);
-	}
+	}*/
 
-	spaceship.colliderMoveTest = function(){
+	/*spaceship.colliderMoveTest = function(){
 		console.log("--------");
 		console.log("--------");
 		console.log(spaceship3D.position);
@@ -336,7 +309,7 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 		console.log(spaceshipColliders[2].center);
 		console.log("--------");
 		console.log("--------");
-	}
+	}*/
 
 	// initialization
 	//spaceship.update();

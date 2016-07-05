@@ -32,7 +32,7 @@ function main(){
 
 	//3D scene initialization
 	var scene = new THREE.Scene();
-	scene.fog = new THREE.FogExp2(0x000000, 0.0015);
+	//scene.fog = new THREE.FogExp2(0x000000, 0.0015);
 
 	//two cameras
 	var gameCamera = new THREE.PerspectiveCamera(75, settingsObj.screenRatio(), 0.1, 1000);
@@ -142,10 +142,10 @@ function main(){
 	// game state initializzation (function for game start and end)
 	gameStateControl = createGameState(
 		function(){
+			
+			scoreControl.reset();
 			timer.reset();
 			envi.reset();
-			scoreControl.reset();
-			// interface
 			interfaceControl.displayGame();
 		},
 		function(){
@@ -211,6 +211,7 @@ function main(){
 			try{
 				envi.updateEnviroment();
 				interfaceControl.update();
+				scoreControl.update();
 			}
 			catch(exec) {
 				gameStateControl.stopGame();
