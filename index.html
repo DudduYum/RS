@@ -60,7 +60,7 @@
 					vec3 newNormal = (tNorm * distortion.x) ;
 
 					// actually make displaysment
-					vec3 nPosition = position + (newNormal * 0.2);
+					vec3 nPosition = position + (newNormal * 0.4);
 
 					pointPosition = (modelViewMatrix * vec4( nPosition, 1.0 )).xyz;
 
@@ -91,36 +91,37 @@
 
 			uniform float alpha;
 
-			uniform float s;
-
 			// maps & texture
 			uniform sampler2D tex;
 			uniform sampler2D normMap;
 			uniform sampler2D specularMap;
 
-
+			uniform float s;
+			uniform vec2 normalScale;
 
 			// start ininitializzation
 			#define PI 3.14159265
+			#extension GL_OES_standard_derivatives : enable
 
 
-			// vec3 perturbNormal2Arb( vec3 eye_pos, vec3 surf_norm ) {
-			// 	vec3 q0 = dFdx( eye_pos.xyz );
-			// 	vec3 q1 = dFdy( eye_pos.xyz );
-			//
-			// 	vec2 st0 = dFdx( uVv.st );
-			// 	vec2 st1 = dFdy( uVv.st );
-			//
-			// 	vec3 S = normalize( q0 * st1.t - q1 * st0.t );
-			// 	vec3 T = normalize( -q0 * st1.s + q1 * st0.s );
-			// 	vec3 N = normalize( surf_norm );
-			//
-			// 	vec3 mapN = texture2D( normalMap, uVv ).xyz * 2.0 - 1.0;
-			// 	mapN.xy = normalScale * mapN.xy;
-			// 	mat3 tsn = mat3( S, T, N );
-			//
-			// 	return normalize( tsn * mapN );
-			// }
+			vec3 perturbNormal2Arb( vec3 eye_pos, vec3 surf_norm ) {
+				vec3 q0 = dFdx( eye_pos.xyz );
+				vec3 q1 = dFdy( eye_pos.xyz );
+
+				vec2 st0 = dFdx( vUv.st );
+				vec2 st1 = dFdy( vUv.st );
+
+				vec3 S = normalize( q0 * st1.t - q1 * st0.t );
+				vec3 T = normalize( -q0 * st1.s + q1 * st0.s );
+				vec3 N = normalize( surf_norm );
+
+				vec3 mapN = texture2D( normMap, vUv ).xyz * 2.0 - 1.0;
+				mapN.xy = normalScale * mapN.xy;
+				mat3 tsn = mat3( S, T, N );
+
+				return normalize( tsn * mapN );
+				// return surf_norm;
+			}
 
 			//
 			float G(float LdotH) {
@@ -141,9 +142,12 @@
 			}
 
 			void main(){
+				// vec3 q0 = dFdx( pointPosition.xyz );
+
 				vec3 c_diff = texture2D(tex,vUv).rgb;
 
-				vec3 n = normalize( tNorm );
+				vec3  n      		 	= perturbNormal2Arb( pointPosition, normalize( tNorm ));
+				// n = normalize( tNorm );
 				vec3 v = normalize( -pointPosition );
 				vec3 l = normalize( lightVector );
 				vec3 h = normalize( v + l );
