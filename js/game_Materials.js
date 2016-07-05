@@ -116,7 +116,7 @@ function createMaterialManager(){
 			},
 			lightPower: {
 				type: "v3",
-				value: new THREE.Vector3( 10000.0, 10000.0, 1000 0.0 )
+				value: new THREE.Vector3( 10000.0, 10000.0, 10000.0 )
 			},
 			alpha: {
 				type: "f",
