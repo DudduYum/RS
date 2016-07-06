@@ -193,6 +193,10 @@ Spaceship.prototype.updateSpaceship = function(){
 			this.spaceship3D.translateZ(this.movementTracker.vStep);
 	}
 	this.updateColliders();
+
+	spaceshipLight.lightPosition.setX(this.spaceship3D.position.x);
+	spaceshipLight.lightPosition.setY(this.spaceship3D.position.y);
+
 }
 
 
