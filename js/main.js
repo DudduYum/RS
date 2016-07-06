@@ -1,5 +1,9 @@
 "use strict";
 
+//======= GLOBAL VARIABLES AND METHODS =======
+var switchCameraMode;
+
+
 function ProjectOLA(){
 	
 //======= VARIABLES =======
@@ -69,22 +73,23 @@ function ProjectOLA(){
 		dofShader.uniforms.height.value = window.innerHeight;
 		dofShader.uniforms.tDepth.value = depthComposer.renderTarget1;
 	
-	
-	//passes
-	var mainRenderPass;
-	var depthRenderPass;
-	var dofPass = new THREE.ShaderPass(dofShader);
-		dofPass.renderToScreen = true;
-	var depthPass = new THREE.ShaderPass(THREE.CopyShader);
-		depthPass.renderToScreen = true;
-
-	
 	//depth material
 	var depthMaterial = new THREE.ShaderMaterial({
 		fragmentShader : depthShader.fragmentShader,
 		vertexShader : depthShader.vertexShader,
 		uniforms : depthShader.uniforms
 	});
+	
+	//passes
+	var mainRenderPass;
+		mainRenderPass = new THREE.RenderPass(scene, gameCamera);
+	var depthRenderPass;
+		depthRenderPass = new THREE.RenderPass(scene, gameCamera, depthMaterial);
+	var dofPass = new THREE.ShaderPass(dofShader);
+		dofPass.renderToScreen = true;
+	var depthPass = new THREE.ShaderPass(THREE.CopyShader);
+		depthPass.renderToScreen = true;	
+	
 	
 
 	//initializes mouse controls for free camera
@@ -94,10 +99,9 @@ function ProjectOLA(){
 		orbitControls.target = new THREE.Vector3(0,0,-10);
 
 
-//======= METHODS =======
+//======= CAMERA METHODS =======
 
-	// camera switch init
-	userInterface.setCameraSwitch(
+	userInterface.setCameraSwitching(
 		function(){
 			// switch to game camera
 			orbitControls.enabled = false;
@@ -111,10 +115,34 @@ function ProjectOLA(){
 			switchComposerCamera(freeCamera);
 		}
 	);
+	
+	//generale camera switch method
+	function switchCamera() {
+		if(!useGameCamera) {
+			userInterface.switchToGameCamera();
+		} else {
+			userInterface.switchToFreeCamera();
+		}
+	}
+	
+	//assign the camera switch method to a globarl variable
+	switchCameraMode = switchCamera;
+	//assign camera switch method to button C
+	inputControl.addKeyDownAction(67, switchCamera);
+	
+	//switches the camera used by the composer by recreating composing order
+	//with new render passes
+	function switchComposerCamera(activeCamera) {
+		mainRenderPass = new THREE.RenderPass(scene, activeCamera);
+		depthRenderPass = new THREE.RenderPass(scene, activeCamera, depthMaterial);
+		depthComposer.addPass(depthRenderPass);
+		depthComposer.addPass(depthPass);
+		mainComposer.addPass(mainRenderPass);
+		mainComposer.addPass(dofPass);
+	}
 
 
-
-
+//======= OTHER METHODS =======
 
 	//resizes the renderer and the game area if the window resizes
 	window.addEventListener('resize',
@@ -134,7 +162,6 @@ function ProjectOLA(){
 		},
 		false
 	);
-
 
 
 
@@ -165,23 +192,10 @@ function ProjectOLA(){
 		}
 	);
 
-	inputControl.addKeyDownAction(67,
-		function(){
-			if (!useGameCamera) {
-				userInterface.switchToGameCamera();
-			} else {
-				userInterface.switchToFreeCamera();
-			}
-		}
-	);
 	
 	
 	
 //======= RENDERING =======
-	
-	//set render passes
-	mainRenderPass = new THREE.RenderPass(scene, gameCamera);
-	depthRenderPass = new THREE.RenderPass(scene, gameCamera, depthMaterial);
 	
 	//rendering depth image
 	depthComposer.addPass(depthRenderPass);
@@ -191,14 +205,7 @@ function ProjectOLA(){
 	mainComposer.addPass(mainRenderPass);
 	mainComposer.addPass(dofPass);
 	
-	function switchComposerCamera(activeCamera) {
-		mainRenderPass = new THREE.RenderPass(scene, activeCamera);
-		depthRenderPass = new THREE.RenderPass(scene, activeCamera, depthMaterial);
-		depthComposer.addPass(depthRenderPass);
-		depthComposer.addPass(depthPass);
-		mainComposer.addPass(mainRenderPass);
-		mainComposer.addPass(dofPass);
-	}
+	
 	
 	//renders from different cameras
 	function renderingCall() {

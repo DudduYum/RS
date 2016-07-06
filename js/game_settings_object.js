@@ -46,6 +46,6 @@ GameSettings.prototype.asteroidSize = function(){
 	return this.minSize + (this.maxSize - this.minSize) * Math.random();
 }
 
-GameSettings.prototype.updareSizeRatio = function(ratio){
+GameSettings.prototype.updateRatio = function(ratio){
 	this.game_area_W = this.game_area_H * ratio;
 }

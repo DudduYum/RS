@@ -17,8 +17,8 @@ function InterfaceManager(canvas, score){
 	this.freeSwitch = document.getElementById("freeCameraButton");
 	this.gameSwitch = document.getElementById("gameCameraButton");
 
-	this.activateGameCamera = undefined;
-	this.activateFreeCamera = undefined;
+	this.activateGameCamera;
+	this.activateFreeCamera;
 
 
 
@@ -81,29 +81,23 @@ InterfaceManager.prototype.update = function(value){
 	this.scoreNumber.innerHTML = this.score.getScore();
 }
 
-InterfaceManager.prototype.setCameraSwitch = function(toGame, toFree){
+InterfaceManager.prototype.setCameraSwitching = function(toGame, toFree){
 	this.activateGameCamera = toGame;
 	this.activateFreeCamera = toFree;
 }
 
 
 InterfaceManager.prototype.switchToFreeCamera  = function(){
-
 	this.gameSwitch.style.display = "block";
 	this.freeSwitch.style.display = "none";
 
-	if (this.activateFreeCamera != undefined) {
-		this.activateFreeCamera();
-	}
+	this.activateFreeCamera();
 }
 
 
 InterfaceManager.prototype.switchToGameCamera = function(){
-
 	this.gameSwitch.style.display = "none";
 	this.freeSwitch.style.display = "block";
 
-	if (this.activateGameCamera != undefined) {
-		this.activateGameCamera();
-	}
+	this.activateGameCamera();
 }
