@@ -116,6 +116,14 @@ function createMaterialManager(){
 				type:	"v2",
 				value: new THREE.Vector2(3.0 , 3.0)
 			},
+			spLightPos: {
+				type:  "v3",
+				value: spaceshipLight.lightPosition
+			},
+			spLightPower: {
+				type: "v3",
+				value: spaceshipLight.lightPower
+			},
 			pointLightPos: {
 				type:  "v3",
 				value: pointLight.lightPosition
@@ -124,9 +132,13 @@ function createMaterialManager(){
 				type: "v3",
 				value: pointLight.lightPower
 			},
+			ambientLight: {
+				type: "v3",
+				value: ambientLight.lightPower
+			},
 			alpha: {
 				type: "f",
-				value: 3.0
+				value: 5.0
 			},
 			s :{
 				type: "f",
