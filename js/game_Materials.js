@@ -253,6 +253,15 @@ function createMaterialManager(){
 
 	// scene.add(sphere);
 
+	// spaceship section
+	materialManager.redSpaceshipMaterial = function(){
+		return new THREE.MeshBasicMaterial({color:0xff0000});
+	}
+
+	materialManager.silverSpaceshipMaterial = function(){
+		return new THREE.MeshBasicMaterial({color:0x0000ff});
+	}
+
 	return materialManager;
 
 

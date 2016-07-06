@@ -13,9 +13,9 @@ function createEnvironment(settingsObject, width, height, depth, timer, IO_contr
 
 	// spaceship
 	var spaceship;
-	
+
 	var game3Dscene = new THREE.Object3D();
-	
+
 	//sphere map
 	var openSpaceGeometry  = new THREE.SphereGeometry(600, 32, 32);
 	var openSpaceTexture = new THREE.TextureLoader().load('textures/spaceD2.jpg');
@@ -25,19 +25,19 @@ function createEnvironment(settingsObject, width, height, depth, timer, IO_contr
 	openSpace.position.set(0,0,0);
 
 	game3Dscene.add(openSpace);
-	
-	
+
+
 	var tempAsteroid;
 
 	(function (){
 		// set volume size
 		resizeGameArea();
 		settings.setGameAreaDepth(depth);
-		
+
 
 		materialManager = createMaterialManager();
 
-		materialManager.shipMaterial = new THREE.MeshBasicMaterial({color:0x00ff00});
+		// materialManager.shipMaterial = new THREE.MeshBasicMaterial({color:0x00ff00});
 
 		spaceship = createSpaceship(settings, materialManager, IO_controls, timer);
 
@@ -66,8 +66,8 @@ function createEnvironment(settingsObject, width, height, depth, timer, IO_contr
 		settings.setGameAreaWidth(width * settings.screenRatio());
 		settings.setGameAreaHeight(height);
 	};
-	
-	
+
+
 	// ASTEROIDS
 	//create asteroid for the future use
 	function fillBuffer(){
@@ -75,23 +75,23 @@ function createEnvironment(settingsObject, width, height, depth, timer, IO_contr
 			asteroidBuffer.push(createAsteroid(settings, materialManager, timer));
 		}
 	};
-	
+
 	//this method moves asteroids and make them visible
 	envi.moveAsteroids = function(){
-		
+
 		for (astIndex in activeAsteroids ){
 			tempAsteroid = activeAsteroids[astIndex];
 			tempAsteroid.move();
 			if(tempAsteroid.hasCrossedTheLine()){
-				this.removeAsteroid(astIndex); 
+				this.removeAsteroid(astIndex);
 			}
 		}
-		
+
 		//check if it's spawn time!!
 		if(timer.getTime() - lastSpawnTime > settings.spawnDelay() ) {
 			addAsteroid();
 		}
-		
+
 	};
 
 
@@ -101,14 +101,14 @@ function createEnvironment(settingsObject, width, height, depth, timer, IO_contr
 		activeAsteroids.push(tempAsteroid);
 		game3Dscene.add(tempAsteroid.asteroidMesh());
 		lastSpawnTime = timer.getTime();
-		
+
 		//check buffer status
 		if(asteroidBuffer.length < asteroidBufferMinimum){
 			fillBuffer();
 		}
 	}
-	
-	
+
+
 	//remove all asteroid from the game area
 	envi.removeAsteroid = function(astIndex){
 		tempAsteroid = activeAsteroids[astIndex];
@@ -116,7 +116,7 @@ function createEnvironment(settingsObject, width, height, depth, timer, IO_contr
 		asteroidBuffer.push(tempAsteroid);
 		game3Dscene.remove(tempAsteroid.asteroidMesh());
 	};
-	
+
 	envi.gameScene = function(){
 		return game3Dscene;
 	};
@@ -138,7 +138,7 @@ function createEnvironment(settingsObject, width, height, depth, timer, IO_contr
 		return this.game3Dscene.children[index];
 	};
 
-	
+
 
 	envi.updateEnviroment = function(){
 			this.moveAsteroids();
@@ -153,11 +153,11 @@ function createEnvironment(settingsObject, width, height, depth, timer, IO_contr
 		spaceship.reset();
 		lastSpawnTime = timer.getTime();
 	};
-	
+
 	envi.rotateSpaceship = function() {
 		spaceship.rotate();
 	}
-	
+
 	envi.immobilizeSpaceship = function() {
 		spaceship.immobilize();
 	}

@@ -1,8 +1,8 @@
 function createSpaceship(settingsObj, materialManager, IO_controls, timer){
-	
+
 	var spaceship = {};
 
-	
+
 	//spaceship3D size
 	var spaceshipRadius = 0.5;
 	var spaceshipLength = 5;
@@ -14,17 +14,17 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 
 	//spaceship3D front
 	var spaceship_front_geometry = new THREE.CylinderGeometry(0, spaceshipRadius, spaceshipLength*spaceshipFrontSize);
-	var spaceship_front_material = materialManager.shipMaterial;
+	var spaceship_front_material = materialManager.redSpaceshipMaterial();
 	var spaceship_front = new THREE.Mesh(spaceship_front_geometry, spaceship_front_material);
 
 	//spaceship3D body
 	var spaceship_body_geometry = new THREE.CylinderGeometry(spaceshipRadius, spaceshipRadius, spaceshipLength*spaceshipBodySize);
-	var spaceship_body_material = materialManager.shipMaterial;
+	var spaceship_body_material = materialManager.silverSpaceshipMaterial();
 	var spaceship_body = new THREE.Mesh(spaceship_body_geometry, spaceship_body_material);
 
 	//spaceship3D tail
 	var spaceship_back_geometry =  new THREE.CylinderGeometry(spaceshipRadius/2, spaceshipRadius*4/5, spaceshipLength*spaceshipBackSize);
-	var spaceship_back_material = materialManager.shipMaterial;
+	var spaceship_back_material = materialManager.redSpaceshipMaterial();
 	var spaceship_back = new THREE.Mesh(spaceship_back_geometry, spaceship_back_material);
 
 	//spaceship3D collider, aproximated with 3 spheres
@@ -47,7 +47,7 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 		hStep: 0.0,
 		vStep: 0.0
 	};
-	
+
 	spaceshipSpeed = {
 		hSpeed: 0.0,
 		vSpeed: 0.0
@@ -81,24 +81,10 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 
 	spaceship3D.position.set(0, -spaceshipLength/2, 0);
 	//settingsObj.gameAreaDepth()/2-spaceshipLength/2);
-	
+
 
 	var spaceshipPosition = new THREE.Vector3().setFromMatrixPosition( spaceship3D.matrix  );
 
-	// // collider translation functions
-	// function translateSpaceshipCollider(x, y){
-	// 	for (var i = 0 ; i < spaceshipColliders.length ; i++) {
-	// 		spaceshipColliders[i].translate(new THREE.Vector3(x,y,0));
-	// 	}
-	// }
-	// function translateSpaceshipColliderX(x){
-	// 	translateSpaceshipCollider(x,0);
-	// }
-	// function translateSpaceshipColliderY(y){
-	// 	translateSpaceshipCollider(0,y);
-	// }
-
-	
 
 
 	// space ship movement initialization
@@ -117,10 +103,10 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 	//down
 	IO_controls.addKeyDownAction(40, moveDown);
 	IO_controls.addKeyDownAlias(83, 40);
-	
-	
+
+
 	var step;
-	
+
 	//check area borders for limit reach
 	function checkLeftBorder() {
 		if(spaceship3D.position.x > -settingsObj.gameAreaWidth()/2 + 1)
@@ -146,26 +132,27 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 		else
 			return false;
 	}
-	
-	
+
+
+
 	//space ship move function definition
-		
+
 	function moveRight(isInertial){
 		spaceshipSpeed.hSpeed = settingsObj.normalSpeed();
 	}
-	
+
 	function moveLeft(){
 		spaceshipSpeed.hSpeed = -settingsObj.normalSpeed();
 	}
-	
+
 	function moveUp(isInertial){
 		spaceshipSpeed.vSpeed = settingsObj.normalSpeed();
 	}
-	
+
 	function moveDown(isInertial){
 		spaceshipSpeed.vSpeed = -settingsObj.normalSpeed();
 	}
-	
+
 	function horizontalInertia(){
 		if(!IO_controls.isKeyPressed(37) && !IO_controls.isKeyPressed(65) && !IO_controls.isKeyPressed(39) && !IO_controls.isKeyPressed(68)) {
 			spaceshipSpeed.hSpeed = spaceshipSpeed.hSpeed * settingsObj.inertia();
@@ -177,12 +164,12 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 			spaceshipSpeed.vSpeed = spaceshipSpeed.vSpeed * settingsObj.inertia();
 		}
 	};
-	
+
 	spaceship.immobilize = function(){
 		spaceshipSpeed.hSpeed = 0;
 		spaceshipSpeed.vSpeed = 0;
 	}
-	
+
 	//move the spaceship3D and keep it inside game borders
 	spaceship.updateSpaceship = function(){
 		movementTracker.hStep = timer.passedTime() * spaceshipSpeed.hSpeed;
@@ -202,6 +189,7 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 				spaceship3D.translateZ(movementTracker.vStep);
 		}
 		updateColliders();
+		updateLight();
 	}
 
 
@@ -221,15 +209,20 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 	//Up
 	IO_controls.addKeyUpAction(40, verticalInertia);
 	IO_controls.addKeyUpAlias(83, 40);
-	
-	
-	
+
+
+
 	//updates collider position
 	function updateColliders() {
 		for(var i = 0 ; i < spaceshipColliders.length ; i++) {
 			spaceshipColliders[i].center.setX(spaceship3D.position.x);
 			spaceshipColliders[i].center.setY(spaceship3D.position.y);
 		}
+	}
+
+	function updateLight(){
+		spaceshipLight.lightPosition.setX( spaceship3D.position.x );
+		spaceshipLight.lightPosition.setY( spaceship3D.position.y );
 	}
 
 
@@ -247,9 +240,11 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 		spaceshipColliders[0].center.set(0,0,spaceship3D.position.z - ((spaceshipFrontSize + spaceshipBodySize/2 )* spaceshipLength));
 		spaceshipColliders[1].center.set(0,0,spaceship3D.position.z);
 		spaceshipColliders[2].center.set(0,0,spaceship3D.position.z + ((spaceshipBodySize/2 + spaceshipBackSize)* spaceshipLength));
+
+		updateLight();
 	}
-	
-	
+
+
 	spaceship.reset = function(){
 		spaceshipSpeed.hSpeed = 0;
 		spaceshipSpeed.vSpeed = 0;
@@ -265,8 +260,8 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 		spaceshipColliders[2].center.set(0,0,spaceship3D.position.z + ((spaceshipBodySize/2 + spaceshipBackSize)* spaceshipLength));
 	};
 
-	
-	
+
+
 	spaceship.rotate = function() {
 		spaceship3D.rotation.y += 1 * Math.PI/180;
 	}
@@ -278,10 +273,6 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 	spaceship.isColliding = function(ast){
 
 		for (index in spaceshipColliders){
-			// console.log("in isColliding method strt");
-			// console.log(spaceshipColliders[index].center);
-			// console.log(ast.testCreation() );
-			// console.log("in isColliding method STOP");
 			if(ast.isCollidingWith(spaceshipColliders[index])){
 				return true;
 			}
