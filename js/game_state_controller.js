@@ -1,71 +1,51 @@
-// TODO
-// some function must be passed as arguments, it's the best
-// I can do right now
+"use strict";
 
-function createGameState(startFun, stopFun){
-	//true if game is running righ now
-	var gameRunning = false;
-	var gameOver = false;
-
-	// i blochi che vengono chiamati dalla
-	var startAction = startFun;
-	var stopAction = stopFun;
-	var gameControl = {};
-
-	//constructor
+function GameState(startFun, stopFun){
+//VARIABLES
+	//true if game is running
+	this.gameRunning = false;;
+	//true if game is over, not just not running
+	this.gameOver = false;;
+	this.startAction = startFun;;
+	this.stopAction = stopFun;;
 
 
-	// getter
-	gameControl.isRunning = function(){
-		return gameRunning;
-	};
-	
-	gameControl.isOver = function() {
-		return gameOver;
+//CONSTRUCTOR
+}
+
+
+
+//METHODS
+GameState.prototype.isRunning = function(){
+	return this.gameRunning;
+};
+
+GameState.prototype.isOver = function() {
+	return this.gameOver;
+}
+
+//set to start state
+GameState.prototype.startGame = function(){
+	if(!this.gameRunning){
+		this.gameRunning = true;
+		this.gameOver = false;
+		//use callBack function call
+		//if(startAction != undefined){
+			this.startAction();
+		//}
+	}		
+}
+
+//set to stop state
+GameState.prototype.stopGame = function(){
+	if(this.gameRunning){
+		this.gameRunning = false;
+		this.gameOver = true;
+		//use callBack function call
+		//if(stopAction != undefined){
+			this.stopAction();
+		//}
+	} else {
+		console.log("warring: game is alredy stopped!");
 	}
-
-	//setters
-	//set to start state and
-	//execute some call back function
-	gameControl.startGame = function(){
-		if(!gameRunning){
-			gameRunning = true;
-			gameOver = false;
-			//use callBack function call
-			if(startAction != undefined){
-				startAction();
-			}
-		}		
-	}
-
-	//set to stop state and
-	//execute some call back function
-	gameControl.stopGame = function(){
-		if(gameRunning){
-			gameRunning = false;
-			gameOver = true;
-			//use callBack function call
-			if(stopAction != undefined){
-				stopAction();
-			}
-		} else {
-			console.log("warring: game is alredy stopped!");
-		}
-	}
-
-
-
-	//init :)
-	// gameControl.stop();
-
-	// unit tests
-	gameControl.testInit = function(){
-		console.log(startAction);
-		console.log(stopAction);
-	};
-
-
-
-	return gameControl;
-
 }

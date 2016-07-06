@@ -1,3 +1,5 @@
+"use strict";
+
 var freeSwitch = document.getElementById("freeCameraButton");
 var gameSwitch = document.getElementById("gameCameraButton");
 

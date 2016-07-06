@@ -1,3 +1,5 @@
+"use strict";
+
 function createInterfaceManager(scoreControl){
 	var interfaceManager = {};
 

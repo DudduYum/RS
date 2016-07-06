@@ -1,3 +1,5 @@
+"use strict";
+
 function createPointLight(){
 	return {
 		lightPower: new THREE.Vector3(),

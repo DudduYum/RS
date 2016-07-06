@@ -1,3 +1,5 @@
+"use strict";
+
 function createAsteroid(settingsObject, materialManager, timer){
 
 	// var AsteroidMaterial = materialManager.asteroidMaterial();

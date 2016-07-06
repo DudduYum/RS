@@ -1,3 +1,5 @@
+"use strict";
+
 //this file saves all sheders
 // asteroid
 
@@ -21,10 +23,6 @@ function createMaterialManager(){
 
 
 
-
-
-
-
 	// var pointLightPositio,
 	// pointLightPower
 	// ;
@@ -34,7 +32,7 @@ function createMaterialManager(){
 
 	function loadImg(imgSrc){
 
-		img = textureLoader.load(
+		var img = textureLoader.load(
 			// resource URL
 			imgSrc,
 			// Function when resource is loaded

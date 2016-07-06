@@ -1,9 +1,14 @@
-function main(){
+"use strict";
+
+function ProjectOLA(){
+	
+	var stats;
+	var canvas;
 	// configuration object
 	var settingsObj = createGameSettings();
 
 	// game timer
-	var timer = createTimer();
+	var timer = new Timer();
 
 	// game state manager
 	var gameStateControl;
@@ -140,7 +145,7 @@ function main(){
 
 	// GAME LOOP //
 	// game state initializzation (function for game start and end)
-	gameStateControl = createGameState(
+	gameStateControl = new GameState(
 		function(){
 			
 			scoreControl.reset();

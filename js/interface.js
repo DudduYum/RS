@@ -1,3 +1,5 @@
+"use strict";
+
 var initialScreen = document.getElementById("initialScreen");
 var gameoverScreen = document.getElementById("gameoverScreen");
 var scoreNumber = document.getElementById("currentScore");

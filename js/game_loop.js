@@ -1,3 +1,5 @@
+"use strict";
+
 displayInitalScreen();
 
 //starts the game by calling all initializing functions

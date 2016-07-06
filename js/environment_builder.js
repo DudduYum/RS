@@ -1,10 +1,14 @@
+"use strict";
+
 function createEnvironment(settingsObject, width, height, depth, timer, IO_controls, scoreControl){
 
 
 
 	var settings = settingsObject;
 	var textureManager;
+	var materialManager;
 	var envi = {};
+	
 	//asteroid param
 	var asteroidBufferMinimum = 5;
 	var activeAsteroids = [];
@@ -34,17 +38,14 @@ function createEnvironment(settingsObject, width, height, depth, timer, IO_contr
 		resizeGameArea();
 		settings.setGameAreaDepth(depth);
 		
-
 		materialManager = createMaterialManager();
 
 		materialManager.shipMaterial = new THREE.MeshBasicMaterial({color:0x00ff00});
 
-		spaceship = createSpaceship(settings, materialManager, IO_controls, timer);
-
-		// test
-		// spaceship.colliderMoveTest();
+		spaceship =  new Spaceship(settings, materialManager, IO_controls, timer);
 
 		game3Dscene.add(spaceship.spaceshipObject());
+		
 		spaceship.initialize();
 		lastSpawnTime = timer.getTime()
 		// test
