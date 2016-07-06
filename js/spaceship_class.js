@@ -17,7 +17,7 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	this.spaceshipFrontSize = 0.42;
 	this.spaceshipBodySize = 0.42;
 	this.spaceshipBackSize = 0.14;
-	
+
 	this.spaceship3D = new THREE.Object3D();
 
 	//spaceship3D front
