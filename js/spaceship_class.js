@@ -14,24 +14,24 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	this.spaceshipLength = 5;
 
 	//ratios compared to spaceship3D length (eg 0.4 is 40% of length)
-	this.spaceshipFrontSize = 0.4;
-	this.spaceshipBodySize = 0.4;
-	this.spaceshipBackSize = 0.2;
+	this.spaceshipFrontSize = 0.42;
+	this.spaceshipBodySize = 0.42;
+	this.spaceshipBackSize = 0.14;
 	
 	this.spaceship3D = new THREE.Object3D();
 	
 	//spaceship3D front
-	this.spaceship_front_geometry = new THREE.CylinderGeometry(0, this.spaceshipRadius, this.spaceshipLength * this.spaceshipFrontSize);
+	this.spaceship_front_geometry = new THREE.CylinderGeometry(0, this.spaceshipRadius, this.spaceshipLength * this.spaceshipFrontSize, 16);
 	this.spaceship_front_material = this.materialManager.redSpaceshipMaterial();
 	this.spaceship_front = new THREE.Mesh(this.spaceship_front_geometry, this.spaceship_front_material);
 
 	//spaceship3D body
-	this.spaceship_body_geometry = new THREE.CylinderGeometry(this.spaceshipRadius, this.spaceshipRadius, this.spaceshipLength * this.spaceshipBodySize);
+	this.spaceship_body_geometry = new THREE.CylinderGeometry(this.spaceshipRadius, this.spaceshipRadius, this.spaceshipLength * this.spaceshipBodySize, 16);
 	this.spaceship_body_material = this.materialManager.silverSpaceshipMaterial();
 	this.spaceship_body = new THREE.Mesh(this.spaceship_body_geometry, this.spaceship_body_material);
 
 	//spaceship3D tail
-	this.spaceship_back_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius/2, this.spaceshipRadius*4/5, this.spaceshipLength * this.spaceshipBackSize);
+	this.spaceship_back_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius*3/5, this.spaceshipRadius*3/4, this.spaceshipLength * this.spaceshipBackSize, 16);
 	this.spaceship_back_material = this.materialManager.darkSilverSpaceshipMaterial();
 	this.spaceship_back = new THREE.Mesh(this.spaceship_back_geometry, this.spaceship_back_material);
 
