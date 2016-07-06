@@ -1,6 +1,6 @@
 "use strict";
 
-function Environment(settingsObject, width, height, depth, timer, IO_controls){
+function Environment(settingsObject, timer, IO_controls){
 
 //=== VARIABLES ===
 
@@ -34,13 +34,10 @@ function Environment(settingsObject, width, height, depth, timer, IO_controls){
 
 	this.game3Dscene.add(this.openSpace);
 	
-	// set volume size
-	this.resizeGameArea();
-	this.settingsObject.setGameAreaDepth(depth);
 
 	this.materialManager.shipMaterial = new THREE.MeshBasicMaterial({color:0x00ff00});
 
-	this.game3Dscene.add(this.spaceship.spaceshipObject());
+	this.game3Dscene.add(this.spaceship.spaceship3D);
 	
 	this.spaceship.initialize();
 	this.lastSpawnTime = timer.getTime()
@@ -64,8 +61,8 @@ Environment.prototype.detectCollisions = function(){
 }
 
 Environment.prototype.resizeGameArea = function(){
-	this.settingsObject.setGameAreaWidth(this.width * this.settingsObject.screenRatio());
-	this.settingsObject.setGameAreaHeight(this.height);
+	this.settingsObject.game_area_W = this.width * this.settingsObject.screenRatio();
+	this.settingsObject.game_area_H = this.height;
 }
 
 
@@ -126,13 +123,6 @@ Environment.prototype.removeAsteroid = function(astIndex){
 	this.activeAsteroids.splice(astIndex,1);
 	this.asteroidBuffer.push(tempAsteroid);
 	this.game3Dscene.remove(tempAsteroid.asteroidMesh);
-}
-
-
-//I don't know why is it stll here
-Environment.prototype.updateRatio = function(){
-	this.settingsObject.updateScreenRatio();
-	this.resizeGameArea();
 }
 
 

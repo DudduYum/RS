@@ -3,24 +3,21 @@
 function MaterialManager(){
 	
 //=== VARIABLES ===
-
-	this.asteroidTexture;
-	this.spaceshipMaterial;
-	this.sunMaterial;
 	this.textureLoader = new THREE.TextureLoader();
 	
-	this.asteroidMaterial;
+	this.spaceshipMaterial;
 	
+	this.sunMaterial;
+	
+	this.asteroidTexture;
+	this.asteroidMaterial = this.getMaterialByName("asteroid");
 	this.asteroidNormalMap;
-
 	this.asteroidDisplacementMap;
 	this.asteroiSpecularMap;
 
 
 
 //=== CONSTRUCTOR ===
-
-	this.initAstMaterial();
 	
 }
 
@@ -33,20 +30,16 @@ MaterialManager.prototype.loadImg = function(imgSrc){
 	var img = this.textureLoader.load(
 		// resource URL
 		imgSrc,
-		// Function when resource is loaded
-		function( texture ) {
-			// do something with the texture
-			// this.material = new THREE.MeshBasicMaterial( {
-			// 	map: texture
-			//  } );
+		// loaded
+		function() {
+			//console.log("image loaded");
 		},
-		// Function called when download progresses
-		function( xhr ) {
-			console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+		// loading
+		function() {
 		},
-		// Function called when download errors
-		function( xhr ) {
-			console.log( 'An error happened' );
+		// error
+		function() {
+			console.log("image loading error");
 		}
 	);
 
@@ -55,7 +48,6 @@ MaterialManager.prototype.loadImg = function(imgSrc){
 
 
 MaterialManager.prototype.createUniforms = function(){
-
 
 	// asteroid texture
 	this.asteroidTexture = this.loadImg('textures/asteroid.jpg');
@@ -136,7 +128,6 @@ MaterialManager.prototype.getMaterialByName = function(objectName){
 
 	var material = new THREE.ShaderMaterial({
 		uniforms: this.createUniforms(),
-
 		vertexShader: vs,
 		fragmentShader: fs
 	});
@@ -144,26 +135,6 @@ MaterialManager.prototype.getMaterialByName = function(objectName){
 	return material;
 }
 
-
-MaterialManager.prototype.initAstMaterial = function(){
-
-	this.asteroidMaterial = this.getMaterialByName("asteroid");
-
-	//this.asteroidMaterial.uniforms = this.createUniforms();
-
-}
-
-
-MaterialManager.prototype.getAsteroidMaterial = function(){
-
-	/*var newMaterial = this.asteroidMaterial.clone();
-
-	newMaterial.uniforms = this.createUniforms();
-
-	return newMaterial;*/
-	
-	return this.asteroidMaterial;
-}
 
 
 // texture initialization

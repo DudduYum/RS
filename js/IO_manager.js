@@ -1,88 +1,88 @@
 "use strict";
 
-function createGameIOManager(){
-	var IO_controller = {};
-	var keyDownMapping = {};
-	var keyUpMapping = {};
-	var keyPressedStatus = [];
+function IOManager(){
 	
-
-	// KEY DOWN ACTIONS
-
-	// the first one shuld be a key code
-	// adds ongly key down function
-	IO_controller.addKeyDownAction = function(funKey, funCode){
-		keyDownMapping[funKey] = funCode;
-	};
-
-	// thanks to this method you don't need to add the same "callback"
-	// function each time, but insted you can create alias between the new key code
-	// and the function that has bees saved in the structure previosly
-	IO_controller.addKeyDownAlias = function(frsKeyCode, scdKeyCode){
-		if(keyDownMapping[scdKeyCode] != undefined && (typeof(keyDownMapping[scdKeyCode]) != "number")  ){
-			keyDownMapping[frsKeyCode] = scdKeyCode;
-		}else{
-			console.log("Can't create alias to another alias or undefined!");
-		}
-	};
-
-	// this method execute callback function given the key code
-	IO_controller.keyDownAction = function(event){
-		if(keyDownMapping[event.keyCode] != undefined ){
-			if(typeof(keyDownMapping[event.keyCode]) != "number"){
-				keyPressedStatus[event.keyCode] = true;
-				keyDownMapping[event.keyCode]();
-			} else {
-				keyPressedStatus[keyUpMapping[event.keyCode]] = true;
-				keyDownMapping[keyDownMapping[event.keyCode] ]();
-			}
-		}
-	};
-
-
-	// KEY UP FUNCTIONS
-
-	// the same as addKeyDownAction. Read the description abowe
-	IO_controller.addKeyUpAction = function(funKey, funCode){
-		keyUpMapping[funKey] = funCode ;
-	};
-
-	IO_controller.addKeyUpAlias = function(frsKeyCode, scdKeyCode){
-		if(keyUpMapping[scdKeyCode] != undefined && (typeof(keyUpMapping[scdKeyCode]) != "number")  ){
-			keyUpMapping[frsKeyCode] = scdKeyCode;
-		}else{
-			console.log("Can't create alias to another alias or undefined!");
-		}
-	};
-
-
-	// the same as addKeyDownAlias. Read the description abowe
-	IO_controller.keyUpAction = function(event){
-		if(keyUpMapping[event.keyCode] != undefined ){
-			if(typeof( keyUpMapping [event.keyCode]) != "number"){
-				keyPressedStatus[event.keyCode] = false;
-				keyUpMapping [event.keyCode]();
-			} else {
-				keyPressedStatus[keyUpMapping[event.keyCode]] = false;
-				keyUpMapping[ keyUpMapping[event.keyCode]]();
-			}
-		}
-	};
+//=== VARIABLES ===
+	this.self = this;
+	self.keyDownMapping = [];
+	self.keyUpMapping = [];
+	self.keyPressedStatus = [];
 	
-	
-	//get key status
-	IO_controller.isKeyPressed = function(key) {
-		if(!keyPressedStatus[key] || keyPressedStatus[key]==undefined)
-			return false;
-		else
-			return true;
+//=== CONSTRUCTOR ===
+
+}
+
+
+
+//=== METHODS ===
+
+// KEY DOWN ACTIONS
+
+// the first one shuld be a key code
+// adds ongly key down function
+IOManager.prototype.addKeyDownAction = function(funKey, funCode){
+	self.keyDownMapping[funKey] = funCode;
+}
+
+// thanks to this method you don't need to add the same "callback"
+// function each time, but insted you can create alias between the new key code
+// and the function that has bees saved in the structure previosly
+IOManager.prototype.addKeyDownAlias = function(frsKeyCode, scdKeyCode){
+	if( self.keyDownMapping[scdKeyCode] != undefined && ( typeof(self.keyDownMapping[scdKeyCode]) != "number")  ){
+		self.keyDownMapping[frsKeyCode] = scdKeyCode;
+	}else{
+		console.log("Can't create alias to another alias or undefined!");
 	}
-	
-	IO_controller.unitTest = function(){
-		console.log(keyMapping);
-	};
+}
+
+// this method execute callback function given the key code
+IOManager.prototype.keyDownAction = function(event){
+	if( self.keyDownMapping[event.keyCode] != undefined ){
+		if( typeof( self.keyDownMapping[event.keyCode] ) != "number" ){
+			self.keyPressedStatus[event.keyCode] = true;
+			self.keyDownMapping[event.keyCode]();
+		} else {
+			self.keyPressedStatus[keyUpMapping[event.keyCode]] = true;
+			self.keyDownMapping[keyDownMapping[event.keyCode] ]();
+		}
+	}
+}
 
 
+// KEY UP FUNCTIONS
 
-	return IO_controller;
+// the same as addKeyDownAction. Read the description abowe
+IOManager.prototype.addKeyUpAction = function(funKey, funCode){
+	self.keyUpMapping[funKey] = funCode ;
+};
+
+IOManager.prototype.addKeyUpAlias = function(frsKeyCode, scdKeyCode){
+	if( self.keyUpMapping[scdKeyCode] != undefined && ( typeof( self.keyUpMapping[scdKeyCode] ) != "number") ){
+		self.keyUpMapping[frsKeyCode] = scdKeyCode;
+	}else{
+		console.log("Can't create alias to another alias or undefined!");
+	}
+}
+
+
+// the same as addKeyDownAlias. Read the description abowe
+IOManager.prototype.keyUpAction = function(event){
+	if( self.keyUpMapping[event.keyCode] != undefined ){
+		if( typeof( self.keyUpMapping [event.keyCode] ) != "number" ){
+			self.keyPressedStatus[event.keyCode] = false;
+			self.keyUpMapping [event.keyCode]();
+		} else {
+			self.keyPressedStatus[keyUpMapping[event.keyCode]] = false;
+			self.keyUpMapping[ keyUpMapping[event.keyCode]]();
+		}
+	}
+}
+
+
+//get key status
+IOManager.prototype.isKeyPressed = function(key) {
+	if( !self.keyPressedStatus[key] || self.keyPressedStatus[key]==undefined )
+		return false;
+	else
+		return true;
 }

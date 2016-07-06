@@ -52,7 +52,7 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	
 	
 	
-//=== CONSTRUCTOR===
+//=== CONSTRUCTOR ===
 	
 	//key press movement binding
 	//right = right arrow, D
@@ -109,31 +109,28 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 
 //=== METHODS ===
 
-Spaceship.prototype.spaceshipObject = function(){
-	return this.spaceship3D;
-}
 
 //check area borders for limit reach
 Spaceship.prototype.checkLeftBorder = function(){
-	if(this.spaceship3D.position.x > -this.settingsObj.gameAreaWidth()/2 + 1)
+	if(this.spaceship3D.position.x > -this.settingsObj.game_area_W/2 + 1)
 		return true;
 	else
 		return false;
 }
 Spaceship.prototype.checkRightBorder = function(){
-	if(this.spaceship3D.position.x < this.settingsObj.gameAreaWidth()/2 - 1)
+	if(this.spaceship3D.position.x < this.settingsObj.game_area_W/2 - 1)
 		return true;
 	else
 		return false;
 }
 Spaceship.prototype.checkUpBorder = function(){
-	if(this.spaceship3D.position.y < this.settingsObj.gameAreaHeight()/2 - 1)
+	if(this.spaceship3D.position.y < this.settingsObj.game_area_H/2 - 1)
 		return true;
 	else
 		return false;
 }
 Spaceship.prototype.checkDownBorder = function(){
-	if(this.spaceship3D.position.y > -this.settingsObj.gameAreaHeight()/2 + 1)
+	if(this.spaceship3D.position.y > -this.settingsObj.game_area_H/2 + 1)
 		return true;
 	else
 		return false;

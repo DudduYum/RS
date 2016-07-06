@@ -4,10 +4,23 @@ function ProjectOLA(){
 	
 //======= VARIABLES =======
 
-	var stats;
-	var canvas;
+	var stats = new Stats();
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.top = '0px';
+	var canvas = document.getElementById('canvas');
+		canvas.appendChild(stats.domElement);
+	
+	
+	//cameras
+	var aspectRatio = window.innerWidth/window.innerHeight;
+	var gameCamera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
+	var freeCamera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
+		freeCamera.position.set(2,2,2);
+	var useGameCamera = true
+	
+	
 	// configuration object
-	var settings = new GameSettings();
+	var settings = new GameSettings(12, 12, 300, aspectRatio);
 
 	// game timer
 	var timer = new Timer();
@@ -16,37 +29,31 @@ function ProjectOLA(){
 	var gameState;
 
 	// score counter
-	var score = createScoreCounter( timer , settings);
+	var score = new ScoreCounter(timer);
 
 	// keyboard Input managment
-	var inputControl = createGameIOManager();
-	window.addEventListener("keydown",inputControl.keyDownAction);
-	window.addEventListener("keyup",inputControl.keyUpAction);
+	var inputControl = new IOManager();
+		window.addEventListener("keydown",inputControl.keyDownAction);
+		window.addEventListener("keyup",inputControl.keyUpAction);
 
 	// interface
-	var userInterface = createInterfaceManager( score );
-
-	// assign cameraswitch action to the botton
-	switchToGameCamera = userInterface.switchToGameCamera;
-	switchToFreeCamera = userInterface.switchToFreeCamera;
+	var userInterface = new InterfaceManager(canvas, score);
 
 	// environmentronment
-	var environment = new Environment(settings, 12, 12, 300, timer, inputControl);
+	var environment = new Environment(settings, timer, inputControl);
 
 
 	//3D scene initialization
 	var scene = new THREE.Scene();
 	//scene.fog = new THREE.FogExp2(0x000000, 0.0015);
+		scene.add(environment.game3Dscene);
 
-	//two cameras
-	var gameCamera = new THREE.PerspectiveCamera(75, settings.screenRatio(), 0.1, 1000);
-	var freeCamera = new THREE.PerspectiveCamera(75, settings.screenRatio(), 0.1, 1000);
-		freeCamera.position.set(2,2,2);
-	var useGameCamera = true
+	
 	
 	//renderer and render targets
 	var renderer = new THREE.WebGLRenderer();
 		renderer.setSize(window.innerWidth, window.innerHeight);
+		canvas.appendChild(renderer.domElement);
 	var renderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
 	var depthRenderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
 	
@@ -82,24 +89,9 @@ function ProjectOLA(){
 
 	//initializes mouse controls for free camera
 	var orbitControls = new THREE.OrbitControls(freeCamera, renderer.domElement);
-	orbitControls.enableKeys = false;
-	orbitControls.enabled = false;
-	orbitControls.target = new THREE.Vector3(0,0,-10);
-	
-
-	// add ship and asteroid to the scene
-	scene.add(environment.game3Dscene);
-
-
-	// stat init
-	stats = new Stats();
-	stats.domElement.style.position = 'absolute';
-	stats.domElement.style.top = '0px';
-
-	canvas = document.getElementById('canvas');
-	canvas.appendChild(renderer.domElement);
-	canvas.appendChild(stats.domElement);
-
+		orbitControls.enableKeys = false;
+		orbitControls.enabled = false;
+		orbitControls.target = new THREE.Vector3(0,0,-10);
 
 
 //======= METHODS =======
@@ -121,26 +113,28 @@ function ProjectOLA(){
 	);
 
 
-	
+
 
 
 	//resizes the renderer and the game area if the window resizes
 	window.addEventListener('resize',
 		function(){
-			environment.updateRatio().bind(environment);
+			aspectRatio = window.innerWidth/window.innerHeight;
 
-			gameCamera.aspect = settings.screenRatio();
-			freeCamera.aspect = settings.screenRatio();
+			gameCamera.aspect = aspectRatio;
+			freeCamera.aspect = aspectRatio;
 
 			gameCamera.updateProjectionMatrix();
 			freeCamera.updateProjectionMatrix();
 			
 			renderer.setSize(window.innerWidth, window.innerHeight);
 			depthRenderTarget.setSize(window.innerWidth, window.innerHeight);
+			
+			settings.updateRatio(aspectRatio);
 		},
 		false
 	);
-	
+
 
 
 
@@ -232,6 +226,7 @@ function ProjectOLA(){
 		depthComposer.render();
 		mainComposer.render();
 	};
-	
+
+//LOOP START
 	animate();
 }
