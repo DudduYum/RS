@@ -60,11 +60,6 @@ Environment.prototype.detectCollisions = function(){
 	}
 }
 
-Environment.prototype.resizeGameArea = function(){
-	this.settingsObject.game_area_W = this.width * this.settingsObject.screenRatio();
-	this.settingsObject.game_area_H = this.height;
-}
-
 
 // ASTEROIDS
 //create asteroid for the future use
