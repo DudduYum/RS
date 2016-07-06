@@ -1,7 +1,13 @@
 "use strict";
 
 function Spaceship(settingsObj, materialManager, IO_controls, timer){
-//VARAIBLES
+	
+//=== VARIABLES ===
+
+	this.settingsObj = settingsObj;
+	this.materialManager = materialManager;
+	this.IO_controls = IO_controls;
+	this.timer = timer;
 	
 	//spaceship3D size
 	this.spaceshipRadius = 0.5;
@@ -13,21 +19,20 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	this.spaceshipBackSize = 0.2;
 	
 	this.spaceship3D = new THREE.Object3D();
-	//spaceshipPosition = new THREE.Vector3().setFromMatrixPosition(spaceship3D.matrix);
 	
 	//spaceship3D front
 	this.spaceship_front_geometry = new THREE.CylinderGeometry(0, this.spaceshipRadius, this.spaceshipLength * this.spaceshipFrontSize);
-	this.spaceship_front_material = materialManager.shipMaterial;
+	this.spaceship_front_material = this.materialManager.shipMaterial;
 	this.spaceship_front = new THREE.Mesh(this.spaceship_front_geometry, this.spaceship_front_material);
 
 	//spaceship3D body
 	this.spaceship_body_geometry = new THREE.CylinderGeometry(this.spaceshipRadius, this.spaceshipRadius, this.spaceshipLength * this.spaceshipBodySize);
-	this.spaceship_body_material = materialManager.shipMaterial;
+	this.spaceship_body_material = this.materialManager.shipMaterial;
 	this.spaceship_body = new THREE.Mesh(this.spaceship_body_geometry, this.spaceship_body_material);
 
 	//spaceship3D tail
 	this.spaceship_back_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius/2, this.spaceshipRadius*4/5, this.spaceshipLength * this.spaceshipBackSize);
-	this.spaceship_back_material = materialManager.shipMaterial;
+	this.spaceship_back_material = this.materialManager.shipMaterial;
 	this.spaceship_back = new THREE.Mesh(this.spaceship_back_geometry, this.spaceship_back_material);
 
 	//spaceship3D collider, aproximated with 3 spheres
@@ -45,7 +50,45 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 		vSpeed: 0.0
 	};
 	
-//CONSTRUCTOR
+	
+	
+//=== CONSTRUCTOR===
+	
+	//key press movement binding
+	//right = right arrow, D
+	this.IO_controls.addKeyDownAction(39, this.moveRight.bind(this));
+	this.IO_controls.addKeyDownAlias(68, 39);
+	
+	//left = left arrow, A
+	this.IO_controls.addKeyDownAction(37, this.moveLeft.bind(this));
+	this.IO_controls.addKeyDownAlias(65, 37);
+
+	//up = up arrow, W
+	this.IO_controls.addKeyDownAction(38, this.moveUp.bind(this));
+	this.IO_controls.addKeyDownAlias(87, 38);
+
+	//down = down arrow, S
+	this.IO_controls.addKeyDownAction(40, this.moveDown.bind(this));
+	this.IO_controls.addKeyDownAlias(83, 40);
+	
+	//key release movement binding
+	//right = right arrow, D
+	this.IO_controls.addKeyUpAction(39, this.horizontalInertia.bind(this));
+	this.IO_controls.addKeyUpAlias(68, 39);
+	
+	//left = left arrow, A
+	this.IO_controls.addKeyUpAction(37, this.horizontalInertia.bind(this));
+	this.IO_controls.addKeyUpAlias(65, 37);
+
+	//up = up arrow, W
+	this.IO_controls.addKeyUpAction(38, this.verticalInertia.bind(this));
+	this.IO_controls.addKeyUpAlias(87, 38);
+
+	//down = down arrow, S
+	this.IO_controls.addKeyUpAction(40, this.verticalInertia.bind(this));
+	this.IO_controls.addKeyUpAlias(83, 40);
+	
+
 	//spaceship3D assembly
 	this.spaceship3D.add(this.spaceship_front);
 	this.spaceship_front.translateY((this.spaceshipFrontSize/2 + this.spaceshipBodySize + this.spaceshipBackSize) * this.spaceshipLength);
@@ -60,48 +103,16 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	this.spaceshipColliders.push(new THREE.Sphere());
 	this.spaceshipColliders.push(new THREE.Sphere());
 	
-	//key press movement binding
-	//right = right arrow, D
-	IO_controls.addKeyDownAction(39, this.moveRight);
-	IO_controls.addKeyDownAlias(68, 39);
-	
-	//left = left arrow, A
-	IO_controls.addKeyDownAction(37, this.moveLeft);
-	IO_controls.addKeyDownAlias(65, 37);
-
-	//up = up arrow, W
-	IO_controls.addKeyDownAction(38, this.moveUp);
-	IO_controls.addKeyDownAlias(87, 38);
-
-	//down = down arrow, S
-	IO_controls.addKeyDownAction(40, this.moveDown);
-	IO_controls.addKeyDownAlias(83, 40);
-	
-	//key release movement binding
-	//right = right arrow, D
-	IO_controls.addKeyUpAction(39, this.horizontalInertia);
-	IO_controls.addKeyUpAlias(68, 39);
-	
-	//left = left arrow, A
-	IO_controls.addKeyUpAction(37, this.horizontalInertia);
-	IO_controls.addKeyUpAlias(65, 37);
-
-	//up = up arrow, W
-	IO_controls.addKeyUpAction(38, this.verticalInertia);
-	IO_controls.addKeyUpAlias(87, 38);
-
-	//down = down arrow, S
-	IO_controls.addKeyUpAction(40, this.verticalInertia);
-	IO_controls.addKeyUpAlias(83, 40);
-
 }
+
+
+
+//=== METHODS ===
 
 Spaceship.prototype.spaceshipObject = function(){
 	return this.spaceship3D;
 }
 
-
-//METHODS
 //check area borders for limit reach
 Spaceship.prototype.checkLeftBorder = function(){
 	if(this.spaceship3D.position.x > -this.settingsObj.gameAreaWidth()/2 + 1)
@@ -128,58 +139,57 @@ Spaceship.prototype.checkDownBorder = function(){
 		return false;
 }
 
-
-//space ship move Spaceship.prototype.definition
-	
+//spaceship movement
 Spaceship.prototype.moveRight = function(){
-	this.spaceshipSpeed.hSpeed = this.settingsObj.normalSpeed();
+	this.spaceshipSpeed.hSpeed = this.settingsObj.normalSpeed;
 }
 
 Spaceship.prototype.moveLeft = function(){
-	this.spaceshipSpeed.hSpeed = -this.settingsObj.normalSpeed();
+	this.spaceshipSpeed.hSpeed = - this.settingsObj.normalSpeed;
 }
 
 Spaceship.prototype.moveUp = function(){
-	this.spaceshipSpeed.vSpeed = this.settingsObj.normalSpeed();
+	this.spaceshipSpeed.vSpeed = this.settingsObj.normalSpeed;
 }
 
 Spaceship.prototype.moveDown = function(){
-	this.spaceshipSpeed.vSpeed = -this.settingsObj.normalSpeed();
+	this.spaceshipSpeed.vSpeed = - this.settingsObj.normalSpeed;
 }
 
 Spaceship.prototype.horizontalInertia = function(){
-	if(!IO_controls.isKeyPressed(37) && !IO_controls.isKeyPressed(65) && !IO_controls.isKeyPressed(39) && !IO_controls.isKeyPressed(68)) {
-		this.spaceshipSpeed.hSpeed = this.spaceshipSpeed.hSpeed * this.settingsObj.inertia();
+	if(!this.IO_controls.isKeyPressed(37) && !this.IO_controls.isKeyPressed(65) && !this.IO_controls.isKeyPressed(39) && !this.IO_controls.isKeyPressed(68)) {
+		this.spaceshipSpeed.hSpeed = this.spaceshipSpeed.hSpeed * this.settingsObj.inertia;
 	}
-};
+}
 
 Spaceship.prototype.verticalInertia = function(){
-	if(!IO_controls.isKeyPressed(38) && !IO_controls.isKeyPressed(87) && !IO_controls.isKeyPressed(40) && !IO_controls.isKeyPressed(83)) {
-		this.spaceshipSpeed.vSpeed = this.spaceshipSpeed.vSpeed * this.settingsObj.inertia();
+	if(!this.IO_controls.isKeyPressed(38) && !this.IO_controls.isKeyPressed(87) && !this.IO_controls.isKeyPressed(40) && !this.IO_controls.isKeyPressed(83)) {
+		this.spaceshipSpeed.vSpeed = this.spaceshipSpeed.vSpeed * this.settingsObj.inertia;
 	}
-};
+}
 
 Spaceship.prototype.immobilize = function(){
 	this.spaceshipSpeed.hSpeed = 0;
 	this.spaceshipSpeed.vSpeed = 0;
 }
 
+
 //move the spaceship3D and keep it inside game borders
 Spaceship.prototype.updateSpaceship = function(){
-	this.movementTracker.hStep = timer.passedTime() * this.spaceshipSpeed.hSpeed;
-	this.movementTracker.vStep = timer.passedTime() * this.spaceshipSpeed.vSpeed;
-	if(Math.sign(movementTracker.hStep) < 0){
-		if(checkLeftBorder())
+	this.movementTracker.hStep = this.timer.passedTime/1000 * this.spaceshipSpeed.hSpeed;
+	this.movementTracker.vStep = this.timer.passedTime/1000 * this.spaceshipSpeed.vSpeed;
+	if(Math.sign(this.movementTracker.hStep) < 0){
+		if(this.checkLeftBorder())
 			this.spaceship3D.translateX(this.movementTracker.hStep);
 	} else {
-		if(checkRightBorder())
+		if(this.checkRightBorder())
 			this.spaceship3D.translateX(this.movementTracker.hStep);
 	}
-	if(Math.sign(movementTracker.vStep) < 0){
-		if(checkDownBorder())
+	if(Math.sign(this.movementTracker.vStep) < 0){
+		if(this.checkDownBorder())
 			this.spaceship3D.translateZ(this.movementTracker.vStep);
 	} else {
-		if(checkUpBorder())
+		if(this.checkUpBorder())
 			this.spaceship3D.translateZ(this.movementTracker.vStep);
 	}
 	this.updateColliders();
@@ -188,7 +198,7 @@ Spaceship.prototype.updateSpaceship = function(){
 
 //updates collider position
 Spaceship.prototype.updateColliders = function() {
-	for(i = 0 ; i < this.spaceshipColliders.length ; i++) {
+	for(var i = 0 ; i < this.spaceshipColliders.length ; i++) {
 		this.spaceshipColliders[i].center.setX(this.spaceship3D.position.x);
 		this.spaceshipColliders[i].center.setY(this.spaceship3D.position.y);
 	}
@@ -225,7 +235,7 @@ Spaceship.prototype.reset = function(){
 	this.spaceshipColliders[0].center.set(0,0,this.spaceship3D.position.z - ((this.spaceshipFrontSize + this.spaceshipBodySize/2 ) * this.spaceshipLength));
 	this.spaceshipColliders[1].center.set(0,0,this.spaceship3D.position.z);
 	this.spaceshipColliders[2].center.set(0,0,this.spaceship3D.position.z + ((this.spaceshipBodySize/2 + this.spaceshipBackSize) * this.spaceshipLength));
-};
+}
 
 
 
@@ -236,8 +246,7 @@ Spaceship.prototype.rotate = function() {
 
 
 Spaceship.prototype.isColliding = function(ast){
-
-	for (index in this.spaceshipColliders){
+	for (var index in this.spaceshipColliders){
 		// console.log("in isColliding method strt");
 		// console.log(spaceshipColliders[index].center);
 		// console.log(ast.testCreation() );
@@ -247,34 +256,4 @@ Spaceship.prototype.isColliding = function(ast){
 		}
 	}
 	return false;
-};
-
-
-
-
-
-
-
-
-// unit tests
-
-/*Spaceship.prototype.testGenerale = function(){
-	console.log(spaceship3D);
-	console.log(spaceshipColliders);
-}*/
-
-/*Spaceship.prototype.colliderMoveTest = function(){
-	console.log("--------");
-	console.log("--------");
-	console.log(spaceship3D.position);
-
-	console.log("--------");
-	console.log(spaceshipColliders[0].center);
-	console.log(spaceshipColliders[1].center);
-	console.log(spaceshipColliders[2].center);
-	console.log("--------");
-	console.log("--------");
-}*/
-
-// initialization
-//Spaceship.prototype.update();
+}

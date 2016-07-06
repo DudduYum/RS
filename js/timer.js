@@ -3,51 +3,37 @@
 //this allows the game to run at the same "effective speed" at any framerate
 
 function Timer(){
-//VARIABLES
+	
+//=== VARIABLES ===
+
 	this.clock = 0;
 	this.previousTime = new Date();;
-	this.timePassed;
-	this.currentTimer;
+	this.passedTime;
 	
-//CONSTRUCTOR
+	
+	
+//=== CONSTRUCTOR===
+
 }
 
 
 
-//METHODS
+//=== METHODS ===
+
 Timer.prototype.update = function(){
-	this.currentTimer =  new Date();
-	this.timePassed = this.currentTimer - this.previousTime;
-	this.clock += this.timePassed;
-	this.previousTime = this.currentTimer;
-};
+	var currentTime =  new Date();
+	this.passedTime = (currentTime - this.previousTime);
+	this.clock += this.passedTime;
+	this.previousTime = currentTime;
+}
+
 
 Timer.prototype.getTime = function(){
 	return this.clock/1000;
-};
+}
 
-Timer.prototype.passedTime = function(){
-	return this.timePassed/1000;
-};
 
 Timer.prototype.reset = function(){
 	this.clock = 0;
 	this.previousTime = new Date();
-};
-
-//unit tests
-
-/*Timer.prototype.updateTest = function(){
-	console.log("update test")
-	console.log(this.getTime());
-	for(var i = 0; i< 10000 ; i++){
-		this.update();
-	}
-	console.log(this.getTime());
-
-};*/
-
-/*Timer.initTest = function(){
-	console.log("init test")
-	console.log(clock);
-};*/
+}

@@ -10,8 +10,8 @@ function createScoreCounter(timer, settings){
 
 	sCount.update = function(){
 		//gameScore = Math.round(timer.getTime() * settings.getForwardVelocity());
-		preciseScore = preciseScore + timer.passedTime();
-		gameScore = Math.floor(preciseScore*10)/10;
+		preciseScore = preciseScore + timer.passedTime;
+		gameScore = Math.floor(preciseScore/1000*10)/10;
 	};
 
 	sCount.reset = function(){

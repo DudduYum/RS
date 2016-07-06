@@ -2,19 +2,21 @@
 
 function ProjectOLA(){
 	
+//======= VARIABLES =======
+
 	var stats;
 	var canvas;
 	// configuration object
-	var settingsObj = createGameSettings();
+	var settings = new GameSettings();
 
 	// game timer
 	var timer = new Timer();
 
 	// game state manager
-	var gameStateControl;
+	var gameState;
 
 	// score counter
-	var scoreControl = createScoreCounter( timer , settingsObj);
+	var score = createScoreCounter( timer , settings);
 
 	// keyboard Input managment
 	var inputControl = createGameIOManager();
@@ -22,26 +24,23 @@ function ProjectOLA(){
 	window.addEventListener("keyup",inputControl.keyUpAction);
 
 	// interface
-	var interfaceControl = createInterfaceManager( scoreControl );
+	var userInterface = createInterfaceManager( score );
 
 	// assign cameraswitch action to the botton
-	switchToGameCamera = interfaceControl.switchToGameCamera;
-	switchToFreeCamera = interfaceControl.switchToFreeCamera;
+	switchToGameCamera = userInterface.switchToGameCamera;
+	switchToFreeCamera = userInterface.switchToFreeCamera;
 
-	// environment
-	var envi = createEnvironment(settingsObj, 12, 12, 300, timer, inputControl, scoreControl);
+	// environmentronment
+	var environment = new Environment(settings, 12, 12, 300, timer, inputControl);
 
-	// init of environment
-	envi.setPosition(0,	0, 0);
-	//-((settingsObj.gameAreaDepth() / 2) + 4));
 
 	//3D scene initialization
 	var scene = new THREE.Scene();
 	//scene.fog = new THREE.FogExp2(0x000000, 0.0015);
 
 	//two cameras
-	var gameCamera = new THREE.PerspectiveCamera(75, settingsObj.screenRatio(), 0.1, 1000);
-	var freeCamera = new THREE.PerspectiveCamera(75, settingsObj.screenRatio(), 0.1, 1000);
+	var gameCamera = new THREE.PerspectiveCamera(75, settings.screenRatio(), 0.1, 1000);
+	var freeCamera = new THREE.PerspectiveCamera(75, settings.screenRatio(), 0.1, 1000);
 		freeCamera.position.set(2,2,2);
 	var useGameCamera = true
 	
@@ -89,7 +88,7 @@ function ProjectOLA(){
 	
 
 	// add ship and asteroid to the scene
-	scene.add(envi.gameScene());
+	scene.add(environment.game3Dscene);
 
 
 	// stat init
@@ -103,9 +102,10 @@ function ProjectOLA(){
 
 
 
+//======= METHODS =======
 
 	// camera switch init
-	interfaceControl.setCameraSwitch(
+	userInterface.setCameraSwitch(
 		function(){
 			// switch to game camera
 			orbitControls.enabled = false;
@@ -127,10 +127,10 @@ function ProjectOLA(){
 	//resizes the renderer and the game area if the window resizes
 	window.addEventListener('resize',
 		function(){
-			envi.updateRatio();
+			environment.updateRatio().bind(environment);
 
-			gameCamera.aspect = settingsObj.screenRatio();
-			freeCamera.aspect = settingsObj.screenRatio();
+			gameCamera.aspect = settings.screenRatio();
+			freeCamera.aspect = settings.screenRatio();
 
 			gameCamera.updateProjectionMatrix();
 			freeCamera.updateProjectionMatrix();
@@ -140,32 +140,33 @@ function ProjectOLA(){
 		},
 		false
 	);
+	
 
 
 
-	// GAME LOOP //
+//======= GAME LOOP =======
+
 	// game state initializzation (function for game start and end)
-	gameStateControl = new GameState(
+	gameState = new GameState(
 		function(){
-			
-			scoreControl.reset();
+			score.reset();
 			timer.reset();
-			envi.reset();
-			interfaceControl.displayGame();
+			environment.reset();
+			userInterface.displayGame();
 		},
 		function(){
-			interfaceControl.displayGameOver();
+			userInterface.displayGameOver();
 		}
 	);
 
 
-	// add some event listener to start the game and switch the camera
+	//add event listener to start the game and switch the camera
 	inputControl.addKeyDownAction(32, 
 		function(){
-			if(gameStateControl.isRunning()) {
-				envi.immobilizeSpaceship();
+			if(gameState.isRunning()) {
+				environment.immobilizeSpaceship();
 			} else {
-				gameStateControl.startGame();
+				gameState.startGame();
 			}
 		}
 	);
@@ -173,17 +174,17 @@ function ProjectOLA(){
 	inputControl.addKeyDownAction(67,
 		function(){
 			if (!useGameCamera) {
-				interfaceControl.switchToGameCamera();
+				userInterface.switchToGameCamera();
 			} else {
-				interfaceControl.switchToFreeCamera();
+				userInterface.switchToFreeCamera();
 			}
 		}
 	);
 	
-	//interfaceControl.switchToGameCamera();
 	
 	
-	//======= RENDERING =======
+//======= RENDERING =======
+	
 	//set render passes
 	mainRenderPass = new THREE.RenderPass(scene, gameCamera);
 	depthRenderPass = new THREE.RenderPass(scene, gameCamera, depthMaterial);
@@ -212,17 +213,18 @@ function ProjectOLA(){
 	
 	//animation loop
 	function animate() {
-		if(gameStateControl.isRunning()) {
+		if(gameState.isRunning()) {
 			try{
-				envi.updateEnviroment();
-				interfaceControl.update();
-				scoreControl.update();
+				environment.update();
+				userInterface.update();
+				score.update();
 			}
 			catch(exec) {
-				gameStateControl.stopGame();
+				console.log(exec);
+				gameState.stopGame();
 			}
-		} else if(!gameStateControl.isOver()){
-			envi.rotateSpaceship();
+		} else if(!gameState.isOver()){
+			environment.rotateSpaceship();
 		}
 		requestAnimationFrame(animate);
 		stats.update();

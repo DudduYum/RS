@@ -1,257 +1,236 @@
 "use strict";
 
-//this file saves all sheders
-// asteroid
+function MaterialManager(){
+	
+//=== VARIABLES ===
 
-function createMaterialManager(){
+	this.asteroidTexture;
+	this.spaceshipMaterial;
+	this.sunMaterial;
+	this.textureLoader = new THREE.TextureLoader();
+	
+	this.asteroidMaterial;
+	
+	this.asteroidNormalMap;
 
-
-	var materialManager = {};
-	var asteroidTexture;
-	var spaceshipMaterial;
-	var sunMaterial;
-	var textureLoader = new THREE.TextureLoader();
-
-
-
-	var asteroidMaterial;
-
-	var asteroidNormalMap;
-
-	var asteroidDisplaysmentMap;
-	var asteroiSpecularMap;
+	this.asteroidDisplacementMap;
+	this.asteroiSpecularMap;
 
 
 
-	// var pointLightPositio,
-	// pointLightPower
-	// ;
+//=== CONSTRUCTOR ===
 
-	// private methods
-	materialManager.asteroidMaterial;
-
-	function loadImg(imgSrc){
-
-		var img = textureLoader.load(
-			// resource URL
-			imgSrc,
-			// Function when resource is loaded
-			function ( texture ) {
-				// do something with the texture
-				// var material = new THREE.MeshBasicMaterial( {
-				// 	map: texture
-				//  } );
-			},
-			// Function called when download progresses
-			function ( xhr ) {
-				console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
-			},
-			// Function called when download errors
-			function ( xhr ) {
-				console.log( 'An error happened' );
-			});
-
-
-			return img;
-	}
-
-	// texture initialization
-	// (function (){
-	//
-	//
-	//
-	//   // asteroid texture
-	//   asteroidTexture = loadImg('textures/asteroid.jpg');
-	//
-	//   // normal map that is used for light calculation
-	//   asteroidNormalMap = loadImg('textures/normalAst.png');
-	//
-	//   // displaysmant map used for vertex distortion
-	//   asteroidDisplaysmentMap = loadImg('textures/displaysmentAst.png');
-	//
-	//
-	//
-	//
-	// })();
-
-
-	function createUniforms(){
-
-
-		// asteroid texture
-		asteroidTexture = loadImg('textures/asteroid.jpg');
-		asteroidTexture.minFilter = THREE.LinearMipMapLinearFilter;
-		// asteroidTexture.anisotropy = renderer.getMaxAnisotropy();
-
-		// normal map that is used for light calculation
-		asteroidNormalMap = loadImg('textures/normalAst.png');
-		asteroidNormalMap.minFilter = THREE.LinearMipMapLinearFilter;
-		// asteroidNormalMap.anisotropy = renderer.getMaxAnisotropy
-
-		// displaysmant map used for vertex distortion
-		asteroidDisplaysmentMap = loadImg('textures/displaysmentAst.png');
-		asteroidDisplaysmentMap.minFilter = THREE.LinearMipMapLinearFilter;
-		// asteroidDisplaysmentMap.anisotropy = renderer.getMaxAnisotropy();
-
-		asteroiSpecularMap = loadImg('textures/specularAst.png');
-
-		var uniforms = {
-			tex: {
-				type: "t",
-				value: asteroidTexture
-			},
-			normalMap: {
-				type:  "t",
-				value: asteroidNormalMap
-			},
-			displaysmentMap: {
-				type:  "t",
-				value: asteroiSpecularMap
-			},
-			specularMap:{
-				type:	"t",
-				value: new THREE.Vector2(0.2 , 0.2)
-			},
-			normalScale:{
-				type:	"v2",
-				value: new THREE.Vector2(3.0 , 3.0)
-			},
-			spLightPos: {
-				type:  "v3",
-				value: spaceshipLight.lightPosition
-			},
-			spLightPower: {
-				type: "v3",
-				value: spaceshipLight.lightPower
-			},
-			pointLightPos: {
-				type:  "v3",
-				value: pointLight.lightPosition
-			},
-			lightPower: {
-				type: "v3",
-				value: pointLight.lightPower
-			},
-			ambientLight: {
-				type: "v3",
-				value: ambientLight.lightPower
-			},
-			alpha: {
-				type: "f",
-				value: 5.0
-			},
-			s :{
-				type: "f",
-				value: 0.6
-			}
-		};
-
-		return uniforms;
-	}
+	this.initAstMaterial();
+	
+}
 
 
 
+//=== METHODS ===
+
+MaterialManager.prototype.loadImg = function(imgSrc){
+
+	var img = this.textureLoader.load(
+		// resource URL
+		imgSrc,
+		// Function when resource is loaded
+		function( texture ) {
+			// do something with the texture
+			// this.material = new THREE.MeshBasicMaterial( {
+			// 	map: texture
+			//  } );
+		},
+		// Function called when download progresses
+		function( xhr ) {
+			console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+		},
+		// Function called when download errors
+		function( xhr ) {
+			console.log( 'An error happened' );
+		}
+	);
+
+	return img;
+}
 
 
+MaterialManager.prototype.createUniforms = function(){
 
 
+	// asteroid texture
+	this.asteroidTexture = this.loadImg('textures/asteroid.jpg');
+	this.asteroidTexture.minFilter = THREE.LinearMipMapLinearFilter;
+	// asteroidTexture.anisotropy = renderer.getMaxAnisotropy();
 
-	function getMaterialByName(objectName){
-		var vs = document.getElementById(objectName + "VS").textContent;
-		var fs = document.getElementById(objectName + "FS").textContent;
+	// normal map that is used for light calculation
+	this.asteroidNormalMap = this.loadImg('textures/normalAst.png');
+	this.asteroidNormalMap.minFilter = THREE.LinearMipMapLinearFilter;
+	// asteroidNormalMap.anisotropy = renderer.getMaxAnisotropy
+
+	// displaysmant map used for vertex distortion
+	this.asteroidDisplacementMap = this.loadImg('textures/displaysmentAst.png');
+	this.asteroidDisplacementMap.minFilter = THREE.LinearMipMapLinearFilter;
+	// asteroidDisplacementMap.anisotropy = renderer.getMaxAnisotropy();
+
+	this.asteroiSpecularMap = this.loadImg('textures/specularAst.png');
+
+	var uniforms = {
+		tex: {
+			type: "t",
+			value: this.asteroidTexture
+		},
+		normalMap: {
+			type:  "t",
+			value: this.asteroidNormalMap
+		},
+		displaysmentMap: {
+			type:  "t",
+			value: this.asteroiSpecularMap
+		},
+		specularMap:{
+			type:	"t",
+			value: new THREE.Vector2(0.2 , 0.2)
+		},
+		normalScale:{
+			type:	"v2",
+			value: new THREE.Vector2(3.0 , 3.0)
+		},
+		spLightPos: {
+			type:  "v3",
+			value: spaceshipLight.lightPosition
+		},
+		spLightPower: {
+			type: "v3",
+			value: spaceshipLight.lightPower
+		},
+		pointLightPos: {
+			type:  "v3",
+			value: pointLight.lightPosition
+		},
+		lightPower: {
+			type: "v3",
+			value: pointLight.lightPower
+		},
+		ambientLight: {
+			type: "v3",
+			value: ambientLight.lightPower
+		},
+		alpha: {
+			type: "f",
+			value: 5.0
+		},
+		s :{
+			type: "f",
+			value: 0.6
+		}
+	};
+
+	return uniforms;
+}
 
 
+MaterialManager.prototype.getMaterialByName = function(objectName){
+	var vs = document.getElementById(objectName + "VS").textContent;
+	var fs = document.getElementById(objectName + "FS").textContent;
 
 
+	var material = new THREE.ShaderMaterial({
+		uniforms: this.createUniforms(),
 
-		var material = new THREE.ShaderMaterial({
-			uniforms: createUniforms(),
+		vertexShader: vs,
+		fragmentShader: fs
+	});
 
-			vertexShader: vs,
-			fragmentShader: fs
-		});
-
-		return material;
-	}
-
-	function initAstMaterial (){
-
-		asteroidMaterial = getMaterialByName("asteroid");
+	return material;
+}
 
 
-		asteroidMaterial.uniforms = createUniforms();;
+MaterialManager.prototype.initAstMaterial = function(){
 
-	}
+	this.asteroidMaterial = this.getMaterialByName("asteroid");
 
-	materialManager.getAsteroidMaterial = function(){
-
-		var newMat = asteroidMaterial.clone();
-
-		newMat.uniforms = createUniforms();
-
-		return   newMat;
-	}
-
-
-
-
-
-	// crete default materials
-	// materialManager.asteroidMaterial = materialManager.getAsteroidMaterial();
-	initAstMaterial();
-
-	var newMat = asteroidMaterial.clone();
-
-	// newMat.uniforms = {
-		// tex: {
-		// 	type: "t",
-		// 	value: asteroidTexture
-		// },
-		// normMap: {
-		// 	type:  "t",
-		// 	value: asteroidNormalMap
-		// },
-		// normalScale:{
-		// 	type:	"vec2",
-		// 	value: new THREE.Vector2(0.4 , 0.4)
-		// },
-		// displaysmentMap: {
-		// 	type:  "t",
-		// 	value: asteroidDisplaysmentMap
-		// },
-		// pointLightPosition: {
-		// 	type:  "vec3",
-		// 	value: new THREE.Vector3( .4 , .4 , 0)
-		// },
-		// lightPower: {
-		// 	type: "vec3",
-		// 	value: new THREE.Vector3( 30000.0, 30000.0, 30000.0 )
-		// },
-		// c_spec: {
-		// 	type: "vec3",
-		// 	value: new THREE.Vector3( 1.0 , .71 , .29)
-		// },
-		// alpha: {
-		// 	type: "f",
-		// 	value: 0.9
-		// },
-		// c_diff: {
-		// 	type: "vec3",
-		// 	value: new THREE.Vector3( 0.5 , 0.5 , 0.5)
-		// },
-		// s :{
-		// 	type: "f",
-		// 	value: 3.0
-		// }
-
-	// }
-
-	// console.log(newMat.uniforms.lightPower);
-	// uniform
-
-	// scene.add(sphere);
-
-	return materialManager;
-
+	//this.asteroidMaterial.uniforms = this.createUniforms();
 
 }
+
+
+MaterialManager.prototype.getAsteroidMaterial = function(){
+
+	/*var newMaterial = this.asteroidMaterial.clone();
+
+	newMaterial.uniforms = this.createUniforms();
+
+	return newMaterial;*/
+	
+	return this.asteroidMaterial;
+}
+
+
+// texture initialization
+// function(){
+//
+//
+//
+//   // asteroid texture
+//   asteroidTexture = loadImg('textures/asteroid.jpg');
+//
+//   // normal map that is used for light calculation
+//   asteroidNormalMap = loadImg('textures/normalAst.png');
+//
+//   // displaysmant map used for vertex distortion
+//   asteroidDisplacementMap = loadImg('textures/displaysmentAst.png');
+//
+//
+//
+//
+// })();
+
+
+// newMaterial.uniforms = {
+	// tex: {
+	// 	type: "t",
+	// 	value: asteroidTexture
+	// },
+	// normMap: {
+	// 	type:  "t",
+	// 	value: asteroidNormalMap
+	// },
+	// normalScale:{
+	// 	type:	"vec2",
+	// 	value: new THREE.Vector2(0.4 , 0.4)
+	// },
+	// displaysmentMap: {
+	// 	type:  "t",
+	// 	value: asteroidDisplacementMap
+	// },
+	// pointLightPosition: {
+	// 	type:  "vec3",
+	// 	value: new THREE.Vector3( .4 , .4 , 0)
+	// },
+	// lightPower: {
+	// 	type: "vec3",
+	// 	value: new THREE.Vector3( 30000.0, 30000.0, 30000.0 )
+	// },
+	// c_spec: {
+	// 	type: "vec3",
+	// 	value: new THREE.Vector3( 1.0 , .71 , .29)
+	// },
+	// alpha: {
+	// 	type: "f",
+	// 	value: 0.9
+	// },
+	// c_diff: {
+	// 	type: "vec3",
+	// 	value: new THREE.Vector3( 0.5 , 0.5 , 0.5)
+	// },
+	// s :{
+	// 	type: "f",
+	// 	value: 3.0
+	// }
+
+// }
+
+// console.log(newMaterial.uniforms.lightPower);
+// uniform
+
+// scene.add(sphere);
