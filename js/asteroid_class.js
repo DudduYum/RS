@@ -1,99 +1,73 @@
-function createAsteroid(settingsObject, materialManager, timer){
+"use strict";
 
-	// var AsteroidMaterial = materialManager.asteroidMaterial();
+function Asteroid(settings, materialManager, timer){
 
-	var asteroid = {};
+//=== VARIABLES ===
 
-
+	this.settings = settings;
+	this.timer = timer;
 	// create asteroidMesh
-	var geom = new THREE.SphereGeometry(1, 32, 32);
-
-
-	var mat = materialManager.getAsteroidMaterial();
-
-	// console.log(mat.map);
+	var geometry = new THREE.SphereGeometry(1, 32, 32);
+	var material = materialManager.asteroidMaterial;
 	// mat.needsinitialize = true;
 
-	// console.log(mat);
 
 	// define propertys and behavior
 
 	//public methods
-	var asteroidMesh = new THREE.Mesh(geom , mat);
+	this.asteroidMesh = new THREE.Mesh(geometry, material);
+	this.previousTime;
 
-	var previousTime;
+	this.collider = this.asteroidMesh.geometry.boundingSphere.clone();
 
-	var collider = asteroidMesh.geometry.boundingSphere.clone();
-
-
-
-
-	// define propertys and behavior
-
-	//public methods
-
-	asteroid.asteroidMesh = function(){
-		return asteroidMesh;
-	};
-
-	asteroid.move = function(time){
-		// move quantity
-		var step = timer.passedTime()  * settingsObject.asteroidSpeed() ;
-		// move asteroidMesh and collider
-		asteroidMesh.translateZ(step);
-		collider.center.setZ(asteroidMesh.position.z);
-	};
-
-	asteroid.hasCrossedTheLine = function(){
-		return asteroidMesh.position.z >= 1;
-		//return asteroidMesh.position.z >= settingsObject.gameAreaDepth() / 2;
-	};
-
-	asteroid.initialize = function(){
-		//reset timestamp
-		previousTime = timer.getTime();
-
-		//reset position
-		asteroidMesh.position.set(
-			settingsObject.randomCoordinate(settingsObject.gameAreaWidth()*2),  //X
-			settingsObject.randomCoordinate(settingsObject.gameAreaHeight()*2),  //Y
-			settingsObject.asteroidStartPoint()
-		);
-
-		// rescale asteroidMesh
-		var size = settingsObject.randomSize();
-		asteroidMesh.scale.x = size;
-		asteroidMesh.scale.y = size;
-		asteroidMesh.scale.z = size;
-
-		//initialize collider
-		collider.center.set(asteroidMesh.position.x, asteroidMesh.position.y, asteroidMesh.position.z);
-		collider.radius = size;
-	};
-
-	asteroid.isCollidingWith = function(sphere){
-		return collider.intersectsSphere(sphere);
-	};
 	
-
-	/*asteroid.testCreation = function(){
-		console.log(asteroidMesh.position);
-		console.log(collider.center);
-	};*/
-
-	/*asteroid.testMove = function(){
-		console.log(asteroidMesh.position);
-		console.log(- settingsObject.gameAreaDepth() / 2 + 5);
-
-		console.log(asteroid.hasCrossedTheLine());
-	};*/
-
-	/*asteroid.testAnomalia = function(){
-		console.log(asteroidMesh.position.z);
-	};*/
-
-
-	return asteroid;
-
+	
+//=== CONSTRUCTOR ===
 
 }
+
+
+
+///=== METHODS ===
+
+Asteroid.prototype.move = function(){
+	// move quantity
+	var step = this.timer.passedTime/1000  * this.settings.asteroidSpeed;
+	// move asteroidMesh and collider
+	this.asteroidMesh.translateZ(step);
+	this.collider.center.setZ(this.asteroidMesh.position.z);
+};
+
+Asteroid.prototype.hasCrossedTheLine = function(){
+	return this.asteroidMesh.position.z >= 1;
+	//return asteroidMesh.position.z >= this.settings.game_area_D / 2;
+};
+
+Asteroid.prototype.initialize = function(){
+	//reset timestamp
+	this.previousTime = this.timer.getTime();
+	
+	//reset position
+	this.asteroidMesh.position.set(
+		this.settings.asteroid_spawn_X(),
+		this.settings.asteroid_spawn_Y(),
+		this.settings.asteroid_spawn_Z()
+	);
+	
+	//this.asteroidMesh.position.set(0,0,0);
+
+	// rescale asteroidMesh
+	var size = this.settings.asteroidSize();
+	this.asteroidMesh.scale.x = size;
+	this.asteroidMesh.scale.y = size;
+	this.asteroidMesh.scale.z = size;
+	
+	
+	//initialize collider
+	this.collider.center.set(this.asteroidMesh.position.x, this.asteroidMesh.position.y, this.asteroidMesh.position.z);
+	this.collider.radius = size;
+};
+
+Asteroid.prototype.isCollidingWith = function(sphere){
+	return this.collider.intersectsSphere(sphere);
+};

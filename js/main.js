@@ -1,48 +1,59 @@
-function main(){
+"use strict";
+
+function ProjectOLA(){
+	
+//======= VARIABLES =======
+
+	var stats = new Stats();
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.top = '0px';
+	var canvas = document.getElementById('canvas');
+		canvas.appendChild(stats.domElement);
+	
+	
+	//cameras
+	var aspectRatio = window.innerWidth/window.innerHeight;
+	var gameCamera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
+	var freeCamera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
+		freeCamera.position.set(2,2,2);
+	var useGameCamera = true
+	
+	
 	// configuration object
-	var settingsObj = createGameSettings();
+	var settings = new GameSettings(12, 12, 300, aspectRatio);
 
 	// game timer
-	var timer = createTimer();
+	var timer = new Timer();
 
 	// game state manager
-	var gameStateControl;
+	var gameState;
 
 	// score counter
-	var scoreControl = createScoreCounter( timer , settingsObj);
+	var score = new ScoreCounter(timer);
 
 	// keyboard Input managment
-	var inputControl = createGameIOManager();
-	window.addEventListener("keydown",inputControl.keyDownAction);
-	window.addEventListener("keyup",inputControl.keyUpAction);
+	var inputControl = new IOManager();
+		window.addEventListener("keydown",inputControl.keyDownAction);
+		window.addEventListener("keyup",inputControl.keyUpAction);
 
 	// interface
-	var interfaceControl = createInterfaceManager( scoreControl );
+	var userInterface = new InterfaceManager(canvas, score);
 
-	// assign cameraswitch action to the botton
-	switchToGameCamera = interfaceControl.switchToGameCamera;
-	switchToFreeCamera = interfaceControl.switchToFreeCamera;
+	// environmentronment
+	var environment = new Environment(settings, timer, inputControl);
 
-	// environment
-	var envi = createEnvironment(settingsObj, 12, 12, 300, timer, inputControl, scoreControl);
-
-	// init of environment
-	envi.setPosition(0,	0, 0);
-	//-((settingsObj.gameAreaDepth() / 2) + 4));
 
 	//3D scene initialization
 	var scene = new THREE.Scene();
 	//scene.fog = new THREE.FogExp2(0x000000, 0.0015);
+		scene.add(environment.game3Dscene);
 
-	//two cameras
-	var gameCamera = new THREE.PerspectiveCamera(75, settingsObj.screenRatio(), 0.1, 1000);
-	var freeCamera = new THREE.PerspectiveCamera(75, settingsObj.screenRatio(), 0.1, 1000);
-		freeCamera.position.set(2,2,2);
-	var useGameCamera = true
+	
 	
 	//renderer and render targets
 	var renderer = new THREE.WebGLRenderer();
 		renderer.setSize(window.innerWidth, window.innerHeight);
+		canvas.appendChild(renderer.domElement);
 	var renderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
 	var depthRenderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
 	
@@ -78,29 +89,15 @@ function main(){
 
 	//initializes mouse controls for free camera
 	var orbitControls = new THREE.OrbitControls(freeCamera, renderer.domElement);
-	orbitControls.enableKeys = false;
-	orbitControls.enabled = false;
-	orbitControls.target = new THREE.Vector3(0,0,-10);
-	
-
-	// add ship and asteroid to the scene
-	scene.add(envi.gameScene());
+		orbitControls.enableKeys = false;
+		orbitControls.enabled = false;
+		orbitControls.target = new THREE.Vector3(0,0,-10);
 
 
-	// stat init
-	stats = new Stats();
-	stats.domElement.style.position = 'absolute';
-	stats.domElement.style.top = '0px';
-
-	canvas = document.getElementById('canvas');
-	canvas.appendChild(renderer.domElement);
-	canvas.appendChild(stats.domElement);
-
-
-
+//======= METHODS =======
 
 	// camera switch init
-	interfaceControl.setCameraSwitch(
+	userInterface.setCameraSwitch(
 		function(){
 			// switch to game camera
 			orbitControls.enabled = false;
@@ -116,51 +113,54 @@ function main(){
 	);
 
 
-	
+
 
 
 	//resizes the renderer and the game area if the window resizes
 	window.addEventListener('resize',
 		function(){
-			envi.updateRatio();
+			aspectRatio = window.innerWidth/window.innerHeight;
 
-			gameCamera.aspect = settingsObj.screenRatio();
-			freeCamera.aspect = settingsObj.screenRatio();
+			gameCamera.aspect = aspectRatio;
+			freeCamera.aspect = aspectRatio;
 
 			gameCamera.updateProjectionMatrix();
 			freeCamera.updateProjectionMatrix();
 			
 			renderer.setSize(window.innerWidth, window.innerHeight);
 			depthRenderTarget.setSize(window.innerWidth, window.innerHeight);
+			
+			settings.updateRatio(aspectRatio);
 		},
 		false
 	);
 
 
 
-	// GAME LOOP //
+
+//======= GAME LOOP =======
+
 	// game state initializzation (function for game start and end)
-	gameStateControl = createGameState(
+	gameState = new GameState(
 		function(){
-			
-			scoreControl.reset();
+			score.reset();
 			timer.reset();
-			envi.reset();
-			interfaceControl.displayGame();
+			environment.reset();
+			userInterface.displayGame();
 		},
 		function(){
-			interfaceControl.displayGameOver();
+			userInterface.displayGameOver();
 		}
 	);
 
 
-	// add some event listener to start the game and switch the camera
+	//add event listener to start the game and switch the camera
 	inputControl.addKeyDownAction(32, 
 		function(){
-			if(gameStateControl.isRunning()) {
-				envi.immobilizeSpaceship();
+			if(gameState.isRunning()) {
+				environment.immobilizeSpaceship();
 			} else {
-				gameStateControl.startGame();
+				gameState.startGame();
 			}
 		}
 	);
@@ -168,17 +168,17 @@ function main(){
 	inputControl.addKeyDownAction(67,
 		function(){
 			if (!useGameCamera) {
-				interfaceControl.switchToGameCamera();
+				userInterface.switchToGameCamera();
 			} else {
-				interfaceControl.switchToFreeCamera();
+				userInterface.switchToFreeCamera();
 			}
 		}
 	);
 	
-	//interfaceControl.switchToGameCamera();
 	
 	
-	//======= RENDERING =======
+//======= RENDERING =======
+	
 	//set render passes
 	mainRenderPass = new THREE.RenderPass(scene, gameCamera);
 	depthRenderPass = new THREE.RenderPass(scene, gameCamera, depthMaterial);
@@ -207,17 +207,18 @@ function main(){
 	
 	//animation loop
 	function animate() {
-		if(gameStateControl.isRunning()) {
+		if(gameState.isRunning()) {
 			try{
-				envi.updateEnviroment();
-				interfaceControl.update();
-				scoreControl.update();
+				environment.update();
+				userInterface.update();
+				score.update();
 			}
 			catch(exec) {
-				gameStateControl.stopGame();
+				//console.log(exec);
+				gameState.stopGame();
 			}
-		} else if(!gameStateControl.isOver()){
-			envi.rotateSpaceship();
+		} else if(!gameState.isOver()){
+			environment.rotateSpaceship();
 		}
 		requestAnimationFrame(animate);
 		stats.update();
@@ -225,6 +226,7 @@ function main(){
 		depthComposer.render();
 		mainComposer.render();
 	};
-	
+
+//LOOP START
 	animate();
 }
