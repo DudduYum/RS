@@ -14,17 +14,17 @@ function createSpaceship(settingsObj, materialManager, IO_controls, timer){
 
 	//spaceship3D front
 	var spaceship_front_geometry = new THREE.CylinderGeometry(0, spaceshipRadius, spaceshipLength*spaceshipFrontSize);
-	var spaceship_front_material = materialManager.shipMaterial;
+	var spaceship_front_material = materialManager.redSpaceshipMaterial();
 	var spaceship_front = new THREE.Mesh(spaceship_front_geometry, spaceship_front_material);
 
 	//spaceship3D body
 	var spaceship_body_geometry = new THREE.CylinderGeometry(spaceshipRadius, spaceshipRadius, spaceshipLength*spaceshipBodySize);
-	var spaceship_body_material = materialManager.shipMaterial;
+	var spaceship_body_material = materialManager.silverSpaceshipMaterial();
 	var spaceship_body = new THREE.Mesh(spaceship_body_geometry, spaceship_body_material);
 
 	//spaceship3D tail
 	var spaceship_back_geometry =  new THREE.CylinderGeometry(spaceshipRadius/2, spaceshipRadius*4/5, spaceshipLength*spaceshipBackSize);
-	var spaceship_back_material = materialManager.shipMaterial;
+	var spaceship_back_material = materialManager.redSpaceshipMaterial();
 	var spaceship_back = new THREE.Mesh(spaceship_back_geometry, spaceship_back_material);
 
 	//spaceship3D collider, aproximated with 3 spheres
