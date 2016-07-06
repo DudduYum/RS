@@ -91,6 +91,19 @@ MaterialManager.prototype.silverSpaceshipMaterial = function(){
 	return tempMaterial;
 }
 
+MaterialManager.prototype.darkSilverSpaceshipMaterial = function(){
+	var tempMaterial = this.spaceshipMaterial.clone();
+
+	tempMaterial.uniforms = this.createSpaceshipUniforms();
+	tempMaterial.uniforms.color = {
+		type: "v3",
+		value: new THREE.Vector3( 0.2 , 0.2 , 0.2)
+	};
+
+	return tempMaterial;
+}
+
+
 
 MaterialManager.prototype.createSpaceshipUniforms = function(){
 
