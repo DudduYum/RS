@@ -1,14 +1,14 @@
 "use strict";
 
 function Spaceship(settingsObj, materialManager, IO_controls, timer){
-	
+
 //=== VARIABLES ===
 
 	this.settingsObj = settingsObj;
 	this.materialManager = materialManager;
 	this.IO_controls = IO_controls;
 	this.timer = timer;
-	
+
 	//spaceship3D size
 	this.spaceshipRadius = 0.5;
 	this.spaceshipLength = 5;
@@ -17,17 +17,20 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	this.spaceshipFrontSize = 0.4;
 	this.spaceshipBodySize = 0.4;
 	this.spaceshipBackSize = 0.2;
-	
+
 	this.spaceship3D = new THREE.Object3D();
-	
+
 	//spaceship3D front
 	this.spaceship_front_geometry = new THREE.CylinderGeometry(0, this.spaceshipRadius, this.spaceshipLength * this.spaceshipFrontSize);
 	this.spaceship_front_material = this.materialManager.redSpaceshipMaterial();
+
 	this.spaceship_front = new THREE.Mesh(this.spaceship_front_geometry, this.spaceship_front_material);
 
 	//spaceship3D body
 	this.spaceship_body_geometry = new THREE.CylinderGeometry(this.spaceshipRadius, this.spaceshipRadius, this.spaceshipLength * this.spaceshipBodySize);
+
 	this.spaceship_body_material = this.materialManager.silverSpaceshipMaterial();
+
 	this.spaceship_body = new THREE.Mesh(this.spaceship_body_geometry, this.spaceship_body_material);
 
 	//spaceship3D tail
@@ -44,21 +47,21 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 		hStep: 0.0,
 		vStep: 0.0
 	};
-	
+
 	this.spaceshipSpeed = {
 		hSpeed: 0.0,
 		vSpeed: 0.0
 	};
-	
-	
-	
+
+
+
 //=== CONSTRUCTOR ===
-	
+
 	//key press movement binding
 	//right = right arrow, D
 	this.IO_controls.addKeyDownAction(39, this.moveRight.bind(this));
 	this.IO_controls.addKeyDownAlias(68, 39);
-	
+
 	//left = left arrow, A
 	this.IO_controls.addKeyDownAction(37, this.moveLeft.bind(this));
 	this.IO_controls.addKeyDownAlias(65, 37);
@@ -70,12 +73,12 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	//down = down arrow, S
 	this.IO_controls.addKeyDownAction(40, this.moveDown.bind(this));
 	this.IO_controls.addKeyDownAlias(83, 40);
-	
+
 	//key release movement binding
 	//right = right arrow, D
 	this.IO_controls.addKeyUpAction(39, this.horizontalInertia.bind(this));
 	this.IO_controls.addKeyUpAlias(68, 39);
-	
+
 	//left = left arrow, A
 	this.IO_controls.addKeyUpAction(37, this.horizontalInertia.bind(this));
 	this.IO_controls.addKeyUpAlias(65, 37);
@@ -87,7 +90,7 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	//down = down arrow, S
 	this.IO_controls.addKeyUpAction(40, this.verticalInertia.bind(this));
 	this.IO_controls.addKeyUpAlias(83, 40);
-	
+
 
 	//spaceship3D assembly
 	this.spaceship3D.add(this.spaceship_front);
@@ -98,11 +101,11 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	this.spaceship_back.translateY((this.spaceshipBackSize/2 * this.spaceshipLength));
 
 	this.spaceship3D.position.set(0, -this.spaceshipLength/2, 0);
-	
+
 	this.spaceshipColliders.push(new THREE.Sphere());
 	this.spaceshipColliders.push(new THREE.Sphere());
 	this.spaceshipColliders.push(new THREE.Sphere());
-	
+
 }
 
 
