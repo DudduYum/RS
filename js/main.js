@@ -214,7 +214,7 @@ function ProjectOLA(){
 				score.update();
 			}
 			catch(exec) {
-				console.log(exec);
+				//console.log(exec);
 				gameState.stopGame();
 			}
 		} else if(!gameState.isOver()){

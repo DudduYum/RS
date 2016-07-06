@@ -21,7 +21,7 @@ function MaterialManager(){
 
 
 //=== CONSTRUCTOR ===
-	this.spacesipMaterial.uniforms = this.createSpaceshipUniforms();
+	this.spaceshipMaterial.uniforms = this.createSpaceshipUniforms();
 	this.asteroidMaterial.uniforms = this.createAsteroidUniforms();
 	
 }
@@ -67,7 +67,7 @@ MaterialManager.prototype.getMaterialByName = function(objectName){
 
 
 MaterialManager.prototype.redSpaceshipMaterial = function(){
-	var tempMaterial = this.spacesipMaterial.clone();
+	var tempMaterial = this.spaceshipMaterial.clone();
 
 	tempMaterial.uniforms = this.createSpaceshipUniforms();
 	tempMaterial.uniforms.color = {
@@ -80,7 +80,7 @@ MaterialManager.prototype.redSpaceshipMaterial = function(){
 }
 
 MaterialManager.prototype.silverSpaceshipMaterial = function(){
-	var tempMaterial = this.spacesipMaterial.clone();
+	var tempMaterial = this.spaceshipMaterial.clone();
 
 	tempMaterial.uniforms = this.createSpaceshipUniforms();
 	tempMaterial.uniforms.color = {
@@ -100,11 +100,11 @@ MaterialManager.prototype.createSpaceshipUniforms = function(){
 	// asteroidTexture.anisotropy = renderer.getMaxAnisotropy();
 
 	// normal map that is used for light calculation
-	this.spaceshipNormalMap = loadImage('textures/spaceship/spaseshipNormal.png');
+	this.spaceshipNormalMap = this.loadImage('textures/spaceship/spaseshipNormal.png');
 	this.spaceshipNormalMap.minFilter = THREE.LinearMipMapLinearFilter;
 	// asteroidNormalMap.anisotropy = renderer.getMaxAnisotropy
 
-	spaceshipSpecularMap = this.loadImage('textures/spaceship/specular.png');
+	this.spaceshipSpecularMap = this.loadImage('textures/spaceship/specular.png');
 
 	var uniforms = {
 		tex: {
@@ -125,11 +125,11 @@ MaterialManager.prototype.createSpaceshipUniforms = function(){
 		},
 		pointLightPos: {
 			type:  "v3",
-			value: this.pointLight.lightPosition
+			value: pointLight.lightPosition
 		},
 		lightPower: {
 			type: "v3",
-			value: this.pointLight.lightPower
+			value: pointLight.lightPower
 		},
 		// color:{
 		// 	type: "v3",
@@ -137,7 +137,7 @@ MaterialManager.prototype.createSpaceshipUniforms = function(){
 		// },
 		ambientLight: {
 			type: "v3",
-			value: this.ambientLight.lightPower
+			value: ambientLight.lightPower
 		},
 		alpha: {
 			type: "f",
@@ -188,7 +188,7 @@ MaterialManager.prototype.createAsteroidUniforms = function(){
 		},
 		specularMap:{
 			type:	"t",
-			value:  asteroidSpecularMap
+			value:  this.asteroidSpecularMap
 		},
 		normalScale:{
 			type:	"v2",
