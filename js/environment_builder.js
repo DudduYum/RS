@@ -8,7 +8,7 @@ function Environment(settingsObject, timer, IO_controls){
 	this.materialManager = new MaterialManager();
 	this.IO_controls = IO_controls;
 	this.timer = timer;
-	
+
 	//asteroid param
 	this.asteroidBufferMinimum = 10;
 	this.activeAsteroids = [];
@@ -17,13 +17,13 @@ function Environment(settingsObject, timer, IO_controls){
 
 	// spaceship
 	this.spaceship = new Spaceship(this.settingsObject, this.materialManager, this.IO_controls, this.timer);
-	
+
 	this.game3Dscene = new THREE.Object3D();
-	
-	
-	
+
+
+
 //=== CONSTRUCTOR ===
-	
+
 	//sphere map
 	this.openSpaceGeometry  = new THREE.SphereGeometry(600, 32, 32);
 	this.openSpaceTexture = new THREE.TextureLoader().load("textures/spaceD2.jpg");
@@ -33,17 +33,17 @@ function Environment(settingsObject, timer, IO_controls){
 	this.openSpace.position.set(0,0,0);
 
 	this.game3Dscene.add(this.openSpace);
-	
+
 
 	this.materialManager.shipMaterial = new THREE.MeshBasicMaterial({color:0x00ff00});
 
 	this.game3Dscene.add(this.spaceship.spaceship3D);
-	
+
 	this.spaceship.initialize();
 	this.lastSpawnTime = timer.getTime()
-	
+
 	this.fillBuffer();
-	
+
 }
 
 
@@ -78,15 +78,15 @@ Environment.prototype.moveAsteroids = function (){
 		tempAsteroid = this.activeAsteroids[astIndex];
 		tempAsteroid.move();
 		if(tempAsteroid.hasCrossedTheLine()){
-			this.removeAsteroid(astIndex); 
+			this.removeAsteroid(astIndex);
 		}
 	}
-	
+
 	//check if it's spawn time!!
 	if(this.timer.getTime() - this.lastSpawnTime > this.settingsObject.spawnDelay ) {
 		this.addAsteroid();
 	}
-	
+
 }
 
 
@@ -102,7 +102,7 @@ Environment.prototype.addAsteroid = function(){
 	this.activeAsteroids.push(tempAsteroid);
 	this.game3Dscene.add(tempAsteroid.asteroidMesh);
 	this.lastSpawnTime = this.timer.getTime();
-	
+
 	//check buffer status
 	if(this.asteroidBuffer.length < this.asteroidBufferMinimum){
 		this.fillBuffer();

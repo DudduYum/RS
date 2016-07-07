@@ -147,7 +147,6 @@ function createSpaceshipSheders(){
 				"uniform vec3 pointLightPos;",
 				"uniform vec3 spLightPos;",
 
-				"#define PI 3.14159265",
 
 
 
@@ -243,6 +242,7 @@ function createSpaceshipSheders(){
 
 				"vec3 F(float LdotH ) {",
 					"vec3 c_spec = (texture2D(specularMap,vUv)).rgb;",
+					"//vec3 c_spec = vec3( 0.0 , 0.0 , 0.0);",
 					"return c_spec + (vec3(1.0) - c_spec) * pow( 1.0 - LdotH , 5.0);",
 				"}",
 
@@ -286,7 +286,7 @@ function createSpaceshipSheders(){
 					"float spNdotL = max(0.000001, dot( n, spl ));",
 
 					// sun light
-					"vec3 Specular = F(VdotH  ) * G(VdotH) * D(NdotH) / 4.0;",
+					"vec3 Specular = F(VdotH ) * G(VdotH) * D(NdotH) / 4.0;",
 					"vec3 beta = calcBeta( lightPower , lightVector);",
 
 					// spaceship light
@@ -297,7 +297,10 @@ function createSpaceshipSheders(){
 					// vec3 color1 = beta * NdotL * (s * c_diff  + (1.0 - s) * Specular );",
 					// vec3 color2 = spBeta * spNdotL  * (s * c_diff  + (1.0 - s) * spSpecular );",
 
+
+
 					"vec3 color1 = beta * (s * c_diff  + (1.0 - s) * Specular );",
+
 					"vec3 color2 = spBeta * (s * c_diff  + (1.0 - s) * spSpecular );",
 					"vec3 color3 = ambientLight;",
 					"gl_FragColor = vec4(  (color2  + color1  + color3 * 0.3) , 1.0);",

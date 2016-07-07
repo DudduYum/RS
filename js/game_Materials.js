@@ -133,7 +133,7 @@ MaterialManager.prototype.createSpaceshipUniforms = function(){
 		},
 		normalScale:{
 			type:	"v2",
-			value: new THREE.Vector2(1.0 , 1.0)
+			value: new THREE.Vector2(0.1 , 0.1)
 		},
 		pointLightPos: {
 			type:  "v3",
@@ -153,11 +153,11 @@ MaterialManager.prototype.createSpaceshipUniforms = function(){
 		},
 		alpha: {
 			type: "f",
-			value: 0.0
+			value: 1.0
 		},
 		s :{
 			type: "f",
-			value: 0.6
+			value: 0.8
 		}
 	};
 
@@ -228,7 +228,7 @@ MaterialManager.prototype.createAsteroidUniforms = function(){
 		},
 		alpha: {
 			type: "f",
-			value: 0.5
+			value: 1.0
 		},
 		s :{
 			type: "f",
