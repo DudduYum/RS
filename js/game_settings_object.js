@@ -3,25 +3,25 @@
 function GameSettings(width, height, depth, aspectRatio){
 
 //=== VARIABLES===
-	
+
 
 	this.game_area_H = height;
 	this.game_area_W = width * aspectRatio;
 	this.game_area_D = depth;
-	
+
 	//SPACESHIP SETTINGS
 	this.normalSpeed = 5;
 	this.inertia = 0.4;
-	
+
 	//ASTEROID SETTINGS
 	//seconds between asteroid spawn
-	this.spawnDelay = 0.1;
+	this.spawnDelay = 0.3;
 	//asteroid speed in units per second
 	this.asteroidSpeed = 20;
 	this.minSize = 0.2;
 	this.maxSize = 3;
-	
-	
+
+
 //=== CONSTRUCTOR===
 
 }

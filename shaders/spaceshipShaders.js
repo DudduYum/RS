@@ -148,7 +148,6 @@ function createSpaceshipSheders(){
 				"uniform vec3 spLightPos;",
 
 				"#define PI 3.14159265",
-				"#extension GL_OES_standard_derivatives : enable",
 
 
 
