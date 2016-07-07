@@ -153,7 +153,7 @@ MaterialManager.prototype.createSpaceshipUniforms = function(){
 		},
 		alpha: {
 			type: "f",
-			value: 0.5
+			value: 0.0
 		},
 		s :{
 			type: "f",
