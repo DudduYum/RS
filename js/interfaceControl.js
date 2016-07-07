@@ -52,7 +52,7 @@ InterfaceManager.prototype.displayGame = function(){
 		this.scoreNumber.innerHTML = this.score.getScore();
 
 		//adjusts z-indexes
-		this.initialScreen.style.zIndex = "-1";
+		this.initialScreen.style.zIndex = "-2";
 		this.gameoverScreen.style.zIndex = "-1";
 		this.scoreTable.style.zIndex = "1";
 		this.canvas.style.zIndex = "0";
@@ -67,7 +67,7 @@ InterfaceManager.prototype.displayGame = function(){
 
 InterfaceManager.prototype.displayGameOver = function(){
 	//adjusts z-indexes
-	this.gameoverScreen.style.zIndex = "0";
+	this.gameoverScreen.style.zIndex = "1";
 
 	//hides game, score and camera switch divs
 	this.scoreTable.style.display = "none";

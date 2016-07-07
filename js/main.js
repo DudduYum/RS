@@ -106,13 +106,13 @@ function ProjectOLA(){
 			// switch to game camera
 			orbitControls.enabled = false;
 			useGameCamera = true;
-			switchComposerCamera(gameCamera);
+			resetComposer(gameCamera);
 		},
 		function(){
 			// switch to free camera
 			useGameCamera = false;
 			orbitControls.enabled = true;
-			switchComposerCamera(freeCamera);
+			resetComposer(freeCamera);
 		}
 	);
 	
@@ -132,7 +132,9 @@ function ProjectOLA(){
 	
 	//switches the camera used by the composer by recreating composing order
 	//with new render passes
-	function switchComposerCamera(activeCamera) {
+	function resetComposer(activeCamera) {
+		mainComposer = new THREE.EffectComposer(renderer, renderTarget);
+		depthComposer = new THREE.EffectComposer(renderer, depthRenderTarget);
 		mainRenderPass = new THREE.RenderPass(scene, activeCamera);
 		depthRenderPass = new THREE.RenderPass(scene, activeCamera, depthMaterial);
 		depthComposer.addPass(depthRenderPass);
