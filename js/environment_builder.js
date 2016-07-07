@@ -10,7 +10,7 @@ function Environment(settingsObject, timer, IO_controls){
 	this.timer = timer;
 	
 	//asteroid param
-	this.asteroidBufferMinimum = 5;
+	this.asteroidBufferMinimum = 10;
 	this.activeAsteroids = [];
 	this.asteroidBuffer = [];
 	this.lastSpawnTime;
