@@ -55,7 +55,9 @@ MaterialManager.prototype.loadImage = function(imgSrc){
 MaterialManager.prototype.getMaterialByName = function(objectName){
 
 	var shaders = createSpaceshipSheders()[objectName + "Shaders"];
+	console.log(shaders);
 	console.log(shaders.vertexShader);
+	console.log(shaders.fragmentShader);
 	var material = new THREE.ShaderMaterial({
 		vertexShader: shaders.vertexShader,
 		fragmentShader: shaders.fragmentShader
