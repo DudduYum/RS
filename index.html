@@ -13,47 +13,58 @@
 		<script type="text/javascript" src="lib/requirejs_2.2.js"></script>
 		<script type="text/javascript" src="lib/OrbitControls.js"></script>
 		<script type="text/javascript" src="lib/stats.min.js"></script>
+		<script src="lib/EffectComposer.js"></script>
+		<script src="lib/CopyShader.js"></script>
+		<script src="lib/ShaderPass.js"></script>
+		<script src="lib/RenderPass.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 		<!--  Our scripts and class-->
-		<script type="text/javascript" src="js/IO_Manager.js"></script><!-- X -->
+		<script type="text/javascript" src="js/IO_Manager.js"></script><!-- V -->
 		<script type="text/javascript" src="js/game_score_counter.js"></script><!-- V -->
 		<script type="text/javascript" src="js/game_state_controller.js"></script><!-- V -->
 		<script type="text/javascript" src="js/game_settings_object.js"></script><!-- V -->
 		<script type="text/javascript" src="js/environment_builder.js"></script><!-- V -->
-		<script type="text/javascript" src="js/asteroid_class.js"></script>
-		<script type="text/javascript" src="js/spaceship_class.js"></script>
-		<script type="text/javascript" src="js/timer.js"></script>
-		<script type="text/javascript" src="js/interfaceControl.js"></script>
-		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" src="js/asteroid_class.js"></script> <!-- V -->
+		<script type="text/javascript" src="js/spaceship_class.js"></script><!-- V -->
+		<script type="text/javascript" src="js/game_Materials.js"></script>
+		<script type="text/javascript" src="js/timer.js"></script><!-- V -->
+		<script type="text/javascript" src="js/interfaceControl.js"></script><!-- V -->
 
-		<script type="text/ogsl" id="vertex">
-			varying vec3 tNorm;
-			varying vec2 vUv;
+		<script type="text/javascript" src="js/main.js"></script><!-- V -->
+
+		<script type="text/javascript" src="shaders/depthOfField.js"></script><!-- V -->
+		<script type="text/javascript" src="shaders/depthShader.js"></script><!-- V -->
+<!-- <<<<<<< Updated upstream -->
+		<!-- <script type="text/javascript" src="shaders/spaceshipShaders.js"></script> --><!-- V -->
+
+ <!-- ======= -->
+		<!-- <script type="text/javascript" src="shaders/gameObjectShaders.js"></script> -->
+		<!-- <script type="text/javascript" src="shaders/shaders..js"></script> -->
+
+<!-- >>>>>>> Stashed changes -->
+		<script type="text/javascript" src="js/lights.js"></script><!-- V -->
 
 
-			void main(){
-				tNorm = normalMatrix * normal;
-				gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.);
-				vUv = uv;
-			}
-		</script>
 
-		<script type="text/ogsl" id="fragment">
-			vatying vec3 tNorm;
-			varying vec2 vUv;
-			uniform sampler2D texture;
-
-			void main(){
-				vec4 color = texture2D(texture,vUv);
-				gl_FragColor = vec4(color.rgb, 1. );
-			}
-		</script>
 
 	</head>
 
 
 	<body>
+		<!-- contenitori di shaders, i veri shaders sono salvati in file
+		con estensione .olsl nel folder shaders -->
+		<div id="shaders">
+			<div class="shaders" id="spaceshipVS" ></div>
+			<div class="shaders" id="spaceshipFS"></div>
+			<div class="shaders" id="asteroidVS"></div>
+			<div class="shaders" id="asteroidFS"></div>
+		</div>
+		<!-- il codice per caricare il codice di shaders nel
+		rispettivi contenitori -->
+		<script type="text/javascript">
 
+		</script>
 
 		<script type="text/javascript" >
 			var switchToFreeCamera = function (){
@@ -65,7 +76,22 @@
 
 			};
 
+			// var pointLight = createPointLight();
+			// pointLight.lightPower.set(10000.0, 10000.0, 10000.0);
+			// pointLight.lightPosition.set(10.0, 20.0, 10.0);
+			//
+			// var vectorLight = createDirectionalLight();
+			// vectorLight.lightPower.set(10000.0, 10000.0, 10000.0);
+			// vectorLight.lightDirection.set(0.0, 0.0, -1.0);
+			//
+			// var spaceshipLight = createPointLight();
+			// spaceshipLight.lightPower.set(20.0, 20.0, 100.0);
+			// spaceshipLight.lightPosition.set(0.0, 0.0, -4.0);
+			//
+			// var ambientLight = createAmbientLight();
+			// ambientLight.lightPower.set(0.1, 0.1 , 0.1);
 		</script>
+
 
 
 
@@ -81,9 +107,11 @@
 				<h3>Damn, asteroid storm incoming!</h3><br/>
 			</div>
 			<div id="instructions">
-				<p>- use arrows or W,A,S,D to move your spaceship and avoid asteroids</p><br/>
-				<p>- click the button or press C to switch camera</p><br/>
 				<p>- press [SPACEBAR] to start the game</p><br/>
+				<p>- use arrows or W,A,S,D to move your spaceship and avoid asteroids</p><br/>
+				<p>- press [SPACEBAR] during game to stop spaceship movement
+				<p>- click the button or press C to switch camera</p><br/>
+
 				<p>Good luck!</p>
 			</div>
 		</div>
@@ -102,8 +130,8 @@
 
 		<div id="cameraSwitch">
 			<div id="switchContainer">
-				<button id="freeCameraButton" onclick="switchToFreeCamera()" type="button">FREE camera</button>
-				<button id="gameCameraButton" onclick="switchToGameCamera()" type="button">GAME camera</button>
+				<button id="freeCameraButton" onclick="switchCameraMode()" type="button">FREE camera</button>
+				<button id="gameCameraButton" onclick="switchCameraMode()" type="button">GAME camera</button>
 			</div>
 		</div>
 
@@ -111,14 +139,33 @@
 			<p >Developed by Riccardo Lulli, Rostyslav Kostyuk</p>
 		</div>
 
-		
+
 		<!--  game evocation -->
 		<script type="text/javascript" >
 
 
+		$(document).ready(function(){
+
+			// the code below loads shaders in their conteiners
+			// space ship
+			$("#spaceshipVS").load("shaders/spaceshipVS.olgl");
+			$("#spaceshipFS").load("shaders/spaceshipFS.olgl");
+			// asteroids
+			$("#asteroidVS").load("shaders/asteroidVS.olgl");
+			// the last load must containt callbeck function that mekes the game start
+			// to make sure the game starts with allready loaded shaders
+			$("#asteroidFS").load("shaders/asteroidFS.olgl","bobo", function(){
+				ProjectOLA();
+			});
+
+			// wait untill all shaders are loaded
+			next = 2;
+			while(next != 2){}
 
 
-		main();
+
+		});
+
 
 
 

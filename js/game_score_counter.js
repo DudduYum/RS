@@ -1,25 +1,31 @@
-function createScoreCounter(timer, settings){
+"use strict";
+
+function ScoreCounter(timer){
+
+//=== VARIABLES ===
+
+	this.timer = timer;
+	
+	this.gameScore = 0;
+	this.preciseScore = 0;
+	
+//=== CONSTRUCTOR ===
+}
 
 
-  //private score counter
-  var gameScore;
-  var sCount = {};
 
-  sCount.update = function(){
-    gameScore = Math.round(timer.getTime() * settings.getForwardVelocity());
-    // gameScore++;
-  };
+//=== METHODS ===
 
-  sCount.reset = function(){
-    gameScore = 0;
-  };
+ScoreCounter.prototype.update = function(){
+	this.preciseScore = this.preciseScore + this.timer.passedTime;
+	this.gameScore = Math.floor(this.preciseScore/1000*10)/10;
+}
 
-  sCount.getScore = function(){
-    return gameScore;
-  };
+ScoreCounter.prototype.reset = function(){
+	this.preciseScore = 0;
+	this.gameScore = 0;
+}
 
-  sCount.reset();
-
-  return sCount;
-
+ScoreCounter.prototype.getScore = function(){
+	return this.gameScore;
 }

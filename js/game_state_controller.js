@@ -1,72 +1,56 @@
-// TODO
-// some function must be passed as arguments, it's the best
-// I can do right now
+"use strict";
 
-function createGameState(startFun, stopFun ){
-  //true if game is running righ now
-  var gameRunning = false,
+function GameState(startFun, stopFun){
+	
+//=== VARIABLES ===
 
-  // i blochi che vengono chiamati dalla
-  startAction = startFun,
-  stopAction = stopFun,
-  gameCntr = {};
-
-  //constructor
+	//true if game is running
+	this.gameRunning = false;;
+	//true if game is over, not just not running
+	this.gameOver = false;;
+	this.startAction = startFun;;
+	this.stopAction = stopFun;;
 
 
-  // getter
-  gameCntr.isRunning = function(){
-    return gameRunning;
-  };
-
-  //setters
-  //set to start state and
-  // execute some call back function
-  gameCntr.start = function(){
-    if( !gameRunning ){
-      gameRunning = true;
-
-      //use callBack function call
-      if(startAction != undefined){
-        startAction();
-      }
-    }
-
-    if(gameRunning == true)
-      console.log("warring: game is alredy running !");
-
-  }
-
-  //set to stop state and
-  // execute some call back function
-  gameCntr.end = function(){
-    if( gameRunning ){
-      gameRunning = false;
-
-      //use callBack function call
-      if(stopAction != undefined){
-        stopAction();
-      }
-    }
-
-    if(gameRunning == false)
-      console.log("warring: game is alredy stopped !");
-
-  }
-
-
-
-  //init :)
-  // gameCntr.stop();
-
-  // unit tests
-  gameCntr.testInit = function(){
-    console.log(startAction);
-    console.log(stopAction);
-  };
-
-
-
-  return gameCntr;
+	
+//=== CONSTRUCTOR ===
 
 }
+
+
+
+//=== METHODS ===
+
+GameState.prototype.isRunning = function(){
+	return this.gameRunning;
+}
+
+
+GameState.prototype.isOver = function() {
+	return this.gameOver;
+}
+
+
+//set to start state
+GameState.prototype.startGame = function(){
+	if(!this.gameRunning){
+		this.gameRunning = true;
+		this.gameOver = false;
+		this.startAction();
+	}		
+}
+
+
+//set to stop state
+GameState.prototype.stopGame = function(){
+	if(this.gameRunning){
+		this.gameRunning = false;
+		this.gameOver = true;
+		this.stopAction();
+	} else {
+		console.log("warring: game is alredy stopped!");
+	}
+}
+
+
+

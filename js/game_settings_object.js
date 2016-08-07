@@ -1,132 +1,51 @@
-function createGameSettings(){
-  //general gameSettings
-  //screen ratio
-  var sRatio = window.innerWidth/window.innerHeight;
+"use strict";
 
-  //game area mesurements
+function GameSettings(width, height, depth, aspectRatio){
 
-
-  //SPACESHIP SETTINGS
-  // spce ship forward velocity
-  var forwardVelocity = .5;
-  //spaceship movement speed in units per seconds
-  var moveSpeed = 3;
-
-  var inertiaValue = .4;
-  //ASTEROID SETTINGS
-  //miliseconds between asteroid spawn
-  // old value = .3
-  var spawnDelay = .3;
-  //asteroid speed in units per second
-  var asteroidSpeed = 20;
-
-  var game_area_H,
-  game_area_W,
-  game_area_D
+//=== VARIABLES===
 
 
+	this.game_area_H = height;
+	this.game_area_W = width * aspectRatio;
+	this.game_area_D = depth;
 
-  ;
+	//SPACESHIP SETTINGS
+	this.normalSpeed = 5;
+	this.inertia = 0.4;
 
-  var ganeTimer;
+	//ASTEROID SETTINGS
+	//seconds between asteroid spawn
+	this.spawnDelay = 0.3;
+	//asteroid speed in units per second
+	this.asteroidSpeed = 20;
+	this.minSize = 0.2;
+	this.maxSize = 3;
+
+
+//=== CONSTRUCTOR===
+
+}
 
 
 
-  function randomCordinate(val){
-    return -(val/2) + val * Math.random();
-  };
+//=== METHODS ===
 
-  function randomSize(){
-    return 0.5 + 2 * Math.random();
-  };
+GameSettings.prototype.asteroid_spawn_X = function(){
+	return this.game_area_W * 2 * Math.random() - this.game_area_W;
+}
 
-  //default settings
-  var configObj = {};
+GameSettings.prototype.asteroid_spawn_Y = function(){
+	return this.game_area_H * 2 * Math.random() - this.game_area_H;
+}
 
+GameSettings.prototype.asteroid_spawn_Z = function(){
+	return - this.game_area_D/2;
+}
 
-  // set timer
-  configObj.setTimerGameTimer = function( newTimer){
-    ganeTimer = newTimer;
-  }
+GameSettings.prototype.asteroidSize = function(){
+	return this.minSize + (this.maxSize - this.minSize) * Math.random();
+}
 
-  // spaceship
-  configObj.getForwardVelocity = function(){
-    return forwardVelocity;
-  };
-
-  configObj.getInertiaValue = function(){
-    return inertiaValue;
-  };
-
-
-  configObj.moveSpeed = function(){
-    return moveSpeed;
-  };
-
-  //asteroid propertys
-  configObj.asteroidStartPoint = function(){
-    return - game_area_D/2;
-  };
-
-  configObj.screenRatio = function(){
-    return sRatio;
-  };
-
-  configObj.spawnDelay = function (){
-    return spawnDelay;
-  };
-
-  configObj.asteroidSpeed = function(){
-    return asteroidSpeed;
-  };
-
-
-
-
-  // game area propertys
-  // getters
-  configObj.gameAreaWidth = function(){
-    return game_area_W;
-  };
-
-  configObj.gameAreaHeight = function(){
-    return game_area_H;
-  };
-
-  configObj.gameAreaDepth = function(){
-    return game_area_D;
-  };
-
-
-  // setters
-  configObj.setGameAreaWidth = function(width){
-    game_area_W = width;
-  };
-
-  configObj.setGameAreaHeight = function(height){
-    game_area_H = height;
-  };
-
-  configObj.setGameAreaDepth = function(depth){
-    game_area_D = depth;
-  };
-
-
-
-  configObj.coordinatRandValue = randomCordinate;
-  configObj.sizeRandValue = randomSize;
-
-
-  //upadate state
-  configObj.updateScreenRatio = function(){
-    sRatio = window.innerWidth/window.innerHeight;
-  }
-
-  // MUST REMOVE...
-  configObj.test = function(){
-    console.log(configObj.coordinatRandValue(12));
-    console.log(configObj.sizeRandValue());
-  }
-  return configObj;
-
+GameSettings.prototype.updateRatio = function(ratio){
+	this.game_area_W = this.game_area_H * ratio;
 }
