@@ -66,6 +66,7 @@ function ProjectOLA(){
 	var depthComposer = new THREE.EffectComposer(renderer, depthRenderTarget);
 
 	//shaders
+	// var depthShader
 	var depthShader = createDepthShader();
 		depthShader.uniforms.farPlane.value = 140;
 	var dofShader = createDofShader();
