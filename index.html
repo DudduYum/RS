@@ -36,10 +36,12 @@
 		<script type="text/javascript" src="shaders/depthOfField.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/depthShader.js"></script><!-- V -->
 <!-- <<<<<<< Updated upstream -->
-		<!-- <script type="text/javascript" src="shaders/spaceshipShaders.js"></script><!-- V --> -->
+
+		<!-- <script type="text/javascript" src="shaders/spaceshipShaders.js"></script> --><!-- V -->
 
  <!-- ======= -->
-		<script type="text/javascript" src="shaders/gameObjectShaders.js"></script>
+		<!-- <script type="text/javascript" src="shaders/gameObjectShaders.js"></script> -->
+
 		<!-- <script type="text/javascript" src="shaders/shaders..js"></script> -->
 
 <!-- >>>>>>> Stashed changes -->
@@ -52,7 +54,27 @@
 
 
 	<body>
+		<!-- contenitori di shaders, i veri shaders sono salvati in file
+		con estensione .olsl nel folder shaders -->
 
+		<!-- SHADERS -->
+		<div class="shaders" id="spaceshipVS" ></div>
+		<div class="shaders" id="spaceshipFS"></div>
+
+		<div class="shaders" id="asteroidVS"></div>
+		<div class="shaders" id="asteroidFS"></div>
+
+		<div class="shaders" id="depthOfFieldVS"></div>
+		<div class="shaders" id="depthOfFieldFS"></div>
+
+		<div class="shaders" id="depthShaderVS"></div>
+		<div class="shaders" id="depthShaderFS"></div>
+
+		<!-- il codice per caricare il codice di shaders nel
+		rispettivi contenitori -->
+		<script type="text/javascript">
+
+		</script>
 
 		<script type="text/javascript" >
 			var switchToFreeCamera = function (){
@@ -134,9 +156,35 @@
 
 
 
+		$(document).ready(function(){
+
+			// the code below loads shaders in their conteiners
+			// space ship
+			$("#spaceshipVS").load("shaders/spaceshipVS.glsl");
+			$("#spaceshipFS").load("shaders/spaceshipFS.glsl");
+
+			// depth of field
+			$("#depthOfFieldVS").load("shaders/depthOfFieldVS.glsl");
+			$("#depthOfFieldFS").load("shaders/depthOfFieldFS.glsl");
+
+			// depthShader
+			$("#depthShaderVS").load("shaders/depthShaderVS.glsl");
+			$("#depthShaderFS").load("shaders/depthShaderFS.glsl");
+
+			// asteroids
+			$("#asteroidVS").load("shaders/asteroidVS.glsl");
+			// the last load must containt callbeck function that mekes the game start
+			// to make sure the game starts with allready loaded shaders
+			$("#asteroidFS").load("shaders/asteroidFS.glsl","bobo", function(){
+				ProjectOLA();
+			});
 
 
-		ProjectOLA();
+
+
+		});
+
+
 
 
 

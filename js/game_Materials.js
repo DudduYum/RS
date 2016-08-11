@@ -5,7 +5,9 @@ function MaterialManager(){
 //=== VARIABLES ===
 	this.textureLoader = new THREE.TextureLoader();
 
-	this.spaceshipMaterial  = this.getMaterialByName("spaceship");;
+
+	this.spaceshipMaterial = this.getMaterialByName("spaceship");
+
 	this.spaceshipTexture;
 	this.spaceshipNormalMap;
 	this.spaceshipSpecularMap;
@@ -20,12 +22,12 @@ function MaterialManager(){
 
 
 
+
 //=== CONSTRUCTOR ===
 	this.spaceshipMaterial.uniforms = this.createSpaceshipUniforms();
 	this.asteroidMaterial.uniforms = this.createAsteroidUniforms();
 
 }
-
 
 
 //=== METHODS ===
@@ -54,14 +56,20 @@ MaterialManager.prototype.loadImage = function(imgSrc){
 
 MaterialManager.prototype.getMaterialByName = function(objectName){
 
-	var shaders = createSpaceshipSheders()[objectName + "Shaders"];
-	console.log(shaders);
-	console.log(shaders.vertexShader);
-	console.log(shaders.fragmentShader);
+
+	// var shaders = createSpaceshipSheders()[objectName + "Shaders"];
+	let vs = document.getElementById(objectName + "VS").textContent;
+	let fs = document.getElementById(objectName + "FS").textContent;
+
+
+
 	var material = new THREE.ShaderMaterial({
-		vertexShader: shaders.vertexShader,
-		fragmentShader: shaders.fragmentShader
+		// vertexShader: shaders.vertexShader,
+		vertexShader: vs,
+		// fragmentShader: shaders.fragmentShader
+		fragmentShader: fs
 	});
+	// console.log(vs);
 
 	return material;
 }
