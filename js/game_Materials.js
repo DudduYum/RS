@@ -23,6 +23,7 @@ function MaterialManager(){
 
 
 
+
 //=== CONSTRUCTOR ===
 	this.spaceshipMaterial.uniforms = this.createSpaceshipUniforms();
 	this.asteroidMaterial.uniforms = this.createAsteroidUniforms();

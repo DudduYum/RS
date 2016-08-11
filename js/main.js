@@ -4,7 +4,6 @@
 var switchCameraMode;
 
 
-
 function ProjectOLA(){
 
 //======= VARIABLES =======
@@ -14,6 +13,7 @@ function ProjectOLA(){
 		stats.domElement.style.top = '0px';
 	var canvas = document.getElementById('canvas');
 		canvas.appendChild(stats.domElement);
+
 
 
 	//cameras
@@ -46,6 +46,7 @@ function ProjectOLA(){
 	var userInterface = new InterfaceManager(canvas, score);
 
 
+
 	// environmentronment
 	var environment = new Environment(settings, timer, inputControl);
 
@@ -54,6 +55,7 @@ function ProjectOLA(){
 	var scene = new THREE.Scene();
 	//scene.fog = new THREE.FogExp2(0x000000, 0.0015);
 		scene.add(environment.game3Dscene);
+
 
 
 	//renderer and render targets
@@ -163,7 +165,6 @@ function ProjectOLA(){
 
 			gameCamera.updateProjectionMatrix();
 			freeCamera.updateProjectionMatrix();
-
 
 			renderer.setSize(window.innerWidth, window.innerHeight);
 			depthRenderTarget.setSize(window.innerWidth, window.innerHeight);
