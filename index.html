@@ -13,6 +13,7 @@
 		<script type="text/javascript" src="lib/requirejs_2.2.js"></script>
 		<script type="text/javascript" src="lib/OrbitControls.js"></script>
 		<script type="text/javascript" src="lib/stats.min.js"></script>
+		<script type='text/javascript' src='lib/dat.gui.min.js'></script>
 		<script src="lib/EffectComposer.js"></script>
 		<script src="lib/CopyShader.js"></script>
 		<script src="lib/ShaderPass.js"></script>
@@ -30,11 +31,14 @@
 		<script type="text/javascript" src="js/game_Materials.js"></script>
 		<script type="text/javascript" src="js/timer.js"></script><!-- V -->
 		<script type="text/javascript" src="js/interfaceControl.js"></script><!-- V -->
+		<script type="text/javascript" src="js/graphicSettings.js"></script><!-- V -->
 
 		<script type="text/javascript" src="js/main.js"></script><!-- V -->
 
-		<script type="text/javascript" src="shaders/depthOfField.js"></script><!-- V -->
+		
 		<script type="text/javascript" src="shaders/depthShader.js"></script><!-- V -->
+		<script type="text/javascript" src="shaders/depthOfField.js"></script><!-- V -->
+		<script type="text/javascript" src="shaders/pixelation.js"></script><!-- V -->
 <!-- <<<<<<< Updated upstream -->
 
 		<!-- <script type="text/javascript" src="shaders/spaceshipShaders.js"></script> --><!-- V -->
@@ -64,11 +68,15 @@
 		<div class="shaders" id="asteroidVS"></div>
 		<div class="shaders" id="asteroidFS"></div>
 
-		<div class="shaders" id="depthOfFieldVS"></div>
-		<div class="shaders" id="depthOfFieldFS"></div>
-
 		<div class="shaders" id="depthShaderVS"></div>
 		<div class="shaders" id="depthShaderFS"></div>
+		
+		<div class="shaders" id="depthOfFieldVS"></div>
+		<div class="shaders" id="depthOfFieldFS"></div>
+		
+		<div class="shaders" id="pixelationVS"></div>
+		<div class="shaders" id="pixelationFS"></div>
+		
 
 		<!-- il codice per caricare il codice di shaders nel
 		rispettivi contenitori -->
@@ -164,14 +172,18 @@
 			// space ship
 			$("#spaceshipVS").load("shaders/spaceshipVS.glsl");
 			$("#spaceshipFS").load("shaders/spaceshipFS.glsl");
-
+			
+			// depthShader
+			$("#depthShaderVS").load("shaders/depthShaderVS.glsl");
+			$("#depthShaderFS").load("shaders/depthShaderFS.glsl");
+			
 			// depth of field
 			$("#depthOfFieldVS").load("shaders/depthOfFieldVS.glsl");
 			$("#depthOfFieldFS").load("shaders/depthOfFieldFS.glsl");
 
-			// depthShader
-			$("#depthShaderVS").load("shaders/depthShaderVS.glsl");
-			$("#depthShaderFS").load("shaders/depthShaderFS.glsl");
+			// depth of field
+			$("#pixelationVS").load("shaders/pixelationVS.glsl");
+			$("#pixelationFS").load("shaders/pixelationFS.glsl");
 
 			// asteroids
 			$("#asteroidVS").load("shaders/asteroidVS.glsl");

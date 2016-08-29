@@ -44,7 +44,9 @@ function ProjectOLA(){
 
 	// interface
 	var userInterface = new InterfaceManager(canvas, score);
-
+	
+	// graphic settings
+	var graphicSettings = new GraphicSettings();
 
 
 	// environmentronment
@@ -71,14 +73,15 @@ function ProjectOLA(){
 	var depthComposer = new THREE.EffectComposer(renderer, depthRenderTarget);
 
 	//shaders
-	// var depthShader
-
 	var depthShader = createDepthShader();
 		depthShader.uniforms.farPlane.value = 140;
 	var dofShader = createDofShader();
 		dofShader.uniforms.width.value = window.innerWidth;
 		dofShader.uniforms.height.value = window.innerHeight;
 		dofShader.uniforms.tDepth.value = depthComposer.renderTarget1;
+	var pixelationShader = createPixelationShader();
+		pixelationShader.uniforms.width.value = window.innerWidth;
+		pixelationShader.uniforms.width.value = window.innerWidth;
 
 	//depth material
 	var depthMaterial = new THREE.ShaderMaterial({
@@ -92,11 +95,13 @@ function ProjectOLA(){
 		mainRenderPass = new THREE.RenderPass(scene, gameCamera);
 	var depthRenderPass;
 		depthRenderPass = new THREE.RenderPass(scene, gameCamera, depthMaterial);
+	var depthPass = new THREE.ShaderPass(THREE.CopyShader);
+		depthPass.renderToScreen = true;
 	var dofPass = new THREE.ShaderPass(dofShader);
 		dofPass.renderToScreen = true;
-	var depthPass = new THREE.ShaderPass(THREE.CopyShader);
-
-		depthPass.renderToScreen = true;
+	var pixelationPass = new THREE.ShaderPass(pixelationShader);
+		pixelationPass.renderToScreen = true;
+	
 
 
 
@@ -150,6 +155,7 @@ function ProjectOLA(){
 		depthComposer.addPass(depthPass);
 		mainComposer.addPass(mainRenderPass);
 		mainComposer.addPass(dofPass);
+		mainComposer.addPass(pixelationPass);
 	}
 
 
@@ -218,6 +224,7 @@ function ProjectOLA(){
 	//composing final image
 	mainComposer.addPass(mainRenderPass);
 	mainComposer.addPass(dofPass);
+	mainComposer.addPass(pixelationPass);
 
 
 

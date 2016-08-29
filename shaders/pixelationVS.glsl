@@ -1,4 +1,4 @@
-//depthOfField vertex shaders
+//pixelation vertex shaders
 
 
 varying vec2 vUv;
