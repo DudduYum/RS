@@ -11,15 +11,20 @@ void main(void) {
 	vec3 color = vec3(0.0, 0.0, 0.0);
 	float step_h = 1.0/width;
 	float step_v = 1.0/height;
-
-	vec2 modPoint = vec2(mod(vUv.x, pixelation), mod(vUv.y, pixelation));
-
-	for(int i=0; i<pixelation; i++) {
-		for(int j=0; j<pixelation; j++) {
-			color += texture2D(tDiffuse, modPoint + (step_h * i) + (step_v * j)).rgb * (1/pow(pixelation, 2));
-		)
-	}
+	float invPixel = 1.0/pixelation;
+	float modPointX = vUv.x - mod(vUv.x, invPixel);
+	float modPointY = vUv.y - mod(vUv.y, invPixel);
 	
-	color = vec3(0.5, 0.5, 0.5);
+	vec2 modPoint;
+
+	for(int i=0; i<16; i++) {
+		for(int j=0; j<16; j++) {
+			modPoint = vec2(
+				min(modPointX + (step_h * float(i)), 1.0),
+				min(modPointY + (step_v * float(j)), 1.0));
+			color += texture2D(tDiffuse, modPoint).rgb * (1.0/pow(pixelation, 2.0));
+		}
+	}
+	color = texture2D(tDiffuse, vUv).rgb;
 	gl_FragColor = vec4(color, 1.0);
 }

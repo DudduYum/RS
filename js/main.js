@@ -56,7 +56,7 @@ function ProjectOLA(){
 	//3D scene initialization
 	var scene = new THREE.Scene();
 	//scene.fog = new THREE.FogExp2(0x000000, 0.0015);
-		scene.add(environment.game3Dscene);
+	scene.add(environment.game3Dscene);
 
 
 
@@ -74,14 +74,9 @@ function ProjectOLA(){
 
 	//shaders
 	var depthShader = createDepthShader();
-		depthShader.uniforms.farPlane.value = 140;
+		depthShader.uniforms.farPlane.value = 40;
 	var dofShader = createDofShader();
-		dofShader.uniforms.width.value = window.innerWidth;
-		dofShader.uniforms.height.value = window.innerHeight;
-		dofShader.uniforms.tDepth.value = depthComposer.renderTarget1;
 	var pixelationShader = createPixelationShader();
-		pixelationShader.uniforms.width.value = window.innerWidth;
-		pixelationShader.uniforms.width.value = window.innerWidth;
 
 	//depth material
 	var depthMaterial = new THREE.ShaderMaterial({
@@ -92,9 +87,7 @@ function ProjectOLA(){
 
 	//passes
 	var mainRenderPass;
-		mainRenderPass = new THREE.RenderPass(scene, gameCamera);
 	var depthRenderPass;
-		depthRenderPass = new THREE.RenderPass(scene, gameCamera, depthMaterial);
 	var depthPass = new THREE.ShaderPass(THREE.CopyShader);
 		depthPass.renderToScreen = true;
 	var dofPass = new THREE.ShaderPass(dofShader);
@@ -120,13 +113,13 @@ function ProjectOLA(){
 			// switch to game camera
 			orbitControls.enabled = false;
 			useGameCamera = true;
-			resetComposer(gameCamera);
+			resetComposers(gameCamera);
 		},
 		function(){
 			// switch to free camera
 			useGameCamera = false;
 			orbitControls.enabled = true;
-			resetComposer(freeCamera);
+			resetComposers(freeCamera);
 		}
 	);
 
@@ -146,16 +139,31 @@ function ProjectOLA(){
 
 	//switches the camera used by the composer by recreating composing order
 	//with new render passes
-	function resetComposer(activeCamera) {
+	function resetComposers(activeCamera) {
 		mainComposer = new THREE.EffectComposer(renderer, renderTarget);
 		depthComposer = new THREE.EffectComposer(renderer, depthRenderTarget);
 		mainRenderPass = new THREE.RenderPass(scene, activeCamera);
 		depthRenderPass = new THREE.RenderPass(scene, activeCamera, depthMaterial);
+		
+		resetShaders();
+		
 		depthComposer.addPass(depthRenderPass);
 		depthComposer.addPass(depthPass);
+		
 		mainComposer.addPass(mainRenderPass);
 		mainComposer.addPass(dofPass);
-		mainComposer.addPass(pixelationPass);
+		//mainComposer.addPass(pixelationPass);
+		
+		
+	}
+	
+	
+	function resetShaders() {
+		dofShader.uniforms.width.value = window.innerWidth;
+		dofShader.uniforms.height.value = window.innerHeight;
+		dofShader.uniforms.tDepth.value = depthComposer.renderTarget1;
+		pixelationShader.uniforms.width.value = window.innerWidth;
+		pixelationShader.uniforms.height.value = window.innerHeight;
 	}
 
 
@@ -174,7 +182,8 @@ function ProjectOLA(){
 
 			renderer.setSize(window.innerWidth, window.innerHeight);
 			depthRenderTarget.setSize(window.innerWidth, window.innerHeight);
-
+			
+			resetShaders();
 
 			settings.updateRatio(aspectRatio);
 		},
@@ -217,14 +226,16 @@ function ProjectOLA(){
 
 //======= RENDERING =======
 
+	resetComposers(gameCamera);
+	
 	//rendering depth image
-	depthComposer.addPass(depthRenderPass);
-	depthComposer.addPass(depthPass);
+	//depthComposer.addPass(depthRenderPass);
+	//depthComposer.addPass(depthPass);
 
 	//composing final image
-	mainComposer.addPass(mainRenderPass);
-	mainComposer.addPass(dofPass);
-	mainComposer.addPass(pixelationPass);
+	//mainComposer.addPass(mainRenderPass);
+	//mainComposer.addPass(dofPass);
+	//mainComposer.addPass(pixelationPass);
 
 
 

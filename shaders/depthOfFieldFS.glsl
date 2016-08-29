@@ -13,6 +13,7 @@ void main(void) {
 	vec3 color = vec3(0.0, 0.0, 0.0);
 	float step_h = 1.0/width;
 	float step_v = 1.0/height;
+	vec2 newCoord;
 
 	vec2 offset[9];
 	offset[0] = vec2(-step_h, step_v);
@@ -27,9 +28,16 @@ void main(void) {
 
 	for( int i=0; i<9; i++ ) {
 		if(i!=4) {
-			color += texture2D(tDiffuse, vUv + offset[i]).rgb
-				* kernelFactor * gaussianBlurKernel[i]
-				* texture2D(tDepth, vUv).r;
+			newCoord = vUv + offset[i];
+			if(newCoord.x >= 0.0 && newCoord.y >= 0.0 && newCoord.x <= 1.0 && newCoord.y <= 1.0) {
+				color += texture2D(tDiffuse, newCoord).rgb
+					* kernelFactor * gaussianBlurKernel[i]
+					* texture2D(tDepth, vUv).r;
+			} else {
+				color += texture2D(tDiffuse, vUv).rgb
+					* kernelFactor * gaussianBlurKernel[i]
+					* texture2D(tDepth, vUv).r;
+			}
 		} else {
 			color += texture2D(tDiffuse, vUv).rgb
 				* (1.0 - ( (1.0 - kernelFactor * gaussianBlurKernel[i]) * texture2D(tDepth, vUv).r));
