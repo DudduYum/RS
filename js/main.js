@@ -151,8 +151,8 @@ function ProjectOLA(){
 		depthComposer.addPass(depthPass);
 		
 		mainComposer.addPass(mainRenderPass);
-		mainComposer.addPass(dofPass);
-		//mainComposer.addPass(pixelationPass);
+		mainComposer.addPass(pixelationPass);
+		//mainComposer.addPass(dofPass);
 		
 		
 	}
@@ -163,7 +163,9 @@ function ProjectOLA(){
 		dofShader.uniforms.height.value = window.innerHeight;
 		dofShader.uniforms.tDepth.value = depthComposer.renderTarget1;
 		pixelationShader.uniforms.width.value = window.innerWidth;
+		console.log(window.innerWidth);
 		pixelationShader.uniforms.height.value = window.innerHeight;
+		console.log(window.innerHeight);
 	}
 
 
@@ -227,16 +229,6 @@ function ProjectOLA(){
 //======= RENDERING =======
 
 	resetComposers(gameCamera);
-	
-	//rendering depth image
-	//depthComposer.addPass(depthRenderPass);
-	//depthComposer.addPass(depthPass);
-
-	//composing final image
-	//mainComposer.addPass(mainRenderPass);
-	//mainComposer.addPass(dofPass);
-	//mainComposer.addPass(pixelationPass);
-
 
 
 
@@ -260,6 +252,7 @@ function ProjectOLA(){
 		} else if(!gameState.isOver()){
 			environment.rotateSpaceship();
 		}
+		
 		requestAnimationFrame(animate);
 		stats.update();
 		timer.update();
