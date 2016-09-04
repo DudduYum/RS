@@ -2,6 +2,11 @@
 
 //======= GLOBAL VARIABLES AND METHODS =======
 var switchCameraMode;
+var setSaturation;
+var setBrightness;
+var setDof;
+var setPixelation;
+var setEdgeOnly;
 
 
 function ProjectOLA(){
@@ -55,7 +60,6 @@ function ProjectOLA(){
 
 	//3D scene initialization
 	var scene = new THREE.Scene();
-	//scene.fog = new THREE.FogExp2(0x000000, 0.0015);
 	scene.add(environment.game3Dscene);
 
 
@@ -75,6 +79,7 @@ function ProjectOLA(){
 	//shaders
 	var depthShader = createDepthShader();
 		depthShader.uniforms.farPlane.value = 40;
+	var imageSettings = createImageSettings();
 	var dofShader = createDofShader();
 	var pixelationShader = createPixelationShader();
 
@@ -88,12 +93,10 @@ function ProjectOLA(){
 	//passes
 	var mainRenderPass;
 	var depthRenderPass;
-	var depthPass = new THREE.ShaderPass(THREE.CopyShader);
-		depthPass.renderToScreen = true;
-	var dofPass = new THREE.ShaderPass(dofShader);
-		dofPass.renderToScreen = true;
-	var pixelationPass = new THREE.ShaderPass(pixelationShader);
-		pixelationPass.renderToScreen = true;
+	var copyPass;
+	var imageSettingsPass;
+	var dofPass;
+	var pixelationPass;
 	
 
 
@@ -132,43 +135,82 @@ function ProjectOLA(){
 		}
 	}
 
-	//assign the camera switch method to a globarl variable
+	//assign the camera switch method to a global variable
 	switchCameraMode = switchCamera;
 	//assign camera switch method to button C
 	inputControl.addKeyDownAction(67, switchCamera);
 
-	//switches the camera used by the composer by recreating composing order
-	//with new render passes
+
+//======= RENDERING METHODS =======	
+
 	function resetComposers(activeCamera) {
 		mainComposer = new THREE.EffectComposer(renderer, renderTarget);
 		depthComposer = new THREE.EffectComposer(renderer, depthRenderTarget);
 		mainRenderPass = new THREE.RenderPass(scene, activeCamera);
 		depthRenderPass = new THREE.RenderPass(scene, activeCamera, depthMaterial);
-		
+				
 		resetShaders();
 		
+		resetPasses();
+			
 		depthComposer.addPass(depthRenderPass);
-		depthComposer.addPass(depthPass);
+		depthComposer.addPass(copyPass);
 		
 		mainComposer.addPass(mainRenderPass);
+		mainComposer.addPass(imageSettingsPass);
 		mainComposer.addPass(pixelationPass);
-		//mainComposer.addPass(dofPass);
+		mainComposer.addPass(dofPass);
+		mainComposer.addPass(copyPass);
 		
 		
 	}
-	
 	
 	function resetShaders() {
 		dofShader.uniforms.width.value = window.innerWidth;
 		dofShader.uniforms.height.value = window.innerHeight;
 		dofShader.uniforms.tDepth.value = depthComposer.renderTarget1;
 		pixelationShader.uniforms.width.value = window.innerWidth;
-		console.log(window.innerWidth);
 		pixelationShader.uniforms.height.value = window.innerHeight;
-		console.log(window.innerHeight);
 	}
-
-
+	
+	function resetPasses() {
+		copyPass = new THREE.ShaderPass(THREE.CopyShader);
+		copyPass.renderToScreen = true;
+		imageSettingsPass = new THREE.ShaderPass(imageSettings);
+		//imageSettingsPass.renderToScreen = true;
+		dofPass = new THREE.ShaderPass(dofShader);
+		dofPass.enabled = false;
+		//dofPass.renderToScreen = false;
+		pixelationPass = new THREE.ShaderPass(pixelationShader);
+		pixelationPass.enabled = false;
+		//pixelationPass.renderToScreen = false;
+	}
+	
+	
+	setSaturation = function(value) {
+		imageSettings.uniforms.saturation.value = value;
+		imageSettingsPass.material.uniforms.saturation.value = value;
+	}
+	
+	setBrightness = function(value) {
+		imageSettings.uniforms.brightness.value = value;
+		imageSettingsPass.material.uniforms.brightness.value = value;
+	}
+	
+	setDof = function(value) {
+		dofPass.enabled = value;
+		//dofPass.renderToScreen = value;
+	}
+	
+	setPixelation = function(value) {
+		pixelationPass.enabled = value;
+		//pixelationPass.renderToScreen = value;
+	}
+	
+	setEdgeOnly = function() {
+		
+	}
+	
 //======= OTHER METHODS =======
 
 	//resizes the renderer and the game area if the window resizes
@@ -186,7 +228,8 @@ function ProjectOLA(){
 			depthRenderTarget.setSize(window.innerWidth, window.innerHeight);
 			
 			resetShaders();
-
+			resetPasses();
+			
 			settings.updateRatio(aspectRatio);
 		},
 		false

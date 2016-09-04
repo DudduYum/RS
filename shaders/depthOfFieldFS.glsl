@@ -43,6 +43,7 @@ void main(void) {
 				* (1.0 - ( (1.0 - kernelFactor * gaussianBlurKernel[i]) * texture2D(tDepth, vUv).r));
 		}
 	}
-
-	 gl_FragColor = vec4(color, 1.0);
+	
+	
+	gl_FragColor = vec4(color, 1.0);
 }

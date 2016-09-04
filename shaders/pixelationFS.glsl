@@ -12,8 +12,8 @@ void main(void) {
 	float step_h = 1.0/width;
 	float step_v = 1.0/height;
 	
-	float pixelSizeX = pixelation/2095.0;
-	float pixelSizeY = pixelation/1339.0;
+	float pixelSizeX = pixelation/width;
+	float pixelSizeY = pixelation/height;
 	float pixelCount = pow(pixelation, 2.0);
 	
 	vec2 currentPoint;
@@ -35,12 +35,7 @@ void main(void) {
 	}
 	
 	
-	
-	
 	color = color / pixelCount;
-	//if(width > -0.01)
-	//	color = vec3(0.0, 1.0, 0.0);
-	//else
-	//	color = vec3(1.0, 0.0, 0.0);
+		
 	gl_FragColor = vec4(color, 1.0);
 }

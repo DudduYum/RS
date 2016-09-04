@@ -37,6 +37,7 @@
 
 		
 		<script type="text/javascript" src="shaders/depthShader.js"></script><!-- V -->
+		<script type="text/javascript" src="shaders/imageSettings.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/depthOfField.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/pixelation.js"></script><!-- V -->
 <!-- <<<<<<< Updated upstream -->
@@ -70,6 +71,9 @@
 
 		<div class="shaders" id="depthShaderVS"></div>
 		<div class="shaders" id="depthShaderFS"></div>
+		
+		<div class="shaders" id="imageSettingsVS"></div>
+		<div class="shaders" id="imageSettingsFS"></div>
 		
 		<div class="shaders" id="depthOfFieldVS"></div>
 		<div class="shaders" id="depthOfFieldFS"></div>
@@ -176,6 +180,10 @@
 			// depthShader
 			$("#depthShaderVS").load("shaders/depthShaderVS.glsl");
 			$("#depthShaderFS").load("shaders/depthShaderFS.glsl");
+			
+			// imageSettings
+			$("#imageSettingsVS").load("shaders/imageSettingsVS.glsl");
+			$("#imageSettingsFS").load("shaders/imageSettingsFS.glsl");
 			
 			// depth of field
 			$("#depthOfFieldVS").load("shaders/depthOfFieldVS.glsl");

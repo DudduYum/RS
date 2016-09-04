@@ -10,7 +10,7 @@ function GraphicSettings() {
 	this.edgeOnly = false;
 	
 	
-	this.contrast = 50;
+	this.saturation = 50;
 	this.brightness = 50;
 	
 	
@@ -19,39 +19,47 @@ function GraphicSettings() {
 	
 	var settingsGui = new dat.GUI();
 	
-	var shaderFolder = settingsGui.addFolder('Shaders');
+	var shaderFolder = settingsGui.addFolder('Post-processing');
 	shaderFolder.open();
 	var dofController = shaderFolder.add(this, 'depthOfField');
-	var pixelController = shaderFolder.add(this, 'pixelation');
-	var edgeController = shaderFolder.add(this, 'edgeOnly');
+	var pixelationController = shaderFolder.add(this, 'pixelation');
+	var edgeOnlyController = shaderFolder.add(this, 'edgeOnly');
 	
 	var imageFolder = settingsGui.addFolder('Image settings');
 	imageFolder.open();
-	var contrastController = imageFolder.add(this, 'contrast', 0, 100);
+	var saturationController = imageFolder.add(this, 'saturation', 0, 100);
 	var brightnessController = imageFolder.add(this, 'brightness', 0, 100);
 	
 	
 	
-	dofController.onChange(function(value) {
-	  this.depthOfField = value;
-	});
-
-	pixelController.onChange(function(value) {
-	  this.pixelation = value;
-	});
-
-	edgeController.onChange(function(value) {
-	  this.edgeOnly = value;
-	});
-
-
-	contrastController.onChange(function(value) {
-	  this.contrast = value;
+	saturationController.onChange(function(value) {
+	  this.saturation = value;
+	  setSaturation(value/50);
 	});
 
 	brightnessController.onChange(function(value) {
 	  this.brightness = value;
+	  setBrightness(value/50);
 	});
+	
+	
+	dofController.onChange(function(value) {
+	  this.depthOfField = value;
+	  setDof(value);
+	});
+
+	pixelationController.onChange(function(value) {
+	  this.pixelation = value;
+	  console.log(value);
+	  setPixelation(value);
+	});
+
+	edgeOnlyController.onChange(function(value) {
+	  this.edgeOnly = value;
+	});
+
+
+	
 
 }
 

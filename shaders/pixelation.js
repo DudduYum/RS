@@ -1,5 +1,5 @@
 function createPixelationShader() {
-	pixelationShader = {
+	pixelation = {
 		uniforms: {
 			"tDiffuse": {type: "t", value: null},
 			"width": {type: "f", value: 0.0 },
@@ -13,5 +13,5 @@ function createPixelationShader() {
 		fragmentShader: document.getElementById("pixelationFS").textContent
 	};
 
-	return pixelationShader;
+	return pixelation;
 }
