@@ -1,7 +1,7 @@
 function createDepthShader() {
 	depthShader = {
 		uniforms: {
-			"farPlane": {type: "f", value: 0.0}
+			"areaDepth": {type: "f", value: 0.0}
 		},
 
 

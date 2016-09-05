@@ -4,9 +4,12 @@
 var switchCameraMode;
 var setSaturation;
 var setBrightness;
-var setDof;
+var setDepthOfField;
+var setDepthOfFieldDistance;
 var setPixelation;
+var setPixelationSize;
 var setEdgeOnly;
+var setDrunkPilot;
 
 
 function ProjectOLA(){
@@ -51,7 +54,7 @@ function ProjectOLA(){
 	var userInterface = new InterfaceManager(canvas, score);
 	
 	// graphic settings
-	var graphicSettings = new GraphicSettings();
+	var graphicSettings = new GraphicSettings(settings.game_area_D / 2);
 
 
 	// environmentronment
@@ -73,31 +76,33 @@ function ProjectOLA(){
 
 
 	//composers
-	var mainComposer = new THREE.EffectComposer(renderer, renderTarget);
-	var depthComposer = new THREE.EffectComposer(renderer, depthRenderTarget);
+	var main_composer = new THREE.EffectComposer(renderer, renderTarget);
+	var depth_composer = new THREE.EffectComposer(renderer, depthRenderTarget);
 
 	//shaders
-	var depthShader = createDepthShader();
-		depthShader.uniforms.farPlane.value = 40;
-	var imageSettings = createImageSettings();
-	var dofShader = createDofShader();
-	var pixelationShader = createPixelationShader();
+	var depth_shader = createDepthShader();
+		depth_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
+	var imageSettings_shader = createImageSettings();
+	var depthOfField_shader = createDofShader();
+		depth_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
+	var pixelation_shader = createPixelationShader();
+	var edgeOnly_shader = createEdgeOnlyShader();
 
 	//depth material
 	var depthMaterial = new THREE.ShaderMaterial({
-		fragmentShader : depthShader.fragmentShader,
-		vertexShader : depthShader.vertexShader,
-		uniforms : depthShader.uniforms
+		fragmentShader : depth_shader.fragmentShader,
+		vertexShader : depth_shader.vertexShader,
+		uniforms : depth_shader.uniforms
 	});
 
 	//passes
-	var mainRenderPass;
-	var depthRenderPass;
-	var copyPass;
-	var imageSettingsPass;
-	var dofPass;
-	var pixelationPass;
-	
+	var mainRander_pass;
+	var depthRender_pass;
+	var copy_pass;
+	var imageSetttings_pass;
+	var depthOfField_pass;
+	var pixelation_pass;
+	var edgeOnly_pass;
 
 
 
@@ -144,72 +149,95 @@ function ProjectOLA(){
 //======= RENDERING METHODS =======	
 
 	function resetComposers(activeCamera) {
-		mainComposer = new THREE.EffectComposer(renderer, renderTarget);
-		depthComposer = new THREE.EffectComposer(renderer, depthRenderTarget);
-		mainRenderPass = new THREE.RenderPass(scene, activeCamera);
-		depthRenderPass = new THREE.RenderPass(scene, activeCamera, depthMaterial);
+		main_composer = new THREE.EffectComposer(renderer, renderTarget);
+		depth_composer = new THREE.EffectComposer(renderer, depthRenderTarget);
+		mainRander_pass = new THREE.RenderPass(scene, activeCamera);
+		depthRender_pass = new THREE.RenderPass(scene, activeCamera, depthMaterial);
 				
 		resetShaders();
 		
 		resetPasses();
 			
-		depthComposer.addPass(depthRenderPass);
-		depthComposer.addPass(copyPass);
+		depth_composer.addPass(depthRender_pass);
+		depth_composer.addPass(copy_pass);
 		
-		mainComposer.addPass(mainRenderPass);
-		mainComposer.addPass(imageSettingsPass);
-		mainComposer.addPass(pixelationPass);
-		mainComposer.addPass(dofPass);
-		mainComposer.addPass(copyPass);
+		main_composer.addPass(mainRander_pass);
+		main_composer.addPass(imageSetttings_pass);
+		main_composer.addPass(depthOfField_pass);
+		
+		main_composer.addPass(pixelation_pass);
+		main_composer.addPass(edgeOnly_pass);
+		main_composer.addPass(copy_pass);
 		
 		
 	}
 	
 	function resetShaders() {
-		dofShader.uniforms.width.value = window.innerWidth;
-		dofShader.uniforms.height.value = window.innerHeight;
-		dofShader.uniforms.tDepth.value = depthComposer.renderTarget1;
-		pixelationShader.uniforms.width.value = window.innerWidth;
-		pixelationShader.uniforms.height.value = window.innerHeight;
+		depthOfField_shader.uniforms.width.value = window.innerWidth;
+		depthOfField_shader.uniforms.height.value = window.innerHeight;
+		depthOfField_shader.uniforms.tDepth.value = depth_composer.renderTarget1;
+		pixelation_shader.uniforms.width.value = window.innerWidth;
+		pixelation_shader.uniforms.height.value = window.innerHeight;
+		edgeOnly_shader.uniforms.width.value = window.innerWidth;
+		edgeOnly_shader.uniforms.height.value = window.innerHeight;
 	}
 	
 	function resetPasses() {
-		copyPass = new THREE.ShaderPass(THREE.CopyShader);
-		copyPass.renderToScreen = true;
-		imageSettingsPass = new THREE.ShaderPass(imageSettings);
-		//imageSettingsPass.renderToScreen = true;
-		dofPass = new THREE.ShaderPass(dofShader);
-		dofPass.enabled = false;
-		//dofPass.renderToScreen = false;
-		pixelationPass = new THREE.ShaderPass(pixelationShader);
-		pixelationPass.enabled = false;
-		//pixelationPass.renderToScreen = false;
+		copy_pass = new THREE.ShaderPass(THREE.CopyShader);
+		copy_pass.renderToScreen = true;
+		imageSetttings_pass = new THREE.ShaderPass(imageSettings_shader);
+		
+		depthOfField_pass = new THREE.ShaderPass(depthOfField_shader);
+		depthOfField_pass.enabled = false;
+		
+		pixelation_pass = new THREE.ShaderPass(pixelation_shader);
+		pixelation_pass.enabled = false;
+		
+		edgeOnly_pass = new THREE.ShaderPass(edgeOnly_shader);
+		edgeOnly_pass.enabled = false;
 	}
 	
 	
+	
+	
+//======= GRAPHIC SETTINGS METHODS =======
+
 	setSaturation = function(value) {
-		imageSettings.uniforms.saturation.value = value;
-		imageSettingsPass.material.uniforms.saturation.value = value;
+		imageSettings_shader.uniforms.saturation.value = value;
+		imageSetttings_pass.material.uniforms.saturation.value = value;
 	}
 	
 	setBrightness = function(value) {
-		imageSettings.uniforms.brightness.value = value;
-		imageSettingsPass.material.uniforms.brightness.value = value;
+		imageSettings_shader.uniforms.brightness.value = value;
+		imageSetttings_pass.material.uniforms.brightness.value = value;
 	}
 	
-	setDof = function(value) {
-		dofPass.enabled = value;
-		//dofPass.renderToScreen = value;
+	setDepthOfField = function(value) {
+		depthOfField_pass.enabled = value;
+	}
+	
+	setDepthOfFieldDistance = function(value) {
+		depthOfField_shader.uniforms.focusLimit.value = value;
+		depthOfField_pass.material.uniforms.focusLimit.value = value;
 	}
 	
 	setPixelation = function(value) {
-		pixelationPass.enabled = value;
-		//pixelationPass.renderToScreen = value;
+		pixelation_pass.enabled = value;
 	}
 	
-	setEdgeOnly = function() {
+	setPixelationSize = function(value) {
+		pixelation_shader.uniforms.pixelationSize.value = value;
+		pixelation_pass.material.uniforms.pixelationSize.value = value;
+	}
+	
+	setEdgeOnly = function(value) {
+		edgeOnly_pass.enabled = value;
+	}
+	
+	setDrunkPilot = function(value) {
 		
 	}
+	
 	
 //======= OTHER METHODS =======
 
@@ -277,7 +305,7 @@ function ProjectOLA(){
 
 	//renders from different cameras
 	function renderingCall() {
-		mainComposer.render();
+		main_composer.render();
 	};
 
 	//animation loop
@@ -299,8 +327,8 @@ function ProjectOLA(){
 		requestAnimationFrame(animate);
 		stats.update();
 		timer.update();
-		depthComposer.render();
-		mainComposer.render();
+		depth_composer.render();
+		main_composer.render();
 	};
 
 //LOOP START

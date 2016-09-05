@@ -40,6 +40,8 @@
 		<script type="text/javascript" src="shaders/imageSettings.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/depthOfField.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/pixelation.js"></script><!-- V -->
+		<script type="text/javascript" src="shaders/edgeOnly.js"></script><!-- V -->
+		
 <!-- <<<<<<< Updated upstream -->
 
 		<!-- <script type="text/javascript" src="shaders/spaceshipShaders.js"></script> --><!-- V -->
@@ -80,6 +82,9 @@
 		
 		<div class="shaders" id="pixelationVS"></div>
 		<div class="shaders" id="pixelationFS"></div>
+		
+		<div class="shaders" id="edgeOnlyVS"></div>
+		<div class="shaders" id="edgeOnlyFS"></div>
 		
 
 		<!-- il codice per caricare il codice di shaders nel
@@ -189,9 +194,13 @@
 			$("#depthOfFieldVS").load("shaders/depthOfFieldVS.glsl");
 			$("#depthOfFieldFS").load("shaders/depthOfFieldFS.glsl");
 
-			// depth of field
+			// pixelation
 			$("#pixelationVS").load("shaders/pixelationVS.glsl");
 			$("#pixelationFS").load("shaders/pixelationFS.glsl");
+			
+			// edge only
+			$("#edgeOnlyVS").load("shaders/edgeOnlyVS.glsl");
+			$("#edgeOnlyFS").load("shaders/edgeOnlyFS.glsl");
 
 			// asteroids
 			$("#asteroidVS").load("shaders/asteroidVS.glsl");
