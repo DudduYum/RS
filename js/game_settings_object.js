@@ -18,8 +18,8 @@ function GameSettings(width, height, depth, aspectRatio){
 	this.spawnDelay = 0.3;
 	//asteroid speed in units per second
 	this.asteroidSpeed = 20;
-	this.minSize = 0.2;
-	this.maxSize = 3;
+	this.AsteroidMinSize = 0.2;
+	this.AsteroidMaxSize = 3;
 
 
 //=== CONSTRUCTOR===
@@ -43,7 +43,7 @@ GameSettings.prototype.asteroid_spawn_Z = function(){
 }
 
 GameSettings.prototype.asteroidSize = function(){
-	return this.minSize + (this.maxSize - this.minSize) * Math.random();
+	return this.AsteroidMinSize + (this.AsteroidMaxSize - this.AsteroidMinSize) * Math.random();
 }
 
 GameSettings.prototype.updateRatio = function(ratio){

@@ -8,7 +8,9 @@ function Asteroid(settings, materialManager, timer){
 	this.timer = timer;
 	// create asteroidMesh
 	var geometry = new THREE.SphereGeometry(1, 32, 32);
-	var material = materialManager.asteroidMaterial;
+	// materialManager.getAsteroidMaterial();
+	// var material = materialManager.asteroidMaterial;
+	var material = materialManager.getAsteroidMaterial();
 	// mat.needsinitialize = true;
 
 
@@ -20,8 +22,8 @@ function Asteroid(settings, materialManager, timer){
 
 	this.collider = this.asteroidMesh.geometry.boundingSphere.clone();
 
-	
-	
+
+
 //=== CONSTRUCTOR ===
 
 }
@@ -36,6 +38,7 @@ Asteroid.prototype.move = function(){
 	// move asteroidMesh and collider
 	this.asteroidMesh.translateZ(step);
 	this.collider.center.setZ(this.asteroidMesh.position.z);
+
 };
 
 Asteroid.prototype.hasCrossedTheLine = function(){
@@ -46,14 +49,14 @@ Asteroid.prototype.hasCrossedTheLine = function(){
 Asteroid.prototype.initialize = function(){
 	//reset timestamp
 	this.previousTime = this.timer.getTime();
-	
+
 	//reset position
 	this.asteroidMesh.position.set(
 		this.settings.asteroid_spawn_X(),
 		this.settings.asteroid_spawn_Y(),
 		this.settings.asteroid_spawn_Z()
 	);
-	
+
 	//this.asteroidMesh.position.set(0,0,0);
 
 	// rescale asteroidMesh
@@ -61,11 +64,19 @@ Asteroid.prototype.initialize = function(){
 	this.asteroidMesh.scale.x = size;
 	this.asteroidMesh.scale.y = size;
 	this.asteroidMesh.scale.z = size;
-	
-	
+
+
 	//initialize collider
 	this.collider.center.set(this.asteroidMesh.position.x, this.asteroidMesh.position.y, this.asteroidMesh.position.z);
 	this.collider.radius = size;
+
+	// material update
+	this.asteroidMesh.material.uniforms.distortionFactor.value = size;
+	this.asteroidMesh.material.uniforms.maxDistortion.value = this.settings.AsteroidMaxSize;
+
+	// console.log("/////////////////////////////");
+	// console.log(size);
+	// console.log(this.asteroidMesh.material.uniforms);
 };
 
 Asteroid.prototype.isCollidingWith = function(sphere){
