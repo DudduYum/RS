@@ -27,8 +27,7 @@ function Environment(settingsObject, timer, IO_controls){
 	//sphere map
 	this.openSpaceGeometry  = new THREE.SphereGeometry(600, 32, 32);
 	this.openSpaceTexture = new THREE.TextureLoader().load("textures/spaceD2.jpg");
-	this.openSpaceMaterial  = new THREE.MeshBasicMaterial({map: this.openSpaceTexture});
-	this.openSpaceMaterial.side  = THREE.BackSide;
+	this.openSpaceMaterial  = new THREE.MeshBasicMaterial({map: this.openSpaceTexture, side: THREE.DoubleSide});
 	this.openSpace  = new THREE.Mesh(this.openSpaceGeometry, this.openSpaceMaterial);
 	this.openSpace.position.set(0,0,0);
 
