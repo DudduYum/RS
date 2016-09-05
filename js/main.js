@@ -84,7 +84,7 @@ function ProjectOLA(){
 		depth_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
 	var imageSettings_shader = createImageSettings();
 	var depthOfField_shader = createDofShader();
-		depth_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
+		depthOfField_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
 	var pixelation_shader = createPixelationShader();
 	var edgeOnly_shader = createEdgeOnlyShader();
 
@@ -176,8 +176,10 @@ function ProjectOLA(){
 		depthOfField_shader.uniforms.width.value = window.innerWidth;
 		depthOfField_shader.uniforms.height.value = window.innerHeight;
 		depthOfField_shader.uniforms.tDepth.value = depth_composer.renderTarget1;
+		
 		pixelation_shader.uniforms.width.value = window.innerWidth;
 		pixelation_shader.uniforms.height.value = window.innerHeight;
+		
 		edgeOnly_shader.uniforms.width.value = window.innerWidth;
 		edgeOnly_shader.uniforms.height.value = window.innerHeight;
 	}
@@ -185,6 +187,7 @@ function ProjectOLA(){
 	function resetPasses() {
 		copy_pass = new THREE.ShaderPass(THREE.CopyShader);
 		copy_pass.renderToScreen = true;
+		
 		imageSetttings_pass = new THREE.ShaderPass(imageSettings_shader);
 		
 		depthOfField_pass = new THREE.ShaderPass(depthOfField_shader);

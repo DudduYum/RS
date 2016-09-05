@@ -45,7 +45,7 @@ void main(void) {
 	}
 	
 	
-	finalColor = baseColor + ( distanceFactor * (baseColor - blurredColor) );	
-	
+	finalColor = baseColor + ( (blurredColor - baseColor) * distanceFactor );	
+	//finalColor = vec3(distanceFactor, distanceFactor, distanceFactor);
 	gl_FragColor = vec4(finalColor, 1.0);
 }
