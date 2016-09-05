@@ -24,11 +24,13 @@ function MaterialManager(){
 
 
 
+
 //=== CONSTRUCTOR ===
 	this.spaceshipMaterial.uniforms = this.createSpaceshipUniforms();
 	this.asteroidMaterial.uniforms = this.createAsteroidUniforms();
 
 }
+
 
 
 //=== METHODS ===
@@ -58,9 +60,9 @@ MaterialManager.prototype.loadImage = function(imgSrc){
 MaterialManager.prototype.getMaterialByName = function(objectName){
 
 
-	// var shaders = createSpaceshipSheders()[objectName + "Shaders"];
 	let vs = document.getElementById(objectName + "VS").textContent;
 	let fs = document.getElementById(objectName + "FS").textContent;
+
 
 
 
