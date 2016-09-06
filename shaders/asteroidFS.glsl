@@ -57,8 +57,11 @@ float G(float LdotH) {
 }
 
 vec3 F(float LdotH ) {
-	vec3 c_spec = (texture2D(specularMap,vUv)).rgb;
-	//vec3 c_spec = vec3( 0.0 , 0.0 , 0.0);
+	//vec3 c_spec = (texture2D(specularMap,vUv)).rgb;
+	//la specular map genera effetto di trasparenza degli asteroid
+	//per questo motivo e stata tolta
+
+	vec3 c_spec = vec3( 0.0 , 0.0 , 0.0);
 	return c_spec + (vec3(1.0) - c_spec) * pow( 1.0 - LdotH , 5.0);
 }
 
@@ -77,10 +80,12 @@ vec3 calcBeta(vec3 power, vec3 lvec){
 void main(){
 
 	vec3 c_diff = texture2D(tex,vUv).rgb;
+	vec3 newNormal = texture2D( normMap, vUv ).xyz;
 
 
 	// comon for both lights
-	vec3 n = perturbNormal2Arb( pointPosition, normalize( tNorm ));
+	//vec3 n = perturbNormal2Arb( pointPosition, normalize( tNorm ));
+	vec3 n = perturbNormal2Arb( pointPosition, normalize( newNormal ));
 	vec3 v = normalize( -pointPosition );
 	// sun
 	vec3 l = normalize( lightVector );

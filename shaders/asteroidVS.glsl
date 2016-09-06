@@ -9,7 +9,13 @@ varying vec3 pointPosition;
 varying vec3 lightVector;
 varying vec3 spLightVector;
 
+// displasment
+uniform float distortionFactor;
+uniform float maxDistortion;
 uniform sampler2D displaysmentMap;
+uniform float x_shift;
+uniform float y_shift;
+uniform vec2 shift_direction;
 
 // light position
 uniform vec3 pointLightPos;
@@ -19,20 +25,33 @@ uniform vec3 spLightPos;
 
 
 
-void main() {
-
+void main(){
+		//must be unpdated{
 		vUv = uv;
+		//}
 
 		tNorm = normalMatrix * normal;
 
 		// get texture coordinates
+		vec2 newUv = uv + shift_direction;
 		vec4 distortion = texture2D( displaysmentMap , uv);
 
-		//change the normal
+		//correct the normal
 		vec3 newNormal = (tNorm * distortion.x) ;
 
-		// actually make displaysment
-		vec3 nPosition = position + (newNormal * 0.4);
+		// calculate the displaysment of each point using
+		// actual radius of asteroid, the max radious each asteroid
+		// could be and displaysment from displaysment map
+
+		// distortionFactor = actual radius of asteroid
+		// maxDistortion = the max radious of asteroid
+		// distortion = displaysment  from displaysment map
+
+		float astRadius = (distortionFactor / maxDistortion);
+		vec3 astDistortion = (0.5 * astRadius * distortion).xyz;
+
+		//applaing the distortion
+		vec3 nPosition = position + (newNormal * astDistortion);
 
 		pointPosition = (modelViewMatrix * vec4( nPosition, 1.0 )).xyz;
 
