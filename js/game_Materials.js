@@ -8,6 +8,7 @@ function MaterialManager(){
 
 	this.spaceshipMaterial = this.getMaterialByName("spaceship");
 
+
 	this.spaceshipTexture;
 	this.spaceshipNormalMap;
 	this.spaceshipSpecularMap;
@@ -36,6 +37,9 @@ function MaterialManager(){
 
 
 
+
+
+
 //=== CONSTRUCTOR ===
 	this.spaceshipMaterial.uniforms = this.createSpaceshipUniforms();
 	this.asteroidMaterial.uniforms = this.createAsteroidUniforms();
@@ -43,7 +47,7 @@ function MaterialManager(){
 }
 
 
-
+// console.log(MaterialManager)
 //=== METHODS ===
 
 MaterialManager.prototype.loadImage = function(imgSrc){
@@ -71,8 +75,10 @@ MaterialManager.prototype.loadImage = function(imgSrc){
 MaterialManager.prototype.getMaterialByName = function(objectName){
 
 
+
 	let vs = document.getElementById(objectName + "VS").textContent;
 	let fs = document.getElementById(objectName + "FS").textContent;
+
 
 
 
