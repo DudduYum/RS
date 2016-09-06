@@ -9,7 +9,7 @@ var setDepthOfFieldDistance;
 var setPixelation;
 var setPixelationSize;
 var setEdgeOnly;
-var setDrunkPilot;
+var setWaving;
 
 
 function ProjectOLA(){
@@ -235,9 +235,9 @@ function ProjectOLA(){
 	setEdgeOnly = function(value) {
 		edgeOnly_pass.enabled = value;
 	}
-
-	setDrunkPilot = function(value) {
-
+	
+	setWaving = function(value) {
+		
 	}
 
 

@@ -29,9 +29,9 @@ void main(void) {
 	for(int i = 0; i<9; i++) {
 		newCoord = vUv + offset[i];
 		if(newCoord.x >= 0.0 && newCoord.y >= 0.0 && newCoord.x <= 1.0 && newCoord.y <= 1.0) {
-			color += texture2D(tDiffuse, newCoord).rgb * xSobelKernel[i];
-			color += texture2D(tDiffuse, newCoord).rgb * ySobelKernel[i];
-				//* ySobelKernel[i];
+			color += texture2D(tDiffuse, newCoord).rgb
+				* xSobelKernel[i]
+				* ySobelKernel[i];
 		} else {
 			color += texture2D(tDiffuse, vUv).rgb
 				* xSobelKernel[i]
@@ -39,6 +39,13 @@ void main(void) {
 		}
 	}
 	
+	float brightness = (color.r + color.g + color.b) / 3.0;
+	
+	if(brightness > 0.1) {
+		color = vec3(1.0, 1.0, 1.0);
+	} else {
+		color = vec3(0.0, 0.0, 0.0);
+	}
 	
 	gl_FragColor = vec4(color, 1.0);
 }

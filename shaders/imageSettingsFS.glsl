@@ -8,15 +8,17 @@ varying vec2 vUv;
 
 void main(void) {
 	float greyScaleColor;
-	vec3 color = vec3(0.0, 0.0, 0.0);
+	vec3 baseColor = texture2D(tDiffuse, vUv).rgb;
+	vec3 finalColor = vec3(0.0, 0.0, 0.0);
 	
-	color = texture2D(tDiffuse, vUv).rgb;
 	
-	greyScaleColor = (color.r + color.g + color.b) / 3.0;
+	greyScaleColor = (baseColor.r + baseColor.g + baseColor.b) / 3.0;
 	
-	color = max(min(greyScaleColor + ((color - greyScaleColor) * saturation), 1.0), 0.0);
+	finalColor = mix(baseColor, greyScaleColor, saturation);
 	
-	color = max(min(color + (brightness - 1.0) * greyScaleColor, 1.0), 0.0);
+	//finalColor = max(min(greyScaleColor + ((color - greyScaleColor) * saturation), 1.0), 0.0);
+	
+	finalColor = max(min(color + (brightness - 1.0) * greyScaleColor, 1.0), 0.0);
 		
 	gl_FragColor = vec4(color, 1.0);
 }

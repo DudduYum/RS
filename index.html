@@ -41,7 +41,8 @@
 		<script type="text/javascript" src="shaders/depthOfField.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/pixelation.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/edgeOnly.js"></script><!-- V -->
-
+		<script type="text/javascript" src="shaders/waving.js"></script><!-- V -->
+		
 <!-- <<<<<<< Updated upstream -->
 
 		<!-- <script type="text/javascript" src="shaders/spaceshipShaders.js"></script> --><!-- V -->
@@ -88,6 +89,9 @@
 		<div class="shaders" id="edgeOnlyVS"></div>
 		<div class="shaders" id="edgeOnlyFS"></div>
 
+		<div class="shaders" id="wavingVS"></div>
+		<div class="shaders" id="wavingFS"></div>
+		
 
 		<!-- il codice per caricare il codice di shaders nel
 		rispettivi contenitori -->
@@ -229,6 +233,10 @@
 			// edge only
 			$("#edgeOnlyVS").load("shaders/edgeOnlyVS.glsl");
 			$("#edgeOnlyFS").load("shaders/edgeOnlyFS.glsl");
+			
+			// waving
+			$("#edgeOnlyVS").load("shaders/wavingVS.glsl");
+			$("#edgeOnlyFS").load("shaders/wavingFS.glsl");
 
 			// asteroids
 			$("#asteroidVS").load("shaders/asteroidVS.glsl");
