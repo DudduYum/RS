@@ -169,7 +169,6 @@ function ProjectOLA(){
 		main_composer.addPass(edgeOnly_pass);
 		main_composer.addPass(copy_pass);
 
-
 	}
 
 	function resetShaders() {
