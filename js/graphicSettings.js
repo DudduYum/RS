@@ -3,7 +3,7 @@
 function GraphicSettings(areaDepth) {
 
 //=== VARIABLES ===
-	
+
 	//settings variables
 	this.depthOfField = false;
 	this.depthOfField_distance = 20;
@@ -13,15 +13,16 @@ function GraphicSettings(areaDepth) {
 	this.waving = false;
 	
 	
+
 	this.saturation = 50;
 	this.brightness = 50;
-	
-	
-	
+
+
+
 //=== CONSTRUCTOR ===
-	
+
 	var settingsGui = new dat.GUI();
-	
+
 	var postProcessing_folder = settingsGui.addFolder('Post-processing');
 	postProcessing_folder.open();
 	var depthOfField_controller = postProcessing_folder.add(this, 'depthOfField');
@@ -30,14 +31,14 @@ function GraphicSettings(areaDepth) {
 	var pixelation_size_controller = postProcessing_folder.add(this, 'pixelation_size', 8, 128).step(8);
 	var edgeOnly_controller = postProcessing_folder.add(this, 'edgeOnly');
 	var waving_controller = postProcessing_folder.add(this, 'waving');
-	
+
 	var imageSettings_folder = settingsGui.addFolder('Image settings');
 	imageSettings_folder.open();
 	var saturationController = imageSettings_folder.add(this, 'saturation', 0, 100);
 	var brightnessController = imageSettings_folder.add(this, 'brightness', 0, 100);
-	
-	
-	
+
+
+
 	saturationController.onChange(function(value) {
 		setSaturation(value/50);
 	});
@@ -49,7 +50,7 @@ function GraphicSettings(areaDepth) {
 	depthOfField_controller.onChange(function(value) {
 		setDepthOfField(value);
 	});
-	
+
 	depthOfField_distance_controller.onChange(function(value) {
 		setDepthOfFieldDistance(value);
 	});
@@ -75,5 +76,3 @@ function GraphicSettings(areaDepth) {
 
 
 //=== METHODS ===
-
-

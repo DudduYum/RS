@@ -52,7 +52,7 @@ function ProjectOLA(){
 
 	// interface
 	var userInterface = new InterfaceManager(canvas, score);
-	
+
 	// graphic settings
 	var graphicSettings = new GraphicSettings(settings.game_area_D / 2);
 
@@ -146,91 +146,92 @@ function ProjectOLA(){
 	inputControl.addKeyDownAction(67, switchCamera);
 
 
-//======= RENDERING METHODS =======	
+//======= RENDERING METHODS =======
 
 	function resetComposers(activeCamera) {
 		main_composer = new THREE.EffectComposer(renderer, renderTarget);
 		depth_composer = new THREE.EffectComposer(renderer, depthRenderTarget);
 		mainRander_pass = new THREE.RenderPass(scene, activeCamera);
 		depthRender_pass = new THREE.RenderPass(scene, activeCamera, depthMaterial);
-				
+
 		resetShaders();
-		
+
 		resetPasses();
-			
+
 		depth_composer.addPass(depthRender_pass);
 		depth_composer.addPass(copy_pass);
-		
+
 		main_composer.addPass(mainRander_pass);
 		main_composer.addPass(imageSetttings_pass);
 		main_composer.addPass(depthOfField_pass);
-		
+
 		main_composer.addPass(pixelation_pass);
 		main_composer.addPass(edgeOnly_pass);
 		main_composer.addPass(copy_pass);
+
 	}
-	
+
 	function resetShaders() {
 		depthOfField_shader.uniforms.width.value = window.innerWidth;
 		depthOfField_shader.uniforms.height.value = window.innerHeight;
 		depthOfField_shader.uniforms.tDepth.value = depth_composer.renderTarget1;
-		
+
 		pixelation_shader.uniforms.width.value = window.innerWidth;
 		pixelation_shader.uniforms.height.value = window.innerHeight;
-		
+
 		edgeOnly_shader.uniforms.width.value = window.innerWidth;
 		edgeOnly_shader.uniforms.height.value = window.innerHeight;
 	}
-	
+
 	function resetPasses() {
 		copy_pass = new THREE.ShaderPass(THREE.CopyShader);
 		copy_pass.renderToScreen = true;
-		
+
 		imageSetttings_pass = new THREE.ShaderPass(imageSettings_shader);
-		
+
 		depthOfField_pass = new THREE.ShaderPass(depthOfField_shader);
 		depthOfField_pass.enabled = false;
-		
+
 		pixelation_pass = new THREE.ShaderPass(pixelation_shader);
 		pixelation_pass.enabled = false;
-		
+
 		edgeOnly_pass = new THREE.ShaderPass(edgeOnly_shader);
 		edgeOnly_pass.enabled = false;
 	}
-	
-	
-	
-	
+
+
+
+
 //======= GRAPHIC SETTINGS METHODS =======
 
 	setSaturation = function(value) {
 		imageSettings_shader.uniforms.saturation.value = value;
 		imageSetttings_pass.material.uniforms.saturation.value = value;
 	}
-	
+
 	setBrightness = function(value) {
 		imageSettings_shader.uniforms.brightness.value = value;
 		imageSetttings_pass.material.uniforms.brightness.value = value;
 	}
-	
+
 	setDepthOfField = function(value) {
 		depthOfField_pass.enabled = value;
 	}
-	
+
 	setDepthOfFieldDistance = function(value) {
 		depthOfField_shader.uniforms.focusLimit.value = value;
 		depthOfField_pass.material.uniforms.focusLimit.value = value;
 	}
-	
+
 	setPixelation = function(value) {
 		pixelation_pass.enabled = value;
 	}
-	
+
 	setPixelationSize = function(value) {
 		pixelation_shader.uniforms.pixelationSize.value = value;
 		pixelation_pass.material.uniforms.pixelationSize.value = value;
 	}
-	
+
 	setEdgeOnly = function(value) {
 		edgeOnly_pass.enabled = value;
 	}
@@ -238,8 +239,8 @@ function ProjectOLA(){
 	setWaving = function(value) {
 		
 	}
-	
-	
+
+
 //======= OTHER METHODS =======
 
 	//resizes the renderer and the game area if the window resizes
@@ -255,10 +256,10 @@ function ProjectOLA(){
 
 			renderer.setSize(window.innerWidth, window.innerHeight);
 			depthRenderTarget.setSize(window.innerWidth, window.innerHeight);
-			
+
 			resetShaders();
 			resetPasses();
-			
+
 			settings.updateRatio(aspectRatio);
 		},
 		false
@@ -324,7 +325,7 @@ function ProjectOLA(){
 		} else if(!gameState.isOver()){
 			environment.rotateSpaceship();
 		}
-		
+
 		requestAnimationFrame(animate);
 		stats.update();
 		timer.update();
