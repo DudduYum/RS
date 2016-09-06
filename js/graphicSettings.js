@@ -10,7 +10,7 @@ function GraphicSettings(areaDepth) {
 	this.pixelation = false;
 	this.pixelation_size = 32;
 	this.edgeOnly = false;
-	this.drunkPilot = false;
+	this.waving = false;
 	
 	
 	this.saturation = 50;
@@ -29,7 +29,7 @@ function GraphicSettings(areaDepth) {
 	var pixelation_controller = postProcessing_folder.add(this, 'pixelation');
 	var pixelation_size_controller = postProcessing_folder.add(this, 'pixelation_size', 8, 128).step(8);
 	var edgeOnly_controller = postProcessing_folder.add(this, 'edgeOnly');
-	var drunkPilot_controller = postProcessing_folder.add(this, 'drunkPilot');
+	var waving_controller = postProcessing_folder.add(this, 'waving');
 	
 	var imageSettings_folder = settingsGui.addFolder('Image settings');
 	imageSettings_folder.open();
@@ -66,8 +66,8 @@ function GraphicSettings(areaDepth) {
 		setEdgeOnly(value);
 	});
 
-	drunkPilot_controller.onChange(function(value) {
-		setDrunkPilot(value);
+	waving_controller.onChange(function(value) {
+		setWaving(value);
 	});
 
 
