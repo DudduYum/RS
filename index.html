@@ -35,13 +35,13 @@
 
 		<script type="text/javascript" src="js/main.js"></script><!-- V -->
 
-		
+
 		<script type="text/javascript" src="shaders/depthShader.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/imageSettings.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/depthOfField.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/pixelation.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/edgeOnly.js"></script><!-- V -->
-		
+
 <!-- <<<<<<< Updated upstream -->
 
 		<!-- <script type="text/javascript" src="shaders/spaceshipShaders.js"></script> --><!-- V -->
@@ -74,19 +74,19 @@
 
 		<div class="shaders" id="depthShaderVS"></div>
 		<div class="shaders" id="depthShaderFS"></div>
-		
+
 		<div class="shaders" id="imageSettingsVS"></div>
 		<div class="shaders" id="imageSettingsFS"></div>
-		
+
 		<div class="shaders" id="depthOfFieldVS"></div>
 		<div class="shaders" id="depthOfFieldFS"></div>
-		
+
 		<div class="shaders" id="pixelationVS"></div>
 		<div class="shaders" id="pixelationFS"></div>
-		
+
 		<div class="shaders" id="edgeOnlyVS"></div>
 		<div class="shaders" id="edgeOnlyFS"></div>
-		
+
 
 		<!-- il codice per caricare il codice di shaders nel
 		rispettivi contenitori -->
@@ -175,27 +175,6 @@
 
 
 
-		$(document).ready(function(){
-
-			// the code below loads shaders in their conteiners
-			// space ship
-			$("#spaceshipVS").load("shaders/spaceshipVS.olgl");
-			$("#spaceshipFS").load("shaders/spaceshipFS.olgl");
-			// asteroids
-			$("#asteroidVS").load("shaders/asteroidVS.olgl");
-			// the last load must containt callbeck function that mekes the game start
-			// to make sure the game starts with allready loaded shaders
-			$("#asteroidFS").load("shaders/asteroidFS.olgl","bobo", function(){
-				ProjectOLA();
-			});
-
-			// wait untill all shaders are loaded
-			next = 2;
-			while(next != 2){}
-
-
-
-		});
 
 
 		$(document).ready(function(){
@@ -205,15 +184,15 @@
 			// space ship
 			$("#spaceshipVS").load("shaders/spaceshipVS.glsl");
 			$("#spaceshipFS").load("shaders/spaceshipFS.glsl");
-			
+
 			// depthShader
 			$("#depthShaderVS").load("shaders/depthShaderVS.glsl");
 			$("#depthShaderFS").load("shaders/depthShaderFS.glsl");
-			
+
 			// imageSettings
 			$("#imageSettingsVS").load("shaders/imageSettingsVS.glsl");
 			$("#imageSettingsFS").load("shaders/imageSettingsFS.glsl");
-			
+
 			// depth of field
 			$("#depthOfFieldVS").load("shaders/depthOfFieldVS.glsl");
 			$("#depthOfFieldFS").load("shaders/depthOfFieldFS.glsl");
@@ -221,7 +200,7 @@
 			// pixelation
 			$("#pixelationVS").load("shaders/pixelationVS.glsl");
 			$("#pixelationFS").load("shaders/pixelationFS.glsl");
-			
+
 			// edge only
 			$("#edgeOnlyVS").load("shaders/edgeOnlyVS.glsl");
 			$("#edgeOnlyFS").load("shaders/edgeOnlyFS.glsl");
