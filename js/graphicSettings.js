@@ -26,7 +26,7 @@ function GraphicSettings(areaDepth) {
 	var postProcessing_folder = settingsGui.addFolder('Post-processing');
 	postProcessing_folder.open();
 	var depthOfField_controller = postProcessing_folder.add(this, 'depthOfField');
-	var depthOfField_distance_controller = postProcessing_folder.add(this, 'depthOfField_distance', 0, areaDepth).step(1);
+	var depthOfField_distance_controller = postProcessing_folder.add(this, 'depthOfField_distance', 1, areaDepth).step(1);
 	var pixelation_controller = postProcessing_folder.add(this, 'pixelation');
 	var pixelation_size_controller = postProcessing_folder.add(this, 'pixelation_size', 8, 128).step(8);
 	var edgeOnly_controller = postProcessing_folder.add(this, 'edgeOnly');

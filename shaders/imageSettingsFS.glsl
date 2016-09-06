@@ -14,11 +14,11 @@ void main(void) {
 	
 	greyScaleColor = (baseColor.r + baseColor.g + baseColor.b) / 3.0;
 	
-	finalColor = mix(baseColor, greyScaleColor, saturation);
+	finalColor = mix(baseColor, vec3(greyScaleColor), saturation / 2.0);
 	
-	//finalColor = max(min(greyScaleColor + ((color - greyScaleColor) * saturation), 1.0), 0.0);
+	//finalColor = max(min(greyScaleColor + ((baseColor - greyScaleColor) * saturation), 1.0), 0.0);
 	
-	finalColor = max(min(color + (brightness - 1.0) * greyScaleColor, 1.0), 0.0);
+	finalColor = max(min(baseColor + (brightness - 1.0) * greyScaleColor, 1.0), 0.0);
 		
-	gl_FragColor = vec4(color, 1.0);
+	gl_FragColor = vec4(finalColor, 1.0);
 }

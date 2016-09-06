@@ -22,7 +22,7 @@ void main(void) {
 	float modPointX = pixelSizeX * floor(vUv.x / pixelSizeX);
 	float modPointY = pixelSizeY * floor(vUv.y / pixelSizeY);
 	
-	if((modPointX, modPointY) == lastModPoint) {
+	if(vec2(modPointX, modPointY) == lastModPoint) {
 		color = lastColor;
 	} else {
 		float pixelCount = pow(pixelationSize, 2.0);
@@ -44,7 +44,7 @@ void main(void) {
 	
 		color = color / pixelCount;
 		lastColor = color;
-		lastModPoint = (modPointX, modPointY);
+		lastModPoint = vec2(modPointX, modPointY);
 	}
 	
 	
