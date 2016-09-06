@@ -42,22 +42,7 @@
 		<script type="text/javascript" src="shaders/pixelation.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/edgeOnly.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/waving.js"></script><!-- V -->
-		
-<!-- <<<<<<< Updated upstream -->
-
-		<!-- <script type="text/javascript" src="shaders/spaceshipShaders.js"></script> --><!-- V -->
-
- <!-- ======= -->
-		<!-- <script type="text/javascript" src="shaders/gameObjectShaders.js"></script> -->
-
-		<!-- <script type="text/javascript" src="shaders/shaders..js"></script> -->
-
-<!-- >>>>>>> Stashed changes -->
 		<script type="text/javascript" src="js/lights.js"></script><!-- V -->
-
-
-
-
 	</head>
 
 
@@ -91,15 +76,11 @@
 
 		<div class="shaders" id="wavingVS"></div>
 		<div class="shaders" id="wavingFS"></div>
-		
+
 
 		<!-- il codice per caricare il codice di shaders nel
 		rispettivi contenitori -->
-		<script type="text/javascript">
 
-
-
-		</script>
 
 		<script type="text/javascript" >
 			// console.log(THREE);
@@ -109,7 +90,6 @@
 
 			var switchToGameCamera = function (){
 				// just a global function that will be changed late
-
 			};
 
 			// var pointLight = createPointLight();
@@ -177,32 +157,8 @@
 
 
 		<!--  game evocation -->
-		<script type="text/javascript" >
+		<script type="text/javascript">
 
-
-
-
-		$(document).ready(function(){
-
-			// the code below loads shaders in their conteiners
-			// space ship
-			$("#spaceshipVS").load("shaders/spaceshipVS.olgl");
-			$("#spaceshipFS").load("shaders/spaceshipFS.olgl");
-			// asteroids
-			$("#asteroidVS").load("shaders/asteroidVS.olgl");
-			// the last load must containt callbeck function that mekes the game start
-			// to make sure the game starts with allready loaded shaders
-			$("#asteroidFS").load("shaders/asteroidFS.olgl","bobo", function(){
-				ProjectOLA();
-			});
-
-			// wait untill all shaders are loaded
-			next = 2;
-			while(next != 2){}
-
-
-
-		});
 
 
 
@@ -233,7 +189,7 @@
 			// edge only
 			$("#edgeOnlyVS").load("shaders/edgeOnlyVS.glsl");
 			$("#edgeOnlyFS").load("shaders/edgeOnlyFS.glsl");
-			
+
 			// waving
 			$("#edgeOnlyVS").load("shaders/wavingVS.glsl");
 			$("#edgeOnlyFS").load("shaders/wavingFS.glsl");
@@ -245,14 +201,7 @@
 			$("#asteroidFS").load("shaders/asteroidFS.glsl","bobo", function(){
 				ProjectOLA();
 			});
-
-
-
-
 		});
-
-
-
 
 
 		</script>
