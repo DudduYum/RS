@@ -10,15 +10,15 @@ void main(void) {
 	float greyScaleColor;
 	vec3 baseColor = texture2D(tDiffuse, vUv).rgb;
 	vec3 finalColor = vec3(0.0, 0.0, 0.0);
+	vec3 luminanceFactor = vec3(0.2126, 0.7152, 0.0722);
+
 	
+	//saturation
+	greyScaleColor = dot(baseColor, luminanceFactor);
+	finalColor = mix(baseColor, vec3(greyScaleColor), 1.0 - saturation);
 	
-	greyScaleColor = (baseColor.r + baseColor.g + baseColor.b) / 3.0;
-	
-	finalColor = mix(baseColor, vec3(greyScaleColor), saturation / 2.0);
-	
-	//finalColor = max(min(greyScaleColor + ((baseColor - greyScaleColor) * saturation), 1.0), 0.0);
-	
-	finalColor = max(min(baseColor + (brightness - 1.0) * greyScaleColor, 1.0), 0.0);
+	//brightness
+	finalColor = max(min(finalColor + (brightness - 1.0), 1.0), 0.0);
 		
 	gl_FragColor = vec4(finalColor, 1.0);
 }
