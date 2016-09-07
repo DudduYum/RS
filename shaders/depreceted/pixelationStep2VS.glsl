@@ -1,4 +1,4 @@
-//pixelation vertex shaders
+//pixelation step 2 vertex shaders
 
 
 varying vec2 vUv;

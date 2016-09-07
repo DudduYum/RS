@@ -1,5 +1,5 @@
 function createEdgeOnlyShader() {
-	pixelation = {
+	edgeOnly = {
 		uniforms: {
 			"tDiffuse": {type: "t", value: null},
 			"width": {type: "f", value: 0.0 },
@@ -9,10 +9,10 @@ function createEdgeOnlyShader() {
 		},
 
 
-		vertexShader: document.getElementById("edgeOnlyVS").textContent,
+		vertexShader: document.getElementById("defaultVS").textContent,
 
 		fragmentShader: document.getElementById("edgeOnlyFS").textContent
 	};
 
-	return pixelation;
+	return edgeOnly;
 }

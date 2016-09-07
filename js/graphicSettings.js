@@ -6,14 +6,13 @@ function GraphicSettings(areaDepth) {
 
 	//settings variables
 	this.depthOfField = false;
-	this.depthOfField_distance = 20;
+	this.depthOfField_distance = 35;
 	this.pixelation = false;
-	this.pixelation_size = 32;
+	this.pixelation_size = 16;
 	this.edgeOnly = false;
 	this.waving = false;
 	
-	
-
+	this.background = true;
 	this.saturation = 50;
 	this.brightness = 50;
 
@@ -26,26 +25,31 @@ function GraphicSettings(areaDepth) {
 	var postProcessing_folder = settingsGui.addFolder('Post-processing');
 	postProcessing_folder.open();
 	var depthOfField_controller = postProcessing_folder.add(this, 'depthOfField');
-	var depthOfField_distance_controller = postProcessing_folder.add(this, 'depthOfField_distance', 1, areaDepth).step(1);
+	var depthOfField_distance_controller = postProcessing_folder.add(this, 'depthOfField_distance', 0, areaDepth).step(1);
 	var pixelation_controller = postProcessing_folder.add(this, 'pixelation');
-	var pixelation_size_controller = postProcessing_folder.add(this, 'pixelation_size', 8, 128).step(8);
+	var pixelation_size_controller = postProcessing_folder.add(this, 'pixelation_size', 1, 16).step(1);
 	var edgeOnly_controller = postProcessing_folder.add(this, 'edgeOnly');
 	var waving_controller = postProcessing_folder.add(this, 'waving');
 
 	var imageSettings_folder = settingsGui.addFolder('Image settings');
 	imageSettings_folder.open();
-	var saturationController = imageSettings_folder.add(this, 'saturation', 0, 100);
-	var brightnessController = imageSettings_folder.add(this, 'brightness', 0, 100);
+	var background_controller = imageSettings_folder.add(this, 'background');
+	var saturation_controller = imageSettings_folder.add(this, 'saturation', 0, 100);
+	var brightness_controller = imageSettings_folder.add(this, 'brightness', 0, 100);
 
 
-
-	saturationController.onChange(function(value) {
+	background_controller.onChange(function(value) {
+		setBackground(value);
+	});
+	
+	saturation_controller.onChange(function(value) {
 		setSaturation(value/50);
 	});
 
-	brightnessController.onChange(function(value) {
+	brightness_controller.onChange(function(value) {
 		setBrightness(value/50);
 	});
+	
 
 	depthOfField_controller.onChange(function(value) {
 		setDepthOfField(value);
@@ -54,7 +58,11 @@ function GraphicSettings(areaDepth) {
 	depthOfField_distance_controller.onChange(function(value) {
 		setDepthOfFieldDistance(value);
 	});
-
+	
+	waving_controller.onChange(function(value) {
+		setWaving(value);
+	});
+	
 	pixelation_controller.onChange(function(value) {
 		setPixelation(value);
 	});
@@ -67,9 +75,7 @@ function GraphicSettings(areaDepth) {
 		setEdgeOnly(value);
 	});
 
-	waving_controller.onChange(function(value) {
-		setWaving(value);
-	});
+	
 
 
 }

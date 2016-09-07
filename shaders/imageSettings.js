@@ -7,7 +7,7 @@ function createImageSettings() {
 		},
 
 
-		vertexShader: document.getElementById("imageSettingsVS").textContent,
+		vertexShader: document.getElementById("defaultVS").textContent,
 
 		fragmentShader: document.getElementById("imageSettingsFS").textContent
 	};

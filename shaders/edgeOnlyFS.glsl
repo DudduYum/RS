@@ -14,6 +14,8 @@ void main(void) {
 	float step_v = 1.0/height;
 	
 	vec2 newCoord;
+	float edge_H;
+	float edge_V;
 	
 	vec2 offset[9];
 	offset[0] = vec2(-step_h, step_v);
@@ -29,16 +31,15 @@ void main(void) {
 	for(int i = 0; i<9; i++) {
 		newCoord = vUv + offset[i];
 		if(newCoord.x >= 0.0 && newCoord.y >= 0.0 && newCoord.x <= 1.0 && newCoord.y <= 1.0) {
-			color += texture2D(tDiffuse, newCoord).rgb * xSobelKernel[i];
-			color += texture2D(tDiffuse, newCoord).rgb * ySobelKernel[i];
-				//* ySobelKernel[i];
+			edge_H += length( texture2D(tDiffuse, newCoord).rgb ) * xSobelKernel[i];
+			edge_V += length( texture2D(tDiffuse, newCoord).rgb ) * ySobelKernel[i];
 		} else {
-			color += texture2D(tDiffuse, vUv).rgb
-				* xSobelKernel[i]
-				* ySobelKernel[i];
+			edge_H += length( texture2D(tDiffuse, vUv).rgb ) * xSobelKernel[i];
+			edge_V += length( texture2D(tDiffuse, vUv).rgb ) * ySobelKernel[i];
 		}
 	}
 	
+	color = vec3(sqrt(pow(edge_H, 2.0) + pow(edge_V, 2.0)));
 	
 	gl_FragColor = vec4(color, 1.0);
 }

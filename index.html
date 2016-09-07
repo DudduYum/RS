@@ -48,7 +48,7 @@
 
 	<body>
 		<!-- contenitori di shaders, i veri shaders sono salvati in file
-		con estensione .olsl nel folder shaders -->
+		con estensione .glsl nel folder shaders -->
 
 
 
@@ -61,20 +61,17 @@
 
 		<div class="shaders" id="depthShaderVS"></div>
 		<div class="shaders" id="depthShaderFS"></div>
-
-		<div class="shaders" id="imageSettingsVS"></div>
+		
+		<div class="shaders" id="defaultVS"></div>
+		
 		<div class="shaders" id="imageSettingsFS"></div>
 
-		<div class="shaders" id="depthOfFieldVS"></div>
 		<div class="shaders" id="depthOfFieldFS"></div>
 
-		<div class="shaders" id="pixelationVS"></div>
 		<div class="shaders" id="pixelationFS"></div>
 
-		<div class="shaders" id="edgeOnlyVS"></div>
 		<div class="shaders" id="edgeOnlyFS"></div>
 
-		<div class="shaders" id="wavingVS"></div>
 		<div class="shaders" id="wavingFS"></div>
 
 
@@ -173,26 +170,29 @@
 			// depthShader
 			$("#depthShaderVS").load("shaders/depthShaderVS.glsl");
 			$("#depthShaderFS").load("shaders/depthShaderFS.glsl");
+			
+			// default
+			$("#defaultVS").load("shaders/defaultVS.glsl");
 
 			// imageSettings
-			$("#imageSettingsVS").load("shaders/imageSettingsVS.glsl");
+			//$("#imageSettingsVS").load("shaders/imageSettingsVS.glsl");
 			$("#imageSettingsFS").load("shaders/imageSettingsFS.glsl");
 
 			// depth of field
-			$("#depthOfFieldVS").load("shaders/depthOfFieldVS.glsl");
+			//$("#depthOfFieldVS").load("shaders/depthOfFieldVS.glsl");
 			$("#depthOfFieldFS").load("shaders/depthOfFieldFS.glsl");
 
-			// pixelation
-			$("#pixelationVS").load("shaders/pixelationVS.glsl");
+			// pixelation step 1
+			//$("#pixelationVS").load("shaders/pixelationStep1VS.glsl");
 			$("#pixelationFS").load("shaders/pixelationFS.glsl");
-
+			
 			// edge only
-			$("#edgeOnlyVS").load("shaders/edgeOnlyVS.glsl");
+			//$("#edgeOnlyVS").load("shaders/edgeOnlyVS.glsl");
 			$("#edgeOnlyFS").load("shaders/edgeOnlyFS.glsl");
 
 			// waving
-			$("#edgeOnlyVS").load("shaders/wavingVS.glsl");
-			$("#edgeOnlyFS").load("shaders/wavingFS.glsl");
+			//$("#edgeOnlyVS").load("shaders/wavingVS.glsl");
+			$("#wavingFS").load("shaders/wavingFS.glsl");
 
 			// asteroids
 			$("#asteroidVS").load("shaders/asteroidVS.glsl");

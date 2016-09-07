@@ -4,8 +4,6 @@ uniform sampler2D tDiffuse;
 uniform sampler2D tDepth;
 uniform float width;
 uniform float height;
-uniform float gaussianBlurKernel[9];
-uniform float kernelSum;
 uniform float focusLimit;
 uniform float areaDepth;
 
@@ -19,33 +17,37 @@ void main(void) {
 	float step_h = 1.0/width;
 	float step_v = 1.0/height;
 	vec2 newCoord;
+	float newCoordDepth;
 	
-	float kernelFactor = 1.0 / kernelSum;
+	float pointDistance = texture2D(tDepth, vUv).r;
+	float distanceFactor;
 	
-	float distanceFactor = texture2D(tDepth, vUv).r;
-	if(distanceFactor <= (focusLimit / areaDepth)) {
-		distanceFactor = distanceFactor * (areaDepth/focusLimit);
+	if(pointDistance <= (focusLimit / areaDepth)) {
+		if(pointDistance != 0.0)
+			distanceFactor = pointDistance * (areaDepth/focusLimit);
+		else
+			distanceFactor = 0.0;
 	} else {
 		distanceFactor = 1.0;
 	}
 	
 
-	for(int i=0; i<5; i++) {
-		for(int j=0; j<5; j++) {
-			newCoord.x = vUv.x + (step_h * float(i-2));
-			newCoord.y = vUv.y + (step_v * float(j-2));
-			if(newCoord.x >= 0.0 && newCoord.y >= 0.0 && newCoord.x <= 1.0 && newCoord.y <= 1.0) {
-				blurredColor += texture2D(tDiffuse, newCoord).rgb
-					* kernelFactor * gaussianBlurKernel[i];
+	for(int i=0; i<15; i++) {
+		for(int j=0; j<15; j++) {
+			newCoord.x = vUv.x + (step_h * float(i-7));
+			newCoord.y = vUv.y + (step_v * float(j-7));
+			newCoordDepth = texture2D(tDepth, newCoord).r;
+			if(newCoord.x >= 0.0 && newCoord.y >= 0.0 && newCoord.x <= 1.0 && newCoord.y <= 1.0 && newCoordDepth <= pointDistance) {
+				blurredColor += texture2D(tDiffuse, newCoord).rgb;
 			} else {
-				blurredColor += baseColor
-					* kernelFactor * gaussianBlurKernel[i];
+				blurredColor += baseColor;
 			}
 		}
 	}
 	
+	blurredColor = blurredColor / 225.0;
 	
-	finalColor = baseColor + ( (blurredColor - baseColor) * distanceFactor );	
-	//finalColor = vec3(distanceFactor, distanceFactor, distanceFactor);
+	finalColor = mix(baseColor, blurredColor, distanceFactor);
+
 	gl_FragColor = vec4(finalColor, 1.0);
 }

@@ -2,6 +2,7 @@
 
 //======= GLOBAL VARIABLES AND METHODS =======
 var switchCameraMode;
+var setBackground;
 var setSaturation;
 var setBrightness;
 var setDepthOfField;
@@ -54,7 +55,7 @@ function ProjectOLA(){
 	var userInterface = new InterfaceManager(canvas, score);
 
 	// graphic settings
-	var graphicSettings = new GraphicSettings(settings.game_area_D / 2);
+	var graphicSettings = new GraphicSettings(settings.game_area_D);
 
 
 	// environmentronment
@@ -85,11 +86,13 @@ function ProjectOLA(){
 	var imageSettings_shader = createImageSettings();
 	var depthOfField_shader = createDofShader();
 		depthOfField_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
+	var waving_shader = createWavingShader();
 	var pixelation_shader = createPixelationShader();
 	var edgeOnly_shader = createEdgeOnlyShader();
 
 	//depth material
 	var depthMaterial = new THREE.ShaderMaterial({
+		side: THREE.DoubleSide,
 		fragmentShader : depth_shader.fragmentShader,
 		vertexShader : depth_shader.vertexShader,
 		uniforms : depth_shader.uniforms
@@ -99,8 +102,9 @@ function ProjectOLA(){
 	var mainRander_pass;
 	var depthRender_pass;
 	var copy_pass;
-	var imageSetttings_pass;
+	var imageSettings_pass;
 	var depthOfField_pass;
+	var waving_pass;
 	var pixelation_pass;
 	var edgeOnly_pass;
 
@@ -162,20 +166,26 @@ function ProjectOLA(){
 		depth_composer.addPass(copy_pass);
 
 		main_composer.addPass(mainRander_pass);
-		main_composer.addPass(imageSetttings_pass);
+		
 		main_composer.addPass(depthOfField_pass);
-
+		main_composer.addPass(waving_pass);
 		main_composer.addPass(pixelation_pass);
 		main_composer.addPass(edgeOnly_pass);
-		main_composer.addPass(copy_pass);
+		
+		main_composer.addPass(imageSettings_pass);
 
 	}
 
 	function resetShaders() {
+		
+
 		depthOfField_shader.uniforms.width.value = window.innerWidth;
 		depthOfField_shader.uniforms.height.value = window.innerHeight;
 		depthOfField_shader.uniforms.tDepth.value = depth_composer.renderTarget1;
-
+		
+		waving_shader.uniforms.width.value = window.innerWidth;
+		waving_shader.uniforms.height.value = window.innerHeight;
+		
 		pixelation_shader.uniforms.width.value = window.innerWidth;
 		pixelation_shader.uniforms.height.value = window.innerHeight;
 
@@ -187,31 +197,39 @@ function ProjectOLA(){
 		copy_pass = new THREE.ShaderPass(THREE.CopyShader);
 		copy_pass.renderToScreen = true;
 
-		imageSetttings_pass = new THREE.ShaderPass(imageSettings_shader);
+		imageSettings_pass = new THREE.ShaderPass(imageSettings_shader);
+		imageSettings_pass.renderToScreen = true;
 
 		depthOfField_pass = new THREE.ShaderPass(depthOfField_shader);
-		depthOfField_pass.enabled = false;
+		depthOfField_pass.enabled = graphicSettings.depthOfField;
+		
+		waving_pass = new THREE.ShaderPass(waving_shader);
+		waving_pass.enabled = false;
 
 		pixelation_pass = new THREE.ShaderPass(pixelation_shader);
-		pixelation_pass.enabled = false;
+		pixelation_pass.enabled = graphicSettings.pixelation;
 
 		edgeOnly_pass = new THREE.ShaderPass(edgeOnly_shader);
-		edgeOnly_pass.enabled = false;
+		edgeOnly_pass.enabled = graphicSettings.edgeOnly;
 	}
 
 
 
 
 //======= GRAPHIC SETTINGS METHODS =======
-
+	
+	setBackground = function(value) {
+		environment.openSpace.visible = value;
+	}
+	
 	setSaturation = function(value) {
 		imageSettings_shader.uniforms.saturation.value = value;
-		imageSetttings_pass.material.uniforms.saturation.value = value;
+		imageSettings_pass.material.uniforms.saturation.value = value;
 	}
 
 	setBrightness = function(value) {
 		imageSettings_shader.uniforms.brightness.value = value;
-		imageSetttings_pass.material.uniforms.brightness.value = value;
+		imageSettings_pass.material.uniforms.brightness.value = value;
 	}
 
 	setDepthOfField = function(value) {
@@ -222,7 +240,11 @@ function ProjectOLA(){
 		depthOfField_shader.uniforms.focusLimit.value = value;
 		depthOfField_pass.material.uniforms.focusLimit.value = value;
 	}
-
+	
+	setWaving = function(value) {
+		waving_pass.enabled = value;
+	}
+	
 	setPixelation = function(value) {
 		pixelation_pass.enabled = value;
 	}
@@ -236,9 +258,6 @@ function ProjectOLA(){
 		edgeOnly_pass.enabled = value;
 	}
 	
-	setWaving = function(value) {
-		
-	}
 
 
 //======= OTHER METHODS =======
