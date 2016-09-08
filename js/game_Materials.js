@@ -64,6 +64,15 @@ MaterialManager.prototype.loadImage = function(imgSrc){
 		}
 	);
 
+
+
+	// img.wrapS = THREE.RepeatWrapping;
+	// img.wrapT = THREE.RepeatWrapping;
+	// img.repeat.set( 8, 8 );
+	// img.offset.set( 0.3 , 0.3 );
+	// img.needsUpdate = true;
+
+
 	return img;
 }
 
@@ -129,15 +138,34 @@ MaterialManager.prototype.darkSilverSpaceshipMaterial = function(){
 // getters
 MaterialManager.prototype.getAsteroidMaterial = function(){
 	var res = this.asteroidMaterial.clone();
+	res.uniforms = this.createAsteroidUniforms();
 
-	res.uniforms.tex.value = this.asteroidTexture;
-	res.uniforms.normalMap.value = this.asteroidNormalMap;
-	res.uniforms.displacementMap.value = this.asteroidDisplacementMap;
+	// res.uniforms.tex.value = this.asteroidTexture;
+	// res.uniforms.normalMap.value = this.asteroidNormalMap;
+	// res.uniforms.displacementMap.value = this.asteroidDisplacementMap;
 	// res.uniforms.x_shift.value = Math.random() + 0.1;
 	// res.uniforms.y_shift.value = Math.random() + 0.1;
 	res.uniforms.shift_direction.value.x = 1.0 + Math.random();
 	res.uniforms.shift_direction.value.y = 1.0 + Math.random();
 	// console.log(res.uniforms);
+
+
+	// res.uniforms.tex;
+	// res.uniforms.tex.value.wrapS = THREE.RepeatWrapping;
+	// res.uniforms.tex.value.wrapT = THREE.RepeatWrapping;
+	// res.uniforms.tex.value.repeat.set( 4, 4 );
+	// res.uniforms.tex.value.needsUpdate = true;
+	// // res.uniforms.normalMap;
+	// res.uniforms.normalMap.value.wrapS = THREE.RepeatWrapping;
+	// res.uniforms.normalMap.value.wrapT = THREE.RepeatWrapping;
+	// res.uniforms.normalMap.value.repeat.set( 4, 4 );
+	// res.uniforms.normalMap.value.needsUpdate = true;
+	// // res.uniforms.displacementMap;
+	// res.uniforms.displacementMap.value.wrapS = THREE.RepeatWrapping;
+	// res.uniforms.displacementMap.value.wrapT = THREE.RepeatWrapping;
+	// res.uniforms.displacementMap.value.repeat.set( 4, 4 );
+	// res.uniforms.displacementMap.value.needsUpdate = true;
+
 	return res;
 }
 
@@ -287,11 +315,11 @@ MaterialManager.prototype.createAsteroidUniforms = function(){
 		// serve per fare animazione della mappe
 		x_shift:{
 			type: "f",
-			value: 1.0
+			value: 0.0
 		},
 		y_shift:{
 			type: "f",
-			value: 1.0
+			value: 0.0
 		},
 		shift_direction:{
 			type: "v2",

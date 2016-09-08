@@ -32,6 +32,7 @@ function ProjectOLA(){
 	var useGameCamera = true
 
 
+
 	// configuration object
 	var settings = new GameSettings(12, 12, 300, aspectRatio);
 
