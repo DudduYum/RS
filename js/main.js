@@ -3,14 +3,17 @@
 //======= GLOBAL VARIABLES AND METHODS =======
 var switchCameraMode;
 var setBackground;
+var setInverseColors;
 var setSaturation;
 var setBrightness;
 var setDepthOfField;
 var setDepthOfFieldDistance;
+var setMotionBlur;
+var setMotionBlurPersistence;
 var setPixelation;
 var setPixelationSize;
-var setEdgeOnly;
-var setWaving;
+var setEdgeDetection;
+
 
 
 function ProjectOLA(){
@@ -67,18 +70,20 @@ function ProjectOLA(){
 	scene.add(environment.game3Dscene);
 
 
-
-	//renderer and render targets
+	//renderer
 	var renderer = new THREE.WebGLRenderer();
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		canvas.appendChild(renderer.domElement);
-	var renderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
-	var depthRenderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
 
 
 	//composers
-	var main_composer = new THREE.EffectComposer(renderer, renderTarget);
-	var depth_composer = new THREE.EffectComposer(renderer, depthRenderTarget);
+	var depth_composer = new THREE.EffectComposer(renderer);
+	var main_composer = new THREE.EffectComposer(renderer);
+	THREE.EffectComposer.prototype.swapTargets = function() {
+		var tmp = this.renderTarget2;
+		this.renderTarget2 = this.renderTarget1;
+		this.renderTarget1 = tmp;
+	};
 
 	//shaders
 	var depth_shader = createDepthShader();
@@ -86,9 +91,8 @@ function ProjectOLA(){
 	var imageSettings_shader = createImageSettings();
 	var depthOfField_shader = createDofShader();
 		depthOfField_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
-	var waving_shader = createWavingShader();
 	var pixelation_shader = createPixelationShader();
-	var edgeOnly_shader = createEdgeOnlyShader();
+	var edgeDetection_shader = createEdgeDetectionShader();
 
 	//depth material
 	var depthMaterial = new THREE.ShaderMaterial({
@@ -99,14 +103,14 @@ function ProjectOLA(){
 	});
 
 	//passes
-	var mainRander_pass;
+	var mainRender_pass;
 	var depthRender_pass;
-	var copy_pass;
+	//var copy_pass;
+	
 	var imageSettings_pass;
 	var depthOfField_pass;
-	var waving_pass;
 	var pixelation_pass;
-	var edgeOnly_pass;
+	var edgeDetection_pass;
 
 
 
@@ -153,9 +157,10 @@ function ProjectOLA(){
 //======= RENDERING METHODS =======
 
 	function resetComposers(activeCamera) {
-		main_composer = new THREE.EffectComposer(renderer, renderTarget);
-		depth_composer = new THREE.EffectComposer(renderer, depthRenderTarget);
-		mainRander_pass = new THREE.RenderPass(scene, activeCamera);
+		depth_composer = new THREE.EffectComposer(renderer);
+		main_composer = new THREE.EffectComposer(renderer);
+		
+		mainRender_pass = new THREE.RenderPass(scene, activeCamera);
 		depthRender_pass = new THREE.RenderPass(scene, activeCamera, depthMaterial);
 
 		resetShaders();
@@ -163,54 +168,41 @@ function ProjectOLA(){
 		resetPasses();
 
 		depth_composer.addPass(depthRender_pass);
-		depth_composer.addPass(copy_pass);
 
-		main_composer.addPass(mainRander_pass);
-		
+		main_composer.addPass(mainRender_pass);
 		main_composer.addPass(depthOfField_pass);
-		main_composer.addPass(waving_pass);
 		main_composer.addPass(pixelation_pass);
-		main_composer.addPass(edgeOnly_pass);
-		
+		main_composer.addPass(edgeDetection_pass);
 		main_composer.addPass(imageSettings_pass);
 
 	}
 
 	function resetShaders() {
 		
-
 		depthOfField_shader.uniforms.width.value = window.innerWidth;
 		depthOfField_shader.uniforms.height.value = window.innerHeight;
-		depthOfField_shader.uniforms.tDepth.value = depth_composer.renderTarget1;
-		
-		waving_shader.uniforms.width.value = window.innerWidth;
-		waving_shader.uniforms.height.value = window.innerHeight;
+		depthOfField_shader.uniforms.tDepth.value = depth_composer.renderTarget2;
 		
 		pixelation_shader.uniforms.width.value = window.innerWidth;
 		pixelation_shader.uniforms.height.value = window.innerHeight;
 
-		edgeOnly_shader.uniforms.width.value = window.innerWidth;
-		edgeOnly_shader.uniforms.height.value = window.innerHeight;
+		edgeDetection_shader.uniforms.width.value = window.innerWidth;
+		edgeDetection_shader.uniforms.height.value = window.innerHeight;
 	}
 
 	function resetPasses() {
-		copy_pass = new THREE.ShaderPass(THREE.CopyShader);
-		copy_pass.renderToScreen = true;
 
 		imageSettings_pass = new THREE.ShaderPass(imageSettings_shader);
 		imageSettings_pass.renderToScreen = true;
 
 		depthOfField_pass = new THREE.ShaderPass(depthOfField_shader);
 		depthOfField_pass.enabled = graphicSettings.depthOfField;
-		
-		waving_pass = new THREE.ShaderPass(waving_shader);
-		waving_pass.enabled = false;
 
 		pixelation_pass = new THREE.ShaderPass(pixelation_shader);
 		pixelation_pass.enabled = graphicSettings.pixelation;
 
-		edgeOnly_pass = new THREE.ShaderPass(edgeOnly_shader);
-		edgeOnly_pass.enabled = graphicSettings.edgeOnly;
+		edgeDetection_pass = new THREE.ShaderPass(edgeDetection_shader);
+		edgeDetection_pass.enabled = graphicSettings.edgeDetection;
 	}
 
 
@@ -222,14 +214,24 @@ function ProjectOLA(){
 		environment.openSpace.visible = value;
 	}
 	
+	setInverseColors = function(value) {
+		var bool;
+		if(value)
+			bool = 1.0;
+		else
+			bool = 0.0;
+		imageSettings_shader.uniforms.inverseColors.value = bool;
+		imageSettings_pass.material.uniforms.inverseColors.value = bool;
+	}
+	
 	setSaturation = function(value) {
-		imageSettings_shader.uniforms.saturation.value = value;
-		imageSettings_pass.material.uniforms.saturation.value = value;
+		imageSettings_shader.uniforms.saturation.value = value / 50;
+		imageSettings_pass.material.uniforms.saturation.value = value / 50;
 	}
 
 	setBrightness = function(value) {
-		imageSettings_shader.uniforms.brightness.value = value;
-		imageSettings_pass.material.uniforms.brightness.value = value;
+		imageSettings_shader.uniforms.brightness.value = value / 50;
+		imageSettings_pass.material.uniforms.brightness.value = value / 50;
 	}
 
 	setDepthOfField = function(value) {
@@ -241,10 +243,6 @@ function ProjectOLA(){
 		depthOfField_pass.material.uniforms.focusLimit.value = value;
 	}
 	
-	setWaving = function(value) {
-		waving_pass.enabled = value;
-	}
-	
 	setPixelation = function(value) {
 		pixelation_pass.enabled = value;
 	}
@@ -254,8 +252,8 @@ function ProjectOLA(){
 		pixelation_pass.material.uniforms.pixelationSize.value = value;
 	}
 
-	setEdgeOnly = function(value) {
-		edgeOnly_pass.enabled = value;
+	setEdgeDetection = function(value) {
+		edgeDetection_pass.enabled = value;
 	}
 	
 
@@ -274,7 +272,9 @@ function ProjectOLA(){
 			freeCamera.updateProjectionMatrix();
 
 			renderer.setSize(window.innerWidth, window.innerHeight);
-			depthRenderTarget.setSize(window.innerWidth, window.innerHeight);
+			depth_composer.setSize(window.innerWidth, window.innerHeight);
+			previousFrame_composer.setSize(window.innerWidth, window.innerHeight);
+			main_composer.setSize(window.innerWidth, window.innerHeight);
 
 			resetShaders();
 			resetPasses();
@@ -322,12 +322,6 @@ function ProjectOLA(){
 
 	resetComposers(gameCamera);
 
-
-
-	//renders from different cameras
-	function renderingCall() {
-		main_composer.render();
-	};
 
 	//animation loop
 	function animate() {

@@ -9,31 +9,80 @@ function GraphicSettings(areaDepth) {
 	this.depthOfField_distance = 35;
 	this.pixelation = false;
 	this.pixelation_size = 16;
-	this.edgeOnly = false;
-	this.waving = false;
+	this.edgeDetection = false;
 	
 	this.background = true;
+	this.inverseColors = false;
 	this.saturation = 50;
 	this.brightness = 50;
 
 
 
 //=== CONSTRUCTOR ===
+	var  presets = {
+		"preset": "Default",
+		"remembered": {
+			"Default": {
+				"0": {
+					"depthOfField": false,
+					"depthOfField_distance": 35,
+					"pixelation": false,
+					"pixelation_size": 16,
+					"edgeDetection": false,
+					
+					"background": true,
+					"inverseColors": false,
+					"saturation": 50,
+					"brightness": 50,
+				}
+			},
+			"Pen and papaer": {
+				"0": {
+					"depthOfField": false,
+					"depthOfField_distance": 35,
+					"pixelation": false,
+					"pixelation_size": 16,
+					"edgeDetection": true,
+					
+					"background": false,
+					"inverseColors": true,
+					"saturation": 50,
+					"brightness": 50,
+				}
+			},
+			"Old school": {
+				"0": {
+					"depthOfField": false,
+					"depthOfField_distance": 35,
+					"pixelation": true,
+					"pixelation_size": 16,
+					"edgeDetection": true,
+					
+					"background": false,
+					"inverseColors": false,
+					"saturation": 50,
+					"brightness": 50,
+				}
+			}
+		},
+		"folders": {}
+	}
 
-	var settingsGui = new dat.GUI();
+	var settingsGui = new dat.GUI({load: presets, preset: 'Default'});
+	settingsGui.remember(this);
 
-	var postProcessing_folder = settingsGui.addFolder('Post-processing');
-	postProcessing_folder.open();
-	var depthOfField_controller = postProcessing_folder.add(this, 'depthOfField');
-	var depthOfField_distance_controller = postProcessing_folder.add(this, 'depthOfField_distance', 0, areaDepth).step(1);
-	var pixelation_controller = postProcessing_folder.add(this, 'pixelation');
-	var pixelation_size_controller = postProcessing_folder.add(this, 'pixelation_size', 1, 16).step(1);
-	var edgeOnly_controller = postProcessing_folder.add(this, 'edgeOnly');
-	var waving_controller = postProcessing_folder.add(this, 'waving');
-
+	var effects_folder = settingsGui.addFolder('Effects');
+	effects_folder.open();
+	var depthOfField_controller = effects_folder.add(this, 'depthOfField');
+	var depthOfField_distance_controller = effects_folder.add(this, 'depthOfField_distance', 0, areaDepth).step(1);
+	var pixelation_controller = effects_folder.add(this, 'pixelation');
+	var pixelation_size_controller = effects_folder.add(this, 'pixelation_size', 1, 16).step(1);
+	var edgeDetection_controller = effects_folder.add(this, 'edgeDetection');
+	
 	var imageSettings_folder = settingsGui.addFolder('Image settings');
 	imageSettings_folder.open();
 	var background_controller = imageSettings_folder.add(this, 'background');
+	var inverseColors_controller = imageSettings_folder.add(this, 'inverseColors');
 	var saturation_controller = imageSettings_folder.add(this, 'saturation', 0, 100);
 	var brightness_controller = imageSettings_folder.add(this, 'brightness', 0, 100);
 
@@ -42,12 +91,16 @@ function GraphicSettings(areaDepth) {
 		setBackground(value);
 	});
 	
+	inverseColors_controller.onChange(function(value) {
+		setInverseColors(value);
+	});
+	
 	saturation_controller.onChange(function(value) {
-		setSaturation(value/50);
+		setSaturation(value);
 	});
 
 	brightness_controller.onChange(function(value) {
-		setBrightness(value/50);
+		setBrightness(value);
 	});
 	
 
@@ -59,10 +112,6 @@ function GraphicSettings(areaDepth) {
 		setDepthOfFieldDistance(value);
 	});
 	
-	waving_controller.onChange(function(value) {
-		setWaving(value);
-	});
-	
 	pixelation_controller.onChange(function(value) {
 		setPixelation(value);
 	});
@@ -71,14 +120,9 @@ function GraphicSettings(areaDepth) {
 		setPixelationSize(value);
 	});
 
-	edgeOnly_controller.onChange(function(value) {
-		setEdgeOnly(value);
+	edgeDetection_controller.onChange(function(value) {
+		setEdgeDetection(value);
 	});
 
 	
-
-
 }
-
-
-//=== METHODS ===

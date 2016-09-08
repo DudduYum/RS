@@ -40,8 +40,7 @@
 		<script type="text/javascript" src="shaders/imageSettings.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/depthOfField.js"></script><!-- V -->
 		<script type="text/javascript" src="shaders/pixelation.js"></script><!-- V -->
-		<script type="text/javascript" src="shaders/edgeOnly.js"></script><!-- V -->
-		<script type="text/javascript" src="shaders/waving.js"></script><!-- V -->
+		<script type="text/javascript" src="shaders/edgeDetection.js"></script><!-- V -->
 		<script type="text/javascript" src="js/lights.js"></script><!-- V -->
 	</head>
 
@@ -70,9 +69,7 @@
 
 		<div class="shaders" id="pixelationFS"></div>
 
-		<div class="shaders" id="edgeOnlyFS"></div>
-
-		<div class="shaders" id="wavingFS"></div>
+		<div class="shaders" id="edgeDetectionFS"></div>
 
 
 		<!-- il codice per caricare il codice di shaders nel
@@ -187,12 +184,8 @@
 			$("#pixelationFS").load("shaders/pixelationFS.glsl");
 			
 			// edge only
-			//$("#edgeOnlyVS").load("shaders/edgeOnlyVS.glsl");
-			$("#edgeOnlyFS").load("shaders/edgeOnlyFS.glsl");
-
-			// waving
-			//$("#edgeOnlyVS").load("shaders/wavingVS.glsl");
-			$("#wavingFS").load("shaders/wavingFS.glsl");
+			//$("#edgeDetectionVS").load("shaders/edgeDetectionVS.glsl");
+			$("#edgeDetectionFS").load("shaders/edgeDetectionFS.glsl");
 
 			// asteroids
 			$("#asteroidVS").load("shaders/asteroidVS.glsl");

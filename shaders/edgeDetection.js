@@ -1,5 +1,5 @@
-function createEdgeOnlyShader() {
-	edgeOnly = {
+function createEdgeDetectionShader() {
+	edgeDetection = {
 		uniforms: {
 			"tDiffuse": {type: "t", value: null},
 			"width": {type: "f", value: 0.0 },
@@ -11,8 +11,8 @@ function createEdgeOnlyShader() {
 
 		vertexShader: document.getElementById("defaultVS").textContent,
 
-		fragmentShader: document.getElementById("edgeOnlyFS").textContent
+		fragmentShader: document.getElementById("edgeDetectionFS").textContent
 	};
 
-	return edgeOnly;
+	return edgeDetection;
 }

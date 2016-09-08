@@ -8,7 +8,7 @@ uniform float pixelationSize;
 varying vec2 vUv;
 
 void main(void) {
-	vec3 color = vec3(0.5, 0.5, 0.5);
+	vec3 color = vec3(0, 0, 0);
 	float step_h = 1.0/width;
 	float step_v = 1.0/height;
 	
