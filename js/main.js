@@ -23,6 +23,8 @@ function ProjectOLA(){
 	var stats = new Stats();
 		stats.domElement.style.position = 'absolute';
 		stats.domElement.style.top = '0px';
+		stats.domElement.style.left = '300px';
+		
 	var canvas = document.getElementById('canvas');
 		canvas.appendChild(stats.domElement);
 

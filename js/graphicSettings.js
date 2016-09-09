@@ -36,7 +36,7 @@ function GraphicSettings(areaDepth) {
 					"brightness": 50,
 				}
 			},
-			"Pen and papaer": {
+			"Pen and paper": {
 				"0": {
 					"depthOfField": false,
 					"depthOfField_distance": 35,
@@ -50,7 +50,7 @@ function GraphicSettings(areaDepth) {
 					"brightness": 50,
 				}
 			},
-			"Old school": {
+			"Modern art": {
 				"0": {
 					"depthOfField": false,
 					"depthOfField_distance": 35,
@@ -68,8 +68,13 @@ function GraphicSettings(areaDepth) {
 		"folders": {}
 	}
 
-	var settingsGui = new dat.GUI({load: presets, preset: 'Default'});
+	var settingsGui = new dat.GUI({load: presets, preset: 'Default', autoPlace: false, width: 300});
 	settingsGui.remember(this);
+	settingsGui.domElement.style.position = 'absolute';
+	settingsGui.domElement.style.top = '0px';
+	settingsGui.domElement.style.left = '0px';
+	var container = document.getElementById('graphicSettings');
+	container.appendChild(settingsGui.domElement);
 
 	var effects_folder = settingsGui.addFolder('Effects');
 	effects_folder.open();
