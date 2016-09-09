@@ -39,7 +39,8 @@ GameSettings.prototype.asteroid_spawn_Y = function(){
 }
 
 GameSettings.prototype.asteroid_spawn_Z = function(){
-	return - this.game_area_D/2;
+	// return - this.game_area_D/2;
+	return - (3 * this.game_area_D/4);
 }
 
 GameSettings.prototype.asteroidSize = function(){
