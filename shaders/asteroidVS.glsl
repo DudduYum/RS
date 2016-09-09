@@ -28,13 +28,15 @@ uniform vec3 spLightPos;
 void main(){
 		//must be unpdated{
 		vUv = uv;
+		//float x_sh = mod(x_shift,1.0);
+		//float y_sh = mod(y_shift,1.0);
+		//vUv = mod(uv + vec2( x_sh  , y_sh ), vec2( 1.0 , 1.0)) ;
 		//}
 
 		tNorm = normalMatrix * normal;
 
 		// get texture coordinates
-		vec2 newUv = uv + shift_direction;
-		vec4 distortion = texture2D( displaysmentMap , uv);
+		vec4 distortion = texture2D( displaysmentMap , vUv);
 
 		//correct the normal
 		vec3 newNormal = (tNorm * distortion.x) ;
@@ -46,7 +48,6 @@ void main(){
 		// distortionFactor = actual radius of asteroid
 		// maxDistortion = the max radious of asteroid
 		// distortion = displaysment  from displaysment map
-
 		float astRadius = (distortionFactor / maxDistortion);
 		vec3 astDistortion = (0.5 * astRadius * distortion).xyz;
 

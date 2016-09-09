@@ -20,6 +20,7 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 
 	this.spaceship3D = new THREE.Object3D();
 
+
 	//spaceship3D front
 	this.spaceship_front_geometry = new THREE.CylinderGeometry(0, this.spaceshipRadius, this.spaceshipLength * this.spaceshipFrontSize, 16);
 	this.spaceship_front_material = this.materialManager.redSpaceshipMaterial();
@@ -105,6 +106,9 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	this.spaceshipColliders.push(new THREE.Sphere());
 	this.spaceshipColliders.push(new THREE.Sphere());
 	this.spaceshipColliders.push(new THREE.Sphere());
+
+	this.initialize();
+	this.reset();
 
 }
 
