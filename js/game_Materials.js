@@ -114,7 +114,6 @@ MaterialManager.prototype.redSpaceshipMaterial = function(){
 	};
 
 	return tempMaterial;
-	// return new THREE.MeshBasicMaterial({color:0xff0000});
 }
 
 MaterialManager.prototype.silverSpaceshipMaterial = function(){
@@ -140,6 +139,20 @@ MaterialManager.prototype.darkSilverSpaceshipMaterial = function(){
 
 	return tempMaterial;
 }
+
+MaterialManager.prototype.azureSpaceshipMaterial = function(){
+	var tempMaterial = this.spaceshipMaterial.clone();
+
+	tempMaterial.uniforms = this.createSpaceshipUniforms();
+	tempMaterial.uniforms.color = {
+		type: "v3",
+		value: new THREE.Vector3( 0.8 , 0.8 , 1)
+	};
+
+	return tempMaterial;
+}
+
+
 
 // getters
 MaterialManager.prototype.getAsteroidMaterial = function(){

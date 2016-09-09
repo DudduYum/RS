@@ -7,7 +7,7 @@ function Timer(){
 //=== VARIABLES ===
 
 	this.clock = 0;
-	this.previousTime = new Date();;
+	this.previousTime = new Date();
 	this.passedTime;
 	
 	

@@ -12,14 +12,10 @@ var spaceshipLight = {
 	lightPower: new THREE.Vector3(),
 	lightPosition: new THREE.Vector3()
 }
-spaceshipLight.lightPower.set(20.0, 20.0, 100.0);
-spaceshipLight.lightPosition.set(0.0, 0.0, -4.0);
+spaceshipLight.lightPower.set(50.0, 50.0, 100.0);
+spaceshipLight.lightPosition.set(0.0, 0.0, -1.5);
 
 
-// function createDirectionalLight(){
-// 	lightPower: new THREE.Vector3(),
-// 	lightDirection: new THREE.Vector3()
-// }
 
 var ambientLight = {
 	lightPower: new THREE.Vector3(),
