@@ -45,6 +45,7 @@
 	</head>
 
 
+
 	<body>
 		<!-- contenitori di shaders, i veri shaders sono salvati in file
 		con estensione .glsl nel folder shaders -->
@@ -75,6 +76,8 @@
 		<!-- il codice per caricare il codice di shaders nel
 		rispettivi contenitori -->
 
+
+		</script>
 
 		<script type="text/javascript" >
 			// console.log(THREE);
@@ -143,9 +146,30 @@
 
 
 
-
 		$(document).ready(function(){
 
+			// the code below loads shaders in their conteiners
+			// space ship
+			$("#spaceshipVS").load("shaders/spaceshipVS.olgl");
+			$("#spaceshipFS").load("shaders/spaceshipFS.olgl");
+			// asteroids
+			$("#asteroidVS").load("shaders/asteroidVS.olgl");
+			// the last load must containt callbeck function that mekes the game start
+			// to make sure the game starts with allready loaded shaders
+			$("#asteroidFS").load("shaders/asteroidFS.olgl","bobo", function(){
+				ProjectOLA();
+			});
+
+			// wait untill all shaders are loaded
+			next = 2;
+			while(next != 2){}
+
+
+
+		});
+
+
+		$(document).ready(function(){
 
 			// the code below loads shaders in their conteiners
 			// space ship
