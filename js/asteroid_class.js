@@ -18,18 +18,6 @@ function Asteroid(settings, materialManager, timer){
 
 	// punto di destinazione
 	this.destination;
-	// this.destination.x = settings.asteroid_spawn_X();
-	// this.destination.y = settings.asteroid_spawn_Y();
-	// this.destination.z = 0;
-
-	// punto di partenza
-	// this.asteroidMesh.position.set(
-	// 	this.settings.asteroid_spawn_X(),
-	// 	this.settings.asteroid_spawn_Y(),
-	// 	this.settings.asteroid_spawn_Z()
-	// );
-
-
 
 	// define propertys and behavior
 
@@ -46,6 +34,7 @@ function Asteroid(settings, materialManager, timer){
 	// rotation animation
 	this.rotationAnimation;
 	this.rotationAnimationSpeed;
+	this.rotationDirection;
 
 //=== CONSTRUCTOR ===
 
@@ -54,6 +43,9 @@ function Asteroid(settings, materialManager, timer){
 
 
 ///=== METHODS ===
+Asteroid.prototype.setQuaternion = function(){
+
+}
 
 Asteroid.prototype.move = function(){
 	// move quantity
@@ -75,18 +67,26 @@ Asteroid.prototype.move = function(){
 	this.rotationAnimation += this.rotationAnimationSpeed;
 	this.rotationAnimation = this.rotationAnimation % (2 * Math.PI);
 
-
-	this.asteroidMesh.quaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), this.rotationAnimation );
-	this.asteroidMesh.quaternion.setFromAxisAngle( new THREE.Vector3( 1, 0, 0 ), this.rotationAnimation );
-
 	// change displaysmentVec to apply movement to mesh
-	var Qast = this.asteroidMesh.quaternion.clone().inverse();
+	var Qast;
+
+	this.asteroidMesh.quaternion.setFromEuler(
+		new THREE.Euler(
+			this.rotationAnimation * this.rotationDirection.x,
+			this.rotationAnimation * this.rotationDirection.y,
+			this.rotationAnimation * this.rotationDirection.z,
+			 'XYZ' )
+		 );
+	Qast = this.asteroidMesh.quaternion.clone().inverse();
 	displaysmentVec.applyQuaternion(Qast);
 
+
+	// move the mesh
 	this.asteroidMesh.translateX(displaysmentVec.x);
 	this.asteroidMesh.translateY(displaysmentVec.y);
 	this.asteroidMesh.translateZ(displaysmentVec.z);
 
+	// move collider
 	this.collider.center.set(
 		this.asteroidObj.position.x,
 		this.asteroidObj.position.y,
@@ -151,7 +151,26 @@ Asteroid.prototype.initialize = function(){
 
 	// reset rotation animation
 	this.rotationAnimation = 0;
-	this.rotationAnimationSpeed = Math.PI / 16;
+	this.rotationAnimationSpeed = (2 * Math.PI) / (100 * size);
+
+	// reset rotation Axes
+	var coin = Math.random();
+	this.rotationDirection = new THREE.Vector3();
+	if( coin < 0.3){
+		this.rotationDirection.z = 0;
+		this.rotationDirection.x = 1;
+		this.rotationDirection.y = -1;
+	}else{
+		if( coin < 0.6){
+			this.rotationDirection.x = 0;
+			this.rotationDirection.y = 1;
+			this.rotationDirection.z = -1;
+		}else{
+			this.rotationDirection.y = 0;
+			this.rotationDirection.z = 1;
+			this.rotationDirection.x = -1;
+		}
+	}
 
 };
 
