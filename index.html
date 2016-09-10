@@ -145,30 +145,6 @@
 		<script type="text/javascript">
 
 
-
-		$(document).ready(function(){
-
-			// the code below loads shaders in their conteiners
-			// space ship
-			$("#spaceshipVS").load("shaders/spaceshipVS.olgl");
-			$("#spaceshipFS").load("shaders/spaceshipFS.olgl");
-			// asteroids
-			$("#asteroidVS").load("shaders/asteroidVS.olgl");
-			// the last load must containt callbeck function that mekes the game start
-			// to make sure the game starts with allready loaded shaders
-			$("#asteroidFS").load("shaders/asteroidFS.olgl","bobo", function(){
-				ProjectOLA();
-			});
-
-			// wait untill all shaders are loaded
-			next = 2;
-			while(next != 2){}
-
-
-
-		});
-
-
 		$(document).ready(function(){
 
 			// the code below loads shaders in their conteiners
