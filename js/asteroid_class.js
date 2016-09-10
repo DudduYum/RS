@@ -151,7 +151,7 @@ Asteroid.prototype.initialize = function(){
 
 	// reset rotation animation
 	this.rotationAnimation = 0;
-	this.rotationAnimationSpeed = (2 * Math.PI) / (100 * size);
+	this.rotationAnimationSpeed = (2 * Math.PI) / (120 * size);
 
 	// reset rotation Axes
 	var coin = Math.random();
