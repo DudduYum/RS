@@ -56,6 +56,8 @@
 		<!-- SHADERS -->
 		<div class="shaders" id="spaceshipVS" ></div>
 		<div class="shaders" id="spaceshipFS"></div>
+		<div class="shaders" id="flameVS"></div>
+		<div class="shaders" id="flameFS"></div>
 
 		<div class="shaders" id="asteroidVS"></div>
 		<div class="shaders" id="asteroidFS"></div>
@@ -150,41 +152,103 @@
 
 		$(document).ready(function(){
 
+			// old code
 			// the code below loads shaders in their conteiners
 			// space ship
-			$("#spaceshipVS").load("shaders/spaceshipVS.glsl");
-			$("#spaceshipFS").load("shaders/spaceshipFS.glsl");
+			// $("#spaceshipVS").load("shaders/spaceshipVS.glsl");
+			// $("#spaceshipFS").load("shaders/spaceshipFS.glsl");
+			//
+			// $("#flameVS").load("shaders/flameVS.glsl");
+			// $("#flameFS").load("shaders/flameFS.glsl");
+			//
+			// // depthShader
+			// $("#depthShaderVS").load("shaders/depthShaderVS.glsl");
+			// $("#depthShaderFS").load("shaders/depthShaderFS.glsl");
+			//
+			// // default
+			// $("#defaultVS").load("shaders/defaultVS.glsl");
+			//
+			// // imageSettings
+			// //$("#imageSettingsVS").load("shaders/imageSettingsVS.glsl");
+			// $("#imageSettingsFS").load("shaders/imageSettingsFS.glsl");
+			//
+			// // depth of field
+			// //$("#depthOfFieldVS").load("shaders/depthOfFieldVS.glsl");
+			// $("#depthOfFieldFS").load("shaders/depthOfFieldFS.glsl");
+			//
+			// // pixelation step 1
+			// //$("#pixelationVS").load("shaders/pixelationStep1VS.glsl");
+			// $("#pixelationFS").load("shaders/pixelationFS.glsl");
+			//
+			// // edge only
+			// //$("#edgeDetectionVS").load("shaders/edgeDetectionVS.glsl");
+			// $("#edgeDetectionFS").load("shaders/edgeDetectionFS.glsl");
+			//
+			// // asteroids
+			// $("#asteroidVS").load("shaders/asteroidVS.glsl");
+			// // the last load must containt callbeck function that mekes the game start
+			// // to make sure the game starts with allready loaded shaders
+			// $("#asteroidFS").load("shaders/asteroidFS.glsl","bobo", function(){
+			// 	ProjectOLA();
+			// });
+			// old code
 
-			// depthShader
-			$("#depthShaderVS").load("shaders/depthShaderVS.glsl");
-			$("#depthShaderFS").load("shaders/depthShaderFS.glsl");
 
-			// default
-			$("#defaultVS").load("shaders/defaultVS.glsl");
+			// new code
+			// dato che il metodo load è assincrono, il nostro gruppo ha deciso di
+			// caricare gli sheder in catene, per non ricorre nel rischio di non avere
+			// gli shader non aggiornati.
+			// Ci rendiamo conto questo porta un deley aggiuntivo, ma per evitare i
+			// rischi abbiamo deciso di prendere questa strada.
 
-			// imageSettings
-			//$("#imageSettingsVS").load("shaders/imageSettingsVS.glsl");
-			$("#imageSettingsFS").load("shaders/imageSettingsFS.glsl");
+			// spaceship
+			$("#spaceshipVS").load("shaders/spaceshipVS.glsl","",function(){
+				$("#spaceshipFS").load("shaders/spaceshipFS.glsl","",function(){
 
-			// depth of field
-			//$("#depthOfFieldVS").load("shaders/depthOfFieldVS.glsl");
-			$("#depthOfFieldFS").load("shaders/depthOfFieldFS.glsl");
+					// flame
+					$("#flameVS").load("shaders/flameVS.glsl","",function(){
+						$("#flameFS").load("shaders/flameFS.glsl","",function(){
 
-			// pixelation step 1
-			//$("#pixelationVS").load("shaders/pixelationStep1VS.glsl");
-			$("#pixelationFS").load("shaders/pixelationFS.glsl");
+							// depthShader
+							$("#depthShaderVS").load("shaders/depthShaderVS.glsl","",function(){
+									$("#depthShaderFS").load("shaders/depthShaderFS.glsl","",function(){
 
-			// edge only
-			//$("#edgeDetectionVS").load("shaders/edgeDetectionVS.glsl");
-			$("#edgeDetectionFS").load("shaders/edgeDetectionFS.glsl");
+										// default
+										$("#defaultVS").load("shaders/defaultVS.glsl","",function(){
 
-			// asteroids
-			$("#asteroidVS").load("shaders/asteroidVS.glsl");
-			// the last load must containt callbeck function that mekes the game start
-			// to make sure the game starts with allready loaded shaders
-			$("#asteroidFS").load("shaders/asteroidFS.glsl","bobo", function(){
-				ProjectOLA();
+											// imageSettings
+											$("#imageSettingsFS").load("shaders/imageSettingsFS.glsl","",function(){
+
+												// depth of field
+												$("#depthOfFieldFS").load("shaders/depthOfFieldFS.glsl","",function(){
+
+													// pixelation step 1
+													$("#pixelationFS").load("shaders/pixelationFS.glsl","",function(){
+
+														// edge only
+														$("#edgeDetectionFS").load("shaders/edgeDetectionFS.glsl","",function(){
+
+															// asteroids
+															$("#asteroidVS").load("shaders/asteroidVS.glsl","",function(){
+
+																// the last load must containt callbeck function that mekes the game start
+																// to make sure the game starts with allready loaded shaders
+																$("#asteroidFS").load("shaders/asteroidFS.glsl","bobo", function(){
+																	ProjectOLA();
+																});
+															});
+														});
+													});
+												});
+											});
+										});
+									});
+							});
+						});
+					});
+				});
 			});
+			// new code
 		});
 
 

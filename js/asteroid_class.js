@@ -144,11 +144,6 @@ Asteroid.prototype.initialize = function(){
 	this.asteroidMesh.material.uniforms.distortionFactor.value = size;
 	this.asteroidMesh.material.uniforms.maxDistortion.value = this.settings.AsteroidMaxSize;
 
-	// reset texture animation
-
-	this.asteroidMesh.material.uniforms.x_shift.value += 1.0 + (1/size);
-	this.asteroidMesh.material.uniforms.y_shift.value += 1.0 + (1/size);
-
 	// reset rotation animation
 	this.rotationAnimation = 0;
 	this.rotationAnimationSpeed = (2 * Math.PI) / (120 * size);

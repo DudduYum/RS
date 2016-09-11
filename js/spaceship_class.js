@@ -36,12 +36,12 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	this.spaceship_back_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius*3/5, this.spaceshipRadius*3/4, this.spaceshipLength * this.spaceshipBackSize, 32);
 	this.spaceship_back_material = this.materialManager.darkSilverSpaceshipMaterial();
 	this.spaceship_back = new THREE.Mesh(this.spaceship_back_geometry, this.spaceship_back_material);
-	
+
 	//spaceship flame
 	this.spaceship_flame_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius*3/5, 0.0, this.spaceshipLength * this.spaceshipFlameSize, 32);
-	this.spaceship_flame_material = this.materialManager.azureSpaceshipMaterial();
+	this.spaceship_flame_material = this.materialManager.getFlameMaterial();
 	this.spaceship_flame = new THREE.Mesh(this.spaceship_flame_geometry, this.spaceship_flame_material);
-	
+	// console.log(this.spaceship_flame.material);
 	//spaceship3D collider, aproximated with 3 spheres
 	this.spaceshipColliders = [];
 
