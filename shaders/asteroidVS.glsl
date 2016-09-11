@@ -13,9 +13,7 @@ varying vec3 spLightVector;
 uniform float distortionFactor;
 uniform float maxDistortion;
 uniform sampler2D displaysmentMap;
-uniform float x_shift;
-uniform float y_shift;
-uniform vec2 shift_direction;
+
 
 // light position
 uniform vec3 pointLightPos;
@@ -26,12 +24,7 @@ uniform vec3 spLightPos;
 
 
 void main(){
-		//must be unpdated{
 		vUv = uv;
-		//float x_sh = mod(x_shift,1.0);
-		//float y_sh = mod(y_shift,1.0);
-		//vUv = mod(uv + vec2( x_sh  , y_sh ), vec2( 1.0 , 1.0)) ;
-		//}
 
 		tNorm = normalMatrix * normal;
 
@@ -39,7 +32,7 @@ void main(){
 		vec4 distortion = texture2D( displaysmentMap , vUv);
 
 		//correct the normal
-		vec3 newNormal = (tNorm * distortion.x) ;
+		vec3 newNormal = tNorm * distortion.x ;
 
 		// calculate the displaysment of each point using
 		// actual radius of asteroid, the max radious each asteroid

@@ -6,20 +6,26 @@ function MaterialManager(){
 	this.textureLoader = new THREE.TextureLoader();
 
 	this.spaceshipMaterial = this.getMaterialByName("spaceship");
+	this.flameMaterial = this.getMaterialByName("flame");
+
+
 
 	this.spaceshipTexture;
 	this.spaceshipNormalMap;
 	this.spaceshipSpecularMap;
+	this.flameTexture = this.loadImage("textures/spaceship/flameOriginal.jpg");
+	this.flameDisplaysmentMap = this.loadImage("textures/spaceship/dispFlame.jpg")
+
 
 	this.sunMaterial;
 
-	// this.asteroidTexture;
+
 	this.asteroidTexture = this.loadImage('textures/asteroid/asteroid.jpg');
-	// this.asteroidNormalMap;
+
 	this.asteroidNormalMap = this.loadImage('textures/asteroid/normalAst.png');
-	// this.asteroidDisplacementMap;
+
 	this.asteroidDisplacementMap = this.loadImage('textures/asteroid/displaysmentAst.png');
-	// this.asteroidSpecularMap;
+
 	this.asteroidSpecularMap = this.loadImage('textures/asteroid/specularAst.png');
 
 	this.asteroidMaterial = this.getMaterialByName("asteroid");
@@ -31,22 +37,9 @@ function MaterialManager(){
 
 	// setting offset
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 //=== CONSTRUCTOR ===
-	this.spaceshipMaterial.uniforms = this.createSpaceshipUniforms();
-	this.asteroidMaterial.uniforms = this.createAsteroidUniforms();
+	// this.spaceshipMaterial.uniforms = this.createSpaceshipUniforms();
+	// this.asteroidMaterial.uniforms = this.createAsteroidUniforms();
 
 }
 
@@ -72,34 +65,20 @@ MaterialManager.prototype.loadImage = function(imgSrc){
 		}
 	);
 
-
-
-	// img.wrapS = THREE.RepeatWrapping;
-	// img.wrapT = THREE.RepeatWrapping;
-	// img.repeat.set( 8, 8 );
-	// img.offset.set( 0.3 , 0.3 );
-	// img.needsUpdate = true;
-
-
 	return img;
 }
 
 
 MaterialManager.prototype.getMaterialByName = function(objectName){
 
-
-
 	let vs = document.getElementById(objectName + "VS").textContent;
 	let fs = document.getElementById(objectName + "FS").textContent;
 
 
 	var material = new THREE.ShaderMaterial({
-		// vertexShader: shaders.vertexShader,
 		vertexShader: vs,
-		// fragmentShader: shaders.fragmentShader
 		fragmentShader: fs
 	});
-	// console.log(vs);
 
 	return material;
 }
@@ -153,38 +132,17 @@ MaterialManager.prototype.azureSpaceshipMaterial = function(){
 	return tempMaterial;
 }
 
+MaterialManager.prototype.getFlameMaterial = function(){
+	var tempMaterial = this.flameMaterial.clone();
+	// console.log(tempMaterial);
+	tempMaterial.uniforms = this.createFlameUniforms();
 
-
+	return tempMaterial;
+}
 // getters
 MaterialManager.prototype.getAsteroidMaterial = function(){
 	var res = this.asteroidMaterial.clone();
 	res.uniforms = this.createAsteroidUniforms();
-
-	// res.uniforms.tex.value = this.asteroidTexture;
-	// res.uniforms.normalMap.value = this.asteroidNormalMap;
-	// res.uniforms.displacementMap.value = this.asteroidDisplacementMap;
-	// res.uniforms.x_shift.value = Math.random() + 0.1;
-	// res.uniforms.y_shift.value = Math.random() + 0.1;
-	res.uniforms.shift_direction.value.x = 1.0 + Math.random();
-	res.uniforms.shift_direction.value.y = 1.0 + Math.random();
-	// console.log(res.uniforms);
-
-
-	// res.uniforms.tex;
-	// res.uniforms.tex.value.wrapS = THREE.RepeatWrapping;
-	// res.uniforms.tex.value.wrapT = THREE.RepeatWrapping;
-	// res.uniforms.tex.value.repeat.set( 4, 4 );
-	// res.uniforms.tex.value.needsUpdate = true;
-	// // res.uniforms.normalMap;
-	// res.uniforms.normalMap.value.wrapS = THREE.RepeatWrapping;
-	// res.uniforms.normalMap.value.wrapT = THREE.RepeatWrapping;
-	// res.uniforms.normalMap.value.repeat.set( 4, 4 );
-	// res.uniforms.normalMap.value.needsUpdate = true;
-	// // res.uniforms.displacementMap;
-	// res.uniforms.displacementMap.value.wrapS = THREE.RepeatWrapping;
-	// res.uniforms.displacementMap.value.wrapT = THREE.RepeatWrapping;
-	// res.uniforms.displacementMap.value.repeat.set( 4, 4 );
-	// res.uniforms.displacementMap.value.needsUpdate = true;
 
 	return res;
 }
@@ -194,12 +152,10 @@ MaterialManager.prototype.createSpaceshipUniforms = function(){
 	// asteroid texture
 	this.spaceshipTexture = this.loadImage('textures/spaceship/spaceshipTex.jpg');
 	this.spaceshipTexture.minFilter = THREE.LinearMipMapLinearFilter;
-	// asteroidTexture.anisotropy = renderer.getMaxAnisotropy();
 
 	// normal map that is used for light calculation
 	this.spaceshipNormalMap = this.loadImage('textures/spaceship/spaseshipNormal.png');
 	this.spaceshipNormalMap.minFilter = THREE.LinearMipMapLinearFilter;
-	// asteroidNormalMap.anisotropy = renderer.getMaxAnisotropy
 
 	this.spaceshipSpecularMap = this.loadImage('textures/spaceship/specular.png');
 
@@ -249,26 +205,42 @@ MaterialManager.prototype.createSpaceshipUniforms = function(){
 	return uniforms;
 }
 
+MaterialManager.prototype.createFlameUniforms = function(){
+	var uniforms = {
+		tex: {
+			type: "t",
+			value: this.flameTexture
+		},
+		displacementMap: {
+			type:  "t",
+			value: this.flameDisplaysmentMap
+		},
+		distortionFactor: {
+			type: "f",
+			value: 0.12
+		},
+		brightness: {
+			type: "f",
+			value: 4.0
+		},
+		x_offset: {
+			type: "f",
+			value: 0.0
+		},
+		y_offset: {
+			type: "f",
+			value: 0.0
+		},
+		texAnimation:{
+			type: "f",
+			value: 1.0
+		}
+	};
 
+	return uniforms;
+}
 
 MaterialManager.prototype.createAsteroidUniforms = function(){
-
-	// asteroid texture
-	// this.asteroidTexture = this.loadImage('textures/asteroid/asteroid.jpg');
-	// this.asteroidTexture.minFilter = THREE.LinearMipMapLinearFilter;
-	// asteroidTexture.anisotropy = renderer.getMaxAnisotropy();
-
-	// normal map that is used for light calculation
-	// this.asteroidNormalMap = this.loadImage('textures/asteroid/normalAst.png');
-	// this.asteroidNormalMap.minFilter = THREE.LinearMipMapLinearFilter;
-	// asteroidNormalMap.anisotropy = renderer.getMaxAnisotropy
-
-	// displaysmant map used for vertex distortion
-	// this.asteroidDisplacementMap = this.loadImage('textures/asteroid/displaysmentAst.png');
-	// this.asteroidDisplacementMap.minFilter = THREE.LinearMipMapLinearFilter;
-	// asteroidDisplacementMap.anisotropy = renderer.getMaxAnisotropy();
-
-	// this.asteroidSpecularMap = this.loadImage('textures/asteroid/specularAst.png');
 
 	var uniforms = {
 		// mapps
@@ -330,20 +302,6 @@ MaterialManager.prototype.createAsteroidUniforms = function(){
 		maxDistortion:{
 			type: "f",
 			value: undefined
-		},
-		// texture shift
-		// serve per fare animazione della mappe
-		x_shift:{
-			type: "f",
-			value: 0.0
-		},
-		y_shift:{
-			type: "f",
-			value: 0.0
-		},
-		shift_direction:{
-			type: "v2",
-			value: new THREE.Vector2()
 		}
 
 	};
