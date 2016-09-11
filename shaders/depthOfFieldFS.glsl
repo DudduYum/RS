@@ -17,9 +17,9 @@ void main(void) {
 	float step_h = 1.0/width;
 	float step_v = 1.0/height;
 	vec2 newCoord;
-	float newCoordDepth;
+	float newCoordDistance;
 	
-	float pointDistance = texture2D(tDepth, vUv).r;
+	float pointDistance = 1.0 - texture2D(tDepth, vUv).r;
 	float distanceFactor;
 	
 	if(pointDistance <= (focusLimit / areaDepth)) {
@@ -32,12 +32,12 @@ void main(void) {
 	}
 	
 
-	for(int i=0; i<15; i++) {
-		for(int j=0; j<15; j++) {
-			newCoord.x = vUv.x + (step_h * float(i-7));
-			newCoord.y = vUv.y + (step_v * float(j-7));
-			newCoordDepth = texture2D(tDepth, newCoord).r;
-			if(newCoord.x >= 0.0 && newCoord.y >= 0.0 && newCoord.x <= 1.0 && newCoord.y <= 1.0 && newCoordDepth <= pointDistance) {
+	for(int i=0; i<9; i++) {
+		for(int j=0; j<9; j++) {
+			newCoord.x = vUv.x + (step_h * float(i-4));
+			newCoord.y = vUv.y + (step_v * float(j-4));
+			newCoordDistance = 1.0 - texture2D(tDepth, newCoord).r;
+			if(newCoordDistance <= pointDistance) {
 				blurredColor += texture2D(tDiffuse, newCoord).rgb;
 			} else {
 				blurredColor += baseColor;
@@ -45,7 +45,7 @@ void main(void) {
 		}
 	}
 	
-	blurredColor = blurredColor / 225.0;
+	blurredColor = blurredColor / 81.0;
 	
 	finalColor = mix(baseColor, blurredColor, distanceFactor);
 

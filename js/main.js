@@ -199,7 +199,7 @@ function ProjectOLA(){
 		imageSettings_pass.renderToScreen = true;
 
 		depthOfField_pass = new THREE.ShaderPass(depthOfField_shader);
-		depthOfField_pass.enabled = graphicSettings.depthOfField;
+		depthOfField_pass.enabled = graphicSettings.dynamic_depthOfField;
 
 		pixelation_pass = new THREE.ShaderPass(pixelation_shader);
 		pixelation_pass.enabled = graphicSettings.pixelation;
@@ -276,7 +276,6 @@ function ProjectOLA(){
 
 			renderer.setSize(window.innerWidth, window.innerHeight);
 			depth_composer.setSize(window.innerWidth, window.innerHeight);
-			previousFrame_composer.setSize(window.innerWidth, window.innerHeight);
 			main_composer.setSize(window.innerWidth, window.innerHeight);
 
 			resetShaders();

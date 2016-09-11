@@ -5,10 +5,10 @@ function GraphicSettings(areaDepth) {
 //=== VARIABLES ===
 
 	//settings variables
-	this.depthOfField = false;
-	this.depthOfField_distance = 35;
+	this.dynamic_depthOfField = false;
+	this.focus_distance = 35;
 	this.pixelation = false;
-	this.pixelation_size = 16;
+	this.pixel_size = 16;
 	this.edgeDetection = false;
 	
 	this.background = true;
@@ -24,10 +24,10 @@ function GraphicSettings(areaDepth) {
 		"remembered": {
 			"Default": {
 				"0": {
-					"depthOfField": false,
-					"depthOfField_distance": 35,
+					"dynamic_depthOfField": false,
+					"focus_distance": 35,
 					"pixelation": false,
-					"pixelation_size": 16,
+					"pixel_size": 16,
 					"edgeDetection": false,
 					
 					"background": true,
@@ -38,10 +38,10 @@ function GraphicSettings(areaDepth) {
 			},
 			"Pen and paper": {
 				"0": {
-					"depthOfField": false,
-					"depthOfField_distance": 35,
+					"dynamic_depthOfField": false,
+					"focus_distance": 35,
 					"pixelation": false,
-					"pixelation_size": 16,
+					"pixel_size": 16,
 					"edgeDetection": true,
 					
 					"background": false,
@@ -52,10 +52,10 @@ function GraphicSettings(areaDepth) {
 			},
 			"Modern art": {
 				"0": {
-					"depthOfField": false,
-					"depthOfField_distance": 35,
+					"dynamic_depthOfField": false,
+					"focus_distance": 35,
 					"pixelation": true,
-					"pixelation_size": 16,
+					"pixel_size": 16,
 					"edgeDetection": true,
 					
 					"background": false,
@@ -78,10 +78,10 @@ function GraphicSettings(areaDepth) {
 
 	var effects_folder = settingsGui.addFolder('Effects');
 	effects_folder.open();
-	var depthOfField_controller = effects_folder.add(this, 'depthOfField');
-	var depthOfField_distance_controller = effects_folder.add(this, 'depthOfField_distance', 0, areaDepth).step(1);
+	var depthOfField_controller = effects_folder.add(this, 'dynamic_depthOfField');
+	var depthOfField_distance_controller = effects_folder.add(this, 'focus_distance', 0, areaDepth).step(1);
 	var pixelation_controller = effects_folder.add(this, 'pixelation');
-	var pixelation_size_controller = effects_folder.add(this, 'pixelation_size', 1, 16).step(1);
+	var pixelation_size_controller = effects_folder.add(this, 'pixel_size', 1, 16).step(1);
 	var edgeDetection_controller = effects_folder.add(this, 'edgeDetection');
 	
 	var imageSettings_folder = settingsGui.addFolder('Image settings');

@@ -13,7 +13,7 @@ void main(void) {
 	float step_v = 1.0/height;
 	
 	vec2 currentPoint;
-	float pixelCount = 0.0;
+	float pixelCount = pow(pixelationSize, 2.0);
 	
 	float pixelSizeX = pixelationSize * step_h;
 	float pixelSizeY = pixelationSize * step_v;
@@ -26,14 +26,9 @@ void main(void) {
 	for(int i=0; i < 16; i++) {
 		for(int j=0; j < 16; j++) {
 			if(float(i) < pixelationSize && float(j) < pixelationSize) {
-			
 				currentPoint.x = modPoint_X + (step_h * float(i));
 				currentPoint.y = modPoint_Y + (step_v * float(j));
-				
-				if(currentPoint.x <= 1.0 && currentPoint.y <= 1.0) {
-					color += texture2D(tDiffuse, currentPoint).rgb;
-					pixelCount += 1.0;
-				}
+				color += texture2D(tDiffuse, currentPoint).rgb;
 			}
 		}
 	}
