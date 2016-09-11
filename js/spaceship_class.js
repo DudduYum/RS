@@ -53,6 +53,9 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	this.flameY_offset = 0.0;
 	this.offsetStep = 1/10;
 
+	// texture animation
+	this.flameTexSpeed = 1/100;
+
 
 	// flame length
 	// this.flameLength = 0;
@@ -236,13 +239,16 @@ Spaceship.prototype.updateSpaceship = function(){
 		this.spaceship_flame.material.uniforms.brightness.value -= this.flameBrightnessStep;
 	}
 
-	// update texture offset (animation)
+	// update displacementMap offset (animation)
 	this.spaceship_flame.material.uniforms.x_offset.value += this.offsetStep;
 	this.spaceship_flame.material.uniforms.y_offset.value += this.offsetStep;
 
 	this.spaceship_flame.material.uniforms.x_offset.value = this.spaceship_flame.material.uniforms.x_offset.value % 1.0;
 	this.spaceship_flame.material.uniforms.y_offset.value = this.spaceship_flame.material.uniforms.y_offset.value % 1.0;
 
+	// flame texture animation
+	this.spaceship_flame.material.uniforms.texAnimation.value += this.flameTexSpeed;
+	this.spaceship_flame.material.uniforms.texAnimation.value = this.spaceship_flame.material.uniforms.texAnimation.value % 1.0;
 }
 
 
@@ -276,6 +282,9 @@ Spaceship.prototype.initialize = function() {
 	// flame animation setup
 	this.spaceship_flame.material.uniforms.x_offset.value = this.flameX_offset;
 	this.spaceship_flame.material.uniforms.y_offset.value = this.flameY_offset;
+
+	// flame texture animation
+	this.spaceship_flame.material.uniforms.texAnimation.value = 0.0;
 }
 
 

@@ -10,11 +10,15 @@ uniform sampler2D tex;
 
 //flame propertys
 uniform float brightness;
+uniform float texAnimation;
 
 
 void main(){
+	//float tex_off = mod(texAnimation , 1.0);
 
-	vec3 c_diff = texture2D( tex, vUv).rgb;
+	//vec2 newUv = vec2(vUv.s , tex_off);
+
+	vec3 c_diff = texture2D( tex, vec2(vUv.s , texAnimation)).rgb;
 	//aggiustamento
 	vec3 color = vec3(c_diff.r/8.0, c_diff.g/4.0 , c_diff.b  );
 

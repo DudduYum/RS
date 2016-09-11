@@ -230,6 +230,10 @@ MaterialManager.prototype.createFlameUniforms = function(){
 		y_offset: {
 			type: "f",
 			value: 0.0
+		},
+		texAnimation:{
+			type: "f",
+			value: 1.0
 		}
 	};
 
