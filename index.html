@@ -45,6 +45,8 @@
 	</head>
 
 
+
+
 	<body>
 		<!-- contenitori di shaders, i veri shaders sono salvati in file
 		con estensione .glsl nel folder shaders -->
@@ -58,11 +60,12 @@
 		<div class="shaders" id="asteroidVS"></div>
 		<div class="shaders" id="asteroidFS"></div>
 
+
 		<div class="shaders" id="depthShaderVS"></div>
 		<div class="shaders" id="depthShaderFS"></div>
-		
+
 		<div class="shaders" id="defaultVS"></div>
-		
+
 		<div class="shaders" id="imageSettingsFS"></div>
 
 		<div class="shaders" id="depthOfFieldFS"></div>
@@ -71,10 +74,13 @@
 
 		<div class="shaders" id="edgeDetectionFS"></div>
 
+		</script>
 
 		<!-- il codice per caricare il codice di shaders nel
 		rispettivi contenitori -->
 
+
+		</script>
 
 		<script type="text/javascript" >
 			// console.log(THREE);
@@ -96,7 +102,7 @@
 		<div id="scoreTable">
 			<h1 id="currentScore">0</h1>
 		</div>
-		
+
 		<div id="graphicSettings"></div>
 
 		<div id="initialScreen">
@@ -142,10 +148,7 @@
 		<script type="text/javascript">
 
 
-
-
 		$(document).ready(function(){
-
 
 			// the code below loads shaders in their conteiners
 			// space ship
@@ -155,7 +158,7 @@
 			// depthShader
 			$("#depthShaderVS").load("shaders/depthShaderVS.glsl");
 			$("#depthShaderFS").load("shaders/depthShaderFS.glsl");
-			
+
 			// default
 			$("#defaultVS").load("shaders/defaultVS.glsl");
 
@@ -170,7 +173,7 @@
 			// pixelation step 1
 			//$("#pixelationVS").load("shaders/pixelationStep1VS.glsl");
 			$("#pixelationFS").load("shaders/pixelationFS.glsl");
-			
+
 			// edge only
 			//$("#edgeDetectionVS").load("shaders/edgeDetectionVS.glsl");
 			$("#edgeDetectionFS").load("shaders/edgeDetectionFS.glsl");

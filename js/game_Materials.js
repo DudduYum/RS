@@ -5,9 +5,7 @@ function MaterialManager(){
 //=== VARIABLES ===
 	this.textureLoader = new THREE.TextureLoader();
 
-
 	this.spaceshipMaterial = this.getMaterialByName("spaceship");
-
 
 	this.spaceshipTexture;
 	this.spaceshipNormalMap;
@@ -32,6 +30,12 @@ function MaterialManager(){
 	this.asteroidDisplacementMap.minFilter = THREE.LinearMipMapLinearFilter;
 
 	// setting offset
+
+
+
+
+
+
 
 
 
@@ -87,9 +91,6 @@ MaterialManager.prototype.getMaterialByName = function(objectName){
 
 	let vs = document.getElementById(objectName + "VS").textContent;
 	let fs = document.getElementById(objectName + "FS").textContent;
-
-
-
 
 
 	var material = new THREE.ShaderMaterial({
