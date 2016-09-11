@@ -42,12 +42,20 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	this.spaceship_flame_material = this.materialManager.getFlameMaterial();
 	this.spaceship_flame = new THREE.Mesh(this.spaceship_flame_geometry, this.spaceship_flame_material);
 
-	// flame animation
+	// flame brightness
 	this.flameBrightness = 4.0;
 	this.flameBrightnessStep = .05;
 	this.maxFlameBrightness = 6.0;
 	this.brightnessMode = 0;
 
+	// flame animation
+	this.flameX_offset = 0.0;
+	this.flameY_offset = 0.0;
+	this.offsetStep = 1/10;
+
+
+	// flame length
+	// this.flameLength = 0;
 	//spaceship3D collider, aproximated with 3 spheres
 	this.spaceshipColliders = [];
 
@@ -214,13 +222,7 @@ Spaceship.prototype.updateSpaceship = function(){
 	spaceshipLight.lightPosition.setX(this.spaceship3D.position.x);
 	spaceshipLight.lightPosition.setY(this.spaceship3D.position.z);
 
-	// update light brightness
-	// this.spaceship_flame.material.uniforms.brightness.value += this.flameBrightnessStep;
-	// this.spaceship_flame.material.uniforms.brightness.value = this.spaceship_flame.material.uniforms.brightness.value % this.maxFlameBrightness;
-	// if(this.spaceship_flame.material.uniforms.brightness.value < this.flameBrightness){
-	// 	this.spaceship_flame.material.uniforms.brightness.value = this.flameBrightness;
-	// }
-
+	// update flame birhtness
 	if(this.spaceship_flame.material.uniforms.brightness.value < this.flameBrightness){
 		this.brightnessMode = 0;
 	}
@@ -233,6 +235,14 @@ Spaceship.prototype.updateSpaceship = function(){
 	}else{
 		this.spaceship_flame.material.uniforms.brightness.value -= this.flameBrightnessStep;
 	}
+
+	// update texture offset (animation)
+	this.spaceship_flame.material.uniforms.x_offset.value += this.offsetStep;
+	this.spaceship_flame.material.uniforms.y_offset.value += this.offsetStep;
+
+	this.spaceship_flame.material.uniforms.x_offset.value = this.spaceship_flame.material.uniforms.x_offset.value % 1.0;
+	this.spaceship_flame.material.uniforms.y_offset.value = this.spaceship_flame.material.uniforms.y_offset.value % 1.0;
+
 }
 
 
@@ -260,8 +270,12 @@ Spaceship.prototype.initialize = function() {
 	this.spaceshipColliders[1].center.set(0,0,this.spaceship3D.position.z);
 	this.spaceshipColliders[2].center.set(0,0,this.spaceship3D.position.z + ((this.spaceshipBodySize/2 + this.spaceshipBackSize)* this.spaceshipLength));
 
-	// brightness setup
+	//flame brightness setup
 	this.spaceship_flame.material.uniforms.brightness.value = this.flameBrightness;
+
+	// flame animation setup
+	this.spaceship_flame.material.uniforms.x_offset.value = this.flameX_offset;
+	this.spaceship_flame.material.uniforms.y_offset.value = this.flameY_offset;
 }
 
 
