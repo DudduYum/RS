@@ -5,7 +5,10 @@
 // displasment
 uniform float distortionFactor;
 uniform sampler2D displacementMap;
-//need offset for distortion
+
+//offset
+uniform float x_offset;
+uniform float y_offset;
 
 varying vec3 tNorm;
 varying vec2 vUv;
@@ -17,8 +20,10 @@ void main(){
 
 		tNorm = normalMatrix * normal;
 
+		vec2 newUv = vec2(uv.s + x_offset, uv.t + y_offset);
+
 		// get texture coordinates
-		vec4 distortion = texture2D( displacementMap , vUv);
+		vec4 distortion = texture2D( displacementMap , newUv);
 
 		//correct the normal
 		vec3 newNormal = (tNorm * distortion.y);

@@ -38,10 +38,16 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	this.spaceship_back = new THREE.Mesh(this.spaceship_back_geometry, this.spaceship_back_material);
 
 	//spaceship flame
-	this.spaceship_flame_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius*3/5, 0.0, this.spaceshipLength * this.spaceshipFlameSize, 32);
+	this.spaceship_flame_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius*3/5, 0.0, this.spaceshipLength * this.spaceshipFlameSize, 32 , 16);
 	this.spaceship_flame_material = this.materialManager.getFlameMaterial();
 	this.spaceship_flame = new THREE.Mesh(this.spaceship_flame_geometry, this.spaceship_flame_material);
-	// console.log(this.spaceship_flame.material);
+
+	// flame animation
+	this.flameBrightness = 4.0;
+	this.flameBrightnessStep = .05;
+	this.maxFlameBrightness = 6.0;
+	this.brightnessMode = 0;
+
 	//spaceship3D collider, aproximated with 3 spheres
 	this.spaceshipColliders = [];
 
@@ -185,6 +191,7 @@ Spaceship.prototype.immobilize = function(){
 
 //move the spaceship3D and keep it inside game borders
 Spaceship.prototype.updateSpaceship = function(){
+	// update coordinates
 	this.movementTracker.hStep = this.timer.passedTime/1000 * this.spaceshipSpeed.hSpeed;
 	this.movementTracker.vStep = this.timer.passedTime/1000 * this.spaceshipSpeed.vSpeed;
 	if(Math.sign(this.movementTracker.hStep) < 0){
@@ -203,9 +210,29 @@ Spaceship.prototype.updateSpaceship = function(){
 	}
 	this.updateColliders();
 
+	// update light position with coordinates
 	spaceshipLight.lightPosition.setX(this.spaceship3D.position.x);
 	spaceshipLight.lightPosition.setY(this.spaceship3D.position.z);
 
+	// update light brightness
+	// this.spaceship_flame.material.uniforms.brightness.value += this.flameBrightnessStep;
+	// this.spaceship_flame.material.uniforms.brightness.value = this.spaceship_flame.material.uniforms.brightness.value % this.maxFlameBrightness;
+	// if(this.spaceship_flame.material.uniforms.brightness.value < this.flameBrightness){
+	// 	this.spaceship_flame.material.uniforms.brightness.value = this.flameBrightness;
+	// }
+
+	if(this.spaceship_flame.material.uniforms.brightness.value < this.flameBrightness){
+		this.brightnessMode = 0;
+	}
+	if(this.spaceship_flame.material.uniforms.brightness.value > this.maxFlameBrightness){
+		this.brightnessMode = 1;
+	}
+
+	if(this.brightnessMode == 0){
+		this.spaceship_flame.material.uniforms.brightness.value += this.flameBrightnessStep;
+	}else{
+		this.spaceship_flame.material.uniforms.brightness.value -= this.flameBrightnessStep;
+	}
 }
 
 
@@ -232,6 +259,9 @@ Spaceship.prototype.initialize = function() {
 	this.spaceshipColliders[0].center.set(0,0,this.spaceship3D.position.z - ((this.spaceshipFrontSize + this.spaceshipBodySize/2 )* this.spaceshipLength));
 	this.spaceshipColliders[1].center.set(0,0,this.spaceship3D.position.z);
 	this.spaceshipColliders[2].center.set(0,0,this.spaceship3D.position.z + ((this.spaceshipBodySize/2 + this.spaceshipBackSize)* this.spaceshipLength));
+
+	// brightness setup
+	this.spaceship_flame.material.uniforms.brightness.value = this.flameBrightness;
 }
 
 

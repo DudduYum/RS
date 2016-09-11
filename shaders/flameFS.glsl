@@ -8,13 +8,17 @@ varying vec2 vUv;
 
 uniform sampler2D tex;
 
+//flame propertys
+uniform float brightness;
+
 
 void main(){
 
 	vec3 c_diff = texture2D( tex, vUv).rgb;
+	//aggiustamento
+	vec3 color = vec3(c_diff.r/8.0, c_diff.g/4.0 , c_diff.b  );
 
-	gl_FragColor = vec4( c_diff , 1.0);
-
-
+	color = color * brightness;
+	gl_FragColor = vec4( color , 1.0);
 
 }

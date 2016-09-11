@@ -136,10 +136,9 @@ MaterialManager.prototype.getFlameMaterial = function(){
 	var tempMaterial = this.flameMaterial.clone();
 	// console.log(tempMaterial);
 	tempMaterial.uniforms = this.createFlameUniforms();
-// console.log(tempMaterial);
+
 	return tempMaterial;
 }
-
 // getters
 MaterialManager.prototype.getAsteroidMaterial = function(){
 	var res = this.asteroidMaterial.clone();
@@ -218,26 +217,23 @@ MaterialManager.prototype.createFlameUniforms = function(){
 		},
 		distortionFactor: {
 			type: "f",
-			value: 0.09
+			value: 0.12
+		},
+		brightness: {
+			type: "f",
+			value: 4.0
+		},
+		x_offset: {
+			type: "f",
+			value: 0.0
+		},
+		y_offset: {
+			type: "f",
+			value: 0.0
 		}
-		// ,
-		// alpha: {
-		// 	type: "f",
-		// 	value: 0.1
-		// }
-		// ,
-		// x_offset: {
-		// 	type: "f",
-		// 	value: 0.0
-		// },
-		// y_offset: {
-		// 	type: "f",
-		// 	value: 0.0
-		// }
 	};
 
 	return uniforms;
-
 }
 
 MaterialManager.prototype.createAsteroidUniforms = function(){
