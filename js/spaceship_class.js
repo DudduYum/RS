@@ -54,7 +54,7 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	this.offsetStep = 1/10;
 
 	// texture animation
-	this.flameTexSpeed = 1/100;
+	this.flameTexSpeed = 1/1000;
 
 
 	// flame length
@@ -313,10 +313,6 @@ Spaceship.prototype.rotate = function() {
 
 Spaceship.prototype.isColliding = function(ast){
 	for (var index in this.spaceshipColliders){
-		// console.log("in isColliding method strt");
-		// console.log(spaceshipColliders[index].center);
-		// console.log(ast.testCreation() );
-		// console.log("in isColliding method STOP");
 		if(ast.isCollidingWith(this.spaceshipColliders[index])){
 			return true;
 		}

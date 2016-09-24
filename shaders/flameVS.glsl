@@ -20,7 +20,7 @@ void main(){
 
 		tNorm = normalMatrix * normal;
 
-		vec2 newUv = vec2(uv.s + x_offset, uv.t + y_offset);
+		vec2 newUv = vec2(uv.s + x_offset , uv.t y_offset);
 
 		// get texture coordinates
 		vec4 distortion = texture2D( displacementMap , newUv);
