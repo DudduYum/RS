@@ -49,8 +49,9 @@ vec3 perturbNormal2Arb( vec3 eye_pos, vec3 surf_norm ) {
 	mat3 tsn = mat3( S, T, N );
 
 	return normalize( tsn * mapN );
-	// return surf_norm;
 }
+
+
 //
 float G(float LdotH) {
 	return 1.0/pow(LdotH,2.0);
@@ -84,7 +85,6 @@ void main(){
 
 
 	// comon for both lights
-	//vec3 n = perturbNormal2Arb( pointPosition, normalize( tNorm ));
 	vec3 n = perturbNormal2Arb( pointPosition, normalize( newNormal ));
 	vec3 v = normalize( -pointPosition );
 	// sun
@@ -106,6 +106,8 @@ void main(){
 	float spVdotH = max(0.000001, dot( v, sph ));
 	float spNdotL = max(0.000001, dot( n, spl ));
 
+
+
 	// sun light
 	vec3 Specular = F(VdotH ) * G(VdotH) * D(NdotH) / 4.0;
 	vec3 beta = calcBeta( lightPower , lightVector);
@@ -114,18 +116,19 @@ void main(){
 	vec3 spSpecular = F( VdotH  ) * G(VdotH) * D(NdotH) / 4.0;
 	vec3 spBeta = calcBeta( spLightPower , spLightVector);
 
-	// sun light
-	// vec3 color1 = beta * NdotL * (s * c_diff  + (1.0 - s) * Specular );
-	// vec3 color2 = spBeta * spNdotL  * (s * c_diff  + (1.0 - s) * spSpecular );
 
 
 
 	vec3 color1 = beta * (s * c_diff  + (1.0 - s) * Specular );
-
 	vec3 color2 = spBeta * (s * c_diff  + (1.0 - s) * spSpecular );
 	vec3 color3 = ambientLight;
 
-	gl_FragColor = vec4(  (color2  + color1  + color3 * 0.3) , 1.0);
+	//lightVector = normalize(lightVector);
+	//float c1dot = dot(tNorm, lightVector);
+	//c1dot = max( 0.0 , c1dot);
+
+
+	gl_FragColor = vec4(  (color2  + color1 + color3) , 1.0);
 
 
 }

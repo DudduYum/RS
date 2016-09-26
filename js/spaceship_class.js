@@ -38,27 +38,26 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	this.spaceship_back = new THREE.Mesh(this.spaceship_back_geometry, this.spaceship_back_material);
 
 	//spaceship flame
-	this.spaceship_flame_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius*3/5, 0.0, this.spaceshipLength * this.spaceshipFlameSize, 32 , 16);
+	this.spaceship_flame_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius*3/7, 0.0, this.spaceshipLength * this.spaceshipFlameSize, 32 , 20);
+	this.spaceship_flame_geometry.scale(0.8 , 1.0 , 1.3);
 	this.spaceship_flame_material = this.materialManager.getFlameMaterial();
 	this.spaceship_flame = new THREE.Mesh(this.spaceship_flame_geometry, this.spaceship_flame_material);
 
+
 	// flame brightness
-	this.flameBrightness = 4.0;
+	this.flameBrightness = 7.0;
 	this.flameBrightnessStep = .05;
-	this.maxFlameBrightness = 6.0;
+	this.maxFlameBrightness = 8.0;
 	this.brightnessMode = 0;
 
 	// flame animation
 	this.flameX_offset = 0.0;
 	this.flameY_offset = 0.0;
-	this.offsetStep = 1/10;
+	this.offsetStep = 1/100;
 
 	// texture animation
-	this.flameTexSpeed = 1/1000;
+	this.flameTexSpeed = 1/20;
 
-
-	// flame length
-	// this.flameLength = 0;
 	//spaceship3D collider, aproximated with 3 spheres
 	this.spaceshipColliders = [];
 
@@ -243,12 +242,12 @@ Spaceship.prototype.updateSpaceship = function(){
 	this.spaceship_flame.material.uniforms.x_offset.value += this.offsetStep;
 	this.spaceship_flame.material.uniforms.y_offset.value += this.offsetStep;
 
-	this.spaceship_flame.material.uniforms.x_offset.value = this.spaceship_flame.material.uniforms.x_offset.value % 1.0;
-	this.spaceship_flame.material.uniforms.y_offset.value = this.spaceship_flame.material.uniforms.y_offset.value % 1.0;
+	this.spaceship_flame.material.uniforms.x_offset.value = this.spaceship_flame.material.uniforms.x_offset.value % 2.0;
+	this.spaceship_flame.material.uniforms.y_offset.value = this.spaceship_flame.material.uniforms.y_offset.value % 2.0;
 
 	// flame texture animation
 	this.spaceship_flame.material.uniforms.texAnimation.value += this.flameTexSpeed;
-	this.spaceship_flame.material.uniforms.texAnimation.value = this.spaceship_flame.material.uniforms.texAnimation.value % 1.0;
+	this.spaceship_flame.material.uniforms.texAnimation.value = this.spaceship_flame.material.uniforms.texAnimation.value % 2.0;
 }
 
 

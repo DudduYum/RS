@@ -20,13 +20,13 @@ void main(){
 
 		tNorm = normalMatrix * normal;
 
-		vec2 newUv = vec2(uv.s + x_offset , uv.t y_offset);
+		vec2 newUv = vec2( x_offset , y_offset );
 
 		// get texture coordinates
-		vec4 distortion = texture2D( displacementMap , newUv);
+		vec3 distortion = texture2D( displacementMap , newUv).rgb;
 
 		//correct the normal
-		vec3 newNormal = (tNorm * distortion.y);
+		vec3 newNormal = (tNorm * distortion * 2.0);
 
 		//applaing the distortion
 		vec3 nPosition = position + (newNormal * distortionFactor);
