@@ -114,20 +114,14 @@ void main(){
 	vec3 spSpecular = F( VdotH  ) * G(VdotH) * D(NdotH) / 4.0;
 	vec3 spBeta = calcBeta( spLightPower , spLightVector);
 
-  //float normalIlumination = dot( l, normalize(tNorm));
-	//float ilumination = dot(l , n);
-	//ilumination = max(0.0, ilumination);
-	//ilumination = mod(ilumination , 1.0);
-	//vec3  color = c_diff * ilumination;
-
 
 	vec3 color1 = beta * NdotL * (s * c_diff + (1.0 - s) * Specular );
 	vec3 color2 = spBeta * spNdotL * (s *  c_diff + (1.0 - s) * spSpecular );
 	vec3 color3 =  c_diff * ambientLight;
 
-	//color1 = mix(color1 , color2, 0.4);
-	//color1 = mix(color1 , color3, 0.1);
-
+	if(color1 == vec3(1.0 , 1.0 ,1.0)){
+		color1 = c_diff;
+	}
 	gl_FragColor = vec4(color1 + color2 + color3, 1.0);
 
 

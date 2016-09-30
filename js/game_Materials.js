@@ -292,7 +292,7 @@ MaterialManager.prototype.createAsteroidUniforms = function(){
 		},
 		s :{
 			type: "f",
-			value: 0.9
+			value: 0.9999
 		},
 		// distortion parameters
 		distortionFactor: {

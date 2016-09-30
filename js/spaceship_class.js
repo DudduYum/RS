@@ -220,10 +220,6 @@ Spaceship.prototype.updateSpaceship = function(){
 	}
 	this.updateColliders();
 
-	// update light position with coordinates
-	//spaceshipLight.lightPosition.setX(this.spaceship3D.position.x);
-	//spaceshipLight.lightPosition.setY(this.spaceship3D.position.z);
-
 
 	// update flame birhtness
 	if(this.spaceship_flame.material.uniforms.brightness.value < this.flameBrightness){
