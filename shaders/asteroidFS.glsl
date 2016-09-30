@@ -34,6 +34,7 @@ uniform vec2 normalScale;
 
 
 vec3 perturbNormal2Arb( vec3 eye_pos, vec3 surf_norm ) {
+
 	vec3 q0 = dFdx( eye_pos.xyz );
 	vec3 q1 = dFdy( eye_pos.xyz );
 
@@ -58,11 +59,10 @@ float G(float LdotH) {
 }
 
 vec3 F(float LdotH ) {
-	//vec3 c_spec = (texture2D(specularMap,vUv)).rgb;
+	vec3 c_spec = (texture2D(specularMap,vUv)).rgb * 2.0 -1.0;
 	//la specular map genera effetto di trasparenza degli asteroid
 	//per questo motivo e stata tolta
 
-	vec3 c_spec = vec3( 0.0 , 0.0 , 0.0);
 	return c_spec + (vec3(1.0) - c_spec) * pow( 1.0 - LdotH , 5.0);
 }
 
@@ -81,11 +81,9 @@ vec3 calcBeta(vec3 power, vec3 lvec){
 void main(){
 
 	vec3 c_diff = texture2D(tex,vUv).rgb;
-	vec3 newNormal = texture2D( normMap, vUv ).xyz;
-
 
 	// comon for both lights
-	vec3 n = perturbNormal2Arb( pointPosition, normalize( newNormal ));
+	vec3 n = perturbNormal2Arb( pointPosition, normalize( tNorm ));
 	vec3 v = normalize( -pointPosition );
 	// sun
 	vec3 l = normalize( lightVector );
@@ -116,19 +114,21 @@ void main(){
 	vec3 spSpecular = F( VdotH  ) * G(VdotH) * D(NdotH) / 4.0;
 	vec3 spBeta = calcBeta( spLightPower , spLightVector);
 
+  //float normalIlumination = dot( l, normalize(tNorm));
+	//float ilumination = dot(l , n);
+	//ilumination = max(0.0, ilumination);
+	//ilumination = mod(ilumination , 1.0);
+	//vec3  color = c_diff * ilumination;
 
 
+	vec3 color1 = beta * NdotL * (s * c_diff + (1.0 - s) * Specular );
+	vec3 color2 = spBeta * spNdotL * (s *  c_diff + (1.0 - s) * spSpecular );
+	vec3 color3 =  c_diff * ambientLight;
 
-	vec3 color1 = beta * (s * c_diff  + (1.0 - s) * Specular );
-	vec3 color2 = spBeta * (s * c_diff  + (1.0 - s) * spSpecular );
-	vec3 color3 = ambientLight;
+	//color1 = mix(color1 , color2, 0.4);
+	//color1 = mix(color1 , color3, 0.1);
 
-	//lightVector = normalize(lightVector);
-	//float c1dot = dot(tNorm, lightVector);
-	//c1dot = max( 0.0 , c1dot);
-
-
-	gl_FragColor = vec4(  (color2  + color1 + color3) , 1.0);
+	gl_FragColor = vec4(color1 + color2 + color3, 1.0);
 
 
 }

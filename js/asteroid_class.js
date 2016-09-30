@@ -80,6 +80,12 @@ Asteroid.prototype.move = function(){
 	Qast = this.asteroidMesh.quaternion.clone().inverse();
 	displaysmentVec.applyQuaternion(Qast);
 
+	//lights position update
+	var sunPosition = pointLight.lightPosition.clone();
+	sunPosition = sunPosition.applyQuaternion(Qast);
+
+	var flamePosition = spaceshipLight.lightPosition.clone();
+	flamePosition = flamePosition.applyQuaternion(Qast);
 
 	// move the mesh
 	this.asteroidMesh.translateX(displaysmentVec.x);

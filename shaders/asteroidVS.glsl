@@ -33,10 +33,10 @@ void main(){
 		tNorm = normalMatrix * normal;
 
 		// get texture coordinates
-		vec4 distortion = texture2D( displaysmentMap , vUv);
+		vec3 distortion = texture2D( displaysmentMap , vUv).xyz * 2.0 - 1.0;
 
 		//correct the normal
-		vec3 newNormal = tNorm * distortion.xyz ;
+		vec3 newNormal = tNorm * distortion ;
 
 		// calculate the displaysment of each point using
 		// actual radius of asteroid, the max radious each asteroid

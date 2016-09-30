@@ -254,7 +254,7 @@ MaterialManager.prototype.createAsteroidUniforms = function(){
 		},
 		displacementMap: {
 			type:  "t",
-			value: this.asteroidSpecularMap
+			value: this.asteroidDisplacementMap
 		},
 		specularMap:{
 			type:	"t",
@@ -263,7 +263,7 @@ MaterialManager.prototype.createAsteroidUniforms = function(){
 		// normal parameters and lights
 		normalScale:{
 			type:	"v2",
-			value: new THREE.Vector2(1.0 , 1.0)
+			value: new THREE.Vector2(0.5 , 0.5)
 		},
 		spLightPos: {
 			type:  "v3",
@@ -288,11 +288,11 @@ MaterialManager.prototype.createAsteroidUniforms = function(){
 		//
 		alpha: {
 			type: "f",
-			value: 0.1
+			value: 0.5
 		},
 		s :{
 			type: "f",
-			value: 0.6
+			value: 0.9
 		},
 		// distortion parameters
 		distortionFactor: {
