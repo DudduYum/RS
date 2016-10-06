@@ -24,7 +24,7 @@ function ProjectOLA(){
 		stats.domElement.style.position = 'absolute';
 		stats.domElement.style.top = '0px';
 		stats.domElement.style.left = '300px';
-		
+
 	var canvas = document.getElementById('canvas');
 		canvas.appendChild(stats.domElement);
 
@@ -109,7 +109,7 @@ function ProjectOLA(){
 	var mainRender_pass;
 	var depthRender_pass;
 	//var copy_pass;
-	
+
 	var imageSettings_pass;
 	var depthOfField_pass;
 	var pixelation_pass;
@@ -120,6 +120,7 @@ function ProjectOLA(){
 
 	//initializes mouse controls for free camera
 	var orbitControls = new THREE.OrbitControls(freeCamera, renderer.domElement);
+		// orbitControls.addEventListener( 'change', animate );
 		orbitControls.enableKeys = false;
 		orbitControls.enabled = false;
 		orbitControls.target = new THREE.Vector3(0,0,-10);
@@ -162,7 +163,7 @@ function ProjectOLA(){
 	function resetComposers(activeCamera) {
 		depth_composer = new THREE.EffectComposer(renderer);
 		main_composer = new THREE.EffectComposer(renderer);
-		
+
 		mainRender_pass = new THREE.RenderPass(scene, activeCamera);
 		depthRender_pass = new THREE.RenderPass(scene, activeCamera, depthMaterial);
 
@@ -181,11 +182,11 @@ function ProjectOLA(){
 	}
 
 	function resetShaders() {
-		
+
 		depthOfField_shader.uniforms.width.value = window.innerWidth;
 		depthOfField_shader.uniforms.height.value = window.innerHeight;
 		depthOfField_shader.uniforms.tDepth.value = depth_composer.renderTarget2;
-		
+
 		pixelation_shader.uniforms.width.value = window.innerWidth;
 		pixelation_shader.uniforms.height.value = window.innerHeight;
 
@@ -212,11 +213,11 @@ function ProjectOLA(){
 
 
 //======= GRAPHIC SETTINGS METHODS =======
-	
+
 	setBackground = function(value) {
 		environment.openSpace.visible = value;
 	}
-	
+
 	setInverseColors = function(value) {
 		var bool;
 		if(value)
@@ -226,7 +227,7 @@ function ProjectOLA(){
 		imageSettings_shader.uniforms.inverseColors.value = bool;
 		imageSettings_pass.material.uniforms.inverseColors.value = bool;
 	}
-	
+
 	setSaturation = function(value) {
 		imageSettings_shader.uniforms.saturation.value = value / 50;
 		imageSettings_pass.material.uniforms.saturation.value = value / 50;
@@ -245,7 +246,7 @@ function ProjectOLA(){
 		depthOfField_shader.uniforms.focusLimit.value = value;
 		depthOfField_pass.material.uniforms.focusLimit.value = value;
 	}
-	
+
 	setPixelation = function(value) {
 		pixelation_pass.enabled = value;
 	}
@@ -258,7 +259,7 @@ function ProjectOLA(){
 	setEdgeDetection = function(value) {
 		edgeDetection_pass.enabled = value;
 	}
-	
+
 
 
 //======= OTHER METHODS =======
@@ -315,9 +316,9 @@ function ProjectOLA(){
 			}
 		}
 	);
-	
-	
-	
+
+
+
 
 
 
@@ -335,7 +336,6 @@ function ProjectOLA(){
 				score.update();
 			}
 			catch(exec) {
-				//console.log(exec);
 				gameState.stopGame();
 			}
 		} else if(!gameState.isOver()){

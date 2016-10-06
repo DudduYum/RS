@@ -53,10 +53,10 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	// flame animation
 	this.flameX_offset = 0.0;
 	this.flameY_offset = 0.0;
-	this.offsetStep = 1/100;
+	this.offsetSpeed = 10;
 
 	// texture animation
-	this.flameTexSpeed = 1/20;
+	this.flameTexSpeed = 4;
 
 	//spaceship3D collider, aproximated with 3 spheres
 	this.spaceshipColliders = [];
@@ -236,14 +236,14 @@ Spaceship.prototype.updateSpaceship = function(){
 	}
 
 	// update displacementMap offset (animation)
-	this.spaceship_flame.material.uniforms.x_offset.value += this.offsetStep;
-	this.spaceship_flame.material.uniforms.y_offset.value += this.offsetStep;
+	this.spaceship_flame.material.uniforms.x_offset.value += this.timer.passedTime/1000 * this.offsetSpeed;
+	this.spaceship_flame.material.uniforms.y_offset.value += this.timer.passedTime/1000 * this.offsetSpeed;
 
 	this.spaceship_flame.material.uniforms.x_offset.value = this.spaceship_flame.material.uniforms.x_offset.value % 2.0;
 	this.spaceship_flame.material.uniforms.y_offset.value = this.spaceship_flame.material.uniforms.y_offset.value % 2.0;
 
 	// flame texture animation
-	this.spaceship_flame.material.uniforms.texAnimation.value += this.flameTexSpeed;
+	this.spaceship_flame.material.uniforms.texAnimation.value += this.timer.passedTime/1000 * this.flameTexSpeed;
 	this.spaceship_flame.material.uniforms.texAnimation.value = this.spaceship_flame.material.uniforms.texAnimation.value % 2.0;
 }
 

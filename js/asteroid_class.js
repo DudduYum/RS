@@ -35,6 +35,7 @@ function Asteroid(settings, materialManager, timer){
 	this.rotationAnimation;
 	this.rotationAnimationSpeed;
 	this.rotationDirection;
+	this.rotationSubdivision = 2.5;
 
 //=== CONSTRUCTOR ===
 
@@ -64,7 +65,8 @@ Asteroid.prototype.move = function(){
 
 
 	// rotation animation
-	this.rotationAnimation += this.rotationAnimationSpeed;
+	this.rotationAnimation += this.timer.passedTime/1000 * this.rotationAnimationSpeed;
+
 	this.rotationAnimation = this.rotationAnimation % (2 * Math.PI);
 
 	// change displaysmentVec to apply movement to mesh
@@ -79,6 +81,10 @@ Asteroid.prototype.move = function(){
 		 );
 	Qast = this.asteroidMesh.quaternion.clone().inverse();
 	displaysmentVec.applyQuaternion(Qast);
+
+	// tmp code start
+
+	// tmp code end
 
 	//lights position update
 	var sunPosition = pointLight.lightPosition.clone();
@@ -107,7 +113,6 @@ Asteroid.prototype.hasCrossedTheLine = function(){
 };
 
 Asteroid.prototype.initialize = function(){
-	//reset timestamp
 	this.previousTime = this.timer.getTime();
 
 	//reset position
@@ -152,24 +157,24 @@ Asteroid.prototype.initialize = function(){
 
 	// reset rotation animation
 	this.rotationAnimation = 0;
-	this.rotationAnimationSpeed = (2 * Math.PI) / (120 * size);
+	this.rotationAnimationSpeed = (2 * Math.PI) / (this.rotationSubdivision * size);
 
 	// reset rotation Axes
 	var coin = Math.random();
 	this.rotationDirection = new THREE.Vector3();
 	if( coin < 0.3){
-		this.rotationDirection.z = 0;
 		this.rotationDirection.x = 1;
-		this.rotationDirection.y = -1;
+		this.rotationDirection.y = 1;
+		this.rotationDirection.z = 0;
 	}else{
 		if( coin < 0.6){
 			this.rotationDirection.x = 0;
 			this.rotationDirection.y = 1;
-			this.rotationDirection.z = -1;
+			this.rotationDirection.z = 1;
 		}else{
+			this.rotationDirection.x = 1;
 			this.rotationDirection.y = 0;
 			this.rotationDirection.z = 1;
-			this.rotationDirection.x = -1;
 		}
 	}
 
