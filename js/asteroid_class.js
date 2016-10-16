@@ -108,8 +108,8 @@ Asteroid.prototype.move = function(){
 };
 
 Asteroid.prototype.hasCrossedTheLine = function(){
-	return this.asteroidMesh.position.z >= 1;
-	//return asteroidMesh.position.z >= this.settings.game_area_D / 2;
+	//return this.asteroidMesh.position.z >= 1;
+	return this.asteroidMesh.position.z >= this.settings.game_area_D / 8;
 };
 
 Asteroid.prototype.initialize = function(){
