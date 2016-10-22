@@ -51,7 +51,7 @@ IOManager.prototype.keyDownAction = function(event){
 
 // KEY UP FUNCTIONS
 
-// the same as addKeyDownAction. Read the description abowe
+// the same as addKeyDownAction, read the description above
 IOManager.prototype.addKeyUpAction = function(funKey, funCode){
 	self.keyUpMapping[funKey] = funCode ;
 };
@@ -65,7 +65,7 @@ IOManager.prototype.addKeyUpAlias = function(frsKeyCode, scdKeyCode){
 }
 
 
-// the same as addKeyDownAlias. Read the description abowe
+// the same as addKeyDownAlias, read the description above
 IOManager.prototype.keyUpAction = function(event){
 	if( self.keyUpMapping[event.keyCode] != undefined ){
 		if( typeof( self.keyUpMapping [event.keyCode] ) != "number" ){

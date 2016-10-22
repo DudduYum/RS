@@ -14,8 +14,8 @@ function GameSettings(width, height, depth, aspectRatio){
 	this.inertia = 0.4;
 
 	//ASTEROID SETTINGS
-	//seconds between asteroid spawn
-	this.spawnDelay = 0.3;
+	//miliseconds between asteroid spawn
+	this.spawnDelay = 300;
 	//asteroid speed in units per second
 	this.asteroidSpeed = 20;
 	this.AsteroidMinSize = 0.2;

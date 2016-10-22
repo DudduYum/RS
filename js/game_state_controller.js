@@ -1,15 +1,16 @@
 "use strict";
 
-function GameState(startFun, stopFun){
+function GameState(startFun, pauseFun, stopFun){
 	
 //=== VARIABLES ===
 
 	//true if game is running
-	this.gameRunning = false;;
+	this.gameRunning = false;
 	//true if game is over, not just not running
-	this.gameOver = false;;
-	this.startAction = startFun;;
-	this.stopAction = stopFun;;
+	this.gameOver = false;
+	this.startAction = startFun;
+	this.pauseAction = pauseFun;
+	this.stopAction = stopFun;
 
 
 	
@@ -38,6 +39,13 @@ GameState.prototype.startGame = function(){
 		this.gameOver = false;
 		this.startAction();
 	}		
+}
+
+
+GameState.prototype.pauseGame = function(){
+	if(this.gameRunning){
+		this.pauseAction();
+	}
 }
 
 

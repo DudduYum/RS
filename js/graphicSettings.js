@@ -8,7 +8,7 @@ function GraphicSettings(areaDepth) {
 	this.dynamic_depthOfField = false;
 	this.focus_distance = 35;
 	this.pixelation = false;
-	this.pixel_size = 16;
+	this.pixel_size = 12;
 	this.edgeDetection = false;
 	
 	this.background = true;
@@ -27,7 +27,7 @@ function GraphicSettings(areaDepth) {
 					"dynamic_depthOfField": false,
 					"focus_distance": 35,
 					"pixelation": false,
-					"pixel_size": 16,
+					"pixel_size": 12,
 					"edgeDetection": false,
 					
 					"background": true,
@@ -41,7 +41,7 @@ function GraphicSettings(areaDepth) {
 					"dynamic_depthOfField": false,
 					"focus_distance": 35,
 					"pixelation": false,
-					"pixel_size": 16,
+					"pixel_size": 12,
 					"edgeDetection": true,
 					
 					"background": false,
@@ -55,7 +55,7 @@ function GraphicSettings(areaDepth) {
 					"dynamic_depthOfField": false,
 					"focus_distance": 35,
 					"pixelation": true,
-					"pixel_size": 16,
+					"pixel_size": 12,
 					"edgeDetection": true,
 					
 					"background": false,
@@ -81,7 +81,7 @@ function GraphicSettings(areaDepth) {
 	var depthOfField_controller = effects_folder.add(this, 'dynamic_depthOfField');
 	var depthOfField_distance_controller = effects_folder.add(this, 'focus_distance', 0, areaDepth).step(1);
 	var pixelation_controller = effects_folder.add(this, 'pixelation');
-	var pixelation_size_controller = effects_folder.add(this, 'pixel_size', 1, 16).step(1);
+	var pixelation_size_controller = effects_folder.add(this, 'pixel_size', 2, 12).step(1);
 	var edgeDetection_controller = effects_folder.add(this, 'edgeDetection');
 	
 	var imageSettings_folder = settingsGui.addFolder('Image settings');

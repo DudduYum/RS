@@ -77,7 +77,7 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 
 //=== CONSTRUCTOR ===
 
-	//key press movement binding
+	//KEY BINDING
 	//right = right arrow, D
 	this.IO_controls.addKeyDownAction(39, this.moveRight.bind(this));
 	this.IO_controls.addKeyDownAlias(68, 39);
@@ -205,18 +205,27 @@ Spaceship.prototype.updateSpaceship = function(){
 	this.movementTracker.hStep = this.timer.passedTime/1000 * this.spaceshipSpeed.hSpeed;
 	this.movementTracker.vStep = this.timer.passedTime/1000 * this.spaceshipSpeed.vSpeed;
 	if(Math.sign(this.movementTracker.hStep) < 0){
-		if(this.checkLeftBorder())
+		if(this.checkLeftBorder()) {
 			this.spaceship3D.translateX(this.movementTracker.hStep);
+			spaceshipLight.lightPosition.set(this.spaceship3D.position);
+		}
 	} else {
-		if(this.checkRightBorder())
+		if(this.checkRightBorder()){
 			this.spaceship3D.translateX(this.movementTracker.hStep);
+			spaceshipLight.lightPosition.set(this.spaceship3D.position);
+
+		}
 	}
 	if(Math.sign(this.movementTracker.vStep) < 0){
-		if(this.checkDownBorder())
+		if(this.checkDownBorder()) {
 			this.spaceship3D.translateZ(this.movementTracker.vStep);
+			spaceshipLight.lightPosition.set(this.spaceship3D.position);
+		}
 	} else {
-		if(this.checkUpBorder())
+		if(this.checkUpBorder()) {
 			this.spaceship3D.translateZ(this.movementTracker.vStep);
+			spaceshipLight.lightPosition.set(this.spaceship3D.position);
+		}
 	}
 	this.updateColliders();
 
@@ -285,6 +294,10 @@ Spaceship.prototype.initialize = function() {
 
 }
 
+Spaceship.prototype.initialPosition = function(){
+	this.spaceship3D.rotation.x = 0;
+}
+
 
 Spaceship.prototype.reset = function(){
 	this.spaceshipSpeed.hSpeed = 0;
@@ -294,7 +307,10 @@ Spaceship.prototype.reset = function(){
 	this.spaceship3D.position.set(0, 0, -this.spaceshipLength);
 	this.spaceship3D.rotation.x = -90 * Math.PI/180;
 	this.spaceship3D.rotation.y = 0;
-
+	
+	//reset the flame light
+	spaceshipLight.lightPosition.set(0.0, 0.0, -this.spaceshipLength);
+	
 	//reset colliders position
 	this.spaceshipColliders[0].center.set(0,0,this.spaceship3D.position.z - ((this.spaceshipFrontSize + this.spaceshipBodySize/2 ) * this.spaceshipLength));
 	this.spaceshipColliders[1].center.set(0,0,this.spaceship3D.position.z);

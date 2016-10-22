@@ -27,8 +27,6 @@ function Asteroid(settings, materialManager, timer){
 	this.asteroidObj = new THREE.Object3D();
 	this.asteroidObj.add(this.asteroidMesh);
 
-	this.previousTime;
-
 	this.collider = this.asteroidMesh.geometry.boundingSphere.clone();
 
 	// rotation animation
@@ -113,8 +111,6 @@ Asteroid.prototype.hasCrossedTheLine = function(){
 };
 
 Asteroid.prototype.initialize = function(){
-	this.previousTime = this.timer.getTime();
-
 	//reset position
 	this.asteroidObj.position.set(
 		this.settings.asteroid_spawn_X(),

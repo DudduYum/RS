@@ -6,8 +6,8 @@ var pointLight = {
 	lightPosition: new THREE.Vector3()
 };
 
-pointLight.lightPower.set(100000.0, 100000.0, 100000.0);
-pointLight.lightPosition.set(50.0, 60.0, -10.0);
+pointLight.lightPower.set(500000.0, 500000.0, 450000.0);
+pointLight.lightPosition.set(100.0, 100.0, -10.0);
 
 
 // flame (point light)
@@ -23,4 +23,4 @@ spaceshipLight.lightPosition.set(0.0, 0.0, 0.0);
 var ambientLight = {
 	lightPower: new THREE.Vector3(),
 };
-ambientLight.lightPower.set(0.2, 0.2 , 0.2);
+ambientLight.lightPower.set(0.1, 0.1, 0.1);

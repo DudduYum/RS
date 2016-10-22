@@ -13,7 +13,7 @@ function Environment(settingsObject, timer, IO_controls){
 	this.asteroidBufferMinimum = 10;
 	this.activeAsteroids = [];
 	this.asteroidBuffer = [];
-	this.lastSpawnTime;
+	this.lastSpawnTime = 0;
 
 	// spaceship
 	this.spaceship = new Spaceship(this.settingsObject, this.materialManager, this.IO_controls, this.timer);
@@ -26,21 +26,25 @@ function Environment(settingsObject, timer, IO_controls){
 
 	//sphere map
 	this.openSpaceGeometry  = new THREE.SphereGeometry(600, 32, 32);
-	this.openSpaceTexture = new THREE.TextureLoader().load("textures/spaceD2.jpg");
+	this.openSpaceTexture = new THREE.TextureLoader().load("textures/spaceDark.jpg");
 	this.openSpaceMaterial  = new THREE.MeshBasicMaterial({map: this.openSpaceTexture, side: THREE.DoubleSide});
 	this.openSpace  = new THREE.Mesh(this.openSpaceGeometry, this.openSpaceMaterial);
 	this.openSpace.position.set(0,0,0);
 
-	this.game3Dscene.add(this.openSpace);
-
-
+	//reference sun
+	this.sunGeometry = new THREE.SphereGeometry(60, 32, 32);
+	this.sunMaterial = new THREE.MeshBasicMaterial({color:0xffffe6});
+	this.sun = new THREE.Mesh(this.sunGeometry, this.sunMaterial);
+	this.sun.position.set(100.0, 100.0, -10.0);
+	
+	
 	this.materialManager.shipMaterial = new THREE.MeshBasicMaterial({color:0x00ff00});
-
+	
+	this.game3Dscene.add(this.openSpace);
+	this.game3Dscene.add(this.sun);
 	this.game3Dscene.add(this.spaceship.spaceship3D);
 
 	this.spaceship.initialize();
-	this.lastSpawnTime = timer.getTime()
-
 	this.fillBuffer();
 
 }
@@ -80,10 +84,12 @@ Environment.prototype.moveAsteroids = function (){
 			this.removeAsteroid(astIndex);
 		}
 	}
-
+	
+	this.lastSpawnTime += this.timer.passedTime;
 	//check if it's spawn time!!
-	if(this.timer.getTime() - this.lastSpawnTime > this.settingsObject.spawnDelay ) {
+	if(this.lastSpawnTime > this.settingsObject.spawnDelay ) {
 		this.addAsteroid();
+		this.lastSpawnTime = 0;
 	}
 
 }
@@ -92,16 +98,11 @@ Environment.prototype.moveAsteroids = function (){
 Environment.prototype.addAsteroid = function(){
 	var tempAsteroid;
 
-	//this.tempAsteroid = this.asteroidBuffer.pop();
-	//this.tempAsteroid.initialize();
 	tempAsteroid = this.asteroidBuffer.pop();
 	tempAsteroid.initialize();
-	//this.activeAsteroids.push(this.tempAsteroid);
-	//this.game3Dscene.add(this.tempAsteroid.asteroidMesh);
 	this.activeAsteroids.push(tempAsteroid);
 	this.game3Dscene.add(tempAsteroid.asteroidMesh);
-	this.lastSpawnTime = this.timer.getTime();
-
+	
 	//check buffer status
 	if(this.asteroidBuffer.length < this.asteroidBufferMinimum){
 		this.fillBuffer();
@@ -131,7 +132,7 @@ Environment.prototype.reset = function(){
 		this.removeAsteroid(0);
 	}
 	this.spaceship.reset();
-	this.lastSpawnTime = this.timer.getTime();
+	this.lastSpawnTime = 0;
 }
 
 

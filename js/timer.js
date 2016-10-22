@@ -6,9 +6,9 @@ function Timer(){
 	
 //=== VARIABLES ===
 
-	this.clock = 0;
 	this.previousTime = new Date();
 	this.passedTime;
+	this.paused = false;
 	
 	
 	
@@ -21,19 +21,21 @@ function Timer(){
 //=== METHODS ===
 
 Timer.prototype.update = function(){
-	var currentTime =  new Date();
-	this.passedTime = (currentTime - this.previousTime);
-	this.clock += this.passedTime;
+	var currentTime = new Date();
+	this.passedTime = currentTime - this.previousTime;
 	this.previousTime = currentTime;
+	if(this.paused){
+		this.passedTime = 0;
+	}
 }
 
 
-Timer.prototype.getTime = function(){
-	return this.clock/1000;
+Timer.prototype.pause = function(){
+	this.paused = !this.paused;
+	console.log("pause");
 }
 
 
 Timer.prototype.reset = function(){
-	this.clock = 0;
 	this.previousTime = new Date();
 }
