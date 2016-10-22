@@ -15,11 +15,13 @@ function GameSettings(width, height, depth, aspectRatio){
 
 	//ASTEROID SETTINGS
 	//miliseconds between asteroid spawn
+	this.initialSpawnDelay = 300;
 	this.spawnDelay = 300;
 	//asteroid speed in units per second
+	this.initialAsteroidSpeed = 20;
 	this.asteroidSpeed = 20;
-	this.AsteroidMinSize = 0.2;
-	this.AsteroidMaxSize = 3;
+	this.asteroidMinSize = 0.2;
+	this.asteroidMaxSize = 3;
 
 
 //=== CONSTRUCTOR===
@@ -39,14 +41,18 @@ GameSettings.prototype.asteroid_spawn_Y = function(){
 }
 
 GameSettings.prototype.asteroid_spawn_Z = function(){
-	// return - this.game_area_D/2;
 	return - (7 * this.game_area_D/8);
 }
 
 GameSettings.prototype.asteroidSize = function(){
-	return this.AsteroidMinSize + (this.AsteroidMaxSize - this.AsteroidMinSize) * Math.random();
+	return this.asteroidMinSize + (this.asteroidMaxSize - this.asteroidMinSize) * Math.random();
 }
 
 GameSettings.prototype.updateRatio = function(ratio){
 	this.game_area_W = this.game_area_H * ratio;
+}
+
+GameSettings.prototype.reset = function(){
+	this.spawnDelay = this.initialSpawnDelay;
+	this.asteroidSpeed = this.initialAsteroidSpeed;
 }

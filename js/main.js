@@ -49,7 +49,7 @@ function ProjectOLA(){
 	var gameState;
 
 	// score counter
-	var score = new ScoreCounter(timer);
+	var score = new ScoreCounter(timer, settings);
 
 
 	// keyboard Input managment
@@ -82,11 +82,7 @@ function ProjectOLA(){
 	//composers
 	var depth_composer = new THREE.EffectComposer(renderer);
 	var main_composer = new THREE.EffectComposer(renderer);
-	THREE.EffectComposer.prototype.swapTargets = function() {
-		var tmp = this.renderTarget2;
-		this.renderTarget2 = this.renderTarget1;
-		this.renderTarget1 = tmp;
-	};
+
 
 	//shaders
 	var depth_shader = createDepthShader();
@@ -108,8 +104,6 @@ function ProjectOLA(){
 	//passes
 	var mainRender_pass;
 	var depthRender_pass;
-	//var copy_pass;
-
 	var imageSettings_pass;
 	var depthOfField_pass;
 	var pixelation_pass;
@@ -120,10 +114,9 @@ function ProjectOLA(){
 
 	//initializes mouse controls for free camera
 	var orbitControls = new THREE.OrbitControls(freeCamera, renderer.domElement);
-		// orbitControls.addEventListener( 'change', animate );
-		orbitControls.enableKeys = false;
-		orbitControls.enabled = false;
-		orbitControls.target = new THREE.Vector3(0,0,-10);
+	orbitControls.enableKeys = false;
+	orbitControls.enabled = false;
+	orbitControls.target = new THREE.Vector3(0,0,-10);
 
 
 //======= CAMERA METHODS =======
@@ -295,6 +288,7 @@ function ProjectOLA(){
 		function(){
 			score.reset();
 			timer.reset();
+			settings.reset();
 			environment.reset();
 			userInterface.displayGame();
 		},
