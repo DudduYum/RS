@@ -1,3 +1,7 @@
+// start ininitializzation
+#define PI 3.14159265
+#extension GL_OES_standard_derivatives : enable
+
 //asteroidFS
 
 
@@ -27,9 +31,7 @@ uniform sampler2D specularMap;
 uniform float s;
 uniform vec2 normalScale;
 
-// start ininitializzation
-#define PI 3.14159265
-#extension GL_OES_standard_derivatives : enable
+
 
 
 

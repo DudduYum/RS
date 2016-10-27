@@ -1,6 +1,8 @@
 //spaceshipFS
 
-
+// start ininitializzation
+#define PI 3.14159265
+#extension GL_OES_standard_derivatives : enable
 
 // fragment propertys
 varying vec3 tNorm;
@@ -29,9 +31,7 @@ uniform vec3 color;
 uniform float s;
 uniform vec2 normalScale;
 
-// start ininitializzation
-#define PI 3.14159265
-#extension GL_OES_standard_derivatives : enable
+
 
 
 

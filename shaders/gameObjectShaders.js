@@ -33,6 +33,11 @@ function createSpaceshipSheders(){
 			].join("\n"),
 
 			fragmentShader: [
+			
+					// start ininitializzation
+					"#define PI 3.14159265",
+					"#extension GL_OES_standard_derivatives : enable",
+					
 					// fragment propertys
 					"varying vec3 tNorm;",
 					"varying vec3 pointPosition;",
@@ -60,9 +65,7 @@ function createSpaceshipSheders(){
 					"uniform float s;",
 					"uniform vec2 normalScale;",
 
-					// start ininitializzation
-					"#define PI 3.14159265",
-					"#extension GL_OES_standard_derivatives : enable",
+					
 
 
 
@@ -183,7 +186,9 @@ function createSpaceshipSheders(){
 			,
 			fragmentShader:[
 
-
+				// start ininitializzation
+				"#define PI 3.14159265",
+				"#extension GL_OES_standard_derivatives : enable",
 
 				// fragment propertys
 				"varying vec3 tNorm;",
@@ -211,9 +216,7 @@ function createSpaceshipSheders(){
 				"uniform float s;",
 				"uniform vec2 normalScale;",
 
-				// start ininitializzation
-				"#define PI 3.14159265",
-				"#extension GL_OES_standard_derivatives : enable",
+				
 
 
 
