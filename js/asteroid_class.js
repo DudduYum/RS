@@ -8,13 +8,9 @@ function Asteroid(settings, materialManager, timer){
 	this.timer = timer;
 	// create asteroidMesh
 	var geometry = new THREE.SphereGeometry(1, 32, 32);
-	// materialManager.getAsteroidMaterial();
-	// var material = materialManager.asteroidMaterial;
 	var material = materialManager.getAsteroidMaterial();
-	// mat.needsinitialize = true;
 
 	this.direction = new THREE.Vector3();
-
 
 	// punto di destinazione
 	this.destination;
@@ -80,9 +76,6 @@ Asteroid.prototype.move = function(){
 	Qast = this.asteroidMesh.quaternion.clone().inverse();
 	displaysmentVec.applyQuaternion(Qast);
 
-	// tmp code start
-
-	// tmp code end
 
 	//lights position update
 	var sunPosition = pointLight.lightPosition.clone();
@@ -106,8 +99,11 @@ Asteroid.prototype.move = function(){
 };
 
 Asteroid.prototype.hasCrossedTheLine = function(){
-	//return this.asteroidMesh.position.z >= 1;
-	return this.asteroidMesh.position.z >= this.settings.game_area_D / 8;
+	if(this.asteroidMesh.position.z >= this.settings.game_area_D / 8) {
+		return true;
+	} else {
+		return false;
+	}
 };
 
 Asteroid.prototype.initialize = function(){
