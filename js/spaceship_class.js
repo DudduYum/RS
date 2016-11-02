@@ -23,22 +23,22 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 
 
 	//spaceship front
-	this.spaceship_front_geometry = new THREE.CylinderGeometry(0, this.spaceshipRadius, this.spaceshipLength * this.spaceshipFrontSize, 32);
+	this.spaceship_front_geometry = new THREE.CylinderGeometry(0, this.spaceshipRadius, this.spaceshipLength * this.spaceshipFrontSize, 64);
 	this.spaceship_front_material = this.materialManager.redSpaceshipMaterial();
 	this.spaceship_front = new THREE.Mesh(this.spaceship_front_geometry, this.spaceship_front_material);
 
 	//spaceship body
-	this.spaceship_body_geometry = new THREE.CylinderGeometry(this.spaceshipRadius, this.spaceshipRadius, this.spaceshipLength * this.spaceshipBodySize, 32);
+	this.spaceship_body_geometry = new THREE.CylinderGeometry(this.spaceshipRadius, this.spaceshipRadius, this.spaceshipLength * this.spaceshipBodySize, 64);
 	this.spaceship_body_material = this.materialManager.silverSpaceshipMaterial();
 	this.spaceship_body = new THREE.Mesh(this.spaceship_body_geometry, this.spaceship_body_material);
 
 	//spaceship back
-	this.spaceship_back_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius*3/5, this.spaceshipRadius*3/4, this.spaceshipLength * this.spaceshipBackSize, 32);
+	this.spaceship_back_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius*3/5, this.spaceshipRadius*3/4, this.spaceshipLength * this.spaceshipBackSize, 64);
 	this.spaceship_back_material = this.materialManager.darkSilverSpaceshipMaterial();
 	this.spaceship_back = new THREE.Mesh(this.spaceship_back_geometry, this.spaceship_back_material);
 
 	//spaceship flame
-	this.spaceship_flame_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius*3/7, 0.0, this.spaceshipLength * this.spaceshipFlameSize, 32 , 20);
+	this.spaceship_flame_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius*3/7, 0.0, this.spaceshipLength * this.spaceshipFlameSize, 64 , 20);
 	this.spaceship_flame_geometry.scale(0.8 , 1.0 , 1.3);
 	this.spaceship_flame_material = this.materialManager.getFlameMaterial();
 	this.spaceship_flame = new THREE.Mesh(this.spaceship_flame_geometry, this.spaceship_flame_material);
