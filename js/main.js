@@ -144,7 +144,7 @@ function ProjectOLA(){
 	);
 
 	//generale camera switch method
-	function switchCamera() {
+	switchCameraMode = function() {
 		if(!useGameCamera) {
 			userInterface.switchToGameCamera();
 		} else {
@@ -152,10 +152,6 @@ function ProjectOLA(){
 		}
 	}
 
-	//assign the camera switch method to a global variable
-	switchCameraMode = switchCamera;
-	//assign camera switch method to button C
-	inputControl.addKeyDownAction(67, switchCamera);
 
 
 //======= RENDERING METHODS =======
@@ -300,12 +296,26 @@ function ProjectOLA(){
 			userInterface.displayGame();
 		},
 		function(){
+			timer.pause();
+		},
+		function(){
 			userInterface.displayGameOver();
 		}
 	);
 
 
-	//add event listener to start the game and switch the camera
+
+	//======= KEY BINDING =======
+
+	//assign camera switch method to C key
+	inputControl.addKeyDownAction(67, switchCameraMode);
+	//assign game pause method to P key
+	inputControl.addKeyDownAction(
+		80,
+		function(){
+			gameState.pauseGame()
+		});
+	//assign game start or spaceship lock to Spacebar key
 
 	inputControl.addKeyDownAction(32,
 		function(){
@@ -318,7 +328,7 @@ function ProjectOLA(){
 	);
 
 
-
+//
 
 
 

@@ -1,18 +1,19 @@
 "use strict";
 
-function GameState(startFun, stopFun){
-	
+function GameState(startFun, pauseFun, stopFun){
+
 //=== VARIABLES ===
 
 	//true if game is running
-	this.gameRunning = false;;
+	this.gameRunning = false;
 	//true if game is over, not just not running
-	this.gameOver = false;;
-	this.startAction = startFun;;
-	this.stopAction = stopFun;;
+	this.gameOver = false;
+	this.startAction = startFun;
+	this.pauseAction = pauseFun;
+	this.stopAction = stopFun;
 
 
-	
+
 //=== CONSTRUCTOR ===
 
 }
@@ -37,7 +38,14 @@ GameState.prototype.startGame = function(){
 		this.gameRunning = true;
 		this.gameOver = false;
 		this.startAction();
-	}		
+	}
+}
+
+//set to start state
+GameState.prototype.pauseGame = function(){
+	if(this.gameRunning){
+		this.pauseAction();
+	}
 }
 
 
@@ -51,6 +59,3 @@ GameState.prototype.stopGame = function(){
 		console.log("warring: game is alredy stopped!");
 	}
 }
-
-
-

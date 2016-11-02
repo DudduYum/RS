@@ -26,7 +26,7 @@ function Environment(settingsObject, timer, IO_controls){
 
 	//sphere map
 	this.openSpaceGeometry  = new THREE.SphereGeometry(600, 32, 32);
-	this.openSpaceTexture = new THREE.TextureLoader().load("textures/spaceD2.jpg");
+	this.openSpaceTexture = new THREE.TextureLoader().load("textures/spaceDark.jpg");
 	this.openSpaceMaterial  = new THREE.MeshBasicMaterial({map: this.openSpaceTexture, side: THREE.DoubleSide});
 	this.openSpace  = new THREE.Mesh(this.openSpaceGeometry, this.openSpaceMaterial);
 	this.openSpace.position.set(0,0,0);
@@ -34,6 +34,19 @@ function Environment(settingsObject, timer, IO_controls){
 	this.game3Dscene.add(this.openSpace);
 
 
+	//reference sun
+	this.sunGeometry = new THREE.SphereGeometry(60, 32, 32);
+	this.sunMaterial = new THREE.MeshBasicMaterial({color:0xffffe6});
+	this.sun = new THREE.Mesh(this.sunGeometry, this.sunMaterial);
+	this.sun.position.set(
+		pointLight.lightPosition.x,
+		pointLight.lightPosition.y,
+		pointLight.lightPosition.z
+	);
+
+	this.game3Dscene.add(this.sun);
+
+	// ?
 	this.materialManager.shipMaterial = new THREE.MeshBasicMaterial({color:0x00ff00});
 
 	this.game3Dscene.add(this.spaceship.spaceship3D);

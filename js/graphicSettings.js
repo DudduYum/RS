@@ -8,9 +8,9 @@ function GraphicSettings(areaDepth) {
 	this.dynamic_depthOfField = false;
 	this.focus_distance = 35;
 	this.pixelation = false;
-	this.pixel_size = 16;
+	this.pixel_size = 12;
 	this.edgeDetection = false;
-	
+
 	this.background = true;
 	this.inverseColors = false;
 	this.saturation = 50;
@@ -27,9 +27,9 @@ function GraphicSettings(areaDepth) {
 					"dynamic_depthOfField": false,
 					"focus_distance": 35,
 					"pixelation": false,
-					"pixel_size": 16,
+					"pixel_size": 12,
 					"edgeDetection": false,
-					
+
 					"background": true,
 					"inverseColors": false,
 					"saturation": 50,
@@ -41,9 +41,9 @@ function GraphicSettings(areaDepth) {
 					"dynamic_depthOfField": false,
 					"focus_distance": 35,
 					"pixelation": false,
-					"pixel_size": 16,
+					"pixel_size": 12,
 					"edgeDetection": true,
-					
+
 					"background": false,
 					"inverseColors": true,
 					"saturation": 50,
@@ -55,9 +55,9 @@ function GraphicSettings(areaDepth) {
 					"dynamic_depthOfField": false,
 					"focus_distance": 35,
 					"pixelation": true,
-					"pixel_size": 16,
+					"pixel_size": 12,
 					"edgeDetection": true,
-					
+
 					"background": false,
 					"inverseColors": false,
 					"saturation": 50,
@@ -81,9 +81,9 @@ function GraphicSettings(areaDepth) {
 	var depthOfField_controller = effects_folder.add(this, 'dynamic_depthOfField');
 	var depthOfField_distance_controller = effects_folder.add(this, 'focus_distance', 0, areaDepth).step(1);
 	var pixelation_controller = effects_folder.add(this, 'pixelation');
-	var pixelation_size_controller = effects_folder.add(this, 'pixel_size', 1, 16).step(1);
+	var pixelation_size_controller = effects_folder.add(this, 'pixel_size', 2, 12).step(1);
 	var edgeDetection_controller = effects_folder.add(this, 'edgeDetection');
-	
+
 	var imageSettings_folder = settingsGui.addFolder('Image settings');
 	imageSettings_folder.open();
 	var background_controller = imageSettings_folder.add(this, 'background');
@@ -95,11 +95,11 @@ function GraphicSettings(areaDepth) {
 	background_controller.onChange(function(value) {
 		setBackground(value);
 	});
-	
+
 	inverseColors_controller.onChange(function(value) {
 		setInverseColors(value);
 	});
-	
+
 	saturation_controller.onChange(function(value) {
 		setSaturation(value);
 	});
@@ -107,7 +107,7 @@ function GraphicSettings(areaDepth) {
 	brightness_controller.onChange(function(value) {
 		setBrightness(value);
 	});
-	
+
 
 	depthOfField_controller.onChange(function(value) {
 		setDepthOfField(value);
@@ -116,7 +116,7 @@ function GraphicSettings(areaDepth) {
 	depthOfField_distance_controller.onChange(function(value) {
 		setDepthOfFieldDistance(value);
 	});
-	
+
 	pixelation_controller.onChange(function(value) {
 		setPixelation(value);
 	});
@@ -129,5 +129,5 @@ function GraphicSettings(areaDepth) {
 		setEdgeDetection(value);
 	});
 
-	
+
 }
