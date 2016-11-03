@@ -13,8 +13,8 @@ function MaterialManager(){
 	this.spaceshipTexture;
 	this.spaceshipNormalMap;
 	this.spaceshipSpecularMap;
-	this.flameTexture = this.loadImage("textures/spaceship/flameOriginal.jpg");
-	this.flameDisplaysmentMap = this.loadImage("textures/spaceship/dispFlame.jpg")
+	this.flameTexture = this.loadImage("textures/spaceship/flame_original.jpg");
+	this.flameDisplacementMap = this.loadImage("textures/spaceship/flame_displacement.jpg")
 
 
 	this.sunMaterial;
@@ -22,11 +22,11 @@ function MaterialManager(){
 
 	this.asteroidTexture = this.loadImage('textures/asteroid/asteroid.jpg');
 
-	this.asteroidNormalMap = this.loadImage('textures/asteroid/normalAst.png');
+	this.asteroidNormalMap = this.loadImage('textures/asteroid/asteroid_normal.png');
 
-	this.asteroidDisplacementMap = this.loadImage('textures/asteroid/displaysmentAst.png');
+	this.asteroidDisplacementMap = this.loadImage('textures/asteroid/asteroid_displacement.png');
 
-	this.asteroidSpecularMap = this.loadImage('textures/asteroid/specularAst.png');
+	this.asteroidSpecularMap = this.loadImage('textures/asteroid/asteroid_specular.png');
 
 	this.asteroidMaterial = this.getMaterialByName("asteroid");
 
@@ -150,14 +150,14 @@ MaterialManager.prototype.getAsteroidMaterial = function(){
 MaterialManager.prototype.createSpaceshipUniforms = function(){
 
 	// asteroid texture
-	this.spaceshipTexture = this.loadImage('textures/spaceship/spaceshipTex.jpg');
+	this.spaceshipTexture = this.loadImage('textures/spaceship/spaceship.jpg');
 	this.spaceshipTexture.minFilter = THREE.LinearMipMapLinearFilter;
 
 	// normal map that is used for light calculation
-	this.spaceshipNormalMap = this.loadImage('textures/spaceship/spaseshipNormal.png');
+	this.spaceshipNormalMap = this.loadImage('textures/spaceship/spaceship_normal.png');
 	this.spaceshipNormalMap.minFilter = THREE.LinearMipMapLinearFilter;
 
-	this.spaceshipSpecularMap = this.loadImage('textures/spaceship/specular.png');
+	this.spaceshipSpecularMap = this.loadImage('textures/spaceship/spaceship_specular.png');
 
 	var uniforms = {
 		tex: {
@@ -213,7 +213,7 @@ MaterialManager.prototype.createFlameUniforms = function(){
 		},
 		displacementMap: {
 			type:  "t",
-			value: this.flameDisplaysmentMap
+			value: this.flameDisplacementMap
 		},
 		distortionFactor: {
 			type: "f",
