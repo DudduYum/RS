@@ -15,9 +15,12 @@ function GameSettings(width, height, depth, aspectRatio){
 
 	//ASTEROID SETTINGS
 	//seconds between asteroid spawn
+	this.initialSpawnDelay = 0.3;
 	this.spawnDelay = 0.3;
 	//asteroid speed in units per second
+	this.initialAsteroidSpeed = 20;
 	this.asteroidSpeed = 20;
+
 	this.AsteroidMinSize = 0.2;
 	this.AsteroidMaxSize = 3;
 
@@ -49,4 +52,9 @@ GameSettings.prototype.asteroidSize = function(){
 
 GameSettings.prototype.updateRatio = function(ratio){
 	this.game_area_W = this.game_area_H * ratio;
+}
+
+GameSettings.prototype.reset = function(){
+	this.spawnDelay = this.initialSpawnDelay;
+	this.asteroidSpeed = this.initialAsteroidSpeed;
 }

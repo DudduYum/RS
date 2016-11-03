@@ -49,7 +49,7 @@ function ProjectOLA(){
 	var gameState;
 
 	// score counter
-	var score = new ScoreCounter(timer);
+	var score = new ScoreCounter(timer, settings);
 
 
 	// keyboard Input managment
@@ -292,6 +292,7 @@ function ProjectOLA(){
 		function(){
 			score.reset();
 			timer.reset();
+			settings.reset();
 			environment.reset();
 			userInterface.displayGame();
 		},
