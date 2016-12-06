@@ -1,4 +1,4 @@
-"use strict";
+//"use strict";
 
 //======= GLOBAL VARIABLES AND METHODS =======
 var switchCameraMode;
@@ -150,7 +150,7 @@ function ProjectOLA(){
 		} else {
 			userInterface.switchToFreeCamera();
 		}
-	}
+	};
 
 
 
@@ -212,7 +212,7 @@ function ProjectOLA(){
 
 	setBackground = function(value) {
 		environment.openSpace.visible = value;
-	}
+	};
 
 	setInverseColors = function(value) {
 		var bool;
@@ -222,39 +222,39 @@ function ProjectOLA(){
 			bool = 0.0;
 		imageSettings_shader.uniforms.inverseColors.value = bool;
 		imageSettings_pass.material.uniforms.inverseColors.value = bool;
-	}
+	};
 
 	setSaturation = function(value) {
 		imageSettings_shader.uniforms.saturation.value = value / 50;
 		imageSettings_pass.material.uniforms.saturation.value = value / 50;
-	}
+	};
 
 	setBrightness = function(value) {
 		imageSettings_shader.uniforms.brightness.value = value / 50;
 		imageSettings_pass.material.uniforms.brightness.value = value / 50;
-	}
+	};
 
 	setDepthOfField = function(value) {
 		depthOfField_pass.enabled = value;
-	}
+	};
 
 	setDepthOfFieldDistance = function(value) {
 		depthOfField_shader.uniforms.focusLimit.value = value;
 		depthOfField_pass.material.uniforms.focusLimit.value = value;
-	}
+	};
 
 	setPixelation = function(value) {
 		pixelation_pass.enabled = value;
-	}
+	};
 
 	setPixelationSize = function(value) {
 		pixelation_shader.uniforms.pixelationSize.value = value;
 		pixelation_pass.material.uniforms.pixelationSize.value = value;
-	}
+	};
 
 	setEdgeDetection = function(value) {
 		edgeDetection_pass.enabled = value;
-	}
+	};
 
 
 
@@ -314,7 +314,7 @@ function ProjectOLA(){
 	inputControl.addKeyDownAction(
 		80,
 		function(){
-			gameState.pauseGame()
+			gameState.pauseGame();
 		});
 	//assign game start or spaceship lock to Spacebar key
 
@@ -358,7 +358,7 @@ function ProjectOLA(){
 		timer.update();
 		depth_composer.render();
 		main_composer.render();
-	};
+	}
 
 //LOOP START
 	animate();

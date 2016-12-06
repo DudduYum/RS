@@ -1,4 +1,5 @@
 "use strict";
+//
 //clock to animate the game regardless of framerate
 //this allows the game to run at the same "effective speed" at any framerate
 
@@ -8,7 +9,7 @@ function Timer(){
 
 	this.clock = 0;
 	this.previousTime = new Date();
-	this.passedTime;
+	this.passedTime = 0; // Random value to cancel warring 
 	this.paused = false;
 
 //=== CONSTRUCTOR===
@@ -27,22 +28,22 @@ Timer.prototype.update = function(){
 	if(this.paused){
 		this.passedTime = 0;
 	}
-}
+};
 
 Timer.prototype.pause = function(){
 	this.paused = !this.paused;
 	console.log("pause");
-}
+};
 
 Timer.prototype.getTime = function(){
 	return this.clock/1000;
-}
+};
 
 
 Timer.prototype.reset = function(){
 	this.clock = 0;
 	this.previousTime = new Date();
-}
+};
 
 //Timer.prototype.reset = function(){
 	//this.previousTime = new Date();

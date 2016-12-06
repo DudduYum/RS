@@ -35,26 +35,26 @@ function GameSettings(width, height, depth, aspectRatio){
 
 GameSettings.prototype.asteroid_spawn_X = function(){
 	return this.game_area_W * 2 * Math.random() - this.game_area_W;
-}
+};
 
 GameSettings.prototype.asteroid_spawn_Y = function(){
 	return this.game_area_H * 2 * Math.random() - this.game_area_H;
-}
+};
 
 GameSettings.prototype.asteroid_spawn_Z = function(){
 	// return - this.game_area_D/2;
 	return - (7 * this.game_area_D/8);
-}
+};
 
 GameSettings.prototype.asteroidSize = function(){
 	return this.AsteroidMinSize + (this.AsteroidMaxSize - this.AsteroidMinSize) * Math.random();
-}
+};
 
 GameSettings.prototype.updateRatio = function(ratio){
 	this.game_area_W = this.game_area_H * ratio;
-}
+};
 
 GameSettings.prototype.reset = function(){
 	this.spawnDelay = this.initialSpawnDelay;
 	this.asteroidSpeed = this.initialAsteroidSpeed;
-}
+};

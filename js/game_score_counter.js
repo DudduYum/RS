@@ -1,3 +1,6 @@
+(function (){
+	"use strict";
+})();
 "use strict";
 
 function ScoreCounter(timer, settingsObj){

@@ -1,4 +1,4 @@
-"use strict";
+//"use strict";
 
 function Environment(settingsObject, timer, IO_controls){
 
@@ -13,7 +13,7 @@ function Environment(settingsObject, timer, IO_controls){
 	this.asteroidBufferMinimum = 10;
 	this.activeAsteroids = [];
 	this.asteroidBuffer = [];
-	this.lastSpawnTime;
+	this.lastSpawnTime = 0;
 
 	// spaceship
 	this.spaceship = new Spaceship(this.settingsObject, this.materialManager, this.IO_controls, this.timer);
@@ -52,7 +52,7 @@ function Environment(settingsObject, timer, IO_controls){
 	this.game3Dscene.add(this.spaceship.spaceship3D);
 
 	this.spaceship.initialize();
-	this.lastSpawnTime = timer.getTime()
+	this.lastSpawnTime = timer.getTime();
 
 	this.fillBuffer();
 
@@ -70,7 +70,7 @@ Environment.prototype.detectCollisions = function(){
 			throw {asteroid: this.activeAsteroids[i].mesh};
 		}
 	}
-}
+};
 
 
 // ASTEROIDS
@@ -79,7 +79,7 @@ Environment.prototype.fillBuffer = function(){
 	while(this.asteroidBuffer.length < this.asteroidBufferMinimum + 5) {
 		this.asteroidBuffer.push(new Asteroid(this.settingsObject, this.materialManager, this.timer));
 	}
-}
+};
 
 
 //this method moves asteroids and make them visible
@@ -99,7 +99,7 @@ Environment.prototype.moveAsteroids = function (){
 		this.addAsteroid();
 	}
 
-}
+};
 
 
 Environment.prototype.addAsteroid = function(){
@@ -119,7 +119,7 @@ Environment.prototype.addAsteroid = function(){
 	if(this.asteroidBuffer.length < this.asteroidBufferMinimum){
 		this.fillBuffer();
 	}
-}
+};
 
 
 //remove all asteroid from the game area
@@ -130,14 +130,14 @@ Environment.prototype.removeAsteroid = function(astIndex){
 	this.activeAsteroids.splice(astIndex,1);
 	this.asteroidBuffer.push(tempAsteroid);
 	this.game3Dscene.remove(tempAsteroid.asteroidMesh);
-}
+};
 
 
 Environment.prototype.update = function(){
 		this.moveAsteroids();
 		this.spaceship.updateSpaceship();
 		this.detectCollisions();
-}
+};
 
 Environment.prototype.reset = function(){
 	while ( this.activeAsteroids.length > 0 ){
@@ -145,14 +145,14 @@ Environment.prototype.reset = function(){
 	}
 	this.spaceship.reset();
 	this.lastSpawnTime = this.timer.getTime();
-}
+};
 
 
 Environment.prototype.rotateSpaceship = function() {
 	this.spaceship.rotate();
-}
+};
 
 
 Environment.prototype.immobilizeSpaceship = function() {
 	this.spaceship.immobilize();
-}
+};
