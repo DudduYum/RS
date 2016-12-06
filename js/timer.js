@@ -1,4 +1,4 @@
-"use strict";
+//"use strict";
 //
 //clock to animate the game regardless of framerate
 //this allows the game to run at the same "effective speed" at any framerate
@@ -43,8 +43,4 @@ Timer.prototype.getTime = function(){
 Timer.prototype.reset = function(){
 	this.clock = 0;
 	this.previousTime = new Date();
-};
-
-//Timer.prototype.reset = function(){
-	//this.previousTime = new Date();
-//}
+}

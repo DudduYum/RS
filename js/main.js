@@ -343,12 +343,13 @@ function ProjectOLA(){
 		if(gameState.isRunning()) {
 			try{
 				environment.update();
-				userInterface.update();
-				score.update();
 			}
 			catch(exec) {
 				gameState.stopGame();
+				console.log(exec);
 			}
+			userInterface.update();
+			score.update();
 		} else if(!gameState.isOver()){
 			environment.rotateSpaceship();
 		}

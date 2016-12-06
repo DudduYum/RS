@@ -182,7 +182,7 @@ Asteroid.prototype.initialize = function(){
 
 	// material update
 	this.asteroidMesh.material.uniforms.distortionFactor.value = size;
-	this.asteroidMesh.material.uniforms.maxDistortion.value = this.settings.AsteroidMaxSize;
+	this.asteroidMesh.material.uniforms.maxDistortion.value = this.settings.asteroidMaxSize;
 
 	// reset rotation animation
 	this.rotationAnimation = 0;
