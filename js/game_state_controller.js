@@ -1,4 +1,7 @@
-"use strict";
+(function (){
+	"use strict";
+})();
+	
 
 function GameState(startFun, pauseFun, stopFun){
 
@@ -24,12 +27,12 @@ function GameState(startFun, pauseFun, stopFun){
 
 GameState.prototype.isRunning = function(){
 	return this.gameRunning;
-}
+};
 
 
 GameState.prototype.isOver = function() {
 	return this.gameOver;
-}
+};
 
 
 //set to start state
@@ -39,14 +42,14 @@ GameState.prototype.startGame = function(){
 		this.gameOver = false;
 		this.startAction();
 	}
-}
+};
 
 //set to start state
 GameState.prototype.pauseGame = function(){
 	if(this.gameRunning){
 		this.pauseAction();
 	}
-}
+};
 
 
 //set to stop state
@@ -58,4 +61,4 @@ GameState.prototype.stopGame = function(){
 	} else {
 		console.log("warring: game is alredy stopped!");
 	}
-}
+};

@@ -1,4 +1,4 @@
-"use strict";
+//"use strict";
 
 function GameSettings(width, height, depth, aspectRatio){
 
@@ -49,7 +49,7 @@ GameSettings.prototype.asteroid_spawn_Y = function(){
 
 GameSettings.prototype.asteroid_spawn_Z = function(){
 	return - (7 * this.game_area_D/8);
-}
+};
 
 GameSettings.prototype.asteroidSize = function(){
 	return this.asteroidMinSize + (this.asteroidMaxSize - this.asteroidMinSize) * Math.random();

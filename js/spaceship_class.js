@@ -1,4 +1,4 @@
-"use strict";
+//"use strikt";
 
 function Spaceship(settingsObj, materialManager, IO_controls, timer){
 
@@ -46,7 +46,7 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 
 	// flame brightness
 	this.flameBrightness = 7.0;
-	this.flameBrightnessStep = .05;
+	this.flameBrightnessStep = 0.05;
 	this.maxFlameBrightness = 8.0;
 	this.brightnessMode = 0;
 
@@ -144,25 +144,25 @@ Spaceship.prototype.checkLeftBorder = function(){
 		return true;
 	else
 		return false;
-}
+};
 Spaceship.prototype.checkRightBorder = function(){
 	if(this.spaceship3D.position.x < this.settingsObj.game_area_W/2 - 1)
 		return true;
 	else
 		return false;
-}
+};
 Spaceship.prototype.checkUpBorder = function(){
 	if(this.spaceship3D.position.y < this.settingsObj.game_area_H/2 - 1)
 		return true;
 	else
 		return false;
-}
+};
 Spaceship.prototype.checkDownBorder = function(){
 	if(this.spaceship3D.position.y > -this.settingsObj.game_area_H/2 + 1)
 		return true;
 	else
 		return false;
-}
+};
 
 //SPACESHIP MOVEMENT
 Spaceship.prototype.moveRight = function(){
@@ -206,18 +206,18 @@ Spaceship.prototype.horizontalInertia = function(){
 	if(!this.IO_controls.isKeyPressed(37) && !this.IO_controls.isKeyPressed(65) && !this.IO_controls.isKeyPressed(39) && !this.IO_controls.isKeyPressed(68)) {
 		this.spaceshipSpeed.hSpeed = this.spaceshipSpeed.hSpeed * this.settingsObj.spaceshipInertia;
 	}
-}
+};
 
 Spaceship.prototype.verticalInertia = function(){
 	if(!this.IO_controls.isKeyPressed(38) && !this.IO_controls.isKeyPressed(87) && !this.IO_controls.isKeyPressed(40) && !this.IO_controls.isKeyPressed(83)) {
 		this.spaceshipSpeed.vSpeed = this.spaceshipSpeed.vSpeed * this.settingsObj.spaceshipInertia;
 	}
-}
+};
 
 Spaceship.prototype.immobilize = function(){
 	this.spaceshipSpeed.hSpeed = 0;
 	this.spaceshipSpeed.vSpeed = 0;
-}
+};
 
 
 //move the spaceship3D and keep it inside game borders
@@ -254,7 +254,7 @@ Spaceship.prototype.updateSpaceship = function(){
 		this.brightnessMode = 1;
 	}
 
-	if(this.brightnessMode == 0){
+	if(this.brightnessMode === 0){
 		this.spaceship_flame.material.uniforms.brightness.value += this.flameBrightnessStep;
 	}else{
 		this.spaceship_flame.material.uniforms.brightness.value -= this.flameBrightnessStep;
@@ -270,7 +270,7 @@ Spaceship.prototype.updateSpaceship = function(){
 	// flame texture animation
 	this.spaceship_flame.material.uniforms.texAnimation.value += this.timer.passedTime/1000 * this.flameTexSpeed;
 	this.spaceship_flame.material.uniforms.texAnimation.value = this.spaceship_flame.material.uniforms.texAnimation.value % 2.0;
-}
+};
 
 
 //updates collider position
@@ -279,7 +279,7 @@ Spaceship.prototype.updateColliders = function() {
 		this.spaceshipColliders[i].center.setX(this.spaceship3D.position.x);
 		this.spaceshipColliders[i].center.setY(this.spaceship3D.position.y);
 	}
-}
+};
 
 
 
@@ -308,7 +308,7 @@ Spaceship.prototype.initialize = function() {
 	this.spaceship_flame.material.uniforms.texAnimation.value = 0.0;
 
 
-}
+};
 
 
 Spaceship.prototype.reset = function(){
@@ -324,13 +324,13 @@ Spaceship.prototype.reset = function(){
 	this.spaceshipColliders[0].center.set(0,0,this.spaceship3D.position.z - ((this.spaceshipFrontSize + this.spaceshipBodySize/2 ) * this.spaceshipLength));
 	this.spaceshipColliders[1].center.set(0,0,this.spaceship3D.position.z);
 	this.spaceshipColliders[2].center.set(0,0,this.spaceship3D.position.z + ((this.spaceshipBodySize/2 + this.spaceshipBackSize) * this.spaceshipLength));
-}
+};
 
 
 
 Spaceship.prototype.rotate = function() {
 	this.spaceship3D.rotation.y += 1 * Math.PI/180;
-}
+};
 
 
 
@@ -341,4 +341,4 @@ Spaceship.prototype.isColliding = function(ast){
 		}
 	}
 	return false;
-}
+};

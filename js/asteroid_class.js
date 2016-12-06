@@ -1,4 +1,7 @@
-"use strict";
+(function (){
+	"use strict";
+})();
+//"use strict";
 
 function Asteroid(settings, materialManager, timer){
 
@@ -17,7 +20,7 @@ function Asteroid(settings, materialManager, timer){
 
 
 	// punto di destinazione
-	this.destination;
+	this.destination = new THREE.Vector3();
 
 	// define propertys and behavior
 
@@ -27,14 +30,14 @@ function Asteroid(settings, materialManager, timer){
 	this.asteroidObj = new THREE.Object3D();
 	this.asteroidObj.add(this.asteroidMesh);
 
-	this.previousTime;
+	this.previousTime = 0;
 
 	this.collider = this.asteroidMesh.geometry.boundingSphere.clone();
 
 	// rotation animation
-	this.rotationAnimation;
-	this.rotationAnimationSpeed;
-	this.rotationDirection;
+	this.rotationAnimation = 0;
+	this.rotationAnimationSpeed = 0;
+	this.rotationDirection = 0;
 	this.rotationSubdivision = 2.5;
 
 //=== CONSTRUCTOR ===
@@ -46,7 +49,7 @@ function Asteroid(settings, materialManager, timer){
 ///=== METHODS ===
 Asteroid.prototype.setQuaternion = function(){
 
-}
+};
 
 Asteroid.prototype.move = function(){
 	// move quantity
@@ -72,13 +75,37 @@ Asteroid.prototype.move = function(){
 	// change displaysmentVec to apply movement to mesh
 	var Qast;
 
+	//correct asteroid rotation
+	var yRot;
+	var zRot;
+
+	if(this.rotationAnimation % Math.PI === 0){
+			 this.rotationDirection.y = -this.rotationDirection.y;
+			 this.rotationDirection.z = -this.rotationDirection.z;
+	}
+
 	this.asteroidMesh.quaternion.setFromEuler(
 		new THREE.Euler(
-			this.rotationAnimation * this.rotationDirection.x,
-			this.rotationAnimation * this.rotationDirection.y,
-			this.rotationAnimation * this.rotationDirection.z,
+			
+			this.rotationAnimation * 1,
+			//this.rotationAnimation * this.rotationDirection.x,
+			0 * this.rotationAnimation * this.rotationDirection.y,
+			0 * this.rotationAnimation * this.rotationDirection.z,
 			 'XYZ' )
 		 );
+	// light possition transformation according to meshrotation
+	//
+	var tmpSunPosition = pointLight.lightPosition.clone();
+	tmpSunPosition.applyQuaternion(this.asteroidMesh.quaternion);
+	this.asteroidMesh.material.uniforms.pointLightPos = tmpSunPosition;	
+	
+	var tmpFlamePosition = spaceshipLight.lightPosition.clone();
+	tmpFlamePosition.applyQuaternion(this.asteroidMesh.quaternion);
+	this.asteroidMesh.material.uniforms.lightPosition = tmpFlamePosition;
+
+
+	// computing inverse trasformation 
+	// need it to correct asteroid direction
 	Qast = this.asteroidMesh.quaternion.clone().inverse();
 	displaysmentVec.applyQuaternion(Qast);
 
@@ -181,6 +208,7 @@ Asteroid.prototype.initialize = function(){
 			this.rotationDirection.z = 1;
 		}
 	}
+
 
 };
 
