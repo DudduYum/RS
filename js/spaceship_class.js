@@ -172,7 +172,6 @@ Spaceship.prototype.moveRight = function(){
 	} else {
 		this.spaceshipSpeed.hSpeed = this.settingsObj.standardSpaceshipSpeed;
 	}
-	console.log(this.spaceshipSpeed.hSpeed + " - " + this.spaceshipSpeed.vSpeed);
 }
 
 Spaceship.prototype.moveLeft = function(){
@@ -182,7 +181,6 @@ Spaceship.prototype.moveLeft = function(){
 	} else {
 		this.spaceshipSpeed.hSpeed = - this.settingsObj.standardSpaceshipSpeed;
 	}
-	console.log(this.spaceshipSpeed.hSpeed + " - " + this.spaceshipSpeed.vSpeed);
 }
 
 Spaceship.prototype.moveUp = function(){
@@ -192,7 +190,6 @@ Spaceship.prototype.moveUp = function(){
 	} else {
 		this.spaceshipSpeed.vSpeed = this.settingsObj.standardSpaceshipSpeed;
 	}
-	console.log(this.spaceshipSpeed.hSpeed + " - " + this.spaceshipSpeed.vSpeed);
 }
 
 Spaceship.prototype.moveDown = function(){
@@ -202,7 +199,6 @@ Spaceship.prototype.moveDown = function(){
 	} else {
 		this.spaceshipSpeed.vSpeed = - this.settingsObj.standardSpaceshipSpeed;
 	}
-	console.log(this.spaceshipSpeed.hSpeed + " - " + this.spaceshipSpeed.vSpeed);
 }
 
 //SPACESHIP INERTIA
