@@ -117,13 +117,19 @@ function ProjectOLA(){
 
 
 
-
 	//initializes mouse controls for free camera
 	var orbitControls = new THREE.OrbitControls(freeCamera, renderer.domElement);
 		// orbitControls.addEventListener( 'change', animate );
 		orbitControls.enableKeys = false;
 		orbitControls.enabled = false;
 		orbitControls.target = new THREE.Vector3(0,0,-10);
+		
+		
+	//sound
+	var audio = document.createElement('audio');
+	var music = document.createElement('music');
+	music.src = '/sound/You_Kill_My_Brother_-_07_-_Go_Go_Go.mp3';
+	audio.appendChild(music);
 
 
 //======= CAMERA METHODS =======
@@ -295,9 +301,12 @@ function ProjectOLA(){
 			settings.reset();
 			environment.reset();
 			userInterface.displayGame();
+			audio.play();
 		},
 		function(){
 			timer.pause();
+			audio.repeat = false;
+			audio.pause();
 		},
 		function(){
 			userInterface.displayGameOver();
