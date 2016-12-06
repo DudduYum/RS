@@ -26,11 +26,11 @@ ScoreCounter.prototype.update = function(){
 	
 	this.preciseScore = this.preciseScore + this.timer.passedTime;
 	this.gameScore = Math.trunc((this.preciseScore/1000)*10)/10;
-	if(!this.difficultyLock && this.gameScore % 5 == 0) {
+	if(!this.difficultyLock && this.gameScore % this.settings.difficultyTimer == 0) {
 		this.difficultyLock = true;
 		this.settings.increaseDifficulty();
 	}
-	if(this.difficultyLock && this.gameScore % 5 == 1) {
+	if(this.difficultyLock && this.gameScore % this.settings.difficultyTimer == 1) {
 		this.difficultyLock = false;
 	}
 }

@@ -164,32 +164,57 @@ Spaceship.prototype.checkDownBorder = function(){
 		return false;
 }
 
-//spaceship movement
+//SPACESHIP MOVEMENT
 Spaceship.prototype.moveRight = function(){
-	this.spaceshipSpeed.hSpeed = this.settingsObj.normalSpeed;
+	if(Math.abs(this.spaceshipSpeed.vSpeed) > this.settingsObj.inertialSpaceshipSpeed) {
+		this.spaceshipSpeed.hSpeed = this.settingsObj.adjustedSpaceshipSpeed;
+		this.spaceshipSpeed.vSpeed = Math.sign(this.spaceshipSpeed.vSpeed) * this.settingsObj.adjustedSpaceshipSpeed;
+	} else {
+		this.spaceshipSpeed.hSpeed = this.settingsObj.standardSpaceshipSpeed;
+	}
+	console.log(this.spaceshipSpeed.hSpeed + " - " + this.spaceshipSpeed.vSpeed);
 }
 
 Spaceship.prototype.moveLeft = function(){
-	this.spaceshipSpeed.hSpeed = - this.settingsObj.normalSpeed;
+	if(Math.abs(this.spaceshipSpeed.vSpeed) > this.settingsObj.inertialSpaceshipSpeed) {
+		this.spaceshipSpeed.hSpeed = - this.settingsObj.adjustedSpaceshipSpeed;
+		this.spaceshipSpeed.vSpeed = Math.sign(this.spaceshipSpeed.vSpeed) * this.settingsObj.adjustedSpaceshipSpeed;
+	} else {
+		this.spaceshipSpeed.hSpeed = - this.settingsObj.standardSpaceshipSpeed;
+	}
+	console.log(this.spaceshipSpeed.hSpeed + " - " + this.spaceshipSpeed.vSpeed);
 }
 
 Spaceship.prototype.moveUp = function(){
-	this.spaceshipSpeed.vSpeed = this.settingsObj.normalSpeed;
+	if(Math.abs(this.spaceshipSpeed.hSpeed) > this.settingsObj.inertialSpaceshipSpeed) {
+		this.spaceshipSpeed.vSpeed = this.settingsObj.adjustedSpaceshipSpeed;
+		this.spaceshipSpeed.hSpeed = Math.sign(this.spaceshipSpeed.hSpeed) * this.settingsObj.adjustedSpaceshipSpeed;
+	} else {
+		this.spaceshipSpeed.vSpeed = this.settingsObj.standardSpaceshipSpeed;
+	}
+	console.log(this.spaceshipSpeed.hSpeed + " - " + this.spaceshipSpeed.vSpeed);
 }
 
 Spaceship.prototype.moveDown = function(){
-	this.spaceshipSpeed.vSpeed = - this.settingsObj.normalSpeed;
+	if(Math.abs(this.spaceshipSpeed.hSpeed) > this.settingsObj.inertialSpaceshipSpeed) {
+		this.spaceshipSpeed.vSpeed = - this.settingsObj.adjustedSpaceshipSpeed;
+		this.spaceshipSpeed.hSpeed = Math.sign(this.spaceshipSpeed.hSpeed) * this.settingsObj.adjustedSpaceshipSpeed;
+	} else {
+		this.spaceshipSpeed.vSpeed = - this.settingsObj.standardSpaceshipSpeed;
+	}
+	console.log(this.spaceshipSpeed.hSpeed + " - " + this.spaceshipSpeed.vSpeed);
 }
 
+//SPACESHIP INERTIA
 Spaceship.prototype.horizontalInertia = function(){
 	if(!this.IO_controls.isKeyPressed(37) && !this.IO_controls.isKeyPressed(65) && !this.IO_controls.isKeyPressed(39) && !this.IO_controls.isKeyPressed(68)) {
-		this.spaceshipSpeed.hSpeed = this.spaceshipSpeed.hSpeed * this.settingsObj.inertia;
+		this.spaceshipSpeed.hSpeed = this.spaceshipSpeed.hSpeed * this.settingsObj.spaceshipInertia;
 	}
 }
 
 Spaceship.prototype.verticalInertia = function(){
 	if(!this.IO_controls.isKeyPressed(38) && !this.IO_controls.isKeyPressed(87) && !this.IO_controls.isKeyPressed(40) && !this.IO_controls.isKeyPressed(83)) {
-		this.spaceshipSpeed.vSpeed = this.spaceshipSpeed.vSpeed * this.settingsObj.inertia;
+		this.spaceshipSpeed.vSpeed = this.spaceshipSpeed.vSpeed * this.settingsObj.spaceshipInertia;
 	}
 }
 

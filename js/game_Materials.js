@@ -134,7 +134,6 @@ MaterialManager.prototype.azureSpaceshipMaterial = function(){
 
 MaterialManager.prototype.getFlameMaterial = function(){
 	var tempMaterial = this.flameMaterial.clone();
-	// console.log(tempMaterial);
 	tempMaterial.uniforms = this.createFlameUniforms();
 
 	return tempMaterial;

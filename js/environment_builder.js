@@ -53,8 +53,11 @@ function Environment(settingsObject, timer, IO_controls){
 
 	this.spaceship.initialize();
 	this.lastSpawnTime = timer.getTime()
-
-	this.fillBuffer();
+	
+	//initial buffer filling
+	for(var i=0; i<23; i++) {
+		this.fillBuffer();
+	}
 
 }
 
@@ -76,9 +79,10 @@ Environment.prototype.detectCollisions = function(){
 // ASTEROIDS
 //create asteroid for the future use
 Environment.prototype.fillBuffer = function(){
-	for (var i=0; i<50; i++) {
+	for (var i=0; i<10; i++) {
 		this.asteroidBuffer.push(new Asteroid(this.settingsObject, this.materialManager, this.timer));
 	}
+	console.log("buffer filled");
 }
 
 
