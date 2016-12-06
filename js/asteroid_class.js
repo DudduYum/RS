@@ -86,9 +86,11 @@ Asteroid.prototype.move = function(){
 
 	this.asteroidMesh.quaternion.setFromEuler(
 		new THREE.Euler(
-			this.rotationAnimation * this.rotationDirection.x,
-			this.rotationAnimation * this.rotationDirection.y,
-			this.rotationAnimation * this.rotationDirection.z,
+			
+			this.rotationAnimation * 1,
+			//this.rotationAnimation * this.rotationDirection.x,
+			0 * this.rotationAnimation * this.rotationDirection.y,
+			0 * this.rotationAnimation * this.rotationDirection.z,
 			 'XYZ' )
 		 );
 	// light possition transformation according to meshrotation
@@ -206,6 +208,7 @@ Asteroid.prototype.initialize = function(){
 			this.rotationDirection.z = 1;
 		}
 	}
+
 
 };
 
