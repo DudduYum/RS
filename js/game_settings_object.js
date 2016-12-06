@@ -8,6 +8,9 @@ function GameSettings(width, height, depth, aspectRatio){
 	this.game_area_H = height;
 	this.game_area_W = width * aspectRatio;
 	this.game_area_D = depth;
+	
+	this.difficultyLevel = 0;
+	this.maxDifficulty = 15;
 
 	//SPACESHIP SETTINGS
 	this.normalSpeed = 5;
@@ -21,8 +24,8 @@ function GameSettings(width, height, depth, aspectRatio){
 	this.initialAsteroidSpeed = 20;
 	this.asteroidSpeed = 20;
 
-	this.AsteroidMinSize = 0.2;
-	this.AsteroidMaxSize = 3;
+	this.asteroidMinSize = 0.2;
+	this.asteroidMaxSize = 3;
 
 
 //=== CONSTRUCTOR===
@@ -47,14 +50,24 @@ GameSettings.prototype.asteroid_spawn_Z = function(){
 }
 
 GameSettings.prototype.asteroidSize = function(){
-	return this.AsteroidMinSize + (this.AsteroidMaxSize - this.AsteroidMinSize) * Math.random();
+	return this.asteroidMinSize + (this.asteroidMaxSize - this.asteroidMinSize) * Math.random();
 }
 
 GameSettings.prototype.updateRatio = function(ratio){
 	this.game_area_W = this.game_area_H * ratio;
+
+}
+
+GameSettings.prototype.increaseDifficulty = function(){
+	if(this.difficultyLevel < this.maxDifficulty) {
+		this.spawnDelay -= 0.02;
+		this.asteroidSpeed += 1;
+		this.difficultyLevel += 1;
+	}
 }
 
 GameSettings.prototype.reset = function(){
 	this.spawnDelay = this.initialSpawnDelay;
 	this.asteroidSpeed = this.initialAsteroidSpeed;
+	this.difficultyLevel = 0;
 }

@@ -10,9 +10,6 @@ function ScoreCounter(timer, settingsObj){
 	this.preciseScore = 0;
 
 	this.settings = settingsObj;
-
-	this.difficultyMultiplier = 1;
-	this.difficultyLevel = 1;
 	
 	this.difficultyLock = false;
 
@@ -31,8 +28,7 @@ ScoreCounter.prototype.update = function(){
 	this.gameScore = Math.trunc((this.preciseScore/1000)*10)/10;
 	if(!this.difficultyLock && this.gameScore % 5 == 0) {
 		this.difficultyLock = true;
-		this.settings.spawnDelay -= 0.02;
-		this.settings.asteroidSpeed += 1;
+		this.settings.increaseDifficulty();
 	}
 	if(this.difficultyLock && this.gameScore % 5 == 1) {
 		this.difficultyLock = false;

@@ -10,7 +10,7 @@ function Environment(settingsObject, timer, IO_controls){
 	this.timer = timer;
 
 	//asteroid param
-	this.asteroidBufferMinimum = 10;
+	this.asteroidBufferMinimum = 5;
 	this.activeAsteroids = [];
 	this.asteroidBuffer = [];
 	this.lastSpawnTime;
@@ -76,7 +76,7 @@ Environment.prototype.detectCollisions = function(){
 // ASTEROIDS
 //create asteroid for the future use
 Environment.prototype.fillBuffer = function(){
-	while(this.asteroidBuffer.length < this.asteroidBufferMinimum + 5) {
+	for (var i=0; i<50; i++) {
 		this.asteroidBuffer.push(new Asteroid(this.settingsObject, this.materialManager, this.timer));
 	}
 }
@@ -104,13 +104,9 @@ Environment.prototype.moveAsteroids = function (){
 
 Environment.prototype.addAsteroid = function(){
 	var tempAsteroid;
-
-	//this.tempAsteroid = this.asteroidBuffer.pop();
-	//this.tempAsteroid.initialize();
 	tempAsteroid = this.asteroidBuffer.pop();
 	tempAsteroid.initialize();
-	//this.activeAsteroids.push(this.tempAsteroid);
-	//this.game3Dscene.add(this.tempAsteroid.asteroidMesh);
+
 	this.activeAsteroids.push(tempAsteroid);
 	this.game3Dscene.add(tempAsteroid.asteroidMesh);
 	this.lastSpawnTime = this.timer.getTime();

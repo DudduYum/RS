@@ -346,6 +346,7 @@ function ProjectOLA(){
 			}
 			catch(exec) {
 				gameState.stopGame();
+				console.log(exec);
 			}
 			userInterface.update();
 			score.update();
