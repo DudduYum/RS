@@ -11,7 +11,7 @@ function GameSettings(width, height, depth, aspectRatio){
 	
 	this.difficultyLevel = -1;
 	this.maxDifficulty = 12;
-	this.difficultyTimer = 10000;
+	this.difficultyTimer = 5;
 
 	//SPACESHIP SETTINGS
 	this.standardSpaceshipSpeed = 5;
