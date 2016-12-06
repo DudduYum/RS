@@ -43,7 +43,3 @@ Timer.prototype.reset = function(){
 	this.clock = 0;
 	this.previousTime = new Date();
 }
-
-//Timer.prototype.reset = function(){
-	//this.previousTime = new Date();
-//}

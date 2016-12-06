@@ -130,7 +130,7 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 
 	this.initialize();
 	this.reset();
-
+	this.spaceship3D.rotation.x = 0;
 }
 
 
@@ -205,18 +205,22 @@ Spaceship.prototype.updateSpaceship = function(){
 	this.movementTracker.hStep = this.timer.passedTime/1000 * this.spaceshipSpeed.hSpeed;
 	this.movementTracker.vStep = this.timer.passedTime/1000 * this.spaceshipSpeed.vSpeed;
 	if(Math.sign(this.movementTracker.hStep) < 0){
-		if(this.checkLeftBorder())
+		if(this.checkLeftBorder()) {
 			this.spaceship3D.translateX(this.movementTracker.hStep);
+		}
 	} else {
-		if(this.checkRightBorder())
+		if(this.checkRightBorder()) {
 			this.spaceship3D.translateX(this.movementTracker.hStep);
+		}
 	}
 	if(Math.sign(this.movementTracker.vStep) < 0){
-		if(this.checkDownBorder())
+		if(this.checkDownBorder()) {
 			this.spaceship3D.translateZ(this.movementTracker.vStep);
+		}
 	} else {
-		if(this.checkUpBorder())
+		if(this.checkUpBorder()) {
 			this.spaceship3D.translateZ(this.movementTracker.vStep);
+		}
 	}
 	this.updateColliders();
 
