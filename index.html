@@ -4,16 +4,17 @@
 
 		<!-- style -->
 		<link rel="stylesheet" type="text/css" href="style/baseStyle.css">
+		<link rel="stylesheet" type="text/css" href="style/loadingScreen.css">
 		<link rel="stylesheet" type="text/css" href="style/initialScreen.css">
 		<link rel="stylesheet" type="text/css" href="style/gameoverScreen.css">
-		<link rel="stylesheet" type="text/css" href="style/switch.css">
+		<link rel="stylesheet" type="text/css" href="style/cameraSwitch.css">
 
 		<!--  Libraris-->
-		<script type="text/javascript" src="lib/three.min.js"></script>
+		<script type="text/javascript" src="lib/three.js"></script>
 		<script type="text/javascript" src="lib/requirejs_2.2.js"></script>
 		<script type="text/javascript" src="lib/OrbitControls.js"></script>
 		<script type="text/javascript" src="lib/stats.min.js"></script>
-		<script type="text/javascript" src="lib/dat.gui.min.js"></script>
+		<script type="text/javascript" src="lib/dat.gui.js"></script>
 		<script src="lib/EffectComposer.js"></script>
 		<script src="lib/CopyShader.js"></script>
 		<script src="lib/ShaderPass.js"></script>
@@ -31,7 +32,7 @@
 		<script type="text/javascript" src="js/game_Materials.js"></script>
 		<script type="text/javascript" src="js/timer.js"></script><!-- V -->
 		<script type="text/javascript" src="js/interfaceControl.js"></script><!-- V -->
-		<script type="text/javascript" src="js/graphicSettings.js"></script><!-- V -->
+		<script type="text/javascript" src="js/settingsPanel.js"></script><!-- V -->
 
 		<script type="text/javascript" src="js/main.js"></script><!-- V -->
 
@@ -104,6 +105,12 @@
 		</div>
 
 		<div id="graphicSettings"></div>
+		
+		<div id="loadingScreen">
+			<div id="writing">
+				<h1>LOADING...</h1>
+			</div>
+		</div>
 
 		<div id="initialScreen">
 			<div id="gameTitle">
@@ -140,7 +147,9 @@
 		</div>
 
 		<div id="authors">
-			<p >Developed by Riccardo Lulli, Rostyslav Kostyuk</p>
+			<p>Developed by</p>
+			<p>Riccardo Lulli</p>
+			<p>Rostyslav Kostyuk</p>
 		</div>
 
 
@@ -194,7 +203,7 @@
 
 			// new code
 			// dato che il metodo load è assincrono, il nostro gruppo ha deciso di
-			// caricare gli sheder in catene, per non ricorre nel rischio di non avere
+			// caricare gli shader in catene, per non ricorre nel rischio di non avere
 			// gli shader non aggiornati.
 			// Ci rendiamo conto questo porta un deley aggiuntivo, ma per evitare i
 			// rischi abbiamo deciso di prendere questa strada.

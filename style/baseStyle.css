@@ -4,10 +4,10 @@ body{
 
 #canvas{
 	position: fixed;
+	display: none;
 	top: 0px;
 	left: 0px;
 	margin: auto;
-	display: block;
 	z-index: -1;
 }
 
@@ -16,6 +16,7 @@ body{
 	position: absolute;
 	text-align: center;
 	vertical-align: middle;
+	display: none;
 	right: 0px;
 	top: 0px;
 	width: 10%;

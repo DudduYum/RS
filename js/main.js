@@ -13,6 +13,8 @@ var setMotionBlurPersistence;
 var setPixelation;
 var setPixelationSize;
 var setEdgeDetection;
+var setMusic;
+var setMusicVolume;
 
 
 
@@ -59,9 +61,10 @@ function ProjectOLA(){
 
 	// interface
 	var userInterface = new InterfaceManager(canvas, score);
+	userInterface.displayLoading();
 
 	// graphic settings
-	var graphicSettings = new GraphicSettings(settings.game_area_D);
+	var settingsPanel = new SettingsPanel(settings.game_area_D);
 
 
 	// environmentronment
@@ -125,13 +128,41 @@ function ProjectOLA(){
 		orbitControls.target = new THREE.Vector3(0,0,-10);
 		
 		
-	//sound
-	var audio = document.createElement('audio');
-	var music = document.createElement('music');
-	music.src = '/sound/You_Kill_My_Brother_-_07_-_Go_Go_Go.mp3';
-	audio.appendChild(music);
+//======= SOUND =======
+	
+	var musicIsLoaded = false;
+	var listener = new THREE.AudioListener();
+	gameCamera.add(listener);
+	freeCamera.add(listener);
+	var music = new THREE.Audio(listener);
+	var explosion = new THREE.Audio(listener);
+	music.load('sound/music.mp3');
+	
+	explosion.load('sound/explosion.mp3');
+	/*var loader = new THREE.AudioLoader();
+	loader.load(
+			'sound/music.mp3',
+			function(audioBuffer){
+				music.setBuffer(audioBuffer);
+				musicIsLoaded = true;
+			},
+			function() {},
+			function() {}
+	);
+	loader.load(
+			'sound/explosion.mp3',
+			function(audioBuffer) {
+				explosion.setBuffer(audioBuffer);
+			},
+			function() {},
+			function() {}
+	);*/
+	music.setVolume(0.5);
+	scene.add(music);
+	scene.add(explosion);
 
 
+	
 //======= CAMERA METHODS =======
 
 	userInterface.setCameraSwitching(
@@ -202,13 +233,13 @@ function ProjectOLA(){
 		imageSettings_pass.renderToScreen = true;
 
 		depthOfField_pass = new THREE.ShaderPass(depthOfField_shader);
-		depthOfField_pass.enabled = graphicSettings.dynamic_depthOfField;
+		depthOfField_pass.enabled = settingsPanel.dynamic_depthOfField;
 
 		pixelation_pass = new THREE.ShaderPass(pixelation_shader);
-		pixelation_pass.enabled = graphicSettings.pixelation;
+		pixelation_pass.enabled = settingsPanel.pixelation;
 
 		edgeDetection_pass = new THREE.ShaderPass(edgeDetection_shader);
-		edgeDetection_pass.enabled = graphicSettings.edgeDetection;
+		edgeDetection_pass.enabled = settingsPanel.edgeDetection;
 	}
 
 
@@ -261,7 +292,20 @@ function ProjectOLA(){
 	setEdgeDetection = function(value) {
 		edgeDetection_pass.enabled = value;
 	};
-
+	
+	setMusic = function(value) {
+		if(value) {
+			setMusicVolume(settingsPanel.music_volume);
+		} else {
+			music.setVolume(0.0);
+		}
+	}
+	
+	setMusicVolume = function(value) {
+		if(settingsPanel.music) {
+			music.setVolume(value/100);
+		}
+	}
 
 
 //======= OTHER METHODS =======
@@ -301,15 +345,19 @@ function ProjectOLA(){
 			settings.reset();
 			environment.reset();
 			userInterface.displayGame();
-			audio.play();
+			music.play();
 		},
 		function(){
 			timer.pause();
-			audio.repeat = false;
-			audio.pause();
+			if(music.isPlaying == true) {
+				music.pause();
+			} else {
+				music.play();
+			}
 		},
 		function(){
 			userInterface.displayGameOver();
+			music.stop();
 		}
 	);
 
@@ -338,15 +386,18 @@ function ProjectOLA(){
 	);
 
 
-//
-
-
 
 //======= RENDERING =======
 
 	resetComposers(gameCamera);
 
-
+//LOADING COMPLETE
+	setTimeout(function(){
+		userInterface.displayInitialScreen();
+		gameState.gameCanStart = true;
+	},4000);
+	
+	
 	//animation loop
 	function animate() {
 		if(gameState.isRunning()) {
@@ -354,6 +405,7 @@ function ProjectOLA(){
 				environment.update();
 			}
 			catch(exec) {
+				explosion.play();
 				gameState.stopGame();
 				console.log(exec);
 			}

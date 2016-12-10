@@ -7,6 +7,8 @@ function GameState(startFun, pauseFun, stopFun){
 
 //=== VARIABLES ===
 
+	//true if loading is complete
+	this.gameCanStart = false;
 	//true if game is running
 	this.gameRunning = false;
 	//true if game is over, not just not running
@@ -37,7 +39,7 @@ GameState.prototype.isOver = function() {
 
 //set to start state
 GameState.prototype.startGame = function(){
-	if(!this.gameRunning){
+	if(!this.gameRunning && this.gameCanStart){
 		this.gameRunning = true;
 		this.gameOver = false;
 		this.startAction();

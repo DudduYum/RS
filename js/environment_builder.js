@@ -55,7 +55,7 @@ this.spaceship.initialize();
 	this.lastSpawnTime = timer.getTime()
 	
 	//initial buffer filling
-	for(var i=0; i<23; i++) {
+	for(var i=0; i<40; i++) {
 		this.fillBuffer();
 	}
 

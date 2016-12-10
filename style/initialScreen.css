@@ -6,7 +6,7 @@
 #initialScreen{
 	position: fixed;
 	border-radius: 10px;
-	display: block;
+	display: none;
 	background-color:rgba(0,70,70,0.5);
 	width: 70vw;
 	height: 70vh;

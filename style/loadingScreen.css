@@ -1,0 +1,29 @@
+.shaders{
+	display: none;
+}
+
+
+#loadingScreen{
+	position: fixed;
+	border-radius: 10px;
+	display: block;
+	background-color:rgba(120,120,0,0.5);
+	width: 50%;
+	height: 50%;
+	top: 25%;
+	left: 25%;
+	border-radius: 100px 100px 100px 100px;
+	z-index: 0;
+}
+
+#writing{
+	text-align: center;
+	position: absolute;
+	width: 70%;
+	height: 40%;
+	left: 15%;
+	top: 30%;
+	font-size: 200%;
+	color: #FFFFFF;
+	z-index: inherit;
+}

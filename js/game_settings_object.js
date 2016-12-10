@@ -9,14 +9,15 @@ function GameSettings(width, height, depth, aspectRatio){
 	this.game_area_W = width * aspectRatio;
 	this.game_area_D = depth;
 	
+	//DIFFICULTY  SETTINGS
 	this.difficultyLevel = -1;
-	this.maxDifficulty = 12;
-	this.difficultyTimer = 5;
+	this.maxDifficulty = 13;
+	this.difficultyTimer = 4;
 
 	//SPACESHIP SETTINGS
 	this.standardSpaceshipSpeed = 5;
 	this.adjustedSpaceshipSpeed = this.standardSpaceshipSpeed * 0.707;
-	this.spaceshipInertia = 0.4;
+	this.spaceshipInertia = 0.2;
 	this.inertialSpaceshipSpeed = this.standardSpaceshipSpeed * this.spaceshipInertia;
 
 	//ASTEROID SETTINGS
