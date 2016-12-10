@@ -392,6 +392,7 @@ function ProjectOLA(){
 	resetComposers(gameCamera);
 
 //LOADING COMPLETE
+	//wait 4 second to be sure everything is loaded correctly
 	setTimeout(function(){
 		userInterface.displayInitialScreen();
 		gameState.gameCanStart = true;
