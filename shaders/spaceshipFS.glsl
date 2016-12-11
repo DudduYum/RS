@@ -11,11 +11,12 @@ varying vec2 vUv;
 
 // light vectors
 varying vec3 lightVector;
-
+varying vec3 spLightVector;
 
 // // lights power
 uniform vec3 lightPower;
 uniform vec3 ambientLight;
+uniform vec3 spLightPower;
 
 uniform float alpha;
 //
@@ -70,29 +71,62 @@ float D(float NdotH) {
 	return A/B;
 }
 
+
+
+vec3 calcBeta(vec3 power, vec3 lvec){
+	return power / (4.0 * PI * pow( length(lvec) , 2.0));
+}
+
+
+
+
+
+
+
 void main(){
 
 	vec3 c_diff = texture2D(tex,vUv).rgb;
 
 	c_diff = c_diff * color;
-
+//comon
 	vec3 n = perturbNormal2Arb( pointPosition, normalize( tNorm ));
 	vec3 v = normalize( -pointPosition );
+// sun
 	vec3 l = normalize( lightVector );
 	vec3 h = normalize( v + l );
 
-	//
+// space ship flame
+	vec3 spl = normalize( spLightVector );
+	vec3 sph = normalize( v + spl );
+
+//comon
 	float NdotV = max(0.000001, dot( n, v ));
+//sun
 	float NdotH = max(0.000001, dot( n, h ));
 	float VdotH = max(0.000001, dot( v, h ));
 	float NdotL = max(0.000001, dot( n, l ));
+// space ship flame (light)
+	float spNdotH = max(0.000001, dot( n, sph ));
+	float spVdotH = max(0.000001, dot( v, sph ));
+	float spNdotL = max(0.000001, dot( n, spl ));
 
-	vec3 Specular = F(VdotH  ) * G(VdotH) * D(NdotH) / 4.0;
-	vec3 beta = lightPower / (4.0 * PI * pow( length(lightVector) , 2.0));
+
+	// sun light
+	vec3 Specular = F(VdotH ) * G(VdotH) * D(NdotH) / 4.0;
+	vec3 beta = calcBeta( lightPower , lightVector);
+
+	// spaceship light
+	vec3 spSpecular = F( spVdotH ) * G(spVdotH) * D(spNdotH) / 4.0;
+	vec3 spBeta = calcBeta( spLightPower , spLightVector);
+	
+
+
+
 
 	// sun light
 	vec3 color1 = beta * NdotL  * (s * c_diff  + (1.0 - s) * Specular );
-	vec3 color2 = c_diff * ambientLight;
-	gl_FragColor = vec4(  color1 + color2 , 1.0);
+	vec3 color2 = spBeta * spNdotL * (s *  c_diff + (1.0 - s) * spSpecular );
+	vec3 color3 = c_diff * ambientLight;
+	gl_FragColor = vec4(  color1 + color3 , 1.0);
 
 }

@@ -52,7 +52,7 @@ this.materialManager.shipMaterial = new THREE.MeshBasicMaterial({color:0x00ff00}
 this.game3Dscene.add(this.spaceship.spaceship3D);
 
 this.spaceship.initialize();
-	this.lastSpawnTime = timer.getTime()
+	this.lastSpawnTime = timer.getTime();
 	
 	//initial buffer filling
 	for(var i=0; i<23; i++) {
@@ -83,7 +83,7 @@ Environment.prototype.fillBuffer = function(){
 		this.asteroidBuffer.push(new Asteroid(this.settingsObject, this.materialManager, this.timer));
 	}
 	console.log("buffer filled");
-}
+};
 
 
 //this method moves asteroids and make them visible

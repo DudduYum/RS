@@ -1,7 +1,6 @@
 (function (){
 	"use strict";
 })();
-"use strict";
 
 function MaterialManager(){
 
@@ -177,6 +176,14 @@ MaterialManager.prototype.createSpaceshipUniforms = function(){
 		normalScale:{
 			type:	"v2",
 			value: new THREE.Vector2(0.1 , 0.1)
+		},
+		spLightPos: {
+			type:  "v3",
+			value: spaceshipLight.lightPosition
+		},
+		spLightPower: {
+			type: "v3",
+			value: spaceshipLight.lightPower
 		},
 		pointLightPos: {
 			type:  "v3",

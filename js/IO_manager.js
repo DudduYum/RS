@@ -41,7 +41,7 @@ IOManager.prototype.addKeyDownAlias = function(frsKeyCode, scdKeyCode){
 // this method execute callback function given the key code
 IOManager.prototype.keyDownAction = function(event){
 	if( self.keyDownMapping[event.keyCode] !== undefined ){
-		if( typeof( self.keyDownMapping[event.keyCode] ) != "number" ){
+		if( typeof( self.keyDownMapping[event.keyCode] ) !== "number" ){
 			self.keyPressedStatus[event.keyCode] = true;
 			self.keyDownMapping[event.keyCode]();
 		} else {
