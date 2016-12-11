@@ -172,7 +172,7 @@ Spaceship.prototype.moveRight = function(){
 	} else {
 		this.spaceshipSpeed.hSpeed = this.settingsObj.standardSpaceshipSpeed;
 	}
-}
+};
 
 Spaceship.prototype.moveLeft = function(){
 	if(Math.abs(this.spaceshipSpeed.vSpeed) > this.settingsObj.inertialSpaceshipSpeed) {
@@ -181,7 +181,7 @@ Spaceship.prototype.moveLeft = function(){
 	} else {
 		this.spaceshipSpeed.hSpeed = - this.settingsObj.standardSpaceshipSpeed;
 	}
-}
+};
 
 Spaceship.prototype.moveUp = function(){
 	if(Math.abs(this.spaceshipSpeed.hSpeed) > this.settingsObj.inertialSpaceshipSpeed) {
@@ -190,7 +190,7 @@ Spaceship.prototype.moveUp = function(){
 	} else {
 		this.spaceshipSpeed.vSpeed = this.settingsObj.standardSpaceshipSpeed;
 	}
-}
+};
 
 Spaceship.prototype.moveDown = function(){
 	if(Math.abs(this.spaceshipSpeed.hSpeed) > this.settingsObj.inertialSpaceshipSpeed) {
@@ -199,7 +199,7 @@ Spaceship.prototype.moveDown = function(){
 	} else {
 		this.spaceshipSpeed.vSpeed = - this.settingsObj.standardSpaceshipSpeed;
 	}
-}
+};
 
 //SPACESHIP INERTIA
 Spaceship.prototype.horizontalInertia = function(){
@@ -243,8 +243,9 @@ Spaceship.prototype.updateSpaceship = function(){
 			this.spaceship3D.translateZ(this.movementTracker.vStep);
 		}
 	}
-	this.updateColliders();
 
+	this.updateColliders();
+	this.updateLight();
 
 	// update flame birhtness
 	if(this.spaceship_flame.material.uniforms.brightness.value < this.flameBrightness){
@@ -270,7 +271,9 @@ Spaceship.prototype.updateSpaceship = function(){
 	// flame texture animation
 	this.spaceship_flame.material.uniforms.texAnimation.value += this.timer.passedTime/1000 * this.flameTexSpeed;
 	this.spaceship_flame.material.uniforms.texAnimation.value = this.spaceship_flame.material.uniforms.texAnimation.value % 2.0;
-};
+	
+
+	};
 
 
 //updates collider position
@@ -281,6 +284,14 @@ Spaceship.prototype.updateColliders = function() {
 	}
 };
 
+//update light position
+Spaceship.prototype.updateLight = function() {
+	spaceshipLight.lightPosition.set(
+		this.spaceship3D.position.x,
+		this.spaceship3D.position.y,	
+		this.spaceship3D.position.z
+	);
+};
 
 
 Spaceship.prototype.initialize = function() {

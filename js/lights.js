@@ -1,5 +1,3 @@
-"use strict";
-
 // sun (point light)
 var pointLight = {
 	lightPower: new THREE.Vector3(),
