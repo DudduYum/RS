@@ -77,21 +77,13 @@ Asteroid.prototype.move = function(){
 
 	//correct asteroid rotation
 	var yRot;
-	var zRot;
-
-	if(this.rotationAnimation % Math.PI === 0){
-			 this.rotationDirection.y = -this.rotationDirection.y;
-			 this.rotationDirection.z = -this.rotationDirection.z;
-	}
 
 	this.asteroidMesh.quaternion.setFromEuler(
 		new THREE.Euler(
-			
-			this.rotationAnimation * 1,
-			//this.rotationAnimation * this.rotationDirection.x,
-			0 * this.rotationAnimation * this.rotationDirection.y,
-			0 * this.rotationAnimation * this.rotationDirection.z,
-			 'XYZ' )
+			this.rotationAnimation * this.rotationDirection.x,
+			this.rotationAnimation * this.rotationDirection.y,
+			this.z_rotation,
+			'XYZ' )
 		 );
 	// light possition transformation according to meshrotation
 	//
@@ -125,7 +117,7 @@ Asteroid.prototype.move = function(){
 	this.asteroidMesh.translateY(displaysmentVec.y);
 	this.asteroidMesh.translateZ(displaysmentVec.z);
 
-	// move collider
+		// move collider
 	this.collider.center.set(
 		this.asteroidObj.position.x,
 		this.asteroidObj.position.y,
@@ -177,6 +169,8 @@ Asteroid.prototype.initialize = function(){
 	this.asteroidMesh.scale.y = size;
 	this.asteroidMesh.scale.z = size;
 
+	//z rotation 
+	this.z_rotation = Math.PI/2 * Math.random();
 
 	//initialize collider
 	this.collider.center.set(this.asteroidObj.position.x, this.asteroidObj.position.y, this.asteroidObj.position.z);
@@ -193,23 +187,9 @@ Asteroid.prototype.initialize = function(){
 	// reset rotation Axes
 	var coin = Math.random();
 	this.rotationDirection = new THREE.Vector3();
-	if( coin < 0.3){
-		this.rotationDirection.x = 1;
-		this.rotationDirection.y = 1;
-		this.rotationDirection.z = 0;
-	}else{
-		if( coin < 0.6){
-			this.rotationDirection.x = 0;
-			this.rotationDirection.y = 1;
-			this.rotationDirection.z = 1;
-		}else{
-			this.rotationDirection.x = 1;
-			this.rotationDirection.y = 0;
-			this.rotationDirection.z = 1;
-		}
-	}
+	this.rotationDirection.y = 1;
 
-
+	
 };
 
 Asteroid.prototype.isCollidingWith = function(sphere){
