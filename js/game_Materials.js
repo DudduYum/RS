@@ -1,7 +1,3 @@
-(function (){
-	"use strict";
-})();
-
 function MaterialManager(){
 
 //=== VARIABLES ===
@@ -11,15 +7,15 @@ function MaterialManager(){
 	this.flameMaterial = this.getMaterialByName("flame");
 
 
-
-	this.spaceshipTexture;
-	this.spaceshipNormalMap;
-	this.spaceshipSpecularMap;
+//this variable are initialized later
+//	this.spaceshipTexture;
+//	this.spaceshipNormalMap;
+//	this.spaceshipSpecularMap;
+//	this.sunMaterial;
 	this.flameTexture = this.loadImage("textures/spaceship/flame_original.jpg");
-	this.flameDisplacementMap = this.loadImage("textures/spaceship/flame_displacement.jpg")
+	this.flameDisplacementMap = this.loadImage("textures/spaceship/flame_displacement.jpg");
 
 
-	this.sunMaterial;
 
 
 	this.asteroidTexture = this.loadImage('textures/asteroid/asteroid.jpg');
@@ -68,13 +64,13 @@ MaterialManager.prototype.loadImage = function(imgSrc){
 	);
 
 	return img;
-}
+};
 
 
 MaterialManager.prototype.getMaterialByName = function(objectName){
 
-	let vs = document.getElementById(objectName + "VS").textContent;
-	let fs = document.getElementById(objectName + "FS").textContent;
+	vs = document.getElementById(objectName + "VS").textContent;
+	fs = document.getElementById(objectName + "FS").textContent;
 
 
 	var material = new THREE.ShaderMaterial({
@@ -83,7 +79,7 @@ MaterialManager.prototype.getMaterialByName = function(objectName){
 	});
 
 	return material;
-}
+};
 
 
 MaterialManager.prototype.redSpaceshipMaterial = function(){
@@ -96,7 +92,7 @@ MaterialManager.prototype.redSpaceshipMaterial = function(){
 	};
 
 	return tempMaterial;
-}
+};
 
 MaterialManager.prototype.silverSpaceshipMaterial = function(){
 	var tempMaterial = this.spaceshipMaterial.clone();
@@ -108,7 +104,7 @@ MaterialManager.prototype.silverSpaceshipMaterial = function(){
 	};
 
 	return tempMaterial;
-}
+};
 
 MaterialManager.prototype.darkSilverSpaceshipMaterial = function(){
 	var tempMaterial = this.spaceshipMaterial.clone();
@@ -120,7 +116,7 @@ MaterialManager.prototype.darkSilverSpaceshipMaterial = function(){
 	};
 
 	return tempMaterial;
-}
+};
 
 MaterialManager.prototype.azureSpaceshipMaterial = function(){
 	var tempMaterial = this.spaceshipMaterial.clone();
@@ -132,21 +128,21 @@ MaterialManager.prototype.azureSpaceshipMaterial = function(){
 	};
 
 	return tempMaterial;
-}
+};
 
 MaterialManager.prototype.getFlameMaterial = function(){
 	var tempMaterial = this.flameMaterial.clone();
 	tempMaterial.uniforms = this.createFlameUniforms();
 
 	return tempMaterial;
-}
+};
 // getters
 MaterialManager.prototype.getAsteroidMaterial = function(){
 	var res = this.asteroidMaterial.clone();
 	res.uniforms = this.createAsteroidUniforms();
 
 	return res;
-}
+};
 
 MaterialManager.prototype.createSpaceshipUniforms = function(){
 
@@ -212,7 +208,7 @@ MaterialManager.prototype.createSpaceshipUniforms = function(){
 	};
 
 	return uniforms;
-}
+};
 
 MaterialManager.prototype.createFlameUniforms = function(){
 	var uniforms = {
@@ -247,7 +243,7 @@ MaterialManager.prototype.createFlameUniforms = function(){
 	};
 
 	return uniforms;
-}
+};
 
 MaterialManager.prototype.createAsteroidUniforms = function(){
 
@@ -316,4 +312,4 @@ MaterialManager.prototype.createAsteroidUniforms = function(){
 	};
 
 	return uniforms;
-}
+};
