@@ -18,6 +18,8 @@ function SettingsPanel(areaDepth) {
 	
 	this.music = true;
 	this.music_volume = 50;
+	this.soundEffects = true;
+	this.soundEffects_volume = 100;
 
 
 
@@ -98,6 +100,8 @@ function SettingsPanel(areaDepth) {
 	soundSettings_folder.open();
 	var music_controller = soundSettings_folder.add(this, 'music');
 	var musicVolume_controller = soundSettings_folder.add(this, 'music_volume', 0 , 100).step(1);
+	var soundEffects_controller = soundSettings_folder.add(this, 'soundEffects');
+	var soundEffects_volume_controller = soundSettings_folder.add(this, 'soundEffects_volume', 0, 100).step(1);
 
 
 	background_controller.onChange(function(value) {
@@ -144,6 +148,14 @@ function SettingsPanel(areaDepth) {
 	
 	musicVolume_controller.onChange(function(value) {
 		setMusicVolume(value);
+	});
+	
+	soundEffects_controller.onChange(function(value) {
+		setSoundEffects(value);
+	});
+	
+	soundEffects_volume_controller.onChange(function(value) {
+		setSoundEffectsVolume(value);
 	});
 	
 }

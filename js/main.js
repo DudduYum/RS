@@ -15,6 +15,8 @@ var setPixelationSize;
 var setEdgeDetection;
 var setMusic;
 var setMusicVolume;
+var setSoundEffects;
+var setSoundEffectsVolume;
 
 
 
@@ -137,7 +139,6 @@ function ProjectOLA(){
 	var music = new THREE.Audio(listener);
 	var explosion = new THREE.Audio(listener);
 	music.load('sound/music.mp3');
-	
 	explosion.load('sound/explosion.mp3');
 	/*var loader = new THREE.AudioLoader();
 	loader.load(
@@ -297,13 +298,27 @@ function ProjectOLA(){
 		if(value) {
 			setMusicVolume(settingsPanel.music_volume);
 		} else {
-			music.setVolume(0.0);
+			setMusicVolume(0);
 		}
 	}
 	
 	setMusicVolume = function(value) {
-		if(settingsPanel.music) {
+		if(settingsPanel.music || value==0) {
 			music.setVolume(value/100);
+		}
+	}
+	
+	setSoundEffects = function(value) {
+		if(value) {
+			setSoundEffectsVolume(settingsPanel.soundEffects_volume);
+		} else {
+			setSoundEffectsVolume(0);
+		}
+	}
+	
+	setSoundEffectsVolume = function(value) {
+		if(settingsPanel.soundEffects || value==0) {
+			explosion.setVolume(value/100);
 		}
 	}
 
