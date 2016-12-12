@@ -22,7 +22,6 @@ function SettingsPanel(areaDepth) {
 	this.soundEffects_volume = 100;
 
 
-
 //=== CONSTRUCTOR ===
 	var  presets = {
 		"preset": "Default",
@@ -80,8 +79,11 @@ function SettingsPanel(areaDepth) {
 	settingsGui.domElement.style.left = '0px';
 	var container = document.getElementById('graphicSettings');
 	container.appendChild(settingsGui.domElement);
-
-	var effects_folder = settingsGui.addFolder('Effects');
+	
+	var graphicSettings_folder = settingsGui.addFolder('Graphic settings');
+	//graphicSettings_folder.open();
+	
+	var effects_folder = graphicSettings_folder.addFolder('Effects');
 	effects_folder.open();
 	var depthOfField_controller = effects_folder.add(this, 'dynamic_depthOfField');
 	var depthOfFieldDistance_controller = effects_folder.add(this, 'focus_distance', 0, areaDepth).step(1);
@@ -89,7 +91,7 @@ function SettingsPanel(areaDepth) {
 	var pixelationSize_controller = effects_folder.add(this, 'pixel_size', 2, 12).step(1);
 	var edgeDetection_controller = effects_folder.add(this, 'edgeDetection');
 
-	var imageSettings_folder = settingsGui.addFolder('Image settings');
+	var imageSettings_folder = graphicSettings_folder.addFolder('Image settings');
 	imageSettings_folder.open();
 	var background_controller = imageSettings_folder.add(this, 'background');
 	var inverseColors_controller = imageSettings_folder.add(this, 'inverseColors');
@@ -97,12 +99,12 @@ function SettingsPanel(areaDepth) {
 	var brightness_controller = imageSettings_folder.add(this, 'brightness', 0, 100);
 	
 	var soundSettings_folder = settingsGui.addFolder('Sound settings');
-	soundSettings_folder.open();
+	//soundSettings_folder.open();
 	var music_controller = soundSettings_folder.add(this, 'music');
 	var musicVolume_controller = soundSettings_folder.add(this, 'music_volume', 0 , 100).step(1);
 	var soundEffects_controller = soundSettings_folder.add(this, 'soundEffects');
 	var soundEffects_volume_controller = soundSettings_folder.add(this, 'soundEffects_volume', 0, 100).step(1);
-
+	
 
 	background_controller.onChange(function(value) {
 		setBackground(value);

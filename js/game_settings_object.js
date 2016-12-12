@@ -10,9 +10,10 @@ function GameSettings(width, height, depth, aspectRatio){
 	this.game_area_D = depth;
 	
 	//DIFFICULTY  SETTINGS
-	this.difficultyLevel = -1;
-	this.maxDifficulty = 13;
-	this.difficultyTimer = 4;
+	this.difficultyLevel;
+	this.initialDifficulty = 0;
+	this.maximumDifficulty = 20;
+	this.difficultyIncreaseTime = 3;
 
 	//SPACESHIP SETTINGS
 	this.standardSpaceshipSpeed = 5;
@@ -62,16 +63,20 @@ GameSettings.prototype.updateRatio = function(ratio){
 }
 
 GameSettings.prototype.increaseDifficulty = function(){
-	if(this.difficultyLevel < this.maxDifficulty) {
+	if(this.difficultyLevel < this.maximumDifficulty) {
 		this.difficultyLevel += 1;
-		this.spawnDelay -= 0.02;
-		this.asteroidSpeed += 1;
-		console.log("difficulty: " + this.difficultyLevel);
+		this.spawnDelay -= 0.0135;
+		this.asteroidSpeed += 0.7;
+		if(this.difficultyLevel <20) {
+			console.log("difficulty: " + this.difficultyLevel);
+		} else {
+			console.log("difficulty: " + this.difficultyLevel + " MAXIMUM");
+		}
 	}
 }
 
 GameSettings.prototype.reset = function(){
 	this.spawnDelay = this.initialSpawnDelay;
 	this.asteroidSpeed = this.initialAsteroidSpeed;
-	this.difficultyLevel = -1;
+	this.difficultyLevel = this.initialDifficulty;
 }

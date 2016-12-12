@@ -19,7 +19,6 @@ var setSoundEffects;
 var setSoundEffectsVolume;
 
 
-
 function ProjectOLA(){
 
 //======= VARIABLES =======
@@ -246,7 +245,7 @@ function ProjectOLA(){
 
 
 
-//======= GRAPHIC SETTINGS METHODS =======
+//======= SETTINGS METHODS =======
 
 	setBackground = function(value) {
 		environment.openSpace.visible = value;
@@ -321,6 +320,8 @@ function ProjectOLA(){
 			explosion.setVolume(value/100);
 		}
 	}
+	
+	
 
 
 //======= OTHER METHODS =======
