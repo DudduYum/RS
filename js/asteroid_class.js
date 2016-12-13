@@ -1,7 +1,3 @@
-(function (){
-	"use strict";
-})();
-//"use strict";
 
 function Asteroid(settings, materialManager, timer){
 
@@ -83,8 +79,11 @@ Asteroid.prototype.move = function(){
 			this.rotationAnimation * this.rotationDirection.x,
 			this.rotationAnimation * this.rotationDirection.y,
 			this.z_rotation,
-			'XYZ' )
+			'XZY' )
 		 );
+//debugging code
+	console.log(this.asteroidMesh.quaternion);
+//debugging code
 	// light possition transformation according to meshrotation
 	//
 	var tmpSunPosition = pointLight.lightPosition.clone();
@@ -170,7 +169,7 @@ Asteroid.prototype.initialize = function(){
 	this.asteroidMesh.scale.z = size;
 
 	//z rotation 
-	this.z_rotation = Math.PI/2 * Math.random();
+	this.z_rotation = Math.PI * Math.random();
 
 	//initialize collider
 	this.collider.center.set(this.asteroidObj.position.x, this.asteroidObj.position.y, this.asteroidObj.position.z);
