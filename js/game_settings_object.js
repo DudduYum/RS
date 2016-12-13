@@ -26,11 +26,11 @@ function GameSettings(width, height, depth, aspectRatio){
 	this.initialSpawnDelay = 0.3;
 	this.spawnDelay = 0.3;
 	//asteroid speed in units per second
-	this.initialAsteroidSpeed = 20;
-	this.asteroidSpeed = 20;
+	this.initialAsteroidSpeed = 30;
+	this.asteroidSpeed = 30;
 
 	this.asteroidMinSize = 0.2;
-	this.asteroidMaxSize = 3;
+	this.asteroidMaxSize = 4;
 
 
 //=== CONSTRUCTOR===
@@ -66,11 +66,13 @@ GameSettings.prototype.increaseDifficulty = function(){
 	if(this.difficultyLevel < this.maximumDifficulty) {
 		this.difficultyLevel += 1;
 		this.spawnDelay -= 0.0135;
-		this.asteroidSpeed += 0.7;
-		if(this.difficultyLevel <20) {
-			console.log("difficulty: " + this.difficultyLevel);
-		} else {
-			console.log("difficulty: " + this.difficultyLevel + " MAXIMUM");
+		this.asteroidSpeed += 0.8;
+		if(this.difficultyLevel % 5 == 0){
+			if(this.difficultyLevel<20) {
+				console.log("> difficulty: " + this.difficultyLevel);
+			} else {
+				console.log("> difficulty: " + this.difficultyLevel + " MAXIMUM");
+			}
 		}
 	}
 }

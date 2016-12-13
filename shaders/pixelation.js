@@ -4,7 +4,7 @@ function createPixelationShader() {
 			"tDiffuse": {type: "t", value: null},
 			"width": {type: "f", value: 0.0 },
 			"height": {type: "f", value: 0.0},
-			"pixelationSize": {type: "f", value: 16.0},
+			"pixelationSize": {type: "f", value: 12.0},
 		},
 
 

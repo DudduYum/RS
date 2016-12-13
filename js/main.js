@@ -26,7 +26,7 @@ function ProjectOLA(){
 	var stats = new Stats();
 		stats.domElement.style.position = 'absolute';
 		stats.domElement.style.top = '0px';
-		stats.domElement.style.left = '300px';
+		stats.domElement.style.left = '350px';
 
 	var canvas = document.getElementById('canvas');
 		canvas.appendChild(stats.domElement);
@@ -299,13 +299,13 @@ function ProjectOLA(){
 		} else {
 			setMusicVolume(0);
 		}
-	}
+	};
 	
 	setMusicVolume = function(value) {
 		if(settingsPanel.music || value==0) {
 			music.setVolume(value/100);
 		}
-	}
+	};
 	
 	setSoundEffects = function(value) {
 		if(value) {
@@ -313,13 +313,13 @@ function ProjectOLA(){
 		} else {
 			setSoundEffectsVolume(0);
 		}
-	}
+	};
 	
 	setSoundEffectsVolume = function(value) {
 		if(settingsPanel.soundEffects || value==0) {
 			explosion.setVolume(value/100);
 		}
-	}
+	};
 	
 	
 

@@ -72,7 +72,7 @@ function SettingsPanel(areaDepth) {
 		"folders": {}
 	}
 
-	var settingsGui = new dat.GUI({load: presets, preset: 'Default', autoPlace: false, width: 300});
+	var settingsGui = new dat.GUI({load: presets, preset: 'Default', autoPlace: false, width: 350});
 	settingsGui.remember(this);
 	settingsGui.domElement.style.position = 'absolute';
 	settingsGui.domElement.style.top = '0px';
@@ -81,7 +81,6 @@ function SettingsPanel(areaDepth) {
 	container.appendChild(settingsGui.domElement);
 	
 	var graphicSettings_folder = settingsGui.addFolder('Graphic settings');
-	//graphicSettings_folder.open();
 	
 	var effects_folder = graphicSettings_folder.addFolder('Effects');
 	effects_folder.open();
@@ -99,7 +98,6 @@ function SettingsPanel(areaDepth) {
 	var brightness_controller = imageSettings_folder.add(this, 'brightness', 0, 100);
 	
 	var soundSettings_folder = settingsGui.addFolder('Sound settings');
-	//soundSettings_folder.open();
 	var music_controller = soundSettings_folder.add(this, 'music');
 	var musicVolume_controller = soundSettings_folder.add(this, 'music_volume', 0 , 100).step(1);
 	var soundEffects_controller = soundSettings_folder.add(this, 'soundEffects');

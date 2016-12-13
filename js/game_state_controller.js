@@ -43,6 +43,7 @@ GameState.prototype.startGame = function(){
 		this.gameRunning = true;
 		this.gameOver = false;
 		this.startAction();
+		console.log("START");
 	}
 };
 
@@ -50,6 +51,7 @@ GameState.prototype.startGame = function(){
 GameState.prototype.pauseGame = function(){
 	if(this.gameRunning){
 		this.pauseAction();
+		console.log("PAUSE");
 	}
 };
 
@@ -60,7 +62,6 @@ GameState.prototype.stopGame = function(){
 		this.gameRunning = false;
 		this.gameOver = true;
 		this.stopAction();
-	} else {
-		console.log("warring: game is alredy stopped!");
+		console.log("GAME OVER");
 	}
 };

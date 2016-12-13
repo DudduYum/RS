@@ -201,12 +201,9 @@
 			// old code
 
 
-			// new code
-			// dato che il metodo load è assincrono, il nostro gruppo ha deciso di
-			// caricare gli shader in catene, per non ricorre nel rischio di non avere
-			// gli shader non aggiornati.
-			// Ci rendiamo conto questo porta un deley aggiuntivo, ma per evitare i
-			// rischi abbiamo deciso di prendere questa strada.
+
+			// dato che il metodo load è asincrono, abbiamo deciso di caricare gli shader in cascata
+			//per non incorrere nel rischio di avere gli shader non aggiornati
 
 			// spaceship
 			$("#spaceshipVS").load("shaders/spaceshipVS.glsl","",function(){

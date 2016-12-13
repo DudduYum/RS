@@ -9,7 +9,7 @@ function Timer(){
 
 	this.clock = 0;
 	this.previousTime = new Date();
-	this.passedTime = 0; // Random value to cancel warring 
+	this.passedTime = 0;
 	this.paused = false;
 
 //=== CONSTRUCTOR===
@@ -32,7 +32,6 @@ Timer.prototype.update = function(){
 
 Timer.prototype.pause = function(){
 	this.paused = !this.paused;
-	console.log("pause");
 };
 
 Timer.prototype.getTime = function(){
