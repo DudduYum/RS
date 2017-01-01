@@ -1,7 +1,3 @@
-(function (){
-	"use strict";
-})();
-//"use strict";
 
 function Asteroid(settings, materialManager, timer){
 
