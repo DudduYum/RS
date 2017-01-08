@@ -375,8 +375,8 @@ function ProjectOLA(){
 			//inserire codice di animazione qui.
 			//environment.rotateSpaceship();
 			
-		//	introAnimation.doAnimation();
-			introAnimation.newTeckTest(gameCamera.position.clone() , new THREE.Vector3(0, 5 , 3));
+			introAnimation.doAnimation();
+//			introAnimation.newTeckTest(gameCamera.position.clone() , new THREE.Vector3(0, 5 , 3));
 		}
 
 		requestAnimationFrame(animate);
