@@ -8,7 +8,7 @@ function Animator(obj, subdivision , center, callback){
 	this.dispatchOnce = true;
 
 	//start point, shoudl never be changed in this class
-	this.startPoint = this.animatedObj.position;
+	this.startPoint = this.animatedObj.position.clone();
 
 	// animation is like a cycle, need a center
 	this.center = center;
@@ -37,7 +37,7 @@ function Animator(obj, subdivision , center, callback){
 	this.lastAnimation = this.timer.getTime();
 
 	//animatin speed
-	this.stepTime = 0.2;
+	this.stepTime = 0.06;
 
 	//the animation function sruff
 	
@@ -101,10 +101,18 @@ Animator.prototype.makeFundamentalPoints = function(startPoint){
 	];
 
 	for(i = 1 ; i < 9 ; i++){
+		//animation should be centered, so here I set all point to be at the animation center 
 		points[i].set(
-			Math.cos( angle[i] ) * 5, // I use 5 to set the distance from the object
-			randomYval(),
-			Math.sin( angle[i] ) * 5
+			this.center.x,
+			this.center.y,
+			this.center.z
+		);
+
+		// now I translate points arround the point center
+		points[i].set(
+			points[i].x + Math.cos( angle[i] ) * 10, // I use 5 to set the distance from the object
+			points[i].y + randomYval(),
+			points[i].z + Math.sin( angle[i] ) * 10
 		);
 	}
 
@@ -170,7 +178,24 @@ Animator.prototype.doAnimation = function(){
 };	
 
 
+// this method let you stop animation
+//
+Animator.prototype.stop = function(){
+	//stop the timer 
+	//this.timer.stop();
 
+
+	//translate the camere to original position
+	this.animatedObj.position.set(
+		this.startPoint.x,
+		this.startPoint.y,
+		this.startPoint.z
+	);
+	
+	// call callback function
+	this.callback();
+
+};
 
 
  
@@ -190,3 +215,112 @@ Animator.prototype.anTest = function(){
 	//console.log( this.step);
  	this.doAnimation();
  };
+
+
+Animator.prototype.newTeckTest = function(vect , cent){
+	function makeRotation( axis , theta ){
+
+		rotation = new THREE.Matrix4();
+		antiRotation = new THREE.Matrix4();
+		return {
+			rotation : rotation.makeRotationAxis( axis , theta ),
+		
+			backRotation : antiRotation.makeRotationAxis( axis , -theta )
+		};
+	}
+
+	function makeTranslation( X , Y , Z){
+		translation = new THREE.Matrix4();
+		antiTranslation = new THREE.Matrix4();
+
+		return {
+			translation : translation.makeTranslation( X , Y, Z),
+			backTranslation : translation.makeTranslation( -X, -Y, -Z)
+		};
+	}
+
+
+	if(this.dispatchOnce === true){
+	
+		console.log("here go a new tecknology");
+		var c = cent.clone();
+		var v = vect.clone();
+
+	
+		var tr = makeTranslation( -c.x , -c.y , -c.z );
+		c.applyMatrix4( tr.translation );
+		v.applyMatrix4( tr.translation );
+
+		var ang = new THREE.Vector3( 0, 1 , 0).angleTo( v.clone().normalize() );
+		var rt = makeRotation( new THREE.Vector3( 1 , 0 , 0) , -ang );
+		
+		v.applyMatrix4( rt.rotation );
+
+		var startPoints = [
+			v,
+			new THREE.Vector3(),
+			new THREE.Vector3(),
+			new THREE.Vector3(),
+			new THREE.Vector3(),
+			new THREE.Vector3(),
+			new THREE.Vector3(),
+			new THREE.Vector3(),
+			v
+		];
+
+		var angls = [
+			0,
+			Math.PI/4 ,
+			Math.PI/2 ,
+			3 * Math.PI/4 ,
+			Math.PI ,
+			5 * Math.PI/4 ,
+			3 * Math.PI/2 ,
+			7 * Math.PI/4 ,
+			0
+		];
+		var len = v.length();
+		for( i = 1; i < startPoints.length - 2 ; i++){
+			//console.log( Math.cos( angls[i]));
+
+			startPoints[ i ].set(
+				startPoints[ i ].x ,
+				len * Math.cos( angls[ i ] ) ,
+				len * Math.sin( angls[ i ] )
+			);
+			//console.log(startPoints[i]);
+			
+		}
+		for( i = 0 ; i < startPoints.length ; i++){
+			console.log( "-------" );
+			console.log( i );
+			console.log(  startPoints[ i ]);
+		}
+		
+		//console.log(radius.angleTo( yA ));
+	
+		
+//		var vec1 = new THREE.Vector3( 0 , 1 , 0 );
+//		var vec2 = new THREE.Vector3( 4 , -4 , 9);
+//		var vec3 = vec2.clone() ;
+//		vec3.normalize();
+//		var radius = vec1.angleTo(vec3);
+//		console.log(radius);
+//		var backUp = new THREE.Matrix4();
+//		var matrix = new THREE.Matrix4();
+//		matrix.makeRotationAxis( new THREE.Vector3( 1 , 0 , 0 ), 0 );
+//		backUp.makeRotationAxis( new THREE.Vector3( 1 , 0 , 0 ), - radius);
+//
+//		vec2.applyMatrix4( matrix );
+//		console.log(vec2 );
+//		vec2.applyMatrix4( backUp );
+//		vec2.set(
+//			Math.floor( vec2.x ),
+//			Math.floor( vec2.y ),
+//			Math.floor( vec2.z )
+//		);
+//
+//		console.log(vec2 );
+		this.dispatchOnce = false;
+	}
+};

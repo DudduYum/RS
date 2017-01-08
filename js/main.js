@@ -1,5 +1,3 @@
-// main file
-
 
 
 
@@ -55,10 +53,11 @@ function ProjectOLA(){
 	// animation object
 	var introAnimation = new Animator( 
 		gameCamera,
-	       	50 ,
-	       	new THREE.Vector3(),
+	       	600 ,
+	       	new THREE.Vector3(0 , 0 , 17),
 	       	function (){
 			console.log("here comes callback function");
+			gameCamera.lookAt(new THREE.Vector3());
 		}
 		
 	);
@@ -304,16 +303,22 @@ function ProjectOLA(){
 
 	// game state initializzation (function for game start and end)
 	gameState = new GameState(
+		//start callback
 		function(){
+			introAnimation.stop();
 			score.reset();
 			timer.reset();
 			settings.reset();
 			environment.reset();
 			userInterface.displayGame();
 		},
+
+		//pause callback
 		function(){
 			timer.pause();
 		},
+
+		//stop callback
 		function(){
 			userInterface.displayGameOver();
 		}
@@ -370,7 +375,8 @@ function ProjectOLA(){
 			//inserire codice di animazione qui.
 			//environment.rotateSpaceship();
 			
-			introAnimation.doAnimation();
+		//	introAnimation.doAnimation();
+			introAnimation.newTeckTest(gameCamera.position.clone() , new THREE.Vector3(0, 5 , 3));
 		}
 
 		requestAnimationFrame(animate);
