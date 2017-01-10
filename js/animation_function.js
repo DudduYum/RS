@@ -11,7 +11,7 @@ function Animator(obj, subdivision , center, callback){
 	this.startPoint = this.animatedObj.position.clone();
 
 	// animation is like a cycle, need a center
-	this.center = center;
+	this.center = center.clone();
 	
 	// is called when animation step is overe
 	this.callback = callback;	
@@ -63,7 +63,7 @@ function Animator(obj, subdivision , center, callback){
 //
 //res - array of THREE.Vector3
 //
-Animator.prototype.makeFundamentalPoints = function(vector ){
+Animator.prototype.makeFundamentalPoints = function(){
 
 
 	console.log("fundamental points");
@@ -91,24 +91,34 @@ Animator.prototype.makeFundamentalPoints = function(vector ){
 
 
 	//********  Transformation
-	var c = this.center.clone();
-	var v = vector.clone();
-
+//	var c = this.center.clone();
+//	var v = this.startPoint.clone();
+	
+	var c = new THREE.Vector3( 0 , -4 , 20 );
+	var v = new THREE.Vector3( -10 , 5, -10);
 
 
 	//traslazione
-	var tr = makeTranslation( -c.x , -c.y , -c.z );
+	var tr = makeTranslation(  -c.x , -c.y ,  -c.z );
 	c.applyMatrix4( tr.translation );
 	v.applyMatrix4( tr.translation );
 
+
+	console.log( c );
+	console.log( v );
 
 	// to XY			
 	var vXY = v.clone();
 	vXY.projectOnPlane( new THREE.Vector3( 0 , 0 , 1));
 
+	console.log(vXY);
+
 	var ang = new THREE.Vector3( 1, 0 , 0).angleTo( vXY.clone().normalize() );
+	console.log( ang );
 	
 	var rXY = makeRotation( new THREE.Vector3( 0 , 0 , 1) , ang );
+	console.log( rXY );
+
 	
 	v.applyMatrix4( rXY.rotation );
 	// end to XY
@@ -171,10 +181,10 @@ Animator.prototype.makeFundamentalPoints = function(vector ){
 	//********  back trasformation
 
 	for( i = 0 ; i < startPoints.length - 1 ; i++){
-
+ 
 		startPoints[ i ].applyMatrix4( rX.backRotation );
 		startPoints[ i ].applyMatrix4( rXY.backRotation );
-		startPoints[ i ].applyMatrix4( tr.backTranslation );
+		startPoints[ i ].applyMatrix4( tr.backTranslation);
 
 	}
 
@@ -266,7 +276,7 @@ Animator.prototype.update = function(){
 	var currentTime = this.timer.getTime();
 	if( currentTime - this.lastAnimation > this.stepTime ){
 		
-		console.log(this.step);
+		//console.log(this.step);
 		this.step = this.step % (this.pathOfAnimation.length - 1)  ;
 		this.step++;
 		this.lastAnimation = currentTime;
@@ -336,133 +346,134 @@ Animator.prototype.anTest = function(){
 
 
 Animator.prototype.newTeckTest = function(vect , cent){
-	function makeRotation( axis , theta ){
-
-		rotation = new THREE.Matrix4();
-		antiRotation = new THREE.Matrix4();
-		return {
-			rotation : rotation.makeRotationAxis( axis , theta ),
-		
-			backRotation : antiRotation.makeRotationAxis( axis , -theta )
-		};
-	}
-
-	function makeTranslation( X , Y , Z){
-		translation = new THREE.Matrix4();
-		antiTranslation = new THREE.Matrix4();
-
-		return {
-			translation : translation.makeTranslation( X , Y, Z),
-			backTranslation : translation.makeTranslation( -X, -Y, -Z)
-		};
-	}
-
-	if(this.dispatchOnce === true){
-	
-		console.log("here go a new tecknology");
-
-
-		//Transformation
-		var c = cent.clone();
-		var v = vect.clone();
-
-
-	
-		var tr = makeTranslation( -c.x , -c.y , -c.z );
-		c.applyMatrix4( tr.translation );
-		v.applyMatrix4( tr.translation );
-	
-	
-	
-
-		// to XY			
-		var vXY = v.clone();
-		vXY.projectOnPlane( new THREE.Vector3( 0 , 0 , 1));
-
-		var ang = new THREE.Vector3( 1, 0 , 0).angleTo( vXY.clone().normalize() );
-		
-		var rXY = makeRotation( new THREE.Vector3( 0 , 0 , 1) , ang );
-		
-		v.applyMatrix4( rXY.rotation );
-		// end to XY
-
-		// to X
-		ang = new THREE.Vector3( 1 , 0 , 0).angleTo( v.clone().normalize() );
-
-		var rX = makeRotation( new THREE.Vector3( 0 , 1 , 0) ,  ang );
-
-		v.applyMatrix4( rX.rotation );
-		// end to X
-		// end Transformation
-
-		//point generation
-
-		// DEFINITIONS
-		//
-		//
-		//
-		//points declaration and initializzation
-		var startPoints = [
-			v,
-			new THREE.Vector3(),
-			new THREE.Vector3(),
-			new THREE.Vector3(),
-			new THREE.Vector3(),
-			new THREE.Vector3(),
-			new THREE.Vector3(),
-			new THREE.Vector3(),
-			v
-		];
-
-		//beware!!! angls[i] is the angle of startPoints[i]
-		var angls = [
-			0,
-			Math.PI/4 ,
-			Math.PI/2 ,
-			3 * Math.PI/4 ,
-			Math.PI ,
-			5 * Math.PI/4 ,
-			3 * Math.PI/2 ,
-			7 * Math.PI/4 ,
-			0
-		];
-
-		// the radius, this way I don't need to calculate it every loop interattion
-		var len = v.length();
-		
-		// here I create all points in easy way, they alla are on XZ plain thanks to trasformation
-		for( i = 1; i < startPoints.length - 2 ; i++){
-			startPoints[ i ].set(
-				len * Math.cos( angls[ i ] ) ,
-				v.y,
-				len * Math.sin( angls[ i ] )
-			);
-		}
-
-
-		// end point generation
-
-		//back trasformation
-
-		for( i = 0 ; i < startPoints.length - 1 ; i++){
-
-			startPoints[ i ].applyMatrix4( rX.backRotation );
-			startPoints[ i ].applyMatrix4( rXY.backRotation );
-			startPoints[ i ].applyMatrix4( tr.backTranslation );
-
-		}
-
-		// end back trasformation
-
-
-//		for( i = 0 ; i < startPoints.length ; i++){
-//			console.log( "-------" );
-//			console.log( i );
-//			console.log(  startPoints[ i ]);
+//	function makeRotation( axis , theta ){
+//
+//		rotation = new THREE.Matrix4();
+//		antiRotation = new THREE.Matrix4();
+//		return {
+//			rotation : rotation.makeRotationAxis( axis , theta ),
+//		
+//			backRotation : antiRotation.makeRotationAxis( axis , -theta )
+//		};
+//	}
+//
+//	function makeTranslation( X , Y , Z){
+//		translation = new THREE.Matrix4();
+//		antiTranslation = new THREE.Matrix4();
+//
+//		return {
+//			translation : translation.makeTranslation( X , Y, Z),
+//			backTranslation : translation.makeTranslation( -X, -Y, -Z)
+//		};
+//	}
+//
+//	if(this.dispatchOnce === true){
+//	
+//		console.log("here go a new tecknology");
+//
+//
+//		//Transformation
+//		var c = cent.clone();
+//		var v = vect.clone();
+//
+//
+//	
+//		var tr = makeTranslation( -c.x , -c.y , -c.z );
+//		c.applyMatrix4( tr.translation );
+//		v.applyMatrix4( tr.translation );
+//	
+//	
+//	
+//
+//		// to XY			
+//		var vXY = v.clone();
+//		vXY.projectOnPlane( new THREE.Vector3( 0 , 0 , 1));
+//
+//		var ang = new THREE.Vector3( 1, 0 , 0).angleTo( vXY.clone().normalize() );
+//		
+//		var rXY = makeRotation( new THREE.Vector3( 0 , 0 , 1) , ang );
+//		
+//		v.applyMatrix4( rXY.rotation );
+//		// end to XY
+//
+//		// to X
+//		ang = new THREE.Vector3( 1 , 0 , 0).angleTo( v.clone().normalize() );
+//
+//		var rX = makeRotation( new THREE.Vector3( 0 , 1 , 0) ,  ang );
+//
+//		v.applyMatrix4( rX.rotation );
+//		// end to X
+//		// end Transformation
+//
+//		//point generation
+//
+//		// DEFINITIONS
+//		//
+//		//
+//		//
+//		//points declaration and initializzation
+//		var startPoints = [
+//			v,
+//			new THREE.Vector3(),
+//			new THREE.Vector3(),
+//			new THREE.Vector3(),
+//			new THREE.Vector3(),
+//			new THREE.Vector3(),
+//			new THREE.Vector3(),
+//			new THREE.Vector3(),
+//			v
+//		];
+//
+//		//beware!!! angls[i] is the angle of startPoints[i]
+//		var angls = [
+//			0,
+//			Math.PI/4 ,
+//			Math.PI/2 ,
+//			3 * Math.PI/4 ,
+//			Math.PI ,
+//			5 * Math.PI/4 ,
+//			3 * Math.PI/2 ,
+//			7 * Math.PI/4 ,
+//			0
+//		];
+//
+//		// the radius, this way I don't need to calculate it every loop interattion
+//		var len = v.length();
+//		
+//		// here I create all points in easy way, they alla are on XZ plain thanks to trasformation
+//		for( i = 1; i < startPoints.length - 2 ; i++){
+//			startPoints[ i ].set(
+//				len * Math.cos( angls[ i ] ) ,
+//				v.y,
+//				len * Math.sin( angls[ i ] )
+//			);
 //		}
-		
-	
-		
-		this.dispatchOnce = false;
-	}
+//
+//
+//		// end point generation
+//
+//		//back trasformation
+//
+//
+//		for( i = 0 ; i < startPoints.length - 1 ; i++){
+//
+//			startPoints[ i ].applyMatrix4( rX.backRotation );
+//			startPoints[ i ].applyMatrix4( rXY.backRotation );
+//			startPoints[ i ].applyMatrix4( tr.backTranslation );
+//
+//		}
+//
+//		// end back trasformation
+//
+//
+////		for( i = 0 ; i < startPoints.length ; i++){
+////			console.log( "-------" );
+////			console.log( i );
+////			console.log(  startPoints[ i ]);
+////		}
+//		
+//	
+//		
+//		this.dispatchOnce = false;
+//	}
 };

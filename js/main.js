@@ -56,7 +56,7 @@ function ProjectOLA(){
 	       	600 ,
 	       	new THREE.Vector3(0 , 0 , 17),
 	       	function (){
-			console.log("here comes callback function");
+		//	console.log("here comes callback function");
 			gameCamera.lookAt(new THREE.Vector3());
 		}
 		
@@ -376,7 +376,7 @@ function ProjectOLA(){
 			//environment.rotateSpaceship();
 			
 			introAnimation.doAnimation();
-//			introAnimation.newTeckTest(gameCamera.position.clone() , new THREE.Vector3(0, 5 , 3));
+			//introAnimation.newTeckTest(gameCamera.position.clone() , new THREE.Vector3(0, 5 , 3));
 		}
 
 		requestAnimationFrame(animate);
