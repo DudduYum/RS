@@ -93,9 +93,11 @@ Animator.prototype.makeFundamentalPoints = function(){
 	//********  Transformation
 //	var c = this.center.clone();
 //	var v = this.startPoint.clone();
+
+	console.log(this.startPoint );
 	
-	var c = new THREE.Vector3( 0 , -4 , 20 );
-	var v = new THREE.Vector3( -10 , 5, -10);
+	var c = new THREE.Vector3( 0 , 0, 0 );
+	var v = new THREE.Vector3( -10 , 10, 0);
 
 
 	//traslazione
