@@ -54,10 +54,10 @@ function ProjectOLA(){
 	var introAnimation = new Animator( 
 		gameCamera,
 	       	600 ,
-	       	new THREE.Vector3(0 , 0 , 17),
+	       	new THREE.Vector3(0 , 0 , 0),
 	       	function (){
 		//	console.log("here comes callback function");
-			gameCamera.lookAt(new THREE.Vector3());
+			gameCamera.lookAt(new THREE.Vector3( 0 , 0 , -10));
 		}
 		
 	);
@@ -357,7 +357,18 @@ function ProjectOLA(){
 
 	resetComposers(gameCamera);
 
+	var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+	var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+	var cube = new THREE.Mesh( geometry, material );
 
+
+	var geometry1 = new THREE.BoxGeometry( 1, 1, 1 );
+	var material1 = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+	var cube1 = new THREE.Mesh( geometry, material );
+	cube1.position.set( 0 , -5 , -5 );
+	console.log(gameCamera.position);
+	scene.add( cube );
+	scene.add( cube1 );
 	//animation loop
 	function animate() {
 		if(gameState.isRunning()) {
@@ -376,6 +387,7 @@ function ProjectOLA(){
 			//environment.rotateSpaceship();
 			
 			introAnimation.doAnimation();
+			
 			//introAnimation.newTeckTest(gameCamera.position.clone() , new THREE.Vector3(0, 5 , 3));
 		}
 

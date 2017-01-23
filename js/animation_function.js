@@ -67,26 +67,26 @@ Animator.prototype.makeFundamentalPoints = function(){
 
 
 	console.log("fundamental points");
-	function makeRotation( axis , theta ){
-
-		rotation = new THREE.Matrix4();
-		antiRotation = new THREE.Matrix4();
-		return {
-			rotation : rotation.makeRotationAxis( axis , theta ),
-		
-			backRotation : antiRotation.makeRotationAxis( axis , -theta )
-		};
-	}
-
-	function makeTranslation( X , Y , Z){
-		translation = new THREE.Matrix4();
-		antiTranslation = new THREE.Matrix4();
-
-		return {
-			translation : translation.makeTranslation( X , Y, Z),
-			backTranslation : translation.makeTranslation( -X, -Y, -Z)
-		};
-	}
+//	function makeRotation( axis , theta ){
+//
+//		rotation = new THREE.Matrix4();
+//		antiRotation = new THREE.Matrix4();
+//		return {
+//			rotation : rotation.makeRotationAxis( axis , theta ),
+//		
+//			backRotation : antiRotation.makeRotationAxis( axis , -theta )
+//		};
+//	}
+//
+//	function makeTranslation( X , Y , Z){
+//		translation = new THREE.Matrix4();
+//		antiTranslation = new THREE.Matrix4();
+//
+//		return {
+//			translation : translation.makeTranslation( X , Y, Z),
+//			backTranslation : translation.makeTranslation( -X, -Y, -Z)
+//		};
+//	}
 
 
 
@@ -96,8 +96,8 @@ Animator.prototype.makeFundamentalPoints = function(){
 
 	console.log(this.startPoint );
 	
-	var c = new THREE.Vector3( 0 , 0, 0 );
-	var v = new THREE.Vector3( -10 , 10, 0);
+	var c = new THREE.Vector3( 0 , 1, -5 );
+	var v = new THREE.Vector3( 0 , 0, 0);
 
 
 	//traslazione
@@ -106,20 +106,15 @@ Animator.prototype.makeFundamentalPoints = function(){
 	v.applyMatrix4( tr.translation );
 
 
-	console.log( c );
-	console.log( v );
-
 	// to XY			
 	var vXY = v.clone();
 	vXY.projectOnPlane( new THREE.Vector3( 0 , 0 , 1));
 
-	console.log(vXY);
 
 	var ang = new THREE.Vector3( 1, 0 , 0).angleTo( vXY.clone().normalize() );
 	console.log( ang );
 	
 	var rXY = makeRotation( new THREE.Vector3( 0 , 0 , 1) , ang );
-	console.log( rXY );
 
 	
 	v.applyMatrix4( rXY.rotation );
@@ -335,9 +330,11 @@ Animator.prototype.stop = function(){
  // all definition and property of the object
  Animator.prototype.unitTest = function(){
 
- 	console.log("initialization");
+ 	console.log("****** initialization");
 	console.log(this.pathOfAnimation);
  	console.log(this.startPoint);
+	console.log("****** end initialization");
+	console.log(); 
 };
 
 Animator.prototype.anTest = function(){

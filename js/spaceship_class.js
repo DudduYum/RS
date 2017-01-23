@@ -136,7 +136,9 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	this.spaceshipColliders.push(new THREE.Sphere());
 
 	this.initialize();
-//	this.reset();
+	this.reset();
+	//console.log( this.spaceship3D.position);
+	
 	
 	
 	//this.spaceship3D.rotation.x = 0;	// ruota space ship in modo tale che il naso guarda verso l'alto
