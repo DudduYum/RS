@@ -141,7 +141,7 @@ function createSpaceshipShaders(){
 				"varying vec3 lightVector;",
 				"varying vec3 spLightVector;",
 
-				"uniform sampler2D displaysmentMap;",
+				"uniform sampler2D displacementMap;",
 
 				// light position
 				"uniform vec3 pointLightPos;",
@@ -158,12 +158,12 @@ function createSpaceshipShaders(){
 						"tNorm = normalMatrix * normal;",
 
 						// get texture coordinates
-						"vec4 distortion = texture2D( displaysmentMap , uv);",
+						"vec4 distortion = texture2D( displacementMap , uv);",
 
 						//change the normal
 						"vec3 newNormal = (tNorm * distortion.x) ;",
 
-						// actually make displaysment
+						// actually make displacement
 						"vec3 nPosition = position + (newNormal * 0.4);",
 
 						"pointPosition = (modelViewMatrix * vec4( nPosition, 1.0 )).xyz;",

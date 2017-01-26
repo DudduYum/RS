@@ -52,15 +52,15 @@ Asteroid.prototype.move = function(){
 	var step = this.timer.passedTime/1000  * this.settings.asteroidSpeed;
 
 	// tells how much asteroid should move
-	var displaysmentVec = new THREE.Vector3(
+	var displacementVec = new THREE.Vector3(
 		step * this.direction.x,
 		step * this.direction.y,
 		step * this.direction.z
 	);
 
-	this.asteroidObj.translateX( displaysmentVec.x );
-	this.asteroidObj.translateY( displaysmentVec.y );
-	this.asteroidObj.translateZ( displaysmentVec.z );
+	this.asteroidObj.translateX( displacementVec.x );
+	this.asteroidObj.translateY( displacementVec.y );
+	this.asteroidObj.translateZ( displacementVec.z );
 
 
 	// rotation animation
@@ -68,7 +68,7 @@ Asteroid.prototype.move = function(){
 
 	this.rotationAnimation = this.rotationAnimation % (2 * Math.PI);
 
-	// change displaysmentVec to apply movement to mesh
+	// change displacementVec to apply movement to mesh
 	var Qast;
 
 	//correct asteroid rotation
@@ -98,7 +98,7 @@ Asteroid.prototype.move = function(){
 	// computing inverse trasformation 
 	// need it to correct asteroid direction
 	Qast = this.asteroidMesh.quaternion.clone().inverse();
-	displaysmentVec.applyQuaternion(Qast);
+	displacementVec.applyQuaternion(Qast);
 
 	// tmp code start
 
@@ -112,9 +112,9 @@ Asteroid.prototype.move = function(){
 	flamePosition = flamePosition.applyQuaternion(Qast);
 
 	// move the mesh
-	this.asteroidMesh.translateX(displaysmentVec.x);
-	this.asteroidMesh.translateY(displaysmentVec.y);
-	this.asteroidMesh.translateZ(displaysmentVec.z);
+	this.asteroidMesh.translateX(displacementVec.x);
+	this.asteroidMesh.translateY(displacementVec.y);
+	this.asteroidMesh.translateZ(displacementVec.z);
 
 		// move collider
 	this.collider.center.set(
