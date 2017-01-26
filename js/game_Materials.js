@@ -11,12 +11,12 @@ function MaterialManager(){
 	this.flameTexture = this.loadImage("textures/flame/flame_original.jpg");
 	this.flameTexture.minFilter = THREE.LinearMipMapLinearFilter;
 	this.flameTexture.magFilter = THREE.LinearFilter;
-	this.flameTexture.anisotropy = renderer.getMaxAnisotropy();
+	//this.flameTexture.anisotropy = renderer.getMaxAnisotropy();
 		
 	this.flameDisplacementMap = this.loadImage("textures/flame/flame_displacement.jpg");
 	this.flameDisplacementMap.minFilter = THREE.LinearMipMapLinearFilter;
 	this.flameDisplacementMap.magFilter = THREE.LinearFilter;
-	this.flameDisplacementMap.anisotropy = renderer.getMaxAnisotropy();
+	//this.flameDisplacementMap.anisotropy = renderer.getMaxAnisotropy();
 
 
 	//asteroid textures, trilinear filter and anisotropy
@@ -30,19 +30,19 @@ function MaterialManager(){
 
 	this.asteroidTexture.minFilter = THREE.LinearMipMapLinearFilter;
 	this.asteroidTexture.magFilter = THREE.LinearFilter;
-	this.asteroidTexture.anisotropy = renderer.getMaxAnisotropy();
+	//this.asteroidTexture.anisotropy = renderer.getMaxAnisotropy();
 	
 	this.asteroidNormalMap.minFilter = THREE.LinearMipMapLinearFilter;
 	this.asteroidNormalMap.magFilter = THREE.LinearFilter;
-	this.asteroidNormalMap.anisotropy = renderer.getMaxAnisotropy();
+	//this.asteroidNormalMap.anisotropy = renderer.getMaxAnisotropy();
 	
 	this.asteroidDisplacementMap.minFilter = THREE.LinearMipMapLinearFilter;
 	this.asteroidDisplacementMap.magFilter = THREE.LinearFilter;
-	this.asteroidDisplacementMap.anisotropy = renderer.getMaxAnisotropy();
+	//this.asteroidDisplacementMap.anisotropy = renderer.getMaxAnisotropy();
 	
 	this.asteroidSpecularMap.minFilter = THREE.LinearMipMapLinearFilter;
 	this.asteroidSpecularMap.magFilter = THREE.LinearFilter;
-	this.asteroidSpecularMap.anisotropy = renderer.getMaxAnisotropy();
+	//this.asteroidSpecularMap.anisotropy = renderer.getMaxAnisotropy();
 
 
 //=== CONSTRUCTOR ===
@@ -154,19 +154,19 @@ MaterialManager.prototype.createSpaceshipUniforms = function(){
 	this.spaceshipTexture = this.loadImage('textures/spaceship/spaceship.jpg');
 	this.spaceshipTexture.minFilter = THREE.LinearMipMapLinearFilter;
 	this.spaceshipTexture.magFilter = THREE.LinearFilter;
-	this.spaceshipTexture.anisotropy = renderer.getMaxAnisotropy();
+	//this.spaceshipTexture.anisotropy = renderer.getMaxAnisotropy();
 
 	// normal map that is used for light calculation
 	this.spaceshipNormalMap = this.loadImage('textures/spaceship/spaceship_normal.png');
 	this.spaceshipNormalMap.minFilter = THREE.LinearMipMapLinearFilter;
 	this.spaceshipNormalMap.magFilter = THREE.LinearFilter;
-	this.spaceshipNormalMap.anisotropy = renderer.getMaxAnisotropy();
+	//this.spaceshipNormalMap.anisotropy = renderer.getMaxAnisotropy();
 
 	//specular map
 	this.spaceshipSpecularMap = this.loadImage('textures/spaceship/spaceship_specular.png');
 	this.spaceshipSpecularMap.minFilter = THREE.LinearMipMapLinearFilter;
 	this.spaceshipSpecularMap.magFilter = THREE.LinearFilter;
-	this.spaceshipSpecularMap.anisotropy = renderer.getMaxAnisotropy();
+	//this.spaceshipSpecularMap.anisotropy = renderer.getMaxAnisotropy();
 
 	var uniforms = {
 		// mapps
@@ -195,14 +195,6 @@ MaterialManager.prototype.createSpaceshipUniforms = function(){
 		spLightPower: {
 			type:	"v3",
 			value:	spaceshipLight.lightPower
-		},
-		spLightPos: {
-			type:  "v3",
-			value: spaceshipLight.lightPosition
-		},
-		spLightPower: {
-			type: "v3",
-			value: spaceshipLight.lightPower
 		},
 		pointLightPos: {
 			type:	"v3",
