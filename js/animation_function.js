@@ -56,8 +56,6 @@ function Animator(obj, subdivision , center, callback){
 
 
 
-	//testing method
-	this.unitTest();
 }
 
 function createTranslation( a , b , c ){
@@ -184,16 +182,12 @@ Animator.prototype.makeFundamentalPoints = function(){
 	];
 	var le = this.startPoint.length();
 	
-	console.log(ar);
 	//random orbit rotation 
 	rr =  createRotationAxis(
 	       new THREE.Vector3( 1 , 0 , 0),
 	       Math.random() % Math.PI
 	);
 	
-	console.log(tr);
-	console.log(ro1);
-	console.log(ro2);
 
 	for( i = 1 , a = Math.PI/4 ; i < ar.length -1 ; i++ , a += Math.PI/4 ){
 		
@@ -256,7 +250,6 @@ Animator.prototype.update = function(){
 	var currentTime = this.timer.getTime();
 	if( currentTime - this.lastAnimation > this.stepTime ){
 		
-		//console.log(this.step);
 		this.step = this.step % (this.pathOfAnimation.length - 1)  ;
 		this.step++;
 		this.lastAnimation = currentTime;
@@ -271,11 +264,9 @@ Animator.prototype.update = function(){
 //do not return, and it shouldn't, perform all needed animation stuf on onimated bject
 //this is this 
 Animator.prototype.doAnimation = function(){
-	//console.log("do animation");
 
 	this.update();	
 
-	//console.log(this.animatedObj );
 	this.animatedObj.position.set(
 		this.pathOfAnimation[ this.step ].x,
 		this.pathOfAnimation[ this.step ].y,
@@ -318,149 +309,15 @@ Animator.prototype.stop = function(){
  // all definition and property of the object
  Animator.prototype.unitTest = function(){
 
- 	console.log("****** initialization");
 	console.log(this.pathOfAnimation);
  	console.log(this.startPoint);
-	console.log("****** end initialization");
 	console.log(); 
 };
 
 Animator.prototype.anTest = function(){
 
-	//console.log( this.step);
  	this.doAnimation();
  };
 
 
-Animator.prototype.newTeckTest = function(vect , cent){
-//	function makeRotation( axis , theta ){
-//
-//		rotation = new THREE.Matrix4();
-//		antiRotation = new THREE.Matrix4();
-//		return {
-//			rotation : rotation.makeRotationAxis( axis , theta ),
-//		
-//			backRotation : antiRotation.makeRotationAxis( axis , -theta )
-//		};
-//	}
-//
-//	function makeTranslation( X , Y , Z){
-//		translation = new THREE.Matrix4();
-//		antiTranslation = new THREE.Matrix4();
-//
-//		return {
-//			translation : translation.makeTranslation( X , Y, Z),
-//			backTranslation : translation.makeTranslation( -X, -Y, -Z)
-//		};
-//	}
-//
-//	if(this.dispatchOnce === true){
-//	
-//		console.log("here go a new tecknology");
-//
-//
-//		//Transformation
-//		var c = cent.clone();
-//		var v = vect.clone();
-//
-//
-//	
-//		var tr = makeTranslation( -c.x , -c.y , -c.z );
-//		c.applyMatrix4( tr.translation );
-//		v.applyMatrix4( tr.translation );
-//	
-//	
-//	
-//
-//		// to XY			
-//		var vXY = v.clone();
-//		vXY.projectOnPlane( new THREE.Vector3( 0 , 0 , 1));
-//
-//		var ang = new THREE.Vector3( 1, 0 , 0).angleTo( vXY.clone().normalize() );
-//		
-//		var rXY = makeRotation( new THREE.Vector3( 0 , 0 , 1) , ang );
-//		
-//		v.applyMatrix4( rXY.rotation );
-//		// end to XY
-//
-//		// to X
-//		ang = new THREE.Vector3( 1 , 0 , 0).angleTo( v.clone().normalize() );
-//
-//		var rX = makeRotation( new THREE.Vector3( 0 , 1 , 0) ,  ang );
-//
-//		v.applyMatrix4( rX.rotation );
-//		// end to X
-//		// end Transformation
-//
-//		//point generation
-//
-//		// DEFINITIONS
-//		//
-//		//
-//		//
-//		//points declaration and initializzation
-//		var startPoints = [
-//			v,
-//			new THREE.Vector3(),
-//			new THREE.Vector3(),
-//			new THREE.Vector3(),
-//			new THREE.Vector3(),
-//			new THREE.Vector3(),
-//			new THREE.Vector3(),
-//			new THREE.Vector3(),
-//			v
-//		];
-//
-//		//beware!!! angls[i] is the angle of startPoints[i]
-//		var angls = [
-//			0,
-//			Math.PI/4 ,
-//			Math.PI/2 ,
-//			3 * Math.PI/4 ,
-//			Math.PI ,
-//			5 * Math.PI/4 ,
-//			3 * Math.PI/2 ,
-//			7 * Math.PI/4 ,
-//			0
-//		];
-//
-//		// the radius, this way I don't need to calculate it every loop interattion
-//		var len = v.length();
-//		
-//		// here I create all points in easy way, they alla are on XZ plain thanks to trasformation
-//		for( i = 1; i < startPoints.length - 2 ; i++){
-//			startPoints[ i ].set(
-//				len * Math.cos( angls[ i ] ) ,
-//				v.y,
-//				len * Math.sin( angls[ i ] )
-//			);
-//		}
-//
-//
-//		// end point generation
-//
-//		//back trasformation
-//
-//
-//		for( i = 0 ; i < startPoints.length - 1 ; i++){
-//
-//			startPoints[ i ].applyMatrix4( rX.backRotation );
-//			startPoints[ i ].applyMatrix4( rXY.backRotation );
-//			startPoints[ i ].applyMatrix4( tr.backTranslation );
-//
-//		}
-//
-//		// end back trasformation
-//
-//
-////		for( i = 0 ; i < startPoints.length ; i++){
-////			console.log( "-------" );
-////			console.log( i );
-////			console.log(  startPoints[ i ]);
-////		}
-//		
-//	
-//		
-//		this.dispatchOnce = false;
-//	}
-};
+

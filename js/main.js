@@ -32,7 +32,7 @@ function ProjectOLA(){
 	var canvas = document.getElementById('canvas');
 		canvas.appendChild(stats.domElement);
 
-	//renderer
+//renderer
 	renderer = new THREE.WebGLRenderer({antialias : true});
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	canvas.appendChild(renderer.domElement);
@@ -59,10 +59,9 @@ function ProjectOLA(){
 	// animation object
 	var introAnimation = new Animator( 
 		gameCamera,
-	       	600 ,
+	       	1000 ,
 	       	new THREE.Vector3(0 , 0 , 5),
 	       	function (){
-		//	console.log("here comes callback function");
 			gameCamera.lookAt(new THREE.Vector3( 0 , 0 , -10));
 		}
 		
@@ -449,13 +448,9 @@ function ProjectOLA(){
 			userInterface.update();
 			score.update();
 		} else if(!gameState.isOver()){
-			//la funzione responsabile per animazione iniziale
-			//inserire codice di animazione qui.
-			//environment.rotateSpaceship();
 			
 			introAnimation.doAnimation();
 			
-			//introAnimation.newTeckTest(gameCamera.position.clone() , new THREE.Vector3(0, 5 , 3));
 		}
 
 		requestAnimationFrame(animate);
