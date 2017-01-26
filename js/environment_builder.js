@@ -1,5 +1,3 @@
-//"use strict";
-
 function Environment(settingsObject, timer, IO_controls){
 
 //=== VARIABLES ===
@@ -27,6 +25,10 @@ this.game3Dscene = new THREE.Object3D();
 //sphere map
 this.openSpaceGeometry  = new THREE.SphereGeometry(600, 32, 32);
 this.openSpaceTexture = new THREE.TextureLoader().load("textures/space.jpg");
+//trilinear and anisotropy
+this.openSpaceTexture.minFilter = THREE.LinearMipMapLinearFilter;
+this.openSpaceTexture.magFilter = THREE.LinearFilter;
+this.openSpaceTexture.anisotropy = renderer.getMaxAnisotropy();
 this.openSpaceMaterial  = new THREE.MeshBasicMaterial({map: this.openSpaceTexture, side: THREE.DoubleSide});
 this.openSpace  = new THREE.Mesh(this.openSpaceGeometry, this.openSpaceMaterial);
 this.openSpace.position.set(0,0,0);
@@ -37,6 +39,10 @@ this.game3Dscene.add(this.openSpace);
 //reference sun
 this.sunGeometry = new THREE.SphereGeometry(60, 32, 32);
 this.sunTexture = new THREE.TextureLoader().load("textures/sun.jpg");
+//trilinear and anisotropy
+this.sunTexture.minFilter = THREE.LinearMipMapLinearFilter;
+this.sunTexture.magFilter = THREE.LinearFilter;
+this.sunTexture.anisotropy = renderer.getMaxAnisotropy();
 this.sunMaterial = new THREE.MeshBasicMaterial({map: this.sunTexture});
 this.sun = new THREE.Mesh(this.sunGeometry, this.sunMaterial);
 this.sun.position.set(

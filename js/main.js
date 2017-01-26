@@ -1,6 +1,6 @@
-//"use strict";
-
 //======= GLOBAL VARIABLES AND METHODS =======
+var renderer;
+
 var switchCameraMode;
 var setBackground;
 var setInverseColors;
@@ -32,7 +32,10 @@ function ProjectOLA(){
 	var canvas = document.getElementById('canvas');
 		canvas.appendChild(stats.domElement);
 
-
+	//renderer
+	renderer = new THREE.WebGLRenderer({antialias : true});
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	canvas.appendChild(renderer.domElement);
 
 	//cameras
 	var aspectRatio = window.innerWidth/window.innerHeight;
@@ -75,13 +78,7 @@ function ProjectOLA(){
 
 	//3D scene initialization
 	var scene = new THREE.Scene();
-	scene.add(environment.game3Dscene);
-
-
-	//renderer
-	var renderer = new THREE.WebGLRenderer();
-		renderer.setSize(window.innerWidth, window.innerHeight);
-		canvas.appendChild(renderer.domElement);
+	scene.add(environment.game3Dscene);	
 
 
 	//composers

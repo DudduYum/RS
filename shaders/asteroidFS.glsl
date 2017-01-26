@@ -1,7 +1,7 @@
-//asteroidFS
+//asteroid FS
 
 
-// fragment propertys
+// fragment properties
 varying vec3 tNorm;
 varying vec3 pointPosition;
 
@@ -27,7 +27,7 @@ uniform sampler2D specularMap;
 uniform float s;
 uniform vec2 normalScale;
 
-// start ininitializzation
+// start initialization
 #define PI 3.14159265
 #extension GL_OES_standard_derivatives : enable
 

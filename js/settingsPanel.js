@@ -6,9 +6,9 @@ function SettingsPanel(areaDepth) {
 
 	//settings variables
 	this.dynamic_depthOfField = false;
-	this.focus_distance = 35;
+	this.focus_distance = 100;
 	this.pixelation = false;
-	this.pixel_size = 12;
+	this.pixel_size = 8;
 	this.edgeDetection = false;
 
 	this.background = true;
@@ -29,9 +29,9 @@ function SettingsPanel(areaDepth) {
 			"Default": {
 				"0": {
 					"dynamic_depthOfField": false,
-					"focus_distance": 35,
+					"focus_distance": 100,
 					"pixelation": false,
-					"pixel_size": 12,
+					"pixel_size": 8,
 					"edgeDetection": false,
 
 					"background": true,
@@ -43,9 +43,9 @@ function SettingsPanel(areaDepth) {
 			"Pen and paper": {
 				"0": {
 					"dynamic_depthOfField": false,
-					"focus_distance": 35,
+					"focus_distance": 100,
 					"pixelation": false,
-					"pixel_size": 12,
+					"pixel_size": 8,
 					"edgeDetection": true,
 
 					"background": false,
@@ -57,9 +57,9 @@ function SettingsPanel(areaDepth) {
 			"Modern art": {
 				"0": {
 					"dynamic_depthOfField": false,
-					"focus_distance": 35,
+					"focus_distance": 100,
 					"pixelation": true,
-					"pixel_size": 12,
+					"pixel_size": 8,
 					"edgeDetection": true,
 
 					"background": false,
@@ -87,7 +87,7 @@ function SettingsPanel(areaDepth) {
 	var depthOfField_controller = effects_folder.add(this, 'dynamic_depthOfField');
 	var depthOfFieldDistance_controller = effects_folder.add(this, 'focus_distance', 0, areaDepth).step(1);
 	var pixelation_controller = effects_folder.add(this, 'pixelation');
-	var pixelationSize_controller = effects_folder.add(this, 'pixel_size', 2, 12).step(1);
+	var pixelationSize_controller = effects_folder.add(this, 'pixel_size', 2, 8).step(1);
 	var edgeDetection_controller = effects_folder.add(this, 'edgeDetection');
 
 	var imageSettings_folder = graphicSettings_folder.addFolder('Image settings');

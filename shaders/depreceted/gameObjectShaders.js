@@ -1,4 +1,4 @@
-function createSpaceshipSheders(){
+function createSpaceshipShaders(){
 	return {
 		spaceshipShaders:{
 			vertexShader: [

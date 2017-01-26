@@ -1,4 +1,4 @@
-//asteroidVS
+//asteroid VS
 
 
 varying vec3 tNorm;
@@ -9,7 +9,7 @@ varying vec3 pointPosition;
 varying vec3 lightVector;
 varying vec3 spLightVector;
 
-// displasment
+// displacement
 uniform float distortionFactor;
 uniform float maxDistortion;
 uniform sampler2D displaysmentMap;

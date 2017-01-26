@@ -5,7 +5,7 @@ function createDofShader() {
 			"tDepth": {type: "t", value: null},
 			"width": {type: "f", value: 0.0 },
 			"height": {type: "f", value: 0.0},
-			"focusLimit": {type: "f", value: 35.0},
+			"focusLimit": {type: "f", value: 100.0},
 			"areaDepth": {type: "f", value: 0.0}
 		},
 

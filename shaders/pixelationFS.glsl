@@ -23,8 +23,8 @@ void main(void) {
 	float modPoint_Y = pixelSizeY * floor(vUv.y / pixelSizeY);
 
 
-	for(int i=0; i < 12; i++) {
-		for(int j=0; j < 12; j++) {
+	for(int i=0; i < 8; i++) {
+		for(int j=0; j < 8; j++) {
 			if(float(i) < pixelationSize && float(j) < pixelationSize) {
 				currentPoint.x = modPoint_X + (step_h * float(i));
 				currentPoint.y = modPoint_Y + (step_v * float(j));

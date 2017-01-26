@@ -1,4 +1,4 @@
-//spaceship's flame FS
+//spaceship flame FS
 
 varying vec3 tNorm;
 
