@@ -50,11 +50,12 @@ function ProjectOLA(){
 	// game state manager
 	var gameState;
 
+
 	// animation object
 	var introAnimation = new Animator( 
 		gameCamera,
 	       	600 ,
-	       	new THREE.Vector3(0 , 0 , 0),
+	       	new THREE.Vector3(0 , 0 , 5),
 	       	function (){
 		//	console.log("here comes callback function");
 			gameCamera.lookAt(new THREE.Vector3( 0 , 0 , -10));
@@ -357,18 +358,6 @@ function ProjectOLA(){
 
 	resetComposers(gameCamera);
 
-	var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-	var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-	var cube = new THREE.Mesh( geometry, material );
-
-
-	var geometry1 = new THREE.BoxGeometry( 1, 1, 1 );
-	var material1 = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-	var cube1 = new THREE.Mesh( geometry, material );
-	cube1.position.set( 0 , -5 , -5 );
-	console.log(gameCamera.position);
-	scene.add( cube );
-	scene.add( cube1 );
 	//animation loop
 	function animate() {
 		if(gameState.isRunning()) {
@@ -377,7 +366,7 @@ function ProjectOLA(){
 			}
 			catch(exec) {
 				gameState.stopGame();
-				console.log(exec);
+				//console.log(exec);
 			}
 			userInterface.update();
 			score.update();

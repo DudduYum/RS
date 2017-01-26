@@ -2,7 +2,7 @@
 
 
 
-
+var actualSpaceShipPosition = new THREE.Vector3();
 
 function Spaceship(settingsObj, materialManager, IO_controls, timer){
 
@@ -137,6 +137,7 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 
 	this.initialize();
 	this.reset();
+
 	//console.log( this.spaceship3D.position);
 	
 	
@@ -283,8 +284,13 @@ Spaceship.prototype.updateSpaceship = function(){
 	this.spaceship_flame.material.uniforms.texAnimation.value += this.timer.passedTime/1000 * this.flameTexSpeed;
 	this.spaceship_flame.material.uniforms.texAnimation.value = this.spaceship_flame.material.uniforms.texAnimation.value % 2.0;
 	
+	actualSpaceShipPosition.set(
+		this.speceship3D.position.x,
+		this.speceship3D.position.y,
+		this.speceship3D.position.z
+	);
 
-	};
+};
 
 
 //updates collider position
@@ -329,6 +335,13 @@ Spaceship.prototype.initialize = function() {
 
 	// flame texture animation
 	this.spaceship_flame.material.uniforms.texAnimation.value = 0.0;
+
+	
+	actualSpaceShipPosition.set(
+		this.spaceship3D.position.x,
+		this.spaceship3D.position.y,
+		this.spaceship3D.position.z 
+	);
 
 
 };
