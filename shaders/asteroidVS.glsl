@@ -38,9 +38,9 @@ void main(){
 		//correct the normal
 		vec3 newNormal = tNorm * distortion ;
 
-		// calculate the displaysment of each point using
-		// actual radius of asteroid, the max radious each asteroid
-		// could be and displaysment from displaysment map
+		// calculate the displacement of each point using
+		// actual radius of asteroid, the max radius each asteroid
+		// could be and displacement from displacement map
 
 		// distortionFactor = actual radius of asteroid
 		// maxDistortion = the max radious of asteroid
