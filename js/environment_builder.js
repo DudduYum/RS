@@ -1,4 +1,3 @@
-
 function Environment(settingsObject, timer, IO_controls){
 
 	//=== VARIABLES ===

@@ -93,43 +93,39 @@ function ProjectOLA(){
 	var scene = new THREE.Scene();
 	scene.add(environment.game3Dscene);	
 
-		//renderer
-		var renderer = new THREE.WebGLRenderer();
-			renderer.setSize(window.innerWidth, window.innerHeight);
-			canvas.appendChild(renderer.domElement);
 
 
-		//composers
-		var depth_composer = new THREE.EffectComposer(renderer);
-		var main_composer = new THREE.EffectComposer(renderer);
-		THREE.EffectComposer.prototype.swapTargets = function() {
-			var tmp = this.renderTarget2;
-			this.renderTarget2 = this.renderTarget1;
-			this.renderTarget1 = tmp;
-		};
+	//composers
+	var depth_composer = new THREE.EffectComposer(renderer);
+	var main_composer = new THREE.EffectComposer(renderer);
+	THREE.EffectComposer.prototype.swapTargets = function() {
+		var tmp = this.renderTarget2;
+		this.renderTarget2 = this.renderTarget1;
+		this.renderTarget1 = tmp;
+	};
 
-		//shaders
-		var depth_shader = createDepthShader();
-			depth_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
-		var imageSettings_shader = createImageSettings();
-		var depthOfField_shader = createDofShader();
-			depthOfField_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
-		var pixelation_shader = createPixelationShader();
-		var edgeDetection_shader = createEdgeDetectionShader();
+	//shaders
+	var depth_shader = createDepthShader();
+		depth_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
+	var imageSettings_shader = createImageSettings();
+	var depthOfField_shader = createDofShader();
+		depthOfField_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
+	var pixelation_shader = createPixelationShader();
+	var edgeDetection_shader = createEdgeDetectionShader();
 
-		//depth material
-		var depthMaterial = new THREE.ShaderMaterial({
-			side: THREE.DoubleSide,
-			fragmentShader : depth_shader.fragmentShader,
-			vertexShader : depth_shader.vertexShader,
-			uniforms : depth_shader.uniforms
-		});
+	//depth material
+	var depthMaterial = new THREE.ShaderMaterial({
+		side: THREE.DoubleSide,
+		fragmentShader : depth_shader.fragmentShader,
+		vertexShader : depth_shader.vertexShader,
+		uniforms : depth_shader.uniforms
+	});
 
-		//passes
-		var mainRender_pass;
-		var depthRender_pass;
-		//var copy_pass;
+	//passes
+	var mainRender_pass;
+	var depthRender_pass;
 
+	
 	//shaders
 	var depth_shader = createDepthShader();
 		depth_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
