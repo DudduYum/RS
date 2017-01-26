@@ -4,7 +4,7 @@ var pointLight = {
 	lightPosition: new THREE.Vector3()
 };
 
-pointLight.lightPower.set(250000.0, 250000.0, 250000.0);
+pointLight.lightPower.set(500000.0, 500000.0, 500000.0);
 pointLight.lightPosition.set(60.0, 100.0, -20.0);
 
 
