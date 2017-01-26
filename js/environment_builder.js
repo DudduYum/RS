@@ -1,26 +1,26 @@
+
 function Environment(settingsObject, timer, IO_controls){
 
-//=== VARIABLES ===
+	//=== VARIABLES ===
 
-this.settingsObject = settingsObject;
-this.materialManager = new MaterialManager();
-this.IO_controls = IO_controls;
-this.timer = timer;
+	this.settingsObject = settingsObject;
+	this.materialManager = new MaterialManager();
+	this.IO_controls = IO_controls;
+	this.timer = timer;
 
-//asteroid param
-this.asteroidBufferMinimum = 5;
-this.activeAsteroids = [];
-this.asteroidBuffer = [];
-this.lastSpawnTime = 0;
+	//asteroid param
+	this.asteroidBufferMinimum = 5;
+	this.activeAsteroids = [];
+	this.asteroidBuffer = [];
+	this.lastSpawnTime = 0;
 
-// spaceship
-this.spaceship = new Spaceship(this.settingsObject, this.materialManager, this.IO_controls, this.timer);
-
-this.game3Dscene = new THREE.Object3D();
-
+	// spaceship
+	this.spaceship = new Spaceship(this.settingsObject, this.materialManager, this.IO_controls, this.timer);
+	this.game3Dscene = new THREE.Object3D();
 
 
-//=== CONSTRUCTOR ===
+
+	//=== CONSTRUCTOR ===
 
 //sphere map
 this.openSpaceGeometry  = new THREE.SphereGeometry(600, 32, 32);
@@ -33,7 +33,7 @@ this.openSpaceMaterial  = new THREE.MeshBasicMaterial({map: this.openSpaceTextur
 this.openSpace  = new THREE.Mesh(this.openSpaceGeometry, this.openSpaceMaterial);
 this.openSpace.position.set(0,0,0);
 
-this.game3Dscene.add(this.openSpace);
+	this.game3Dscene.add(this.openSpace);
 
 
 //reference sun
@@ -53,12 +53,12 @@ this.sun.position.set(
 this.sun.rotation.z = 45 * (Math.PI/180);
 this.sun.rotation.y = 90 * (Math.PI/180);
 
-this.game3Dscene.add(this.sun);
+	this.game3Dscene.add(this.sun);
 
-// ?
-this.materialManager.shipMaterial = new THREE.MeshBasicMaterial({color:0x00ff00});
+	// ?
+	this.materialManager.shipMaterial = new THREE.MeshBasicMaterial({color:0x00ff00});
 
-this.game3Dscene.add(this.spaceship.spaceship3D);
+	this.game3Dscene.add(this.spaceship.spaceship3D);
 
 this.spaceship.initialize();
 	this.lastSpawnTime = timer.getTime();

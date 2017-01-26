@@ -80,6 +80,7 @@ Asteroid.prototype.move = function(){
 			this.rotationAnimation * this.rotationDirection.y,
 			this.z_rotation,
 			'XZY' )
+//			'XYZ' )
 		 );
 
 //debugging code

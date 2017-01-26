@@ -42,7 +42,7 @@ function ProjectOLA(){
 	var gameCamera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
 	var freeCamera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
 		freeCamera.position.set(2,2,2);
-	var useGameCamera = true
+	var useGameCamera = true;
 
 
 
@@ -54,6 +54,19 @@ function ProjectOLA(){
 
 	// game state manager
 	var gameState;
+
+
+	// animation object
+	var introAnimation = new Animator( 
+		gameCamera,
+	       	600 ,
+	       	new THREE.Vector3(0 , 0 , 5),
+	       	function (){
+		//	console.log("here comes callback function");
+			gameCamera.lookAt(new THREE.Vector3( 0 , 0 , -10));
+		}
+		
+	);
 
 	// score counter
 	var score = new ScoreCounter(timer, settings);
@@ -74,21 +87,48 @@ function ProjectOLA(){
 
 	// environmentronment
 	var environment = new Environment(settings, timer, inputControl);
-
+		//environment.reset();
 
 	//3D scene initialization
 	var scene = new THREE.Scene();
 	scene.add(environment.game3Dscene);	
 
+		//renderer
+		var renderer = new THREE.WebGLRenderer();
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			canvas.appendChild(renderer.domElement);
 
-	//composers
-	var depth_composer = new THREE.EffectComposer(renderer);
-	var main_composer = new THREE.EffectComposer(renderer);
-	THREE.EffectComposer.prototype.swapTargets = function() {
-		var tmp = this.renderTarget2;
-		this.renderTarget2 = this.renderTarget1;
-		this.renderTarget1 = tmp;
-	};
+
+		//composers
+		var depth_composer = new THREE.EffectComposer(renderer);
+		var main_composer = new THREE.EffectComposer(renderer);
+		THREE.EffectComposer.prototype.swapTargets = function() {
+			var tmp = this.renderTarget2;
+			this.renderTarget2 = this.renderTarget1;
+			this.renderTarget1 = tmp;
+		};
+
+		//shaders
+		var depth_shader = createDepthShader();
+			depth_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
+		var imageSettings_shader = createImageSettings();
+		var depthOfField_shader = createDofShader();
+			depthOfField_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
+		var pixelation_shader = createPixelationShader();
+		var edgeDetection_shader = createEdgeDetectionShader();
+
+		//depth material
+		var depthMaterial = new THREE.ShaderMaterial({
+			side: THREE.DoubleSide,
+			fragmentShader : depth_shader.fragmentShader,
+			vertexShader : depth_shader.vertexShader,
+			uniforms : depth_shader.uniforms
+		});
+
+		//passes
+		var mainRender_pass;
+		var depthRender_pass;
+		//var copy_pass;
 
 	//shaders
 	var depth_shader = createDepthShader();
@@ -333,7 +373,9 @@ function ProjectOLA(){
 
 	// game state initializzation (function for game start and end)
 	gameState = new GameState(
+		//start callback
 		function(){
+			introAnimation.stop();
 			score.reset();
 			timer.reset();
 			settings.reset();
@@ -341,6 +383,8 @@ function ProjectOLA(){
 			userInterface.displayGame();
 			music.play();
 		},
+
+		//pause callback
 		function(){
 			timer.pause();
 			if(music.isPlaying == true) {
@@ -349,6 +393,8 @@ function ProjectOLA(){
 				music.play();
 			}
 		},
+
+		//stop callback
 		function(){
 			userInterface.displayGameOver();
 			music.stop();
@@ -402,12 +448,18 @@ function ProjectOLA(){
 			catch(exec) {
 				explosion.play();
 				gameState.stopGame();
-				console.log(exec);
+				//console.log(exec);
 			}
 			userInterface.update();
 			score.update();
 		} else if(!gameState.isOver()){
-			environment.rotateSpaceship();
+			//la funzione responsabile per animazione iniziale
+			//inserire codice di animazione qui.
+			//environment.rotateSpaceship();
+			
+			introAnimation.doAnimation();
+			
+			//introAnimation.newTeckTest(gameCamera.position.clone() , new THREE.Vector3(0, 5 , 3));
 		}
 
 		requestAnimationFrame(animate);

@@ -119,9 +119,12 @@ void main(){
 	vec3 color2 = spBeta * spNdotL * (s *  c_diff + (1.0 - s) * spSpecular );
 	vec3 color3 =  c_diff * ambientLight;
 
-	//if(color1 == vec3(1.0 , 1.0 ,1.0)){
-		//color1 = c_diff;
-	//}
+
+
+
+
+
+
 	gl_FragColor = vec4(color1 + color2 + color3, 1.0);
 
 

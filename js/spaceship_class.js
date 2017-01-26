@@ -1,4 +1,8 @@
-//"use strikt";
+// spaceship
+
+
+
+//var actualSpaceShipPosition = new THREE.Vector3();
 
 function Spaceship(settingsObj, materialManager, IO_controls, timer){
 
@@ -21,28 +25,31 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 
 	this.spaceship3D = new THREE.Object3D();
 
-
-	//spaceship front
-	this.spaceship_front_geometry = new THREE.CylinderGeometry(0, this.spaceshipRadius, this.spaceshipLength * this.spaceshipFrontSize, 64);
-	this.spaceship_front_material = this.materialManager.redSpaceshipMaterial();
-	this.spaceship_front = new THREE.Mesh(this.spaceship_front_geometry, this.spaceship_front_material);
-
-	//spaceship body
-	this.spaceship_body_geometry = new THREE.CylinderGeometry(this.spaceshipRadius, this.spaceshipRadius, this.spaceshipLength * this.spaceshipBodySize, 64);
-	this.spaceship_body_material = this.materialManager.silverSpaceshipMaterial();
-	this.spaceship_body = new THREE.Mesh(this.spaceship_body_geometry, this.spaceship_body_material);
-
-	//spaceship back
-	this.spaceship_back_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius*3/5, this.spaceshipRadius*3/4, this.spaceshipLength * this.spaceshipBackSize, 64);
-	this.spaceship_back_material = this.materialManager.darkSilverSpaceshipMaterial();
-	this.spaceship_back = new THREE.Mesh(this.spaceship_back_geometry, this.spaceship_back_material);
-
 	//spaceship flame
 	this.spaceship_flame_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius*3/7, 0.0, this.spaceshipLength * this.spaceshipFlameSize, 32 , 20);
 	this.spaceship_flame_geometry.scale(0.8 , 1.0 , 1.3);
 	this.spaceship_flame_material = this.materialManager.getFlameMaterial();
 	this.spaceship_flame = new THREE.Mesh(this.spaceship_flame_geometry, this.spaceship_flame_material);
 
+	//spaceship front
+	this.spaceship_front_geometry = new THREE.CylinderGeometry(0, this.spaceshipRadius, this.spaceshipLength * this.spaceshipFrontSize, 64);
+	this.spaceship_front_material = this.materialManager.redSpaceshipMaterial();
+	this.spaceship_front_material.uniforms.spLightPos.value =  this.spaceship_flame.position; 
+	this.spaceship_front = new THREE.Mesh(this.spaceship_front_geometry, this.spaceship_front_material);
+
+	//spaceship body
+	this.spaceship_body_geometry = new THREE.CylinderGeometry(this.spaceshipRadius, this.spaceshipRadius, this.spaceshipLength * this.spaceshipBodySize, 64);
+	this.spaceship_body_material = this.materialManager.silverSpaceshipMaterial();
+	this.spaceship_body_material .uniforms.spLightPos.value =  this.spaceship_flame.position; 
+	this.spaceship_body = new THREE.Mesh(this.spaceship_body_geometry, this.spaceship_body_material);
+
+	//spaceship back
+	this.spaceship_back_geometry =  new THREE.CylinderGeometry(this.spaceshipRadius*3/5, this.spaceshipRadius*3/4, this.spaceshipLength * this.spaceshipBackSize, 64);
+	this.spaceship_back_material = this.materialManager.darkSilverSpaceshipMaterial();
+	this.spaceship_back_material .uniforms.spLightPos.value =  this.spaceship_flame.position; 
+	this.spaceship_back = new THREE.Mesh(this.spaceship_back_geometry, this.spaceship_back_material);
+
+	
 
 	// flame brightness
 	this.flameBrightness = 7.0;
@@ -121,7 +128,7 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 	this.spaceship_back.translateY((this.spaceshipBackSize/2 + this.spaceshipFlameSize)* this.spaceshipLength);
 	this.spaceship3D.add(this.spaceship_flame);
 	this.spaceship_flame.translateY((this.spaceshipFlameSize/2 * this.spaceshipLength));
-
+	
 	this.spaceship3D.position.set(0, -this.spaceshipLength/2, 0);
 
 	this.spaceshipColliders.push(new THREE.Sphere());
@@ -130,7 +137,12 @@ function Spaceship(settingsObj, materialManager, IO_controls, timer){
 
 	this.initialize();
 	this.reset();
-	this.spaceship3D.rotation.x = 0;
+
+	//console.log( this.spaceship3D.position);
+	
+	
+	
+	//this.spaceship3D.rotation.x = 0;	// ruota space ship in modo tale che il naso guarda verso l'alto
 }
 
 
@@ -274,7 +286,7 @@ Spaceship.prototype.updateSpaceship = function(){
 	this.spaceship_flame.material.uniforms.texAnimation.value = this.spaceship_flame.material.uniforms.texAnimation.value % 2.0;
 	
 
-	};
+};
 
 
 //updates collider position
@@ -290,8 +302,9 @@ Spaceship.prototype.updateLight = function() {
 	spaceshipLight.lightPosition.set(
 		this.spaceship3D.position.x,
 		this.spaceship3D.position.y,	
-		this.spaceship3D.position.z
+		this.spaceship3D.position.z + 0.5
 	);
+	
 };
 
 
@@ -318,6 +331,13 @@ Spaceship.prototype.initialize = function() {
 
 	// flame texture animation
 	this.spaceship_flame.material.uniforms.texAnimation.value = 0.0;
+
+	
+//	actualSpaceShipPosition.set(
+//		this.spaceship3D.position.x,
+//		this.spaceship3D.position.y,
+//		this.spaceship3D.position.z 
+//	);
 
 
 };

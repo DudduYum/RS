@@ -17,10 +17,9 @@ varying vec3 spLightVector;
 uniform vec3 lightPower;
 uniform vec3 ambientLight;
 uniform vec3 spLightPower;
-
 uniform float alpha;
 //
-// // maps & texture
+// maps & texture
 uniform sampler2D tex;
 uniform sampler2D normMap;
 uniform sampler2D specularMap;
@@ -120,12 +119,15 @@ void main(){
 	vec3 spBeta = calcBeta( spLightPower , spLightVector);
 	
 
-
+	vec3 testNorma = normalize(tNorm);
+	vec3 testLightV = normalize(spLightVector);
+	float test =max( 0.0000001 , dot( testLightV , testNorma ));
 
 
 	// sun light
 	vec3 color1 = beta * NdotL  * (s * c_diff  + (1.0 - s) * Specular );
-	vec3 color2 = spBeta * spNdotL * (s *  c_diff + (1.0 - s) * spSpecular );
+	//vec3 color2 = spBeta * spNdotL * (s *  c_diff + (1.0 - s) * spSpecular );
+	vec3 color2 = spLightPower * test;
 	vec3 color3 = c_diff * ambientLight;
 	gl_FragColor = vec4(  color1 + color3 , 1.0);
 

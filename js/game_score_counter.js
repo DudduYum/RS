@@ -1,7 +1,4 @@
-(function (){
-	"use strict";
-})();
-"use strict";
+
 
 function ScoreCounter(timer, settingsObj){
 
@@ -36,7 +33,7 @@ ScoreCounter.prototype.update = function(){
 	if(this.difficultyLock && this.gameScore % this.settings.difficultyIncreaseTime == 1) {
 		this.difficultyLock = false;
 	}
-}
+};
 
 ScoreCounter.prototype.reset = function(){
 	this.difficultyMultiplier = 1;
@@ -47,4 +44,4 @@ ScoreCounter.prototype.reset = function(){
 
 ScoreCounter.prototype.getScore = function(){
 	return this.gameScore;
-}
+};

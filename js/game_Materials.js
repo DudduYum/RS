@@ -169,21 +169,32 @@ MaterialManager.prototype.createSpaceshipUniforms = function(){
 	this.spaceshipSpecularMap.anisotropy = renderer.getMaxAnisotropy();
 
 	var uniforms = {
+		// mapps
 		tex: {
-			type: "t",
-			value: this.spaceshipTexture
+			type:	"t",
+			value:	this.spaceshipTexture
 		},
 		normalMap: {
-			type:  "t",
-			value: this.spaceshipNormalMap
+			type:	"t",
+			value:	this.spaceshipNormalMap
 		},
 		specularMap:{
 			type:	"t",
-			value: this.spaceshipSpecularMap
+			value:	this.spaceshipSpecularMap
 		},
+		// normal parameters and lights
 		normalScale:{
 			type:	"v2",
-			value: new THREE.Vector2(0.1 , 0.1)
+			value:	new THREE.Vector2(0.1 , 0.1)
+		},
+		spLightPos: {
+			type:	"v3",
+			//value:	spaceshipLight.lightPosition
+			value:	undefined
+		},
+		spLightPower: {
+			type:	"v3",
+			value:	spaceshipLight.lightPower
 		},
 		spLightPos: {
 			type:  "v3",
@@ -194,28 +205,24 @@ MaterialManager.prototype.createSpaceshipUniforms = function(){
 			value: spaceshipLight.lightPower
 		},
 		pointLightPos: {
-			type:  "v3",
-			value: pointLight.lightPosition
+			type:	"v3",
+			value:	pointLight.lightPosition
 		},
 		lightPower: {
-			type: "v3",
-			value: pointLight.lightPower
+			type:	"v3",
+			value:	pointLight.lightPower
 		},
-		// color:{
-		// 	type: "v3",
-		// 	value: new THREE.Vector3( 0.5 , 0.5 , 1.0)
-		// },
 		ambientLight: {
-			type: "v3",
-			value: ambientLight.lightPower
+			type:	"v3",
+			value:	ambientLight.lightPower
 		},
 		alpha: {
-			type: "f",
-			value: 1.0
+			type:	"f",
+			value:	1.0
 		},
 		s :{
-			type: "f",
-			value: 0.8
+			type:	"f",
+			value:	0.8
 		}
 	};
 
