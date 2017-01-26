@@ -24,7 +24,7 @@ this.game3Dscene = new THREE.Object3D();
 
 //sphere map
 this.openSpaceGeometry  = new THREE.SphereGeometry(600, 32, 32);
-this.openSpaceTexture = new THREE.TextureLoader().load("textures/space.jpg");
+this.openSpaceTexture = new THREE.TextureLoader().load("textures/environment/space.jpg");
 //trilinear and anisotropy
 this.openSpaceTexture.minFilter = THREE.LinearMipMapLinearFilter;
 this.openSpaceTexture.magFilter = THREE.LinearFilter;
@@ -38,7 +38,7 @@ this.game3Dscene.add(this.openSpace);
 
 //reference sun
 this.sunGeometry = new THREE.SphereGeometry(60, 32, 32);
-this.sunTexture = new THREE.TextureLoader().load("textures/sun.jpg");
+this.sunTexture = new THREE.TextureLoader().load("textures/environment/sun.jpg");
 //trilinear and anisotropy
 this.sunTexture.minFilter = THREE.LinearMipMapLinearFilter;
 this.sunTexture.magFilter = THREE.LinearFilter;

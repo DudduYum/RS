@@ -390,7 +390,7 @@ function ProjectOLA(){
 	setTimeout(function(){
 		userInterface.displayInitialScreen();
 		gameState.gameCanStart = true;
-	},4000);
+	},5000);
 	
 	
 	//animation loop
