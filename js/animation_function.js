@@ -297,9 +297,12 @@ Animator.prototype.stop = function(){
 
 	//translate the camere to original position
 	this.animatedObj.position.set(
-		this.startPoint.x,
-		this.startPoint.y,
-		this.startPoint.z
+	//	this.startPoint.x,
+	//	this.startPoint.y,
+	//	this.startPoint.z
+		0,
+		0,
+		0
 	);
 	
 	// call callback function
