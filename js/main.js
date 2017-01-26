@@ -19,6 +19,7 @@ var setSoundEffects;
 var setSoundEffectsVolume;
 
 
+
 function ProjectOLA(){
 
 //======= VARIABLES =======
@@ -112,7 +113,6 @@ function ProjectOLA(){
 	//passes
 	var mainRender_pass;
 	var depthRender_pass;
-	//var copy_pass;
 
 	var imageSettings_pass;
 	var depthOfField_pass;
@@ -123,7 +123,6 @@ function ProjectOLA(){
 
 	//initializes mouse controls for free camera
 	var orbitControls = new THREE.OrbitControls(freeCamera, renderer.domElement);
-		// orbitControls.addEventListener( 'change', animate );
 		orbitControls.enableKeys = false;
 		orbitControls.enabled = false;
 		orbitControls.target = new THREE.Vector3(0,0,-10);
@@ -139,24 +138,6 @@ function ProjectOLA(){
 	var explosion = new THREE.Audio(listener);
 	music.load('sound/music.mp3');
 	explosion.load('sound/explosion.mp3');
-	/*var loader = new THREE.AudioLoader();
-	loader.load(
-			'sound/music.mp3',
-			function(audioBuffer){
-				music.setBuffer(audioBuffer);
-				musicIsLoaded = true;
-			},
-			function() {},
-			function() {}
-	);
-	loader.load(
-			'sound/explosion.mp3',
-			function(audioBuffer) {
-				explosion.setBuffer(audioBuffer);
-			},
-			function() {},
-			function() {}
-	);*/
 	music.setVolume(0.5);
 	scene.add(music);
 	scene.add(explosion);

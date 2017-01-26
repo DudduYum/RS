@@ -221,6 +221,7 @@ Spaceship.prototype.immobilize = function(){
 
 
 //move the spaceship3D and keep it inside game borders
+
 Spaceship.prototype.updateSpaceship = function(){
 	// update coordinates
 	this.movementTracker.hStep = this.timer.passedTime/1000 * this.spaceshipSpeed.hSpeed;

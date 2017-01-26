@@ -81,8 +81,7 @@ Asteroid.prototype.move = function(){
 			this.z_rotation,
 			'XZY' )
 		 );
-//debugging code
-	console.log(this.asteroidMesh.quaternion);
+
 //debugging code
 	// light possition transformation according to meshrotation
 	//

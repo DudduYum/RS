@@ -42,7 +42,6 @@ function MaterialManager(){
 }
 
 
-// console.log(MaterialManager)
 //=== METHODS ===
 
 MaterialManager.prototype.loadImage = function(imgSrc){
@@ -51,12 +50,9 @@ MaterialManager.prototype.loadImage = function(imgSrc){
 		// resource URL
 		imgSrc,
 		// loaded
-		function() {
-			//console.log("image loaded");
-		},
+		function() {},
 		// loading
-		function() {
-		},
+		function() {},
 		// error
 		function() {
 			console.log("image loading error");

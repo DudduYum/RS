@@ -67,7 +67,7 @@ GameSettings.prototype.increaseDifficulty = function(){
 		this.difficultyLevel += 1;
 		this.spawnDelay -= 0.0135;
 		this.asteroidSpeed += 0.8;
-		if(this.difficultyLevel % 5 == 0){
+		if(this.difficultyLevel % 4 == 0){
 			if(this.difficultyLevel<20) {
 				console.log("> difficulty: " + this.difficultyLevel);
 			} else {

@@ -19,7 +19,6 @@ function getAsteroidMaterial(){
 	return meterial;
 }
 
-console.log(getAsteroidMaterial());
 
 //generate asteroids
 function generateAsteroid() {
