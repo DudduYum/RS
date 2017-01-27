@@ -85,7 +85,7 @@ function SettingsPanel(areaDepth) {
 	var effects_folder = graphicSettings_folder.addFolder('Effects');
 	effects_folder.open();
 	var depthOfField_controller = effects_folder.add(this, 'dynamic_depthOfField');
-	var depthOfFieldDistance_controller = effects_folder.add(this, 'focus_distance', 0, areaDepth).step(1);
+	var depthOfFieldDistance_controller = effects_folder.add(this, 'focus_distance', 0, areaDepth*9/10).step(1);
 	var pixelation_controller = effects_folder.add(this, 'pixelation');
 	var pixelationSize_controller = effects_folder.add(this, 'pixel_size', 2, 8).step(1);
 	var edgeDetection_controller = effects_folder.add(this, 'edgeDetection');

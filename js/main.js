@@ -105,33 +105,18 @@ function ProjectOLA(){
 
 	//shaders
 	var depth_shader = createDepthShader();
-		depth_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
+		depth_shader.uniforms.areaDepth.value = settings.game_area_D;
+		
 	var imageSettings_shader = createImageSettings();
-	var depthOfField_shader = createDofShader();
-		depthOfField_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
-	var pixelation_shader = createPixelationShader();
-	var edgeDetection_shader = createEdgeDetectionShader();
-
-	//depth material
-	var depthMaterial = new THREE.ShaderMaterial({
-		side: THREE.DoubleSide,
-		fragmentShader : depth_shader.fragmentShader,
-		vertexShader : depth_shader.vertexShader,
-		uniforms : depth_shader.uniforms
-	});
-
-	//passes
-	var mainRender_pass;
-	var depthRender_pass;
-
 	
-	//shaders
-	var depth_shader = createDepthShader();
-		depth_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
-	var imageSettings_shader = createImageSettings();
-	var depthOfField_shader = createDofShader();
-		depthOfField_shader.uniforms.areaDepth.value = settings.game_area_D / 2;
+	var depthOfField_VerStep_shader = createDofVerShader();
+		depthOfField_VerStep_shader.uniforms.areaDepth.value = settings.game_area_D;
+		
+	var depthOfField_HorStep_shader = createDofHorShader();
+		depthOfField_HorStep_shader.uniforms.areaDepth.value = settings.game_area_D;
+		
 	var pixelation_shader = createPixelationShader();
+	
 	var edgeDetection_shader = createEdgeDetectionShader();
 
 	//depth material
@@ -220,7 +205,8 @@ function ProjectOLA(){
 		depth_composer.addPass(depthRender_pass);
 
 		main_composer.addPass(mainRender_pass);
-		main_composer.addPass(depthOfField_pass);
+		main_composer.addPass(depthOfField_VerStep_pass);
+		main_composer.addPass(depthOfField_HorStep_pass);
 		main_composer.addPass(pixelation_pass);
 		main_composer.addPass(edgeDetection_pass);
 		main_composer.addPass(imageSettings_pass);
@@ -229,9 +215,13 @@ function ProjectOLA(){
 
 	function resetShaders() {
 
-		depthOfField_shader.uniforms.width.value = window.innerWidth;
-		depthOfField_shader.uniforms.height.value = window.innerHeight;
-		depthOfField_shader.uniforms.tDepth.value = depth_composer.renderTarget2;
+		depthOfField_VerStep_shader.uniforms.width.value = window.innerWidth;
+		depthOfField_VerStep_shader.uniforms.height.value = window.innerHeight;
+		depthOfField_VerStep_shader.uniforms.tDepth.value = depth_composer.renderTarget2;
+		
+		depthOfField_HorStep_shader.uniforms.width.value = window.innerWidth;
+		depthOfField_HorStep_shader.uniforms.height.value = window.innerHeight;
+		depthOfField_HorStep_shader.uniforms.tDepth.value = depth_composer.renderTarget2;
 
 		pixelation_shader.uniforms.width.value = window.innerWidth;
 		pixelation_shader.uniforms.height.value = window.innerHeight;
@@ -245,8 +235,10 @@ function ProjectOLA(){
 		imageSettings_pass = new THREE.ShaderPass(imageSettings_shader);
 		imageSettings_pass.renderToScreen = true;
 
-		depthOfField_pass = new THREE.ShaderPass(depthOfField_shader);
-		depthOfField_pass.enabled = settingsPanel.dynamic_depthOfField;
+		depthOfField_VerStep_pass = new THREE.ShaderPass(depthOfField_VerStep_shader);
+		depthOfField_VerStep_pass.enabled = settingsPanel.dynamic_depthOfField;
+		depthOfField_HorStep_pass = new THREE.ShaderPass(depthOfField_HorStep_shader);
+		depthOfField_HorStep_pass.enabled = settingsPanel.dynamic_depthOfField;
 
 		pixelation_pass = new THREE.ShaderPass(pixelation_shader);
 		pixelation_pass.enabled = settingsPanel.pixelation;
@@ -285,12 +277,15 @@ function ProjectOLA(){
 	};
 
 	setDepthOfField = function(value) {
-		depthOfField_pass.enabled = value;
+		depthOfField_VerStep_pass.enabled = value;
+		depthOfField_HorStep_pass.enabled = value;
 	};
 
 	setDepthOfFieldDistance = function(value) {
-		depthOfField_shader.uniforms.focusLimit.value = value;
-		depthOfField_pass.material.uniforms.focusLimit.value = value;
+		depthOfField_VerStep_shader.uniforms.focusLimit.value = value;
+		depthOfField_VerStep_pass.material.uniforms.focusLimit.value = value;
+		depthOfField_HorStep_shader.uniforms.focusLimit.value = value;
+		depthOfField_HorStep_pass.material.uniforms.focusLimit.value = value;
 	};
 
 	setPixelation = function(value) {
@@ -443,7 +438,7 @@ function ProjectOLA(){
 			catch(exec) {
 				explosion.play();
 				gameState.stopGame();
-				//console.log(exec);
+				console.log(exec);
 			}
 			userInterface.update();
 			score.update();

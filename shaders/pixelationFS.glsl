@@ -1,4 +1,4 @@
-//pixelation step 1 fragment shaders
+//pixelation step 1 fragment shader
 
 uniform sampler2D tDiffuse;
 uniform float width;

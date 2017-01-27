@@ -72,7 +72,8 @@
 
 		<div class="shaders" id="imageSettingsFS"></div>
 
-		<div class="shaders" id="depthOfFieldFS"></div>
+		<div class="shaders" id="depthOfField_VerStepFS"></div>
+		<div class="shaders" id="depthOfField_HorStepFS"></div>
 
 		<div class="shaders" id="pixelationFS"></div>
 
@@ -176,18 +177,20 @@
 											// imageSettings
 											$("#imageSettingsFS").load("shaders/imageSettingsFS.glsl","",function(){
 												// depth of field
-												$("#depthOfFieldFS").load("shaders/depthOfFieldFS.glsl","",function(){
-													// pixelation
-													$("#pixelationFS").load("shaders/pixelationFS.glsl","",function(){
-														// edge only
-														$("#edgeDetectionFS").load("shaders/edgeDetectionFS.glsl","",function(){
-															// asteroids
-															$("#asteroidVS").load("shaders/asteroidVS.glsl","",function(){
+												$("#depthOfField_VerStepFS").load("shaders/depthOfField_VerStepFS.glsl","",function(){
+													$("#depthOfField_HorStepFS").load("shaders/depthOfField_HorStepFS.glsl","",function(){
+														// pixelation
+														$("#pixelationFS").load("shaders/pixelationFS.glsl","",function(){
+															// edge only
+															$("#edgeDetectionFS").load("shaders/edgeDetectionFS.glsl","",function(){
+																// asteroids
+																$("#asteroidVS").load("shaders/asteroidVS.glsl","",function(){
 
-																// the last load must containt callback function to the main function
-																// to be sure the rendering starts with all shaders loaded
-																$("#asteroidFS").load("shaders/asteroidFS.glsl","bobo", function(){
-																	ProjectOLA();
+																	// the last load must containt callback function to the main function
+																	// to be sure the rendering starts with all shaders loaded
+																	$("#asteroidFS").load("shaders/asteroidFS.glsl","bobo", function(){
+																		ProjectOLA();
+																	});
 																});
 															});
 														});
