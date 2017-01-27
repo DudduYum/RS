@@ -42,7 +42,7 @@ function Animator(obj, subdivision , center, callback){
 	this.lastAnimation = this.timer.getTime();
 
 	//animatin speed
-	this.stepTime = 0.06;
+	this.stepTime = 0.02;
 	
 	//speed in points/sec
 	this.speed = 1;	
